@@ -2,7 +2,6 @@ package com.zp.product.dao;
 
 import com.zp.common.dao.BaseDao;
 import com.zp.product.entity.BrandEntity;
-import com.zp.product.entity.BrandEntity;
 import org.apache.ibatis.annotations.Mapper;
 
 /**

@@ -13,6 +13,18 @@
 
 <dependencies>
     <dependency>
+        <groupId>com.baomidou</groupId>
+        <artifactId>mybatis-plus-boot-starter</artifactId>
+        <version>${mybatis-plus.version}</version>
+    </dependency>
+    <!-- mysql驱动 -->
+    <dependency>
+        <groupId>mysql</groupId>
+        <artifactId>mysql-connector-java</artifactId>
+        <version>${mysql.version}</version>
+    </dependency>
+
+    <dependency>
         <groupId>io.springfox</groupId>
         <artifactId>springfox-swagger2</artifactId>
         <version>${swagger2.version}</version>
@@ -22,6 +34,7 @@
         <artifactId>springfox-swagger-ui</artifactId>
         <version>${swagger2.version}</version>
     </dependency>
+
     <!--jsr 303-->
     <dependency>
         <groupId>javax.validation</groupId>
@@ -30,9 +43,9 @@
     </dependency>
     <!-- hibernate validator-->
     <dependency>
-        <groupId>org.hibernate</groupId>
+        <groupId>org.hibernate.validator</groupId>
         <artifactId>hibernate-validator</artifactId>
-        <version>5.2.0.Final</version>
+        <version>6.0.23.Final</version>
     </dependency>
 
     <dependency>

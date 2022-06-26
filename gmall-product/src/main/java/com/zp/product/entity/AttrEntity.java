@@ -1,5 +1,6 @@
 package com.zp.product.entity;
 
+import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.annotation.TableName;
 import com.zp.common.entity.BaseEntity;
 import lombok.Data;
@@ -18,10 +19,6 @@ import lombok.EqualsAndHashCode;
 public class AttrEntity extends BaseEntity {
 	private static final long serialVersionUID = 1L;
 
-    /**
-     * 属性id
-     */
-	private Long attrId;
     /**
      * 属性名
      */

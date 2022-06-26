@@ -7,6 +7,7 @@ import com.zp.product.dto.AttrAttrgroupRelationDTO;
 import com.zp.product.entity.AttrAttrgroupRelationEntity;
 import com.zp.product.service.AttrAttrgroupRelationService;
 import org.apache.commons.lang3.StringUtils;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.Map;
@@ -19,6 +20,9 @@ import java.util.Map;
  */
 @Service
 public class AttrAttrgroupRelationServiceImpl extends CrudServiceImpl<AttrAttrgroupRelationDao, AttrAttrgroupRelationEntity, AttrAttrgroupRelationDTO> implements AttrAttrgroupRelationService {
+
+    @Autowired
+    private AttrAttrgroupRelationDao attrAttrgroupRelationDao;
 
     @Override
     public QueryWrapper<AttrAttrgroupRelationEntity> getWrapper(Map<String, Object> params){
