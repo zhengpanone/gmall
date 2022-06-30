@@ -24,6 +24,7 @@
         <module>gmall-common</module>
         <module>gmall-ware</module>
         <module>gmall-generator</module>
+        <module>gmall-sys</module>
     </modules>
 
     <properties>

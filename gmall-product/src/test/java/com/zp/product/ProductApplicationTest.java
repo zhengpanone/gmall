@@ -24,9 +24,12 @@ public class ProductApplicationTest {
     @Test
     public void contextLoads(){
         BrandDTO brandDTO = new BrandDTO();
-        brandDTO.setName("小米");
+        /*brandDTO.setName("小米");
         brandDTO.setDescript("小米手机");
         brandService.save(brandDTO);
-        System.out.println("保存成功");
+        System.out.println("保存成功");*/
+        brandDTO.setId(1L);
+        brandDTO.setName("红米");
+        brandService.update(brandDTO);
     }
 }
