@@ -1,4 +1,4 @@
-package ${package}.modules.${moduleName}.controller;
+package ${package}.${moduleName}.controller;
 
 import ${package}.common.annotation.LogOperation;
 import ${package}.common.constant.Constant;
@@ -10,9 +10,9 @@ import ${package}.common.validator.ValidatorUtils;
 import ${package}.common.validator.group.AddGroup;
 import ${package}.common.validator.group.DefaultGroup;
 import ${package}.common.validator.group.UpdateGroup;
-import ${package}.modules.${moduleName}.dto.${className}DTO;
-import ${package}.modules.${moduleName}.excel.${className}Excel;
-import ${package}.modules.${moduleName}.service.${className}Service;
+import ${package}.${moduleName}.dto.${className}DTO;
+import ${package}.${moduleName}.excel.${className}Excel;
+import ${package}.${moduleName}.service.${className}Service;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiImplicitParam;
 import io.swagger.annotations.ApiImplicitParams;

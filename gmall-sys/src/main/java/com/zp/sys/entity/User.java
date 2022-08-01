@@ -13,7 +13,7 @@ import lombok.Data;
  */
 @TableName("sys_user")
 @Data
-public class User extends BaseEntity {
+public class User /*extends BaseEntity*/ {
     @TableField("username")
     private String username;
     @TableField("password")
