@@ -18,11 +18,14 @@ import io.swagger.annotations.ApiImplicitParam;
 import io.swagger.annotations.ApiImplicitParams;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.cloud.context.config.annotation.RefreshScope;
 import org.springframework.web.bind.annotation.*;
 import springfox.documentation.annotations.ApiIgnore;
 
 import javax.servlet.http.HttpServletResponse;
 import java.util.Arrays;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -33,18 +36,30 @@ import java.util.Map;
  * @author zhengpanone zhengpanone@hotmail.com
  * @since 1.0.0 2022-07-30
  */
+@RefreshScope
 @RestController
 @RequestMapping("coupon")
 @Api(tags="优惠券信息")
 public class CouponController {
     @Autowired
     private CouponService couponService;
+    @Value("${cuser.name}")
+    private String name;
+    @Value("${cuser.age}")
+    private Integer age;
 
     @GetMapping("/list")
     public Result<List<CouponDTO>> memberCoupons(){
         CouponDTO couponDTO = new CouponDTO();
         couponDTO.setCouponName("满100减10");
         return new Result<List<CouponDTO>>().ok(Arrays.asList(couponDTO));
+    }
+    @GetMapping("/test")
+    public Result<Object> test(){
+       Map<String, Object> data = new HashMap<>(2);
+       data.put("name",name);
+       data.put("age",age);
+        return new Result<>().ok(data);
     }
 
     @GetMapping("page")

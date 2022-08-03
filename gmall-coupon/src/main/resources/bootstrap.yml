@@ -1,0 +1,18 @@
+spring:
+  application:
+    name: gmall-coupon # 服务名
+  cloud:
+    nacos:
+      config: # 服务配置
+        server-addr: 127.0.0.1:8848
+        enabled: true
+        file-extension: yaml
+        namespace: 28c38fef-44a6-4461-8d8e-107a44a5511f
+        group: uat
+      discovery: # 服务发现
+        server-addr: 127.0.0.1:8848
+        enabled: true # 是否启用nacos作为服务注册发现
+        namespace: 28c38fef-44a6-4461-8d8e-107a44a5511f
+        group: uat
+
+#${spring.application.name}-${spring.profile.active}.${spring.cloud.nacos.config.file-extension}
