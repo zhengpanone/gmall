@@ -4,6 +4,8 @@ import com.zp.product.dto.BrandDTO;
 import com.zp.product.service.BrandService;
 import org.junit.Test;
 import org.junit.runner.RunWith;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.junit4.SpringRunner;
@@ -17,7 +19,7 @@ import org.springframework.test.context.junit4.SpringRunner;
 @RunWith(SpringRunner.class)
 @SpringBootTest
 public class ProductApplicationTest {
-
+    private static final Logger LOGGER = LoggerFactory.getLogger(ProductApplicationTest.class);
     @Autowired
     BrandService brandService;
 
@@ -31,5 +33,6 @@ public class ProductApplicationTest {
         brandDTO.setId(1L);
         brandDTO.setName("红米");
         brandService.update(brandDTO);
+        LOGGER.info("上下文加载成功");
     }
 }

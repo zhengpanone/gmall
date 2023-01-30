@@ -4,15 +4,23 @@ spring:
   cloud:
     nacos:
       config: # 服务配置
-        server-addr: 127.0.0.1:8848
+        server-addr: 127.0.0.1:8848 # 配置中心的服务地址
         enabled: true
         file-extension: yaml
-        namespace: 28c38fef-44a6-4461-8d8e-107a44a5511f
-        group: uat
+        namespace: 09aaec5b-628d-43cd-9831-4bfde6df2926
+        group: coupon-dev
+        extension-configs[0]:
+          data-id: datasource.yaml
+          group: coupon-dev
+          refresh: true
+        extension-configs[1]:
+          data-id: mybatis.yaml
+          group: coupon-dev
+          refresh: true
       discovery: # 服务发现
-        server-addr: 127.0.0.1:8848
+        server-addr: 127.0.0.1:8848 # 服务注册中心的服务地址
         enabled: true # 是否启用nacos作为服务注册发现
-        namespace: 28c38fef-44a6-4461-8d8e-107a44a5511f
-        group: uat
+        namespace: 09aaec5b-628d-43cd-9831-4bfde6df2926
+        group: gmall
 
 #${spring.application.name}-${spring.profile.active}.${spring.cloud.nacos.config.file-extension}

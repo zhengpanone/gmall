@@ -28,6 +28,7 @@ import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.concurrent.ForkJoinPool;
 
 
 /**
@@ -73,7 +74,6 @@ public class CouponController {
 
     public Result<PageData<CouponDTO>> page(@ApiIgnore @RequestParam Map<String, Object> params){
         PageData<CouponDTO> page = couponService.page(params);
-
         return new Result<PageData<CouponDTO>>().ok(page);
     }
 

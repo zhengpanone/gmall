@@ -12,8 +12,8 @@ import org.springframework.cloud.client.discovery.EnableDiscoveryClient;
  */
 @EnableDiscoveryClient
 @SpringBootApplication
-public class CouponApplcation {
+public class CouponApplication {
     public static void main(String[] args) {
-        SpringApplication.run(CouponApplcation.class,args);
+        SpringApplication.run(CouponApplication.class,args);
     }
 }

@@ -33,9 +33,9 @@ import java.util.Map;
  * @since 1.0.0 2022-06-25
  */
 @RestController
-@RequestMapping("product/attrattrgrouprelation")
+@RequestMapping("product/attrGroupRelation")
 @Api(tags="属性&属性分组关联")
-public class AttrAttrgroupRelationController {
+public class AttrGroupRelationController {
     @Autowired
     private AttrAttrgroupRelationService attrAttrgroupRelationService;
 
