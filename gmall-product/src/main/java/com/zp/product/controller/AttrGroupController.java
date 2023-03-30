@@ -33,7 +33,7 @@ import java.util.Map;
  * @since 1.0.0 2022-06-25
  */
 @RestController
-@RequestMapping("product/attrgroup")
+@RequestMapping("product/attrGroup")
 @Api(tags="属性分组")
 public class AttrGroupController {
     @Autowired

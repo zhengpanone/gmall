@@ -12,4 +12,11 @@
     <artifactId>gmall-order</artifactId>
 <description>订单服务</description>
 
+    <dependencies>
+        <dependency>
+            <groupId>com.zp</groupId>
+            <artifactId>gmall-common</artifactId>
+            <version>1.0-SNAPSHOT</version>
+        </dependency>
+    </dependencies>
 </project>

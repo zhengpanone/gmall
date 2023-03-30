@@ -20,7 +20,7 @@ public class BrandDTO implements Serializable {
     private static final long serialVersionUID = 1L;
 
 	@ApiModelProperty(value = "品牌id")
-	private Long brandId;
+	private Long id;
 
 	@ApiModelProperty(value = "品牌名")
 	private String name;

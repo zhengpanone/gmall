@@ -1,0 +1,9 @@
+server:
+  port: 8080
+
+#spring:
+#  security:
+#    user:
+#      name: SBA_admin
+#      password: SBA_password
+#      roles: SBA_ADMIN

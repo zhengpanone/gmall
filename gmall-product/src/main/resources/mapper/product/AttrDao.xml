@@ -13,8 +13,6 @@
         <result property="enable" column="enable"/>
         <result property="catelogId" column="catelog_id"/>
         <result property="showDesc" column="show_desc"/>
-        <result property="creator" column="creator"/>
-        <result property="createDate" column="creat_date"/>
     </resultMap>
 
 
