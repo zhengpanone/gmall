@@ -7,7 +7,7 @@ spring:
         server-addr: 127.0.0.1:8848 # 配置中心的服务地址
         enabled: true
         file-extension: yaml
-        namespace: 09aaec5b-628d-43cd-9831-4bfde6df2926
+        namespace: 09aaec5b-628d-43cd-9831-4bfde6df2926 #命名空间
         group: coupon-dev
         extension-configs[0]:
           data-id: datasource.yaml

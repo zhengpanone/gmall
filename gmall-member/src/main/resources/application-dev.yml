@@ -8,11 +8,11 @@ spring:
         enabled: true
         namespace: 09aaec5b-628d-43cd-9831-4bfde6df2926
         group: gmall
-  datasource:
-    url: jdbc:mysql://127.0.0.1:3306/gmall_ums?serverTimezone=UTC
-    username: root
-    password: root
-    driver-class-name: com.mysql.cj.jdbc.Driver
+#  datasource:
+#    url: jdbc:mysql://127.0.0.1:3306/gmall_ums?serverTimezone=UTC
+#    username: root
+#    password: root
+#    driver-class-name: com.mysql.cj.jdbc.Driver
 server:
   servlet:
     context-path: /member
