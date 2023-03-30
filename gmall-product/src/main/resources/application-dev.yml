@@ -1,0 +1,24 @@
+server:
+  port: 9030
+  servlet:
+    context-path: /product
+spring:
+  application:
+    name: gmall-product
+  cloud:
+    nacos:
+      discovery: # 服务发现
+        server-addr: 127.0.0.1:8848
+        enabled: true
+        namespace: 09aaec5b-628d-43cd-9831-4bfde6df2926
+        group: gmall
+  datasource:
+    url: jdbc:mysql://127.0.0.1:3306/gmall_pms?serverTimezone=UTC
+    username: root
+    password: root
+    driver-class-name: com.mysql.cj.jdbc.Driver
+mybatis-plus:
+  mapper-locations: classpath:/mapper/**/*.xml
+  global-config:
+    db-config:
+      id-type: auto
