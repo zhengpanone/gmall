@@ -24,7 +24,6 @@
         <module>gmall-coupon</module> <!--优惠券服务-->
         <module>gmall-ware</module>
         <module>gmall-sys</module>
-        <module>gmall-spring-boot-admin</module>
     </modules>
 
     <properties>
