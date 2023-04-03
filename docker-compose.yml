@@ -33,15 +33,22 @@ services:
     #     # - /mydata/mysql/mysql-files:/var/lib/mysql-files 
     #     # - /mydata/mysql/conf:/etc/mysql #配置文件挂载
     #     - /mydata/mysql/log:/var/log/mysql #日志文件挂载
+
+    healthcheck:
+      test: [ "CMD", "mysqladmin" ,"ping", "-h", "localhost" ]
+      interval: 5s
+      timeout: 10s
+      retries: 10
         
   nacos:
     hostname: nacos
     image: nacos/nacos-server:v2.1.2
     container_name: nacos
-    privileged: true
+    # privileged: true
     # restart: always
     depends_on:
-      - mysql
+      mysql:
+        condition: service_healthy
     environment:
       TZ: Asia/Shanghai
       MODE: standalone
@@ -59,7 +66,7 @@ services:
     volumes:
       - /mydata/nacos/logs/:/home/nacos/logs
       - /mydata/nacos/plugins/:/home/nacos/plugins
-      - nacos-conf:/home/nacos/conf
+      # - nacos-conf:/home/nacos/conf
       
     ports:
       - "8848:8848"
