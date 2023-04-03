@@ -89,7 +89,6 @@ public class CouponController {
     @PostMapping
     @ApiOperation("保存")
     @LogOperation("保存")
-
     public Result save(@RequestBody CouponDTO dto){
         //效验数据
         ValidatorUtils.validateEntity(dto, AddGroup.class, DefaultGroup.class);

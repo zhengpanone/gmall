@@ -23,13 +23,15 @@ services:
     environment:
       MYSQL_ROOT_PASSWORD: 'root' # root管理员用户密码
       TZ: 'Asia/Shanghai'
-    entrypoint:
-      sh -c "
-        echo 'CREATE DATABASE IF NOT EXISTS gmall_sms; CREATE DATABASE IF NOT EXISTS gmall_ums;CREATE DATABASE IF NOT EXISTS nacos;' > /docker-entrypoint-initdb.d/init.sql; 
-        /usr/local/bin/docker-entrypoint.sh --character-set-server=utf8mb4 --collation-server=utf8mb4_unicode_ci"
+#    entrypoint:
+#      sh -c "
+#        echo 'CREATE DATABASE IF NOT EXISTS gmall_sms; CREATE DATABASE IF NOT EXISTS gmall_ums;CREATE DATABASE IF NOT EXISTS nacos;' > /docker-entrypoint-initdb.d/init.sql;
+#        /usr/local/bin/docker-entrypoint.sh --character-set-server=utf8mb4 --collation-server=utf8mb4_unicode_ci"
+
     volumes:
       - /mydata/mysql/data:/var/lib/mysql # 数据文件挂载
-      # - ./mysql/init:/docker-entrypoint-initdb.d/
+      - ./mysql/init:/docker-entrypoint-initdb.d/
+      - ./mysql/sql:/opt/sql
     #     # - /mydata/mysql/mysql-files:/var/lib/mysql-files 
     #     # - /mydata/mysql/conf:/etc/mysql #配置文件挂载
     #     - /mydata/mysql/log:/var/log/mysql #日志文件挂载
