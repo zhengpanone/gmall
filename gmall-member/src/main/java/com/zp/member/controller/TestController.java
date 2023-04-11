@@ -17,7 +17,7 @@ import java.util.List;
  * @since 2022-07-30
  */
 @RestController
-@RefreshScope
+@RefreshScope // 动态刷新配置
 public class TestController {
     @Autowired
     CouponFeignService couponFeignService;

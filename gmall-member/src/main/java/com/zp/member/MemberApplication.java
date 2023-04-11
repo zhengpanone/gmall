@@ -12,6 +12,7 @@ import org.springframework.cloud.openfeign.EnableFeignClients;
  * @author zhengpanone
  * @since 2022-06-25
  */
+// 开启feign远程调用服务
 @EnableFeignClients(basePackages = "com.zp.member.feign")
 @EnableDiscoveryClient
 @SpringBootApplication

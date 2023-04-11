@@ -9,7 +9,9 @@ spring:
         file-extension: yaml
         namespace: 09aaec5b-628d-43cd-9831-4bfde6df2926 #命名空间
         group: member-dev
-        extension-configs[0]:
-          data-id: datasource.yaml
-          group: member-dev
-          refresh: true
+        # 常规配置文件
+        # 优先级大于 shared-configs，在 shared-configs 之后加载
+        extension-configs:
+          - data-id: datasource.yaml
+            group: member-dev
+            refresh: true
