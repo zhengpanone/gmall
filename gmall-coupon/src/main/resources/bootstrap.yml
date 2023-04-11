@@ -9,14 +9,17 @@ spring:
         file-extension: yaml
         namespace: 09aaec5b-628d-43cd-9831-4bfde6df2926 #命名空间
         group: coupon-dev
-        extension-configs[0]:
-          data-id: datasource.yaml
-          group: coupon-dev
-          refresh: true
-        extension-configs[1]:
-          data-id: mybatis.yaml
-          group: coupon-dev
-          refresh: true
+        # 用于共享的配置文件
+        shared-configs:
+          - data-id: mybatis.yml
+            group: DEFAULT_GROUP
+            refresh: true
+        # 常规配置文件
+        # 优先级大于 shared-configs，在 shared-configs 之后加载
+        extension-configs:
+          - data-id: datasource.yaml
+            group: coupon-dev
+            refresh: true
       discovery: # 服务发现
         server-addr: 127.0.0.1:8848 # 服务注册中心的服务地址
         enabled: true # 是否启用nacos作为服务注册发现
