@@ -1,0 +1,13 @@
+spring:
+  application:
+    name: gmall-gateway
+  cloud:
+    nacos:
+      config:
+        server-addr: 127.0.0.1:8848
+        enabled: true
+        namespace: 09aaec5b-628d-43cd-9831-4bfde6df2926
+        file-extension: yaml
+        group: gateway-dev
+
+

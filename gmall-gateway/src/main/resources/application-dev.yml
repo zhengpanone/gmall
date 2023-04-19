@@ -1,0 +1,25 @@
+spring:
+  application:
+    name: gmall-gateway
+  cloud:
+    nacos:
+      discovery:
+        server-addr: 127.0.0.1:8848
+        enabled: true
+        namespace: 09aaec5b-628d-43cd-9831-4bfde6df2926
+        group: gmall
+    gateway:
+      routes:
+        - id: test_route
+          uri: https://www.baidu.com
+          predicates:
+            - Query=url,baidu
+        - id: qq_route
+          uri: https://www.qq.com
+          predicates:
+            - Query=url,qq
+server:
+  servlet:
+    context-path: /gateway
+  port: 88
+

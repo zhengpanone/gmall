@@ -17,6 +17,7 @@
         <module>gmall-coupon</module> <!--优惠券服务-->
         <module>gmall-ware</module>
         <module>gmall-sys</module>
+        <module>gmall-gateway</module>
     </modules>
 
     <properties>
@@ -98,6 +99,11 @@
                 <version>${spring-cloud.version}</version>
                 <type>pom</type>
                 <scope>import</scope>
+            </dependency>
+
+            <dependency>
+                <groupId>org.springframework.cloud</groupId>
+                <artifactId>spring-cloud-gateway</artifactId>
             </dependency>
 
         </dependencies>
