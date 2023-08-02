@@ -3,6 +3,10 @@ package com.zp.product.service;
 import com.zp.common.service.CrudService;
 import com.zp.product.dto.CategoryDTO;
 import com.zp.product.entity.CategoryEntity;
+import com.zp.product.vo.CategoryTreeVO;
+import com.zp.product.vo.CategoryVO;
+
+import java.util.List;
 
 /**
  * 商品三级分类
@@ -12,4 +16,5 @@ import com.zp.product.entity.CategoryEntity;
  */
 public interface CategoryService extends CrudService<CategoryEntity, CategoryDTO> {
 
+    List<CategoryTreeVO> listTree();
 }

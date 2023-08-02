@@ -1,5 +1,6 @@
 package com.zp.product.entity;
 
+import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.annotation.TableName;
 import com.zp.common.entity.BaseEntity;
 import lombok.Data;
@@ -22,6 +23,7 @@ public class CategoryEntity extends BaseEntity {
     /**
      * 分类id
      */
+	@TableId
 	private Long catId;
     /**
      * 分类名称

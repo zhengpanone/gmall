@@ -5,6 +5,9 @@ server:
 spring:
   application:
     name: gmall-product
+  mvc:
+    pathmatch:
+      matching-strategy: ant_path_matcher
   cloud:
     nacos:
       discovery: # 服务发现
