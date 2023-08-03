@@ -4,6 +4,8 @@ import com.zp.common.enums.ResultEnum;
 import com.zp.common.exception.BusinessException;
 import com.zp.common.exception.ForbiddenException;
 import com.zp.common.utils.Result;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.util.StringUtils;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.FieldError;
@@ -13,9 +15,12 @@ import org.springframework.web.bind.annotation.RestControllerAdvice;
 
 import javax.validation.ConstraintViolationException;
 
-//统一拦截异常
+/**
+ * 全局异常处理
+ */
 @RestControllerAdvice(basePackages = "com.zp")
 public class ExceptionAdvice {
+    private static final Logger logger = LoggerFactory.getLogger(ExceptionAdvice.class);
     /**
      * 捕获 {@code BusinessException} 异常
      */
@@ -37,6 +42,7 @@ public class ExceptionAdvice {
      */
     @ExceptionHandler({MethodArgumentNotValidException.class})
     public Result<?> handleMethodArgumentNotValidException(MethodArgumentNotValidException ex) {
+        logger.info("数据校验出现问题：{}，异常类型：{}", ex.getMessage(), ex.getClass());
         BindingResult bindingResult = ex.getBindingResult();
         StringBuilder sb = new StringBuilder("校验失败:");
         for (FieldError fieldError : bindingResult.getFieldErrors()) {

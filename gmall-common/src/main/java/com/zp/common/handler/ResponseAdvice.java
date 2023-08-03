@@ -19,7 +19,7 @@ import org.springframework.web.servlet.mvc.method.annotation.ResponseBodyAdvice;
  * ResponseBodyAdvice 是对 Controller 返回的内容在 HttpMessageConverter 进行类型转换之前拦截，进行相应的处理操作后，再将结果返回给客户端
  */
 @Component // 注入到spring容器进行拦截
-@RestControllerAdvice(annotations = RestController.class) // 通过注解进行过滤哪些请求响应会被拦截，避免错误拦截
+@RestControllerAdvice(annotations = {RestController.class}) // 通过注解进行过滤哪些请求响应会被拦截，避免错误拦截
 public class ResponseAdvice implements ResponseBodyAdvice {
     private Logger log = LoggerFactory.getLogger(ResponseAdvice.class);
 

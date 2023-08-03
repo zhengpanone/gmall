@@ -11,9 +11,9 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
  * @since 2022-06-30
  */
 @MapperScan("com.zp.sys.mapper")
-@SpringBootApplication
+@SpringBootApplication(scanBasePackages = {"com.zp.common", "com.zp.sys"})
 public class SysApplication {
     public static void main(String[] args) {
-        SpringApplication.run(SysApplication.class,args);
+        SpringApplication.run(SysApplication.class, args);
     }
 }
