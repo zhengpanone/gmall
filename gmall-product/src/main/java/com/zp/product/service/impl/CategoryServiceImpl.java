@@ -2,20 +2,17 @@ package com.zp.product.service.impl;
 
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.zp.common.service.impl.CrudServiceImpl;
-import com.zp.common.utils.TreeUtils;
 import com.zp.product.dao.CategoryDao;
 import com.zp.product.dto.CategoryDTO;
 import com.zp.product.entity.CategoryEntity;
 import com.zp.product.mapstruct.struct.CategoryConvert;
 import com.zp.product.service.CategoryService;
-import com.zp.product.vo.CategoryTreeVO;
-import com.zp.product.vo.CategoryVO;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.util.List;
-import java.util.Map;
+import java.util.*;
+import java.util.stream.Collectors;
 
 /**
  * 商品三级分类
@@ -30,8 +27,8 @@ public class CategoryServiceImpl extends CrudServiceImpl<CategoryDao, CategoryEn
     private CategoryConvert categoryConvert;
 
     @Override
-    public QueryWrapper<CategoryEntity> getWrapper(Map<String, Object> params){
-        String id = (String)params.get("id");
+    public QueryWrapper<CategoryEntity> getWrapper(Map<String, Object> params) {
+        String id = (String) params.get("id");
 
         QueryWrapper<CategoryEntity> wrapper = new QueryWrapper<>();
         wrapper.eq(StringUtils.isNotBlank(id), "id", id);
@@ -41,11 +38,30 @@ public class CategoryServiceImpl extends CrudServiceImpl<CategoryDao, CategoryEn
 
 
     @Override
-    public List<CategoryTreeVO> listTree() {
+    public List<CategoryEntity> listTree() {
         // 查出所有分类
-        List<CategoryEntity> allCategoryList = baseDao.selectList(null);
-        List<CategoryTreeVO> vOs = categoryConvert.toTreeVOs(allCategoryList);
-        // 组装树形结构
-        return  TreeUtils.toTree(vOs);
+        Optional<List<CategoryEntity>> optional = Optional.ofNullable(baseDao.selectList(null));
+        if (optional.isPresent()) {
+            List<CategoryEntity> level1 = optional.orElseGet(Collections::emptyList).stream()
+                    .filter(categoryEntity -> categoryEntity.getParentCid() == 0L)
+                    .map(item -> {
+                        item.setChildren(getChildrens(item, optional.get()));
+                        return item;
+                    })
+                    .sorted(Comparator.comparingInt(menu -> (menu.getSort() == null ? 0 : menu.getSort())))
+                    .collect(Collectors.toList());
+            return level1;
+        }
+        return Collections.emptyList();
+    }
+
+
+    private List<CategoryEntity> getChildrens(CategoryEntity root, List<CategoryEntity> all) {
+        return all.stream().filter(categoryEntity -> {
+            return root.getCatId() == categoryEntity.getParentCid();
+        }).map(item -> {
+            item.setChildren(getChildrens(item, all));
+            return item;
+        }).sorted(Comparator.comparingInt(menu -> (menu.getSort() == null ? 0 : menu.getSort()))).collect(Collectors.toList());
     }
 }

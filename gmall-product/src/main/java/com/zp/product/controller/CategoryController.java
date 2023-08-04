@@ -71,9 +71,9 @@ public class CategoryController {
     @GetMapping("tree")
     @ApiOperation("查询分类的树形结构")
     @ApiResponses(@ApiResponse(code = 0, message = "success", responseContainer = "List", response = CategoryVO.class))
-    public Result<List<CategoryTreeVO>> tree() {
-        List<CategoryTreeVO> tree = categoryService.listTree();
-        return new Result<List<CategoryTreeVO>>().ok(tree);
+    public Result<List<CategoryEntity>> tree() {
+        List<CategoryEntity> tree = categoryService.listTree();
+        return Result.ok(tree);
     }
 
     @PostMapping
