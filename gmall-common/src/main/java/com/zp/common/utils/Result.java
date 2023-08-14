@@ -21,7 +21,7 @@ import java.io.Serializable;
 /**
  * 统一返回数据结构
  *
- * @author Mark sunlightcs@gmail.com
+ * @author 
  * @since 1.0.0
  */
 @ApiModel(value = "返回结果集")
@@ -46,6 +46,11 @@ public class Result<T> implements Serializable {
     @ApiModelProperty(value = "响应数据")
     private T data;
 
+    public Result(int code, String message) {
+        this.code = code;
+        this.msg = message;
+    }
+
     public static Result<?> ok() {
         return new Result<>(ResultEnum.SUCCESS.getCode(), ResultEnum.SUCCESS.getMessage(), null);
     }
@@ -63,6 +68,9 @@ public class Result<T> implements Serializable {
         return new Result<>(ResultEnum.COMMON_FAILED.getCode(), ResultEnum.COMMON_FAILED.getMessage(), null);
     }
 
+    public static Result<?> failed(int code) {
+        return new Result<>(code, MessageUtils.getMessage(code));
+    }
 
     public static Result<?> failed(String msg) {
         return new Result<>(ResultEnum.COMMON_FAILED.getCode(), msg, null);

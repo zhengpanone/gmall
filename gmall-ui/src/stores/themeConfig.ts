@@ -104,7 +104,7 @@ export const useThemeConfig = defineStore('themeConfig', {
 			// 是否开启水印
 			isWartermark: true,
 			// 水印文案
-			wartermarkText: 'vue-next-admin',
+			wartermarkText: 'gmall-admin',
 
 			/**
 			 * 其它设置
@@ -137,7 +137,7 @@ export const useThemeConfig = defineStore('themeConfig', {
 			 * 全局网站标题 / 副标题
 			 */
 			// 网站主标题（菜单导航、浏览器当前网页标题）
-			globalTitle: 'vue-next-admin',
+			globalTitle: 'gmall-admin',
 			// 网站副标题（登录页顶部文字）
 			globalViceTitle: 'vueNextAdmin',
 			// 网站副标题（登录页顶部文字）

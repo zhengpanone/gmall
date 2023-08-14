@@ -3,7 +3,7 @@ package com.zp.common.validator.group;
 /**
  * 新增 Group
  *
- * @author Mark sunlightcs@gmail.com
+ * @author 
  * @since 1.0.0
  */
 public interface AddGroup {

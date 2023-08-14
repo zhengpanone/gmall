@@ -3,7 +3,7 @@ package com.zp.common.constant;
 /**
  * 常量
  *
- * @author Mark sunlightcs@gmail.com
+ * @author 
  */
 public interface Constant {
     /**

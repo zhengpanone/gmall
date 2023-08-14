@@ -24,10 +24,12 @@
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
         <java.version>11</java.version>
+        <jmh.version>1.37</jmh.version>
         <spring-boot.version>2.6.7</spring-boot.version>
         <spring-boot-admin.version>2.6.7</spring-boot-admin.version>
         <org.mapstruct.version>1.5.3.Final</org.mapstruct.version>
         <mybatis-plus.version>3.5.2</mybatis-plus.version>
+        <mybatis-flex-version>1.5.3</mybatis-flex-version>
         <servlet.version>2.5</servlet.version>
         <commons.io.version>2.11.0</commons.io.version>
         <jsoup.version>1.11.3</jsoup.version>
@@ -83,6 +85,11 @@
                 <version>${mybatis-plus.version}</version>
             </dependency>
             <dependency>
+                <groupId>com.mybatis-flex</groupId>
+                <artifactId>mybatis-flex-spring-boot-starter</artifactId>
+                <version>${mybatis-flex-version}</version>
+            </dependency>
+            <dependency>
                 <groupId>javax.servlet</groupId>
                 <artifactId>servlet-api</artifactId>
                 <version>${servlet.version}</version>
@@ -126,12 +133,25 @@
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-web</artifactId>
         </dependency>
-        <!--        测试工具-->
+        <!-- 测试工具-->
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-test</artifactId>
             <scope>test</scope>
         </dependency>
+
+        <dependency>
+            <groupId>org.openjdk.jmh</groupId>
+            <artifactId>jmh-core</artifactId>
+            <version>${jmh.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>org.openjdk.jmh</groupId>
+            <artifactId>jmh-generator-annprocess</artifactId>
+            <version>${jmh.version}</version>
+            <scope>provided</scope>
+        </dependency>
+
         <!--        整合SpringBoot配置提示-->
         <dependency>
             <groupId>org.springframework.boot</groupId>

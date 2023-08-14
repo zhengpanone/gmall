@@ -3,7 +3,7 @@ package com.zp.common.validator.group;
 /**
  * 默认 Group
  *
- * @author Mark sunlightcs@gmail.com
+ * @author 
  * @since 1.0.0
  */
 public interface DefaultGroup {

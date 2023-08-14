@@ -22,8 +22,3 @@ server:
     context-path: /gmall-sys
   port: 9000
 
-mybatis-plus:
-  mapper-locations: classpath*:/mapper/**/*.xml
-  global-config:
-    db-config:
-      id-type: auto

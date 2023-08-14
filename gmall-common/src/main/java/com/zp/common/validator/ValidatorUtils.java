@@ -8,7 +8,7 @@
 
 package com.zp.common.validator;
 
-import com.zp.common.exception.RenException;
+import com.zp.common.exception.BusinessException;
 import org.hibernate.validator.messageinterpolation.ResourceBundleMessageInterpolator;
 import org.springframework.context.i18n.LocaleContextHolder;
 import org.springframework.context.support.ResourceBundleMessageSource;
@@ -24,7 +24,7 @@ import java.util.Set;
  * hibernate-validator校验工具类
  * 参考文档：http://docs.jboss.org/hibernate/validator/6.0/reference/en-US/html_single/
  *
- * @author Mark sunlightcs@gmail.com
+ * @author 
  * @since 1.0.0
  */
 public class ValidatorUtils {
@@ -42,7 +42,7 @@ public class ValidatorUtils {
      * @param groups        待校验的组
      */
     public static void validateEntity(Object object, Class<?>... groups)
-            throws RenException {
+            throws BusinessException {
         Locale.setDefault(LocaleContextHolder.getLocale());
         Validator validator = Validation.byDefaultProvider().configure().messageInterpolator(
                 new ResourceBundleMessageInterpolator(new MessageSourceResourceBundleLocator(getMessageSource())))
@@ -51,7 +51,7 @@ public class ValidatorUtils {
         Set<ConstraintViolation<Object>> constraintViolations = validator.validate(object, groups);
         if (!constraintViolations.isEmpty()) {
         	ConstraintViolation<Object> constraint = constraintViolations.iterator().next();
-            throw new RenException(constraint.getMessage());
+            throw new BusinessException(constraint.getMessage());
         }
     }
 }
