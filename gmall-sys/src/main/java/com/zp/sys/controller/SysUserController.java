@@ -32,7 +32,6 @@ import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiImplicitParam;
 import io.swagger.annotations.ApiImplicitParams;
 import io.swagger.annotations.ApiOperation;
-import lombok.RequiredArgsConstructor;
 import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
@@ -72,7 +71,7 @@ public class SysUserController {
     public Result<PageData<SysUserDTO>> page(@ApiIgnore @RequestParam Map<String, Object> params) {
         PageData<SysUserDTO> page = sysUserService.page(params);
 
-        return new Result<PageData<SysUserDTO>>().ok(page);
+        return Result.ok(page);
     }
 
     @GetMapping("{id}")
@@ -85,20 +84,20 @@ public class SysUserController {
         List<Long> roleIdList = sysRoleUserService.getRoleIdList(id);
         data.setRoleIdList(roleIdList);
 
-        return new Result<SysUserDTO>().ok(data);
+        return Result.ok(data);
     }
 
     @GetMapping("info")
     @ApiOperation("登录用户信息")
     public Result<SysUserDTO> info() {
         SysUserDTO data = ConvertUtils.sourceToTarget(SecurityUser.getUser(), SysUserDTO.class);
-        return new Result<SysUserDTO>().ok(data);
+        return Result.ok(data);
     }
 
     @PutMapping("password")
     @ApiOperation("修改密码")
     @LogOperation("修改密码")
-    public Result password(@RequestBody PasswordDTO dto) {
+    public Result<?> password(@RequestBody PasswordDTO dto) {
         //效验数据
         ValidatorUtils.validateEntity(dto);
 
@@ -111,44 +110,44 @@ public class SysUserController {
 
         sysUserService.updatePassword(user.getId(), dto.getNewPassword());
 
-        return new Result();
+        return Result.ok();
     }
 
     @PostMapping
     @ApiOperation("保存")
     @LogOperation("保存")
     @RequiresPermissions("sys:user:save")
-    public Result save(@RequestBody SysUserDTO dto) {
+    public Result<?> save(@RequestBody SysUserDTO dto) {
         //效验数据
         ValidatorUtils.validateEntity(dto, AddGroup.class, DefaultGroup.class);
 
         sysUserService.save(dto);
 
-        return new Result();
+        return Result.ok();
     }
 
     @PutMapping
     @ApiOperation("修改")
     @LogOperation("修改")
     @RequiresPermissions("sys:user:update")
-    public Result update(@RequestBody SysUserDTO dto) {
+    public Result<?> update(@RequestBody SysUserDTO dto) {
         //效验数据
         ValidatorUtils.validateEntity(dto, UpdateGroup.class, DefaultGroup.class);
 
         sysUserService.update(dto);
 
-        return new Result();
+        return Result.ok();
     }
 
     @DeleteMapping
     @ApiOperation("删除")
     @LogOperation("删除")
     @RequiresPermissions("sys:user:delete")
-    public Result delete(@RequestBody Long[] ids) {
+    public Result<?> delete(@RequestBody Long[] ids) {
         //效验数据
         AssertUtils.isArrayEmpty(ids, "id");
         sysUserService.removeByIds(Arrays.asList(ids));
-        return new Result();
+        return Result.ok();
     }
 
     @GetMapping("export")
