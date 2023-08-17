@@ -9,8 +9,8 @@
 package com.zp.sys.service;
 
 import com.mybatisflex.core.service.IService;
-import com.zp.sys.dto.SysDeptDTO;
-import com.zp.sys.entity.SysDeptEntity;
+import com.zp.sys.model.dto.SysDeptDTO;
+import com.zp.sys.model.entity.SysDeptEntity;
 
 import java.util.List;
 import java.util.Map;

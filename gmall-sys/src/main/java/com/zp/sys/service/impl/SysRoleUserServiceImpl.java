@@ -4,7 +4,7 @@ package com.zp.sys.service.impl;
 
 import cn.hutool.core.collection.CollUtil;
 import com.zp.common.service.impl.FlexBaseServiceImpl;
-import com.zp.sys.entity.SysRoleUserEntity;
+import com.zp.sys.model.entity.SysRoleUserEntity;
 import com.zp.sys.mapper.SysRoleUserMapper;
 import com.zp.sys.service.SysRoleUserService;
 import org.springframework.stereotype.Service;

@@ -10,8 +10,8 @@ package com.zp.sys.service.impl;
 
 import com.zp.common.service.impl.FlexBaseServiceImpl;
 import com.zp.common.utils.ConvertUtils;
-import com.zp.sys.dto.SysDictDataDTO;
-import com.zp.sys.entity.SysDictDataEntity;
+import com.zp.sys.model.dto.SysDictDataDTO;
+import com.zp.sys.model.entity.SysDictDataEntity;
 import com.zp.sys.mapper.SysDictDataMapper;
 import com.zp.sys.service.SysDictDataService;
 import org.springframework.stereotype.Service;

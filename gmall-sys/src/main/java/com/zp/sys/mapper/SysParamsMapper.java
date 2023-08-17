@@ -9,7 +9,7 @@
 package com.zp.sys.mapper;
 
 import com.mybatisflex.core.BaseMapper;
-import com.zp.sys.entity.SysParamsEntity;
+import com.zp.sys.model.entity.SysParamsEntity;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
 

@@ -10,7 +10,7 @@ package com.zp.sys.service.impl;
 
 import cn.hutool.core.collection.CollUtil;
 import com.mybatisflex.spring.service.impl.ServiceImpl;
-import com.zp.sys.entity.SysRoleDataScopeEntity;
+import com.zp.sys.model.entity.SysRoleDataScopeEntity;
 import com.zp.sys.mapper.SysRoleDataScopeMapper;
 import com.zp.sys.service.SysRoleDataScopeService;
 import org.springframework.stereotype.Service;

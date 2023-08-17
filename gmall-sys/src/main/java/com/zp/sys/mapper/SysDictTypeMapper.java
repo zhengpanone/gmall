@@ -9,8 +9,8 @@
 package com.zp.sys.mapper;
 
 import com.mybatisflex.core.BaseMapper;
-import com.zp.sys.entity.DictType;
-import com.zp.sys.entity.SysDictTypeEntity;
+import com.zp.sys.model.entity.DictType;
+import com.zp.sys.model.entity.SysDictTypeEntity;
 import org.apache.ibatis.annotations.Mapper;
 
 import java.util.List;

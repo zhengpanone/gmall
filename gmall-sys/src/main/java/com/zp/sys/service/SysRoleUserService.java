@@ -9,7 +9,7 @@
 package com.zp.sys.service;
 
 import com.mybatisflex.core.service.IService;
-import com.zp.sys.entity.SysRoleUserEntity;
+import com.zp.sys.model.entity.SysRoleUserEntity;
 
 import java.util.List;
 

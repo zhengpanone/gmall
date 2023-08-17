@@ -8,13 +8,9 @@
 
 package com.zp.sys.service;
 
-import com.mybatisflex.core.paginate.Page;
 import com.mybatisflex.core.service.IService;
-import com.zp.common.page.PageData;
-import com.zp.sys.dto.SysDictDataDTO;
-import com.zp.sys.entity.SysDictDataEntity;
-
-import java.util.Map;
+import com.zp.sys.model.dto.SysDictDataDTO;
+import com.zp.sys.model.entity.SysDictDataEntity;
 
 /**
  * 数据字典

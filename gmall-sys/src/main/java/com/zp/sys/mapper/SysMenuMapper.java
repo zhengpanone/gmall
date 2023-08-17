@@ -9,7 +9,7 @@
 package com.zp.sys.mapper;
 
 import com.mybatisflex.core.BaseMapper;
-import com.zp.sys.entity.SysMenuEntity;
+import com.zp.sys.model.entity.SysMenuEntity;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
 

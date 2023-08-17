@@ -9,7 +9,7 @@
 package com.zp.sys.mapper;
 
 import com.mybatisflex.core.BaseMapper;
-import com.zp.sys.entity.SysRoleEntity;
+import com.zp.sys.model.entity.SysRoleEntity;
 import org.apache.ibatis.annotations.Mapper;
 
 /**

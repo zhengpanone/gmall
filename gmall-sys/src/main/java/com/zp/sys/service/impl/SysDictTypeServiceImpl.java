@@ -10,10 +10,10 @@ package com.zp.sys.service.impl;
 
 import com.zp.common.service.impl.FlexBaseServiceImpl;
 import com.zp.common.utils.ConvertUtils;
-import com.zp.sys.dto.SysDictTypeDTO;
-import com.zp.sys.entity.DictData;
-import com.zp.sys.entity.DictType;
-import com.zp.sys.entity.SysDictTypeEntity;
+import com.zp.sys.model.dto.SysDictTypeDTO;
+import com.zp.sys.model.entity.DictData;
+import com.zp.sys.model.entity.DictType;
+import com.zp.sys.model.entity.SysDictTypeEntity;
 import com.zp.sys.mapper.SysDictDataMapper;
 import com.zp.sys.mapper.SysDictTypeMapper;
 import com.zp.sys.service.SysDictTypeService;

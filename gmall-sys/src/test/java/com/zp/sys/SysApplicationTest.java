@@ -1,6 +1,6 @@
 package com.zp.sys;
 
-import com.zp.sys.entity.SysUserEntity;
+import com.zp.sys.model.entity.SysUserEntity;
 import com.zp.sys.mapper.SysUserMapper;
 import org.junit.Test;
 import org.junit.runner.RunWith;

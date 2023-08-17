@@ -10,8 +10,8 @@ package com.zp.sys.service;
 
 import com.mybatisflex.core.service.IService;
 import com.zp.common.security.user.UserDetail;
-import com.zp.sys.dto.SysMenuDTO;
-import com.zp.sys.entity.SysMenuEntity;
+import com.zp.sys.model.dto.SysMenuDTO;
+import com.zp.sys.model.entity.SysMenuEntity;
 
 import java.util.List;
 

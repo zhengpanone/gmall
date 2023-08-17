@@ -10,8 +10,8 @@ package com.zp.sys.service;
 
 import com.mybatisflex.core.service.IService;
 import com.zp.common.page.PageData;
-import com.zp.sys.dto.SysUserDTO;
-import com.zp.sys.entity.SysUserEntity;
+import com.zp.sys.model.dto.SysUserDTO;
+import com.zp.sys.model.entity.SysUserEntity;
 
 import java.util.List;
 import java.util.Map;

@@ -9,13 +9,11 @@
 package com.zp.sys.service;
 
 import com.mybatisflex.core.service.IService;
-import com.zp.common.page.PageData;
-import com.zp.sys.dto.SysDictTypeDTO;
-import com.zp.sys.entity.DictType;
-import com.zp.sys.entity.SysDictTypeEntity;
+import com.zp.sys.model.dto.SysDictTypeDTO;
+import com.zp.sys.model.entity.DictType;
+import com.zp.sys.model.entity.SysDictTypeEntity;
 
 import java.util.List;
-import java.util.Map;
 
 /**
  * 数据字典

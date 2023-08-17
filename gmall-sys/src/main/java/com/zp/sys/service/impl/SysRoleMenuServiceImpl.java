@@ -10,7 +10,7 @@ package com.zp.sys.service.impl;
 
 import cn.hutool.core.collection.CollUtil;
 import com.mybatisflex.spring.service.impl.ServiceImpl;
-import com.zp.sys.entity.SysRoleMenuEntity;
+import com.zp.sys.model.entity.SysRoleMenuEntity;
 import com.zp.sys.mapper.SysRoleMenuMapper;
 import com.zp.sys.service.SysRoleMenuService;
 import org.springframework.stereotype.Service;

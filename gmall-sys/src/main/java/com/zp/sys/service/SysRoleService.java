@@ -11,8 +11,8 @@ package com.zp.sys.service;
 
 import com.mybatisflex.core.service.IService;
 import com.zp.common.page.PageData;
-import com.zp.sys.dto.SysRoleDTO;
-import com.zp.sys.entity.SysRoleEntity;
+import com.zp.sys.model.dto.SysRoleDTO;
+import com.zp.sys.model.entity.SysRoleEntity;
 
 import java.util.List;
 import java.util.Map;
