@@ -1,5 +1,6 @@
 package com.zp.sys.model.entity;
 
+import com.mybatisflex.annotation.Column;
 import com.mybatisflex.annotation.Table;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
@@ -62,7 +63,7 @@ public class SysUserEntity extends BaseEntity {
     /**
      * 更新时间
      */
-
+    @Column(onUpdateValue = "now()")
     private Date updateDate;
     /**
      * 部门名称
