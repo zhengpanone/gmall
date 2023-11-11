@@ -1,73 +1,110 @@
 package com.zp.common.utils;
 
 
-import com.zp.common.validator.AssertUtils;
+import com.zp.common.utils.tree.ITreeNode;
+import org.apache.commons.collections.CollectionUtils;
+import org.apache.commons.lang3.StringUtils;
+import org.jetbrains.annotations.NotNull;
 
-import java.util.ArrayList;
-import java.util.LinkedHashMap;
-import java.util.List;
-import java.util.Map;
+import java.text.Collator;
+import java.util.*;
 
 /**
  * 树形结构工具类，如：菜单、部门等
  *
- * @author Mark sunlightcs@gmail.com
+ * @author zhengpanone
  * @since 1.0.0
  */
 public class TreeUtils {
 
     /**
-     * 根据pid，构建树节点
+     * 构建树节点
      */
-    public static <T extends TreeNode> List<T> build(List<T> treeNodes, Long pid) {
-        //pid不能为空
-        AssertUtils.isNull(pid, "pid");
-
-        List<T> treeList = new ArrayList<>();
-        for (T treeNode : treeNodes) {
-            if (pid.equals(treeNode.getPid())) {
-                treeList.add(findChildren(treeNodes, treeNode));
-            }
-        }
-
-        return treeList;
-    }
-
-    /**
-     * 查找子节点
-     */
-    private static <T extends TreeNode> T findChildren(List<T> treeNodes, T rootNode) {
-        for (T treeNode : treeNodes) {
-            if (rootNode.getId().equals(treeNode.getPid())) {
-                rootNode.getChildren().add(findChildren(treeNodes, treeNode));
-            }
-        }
-        return rootNode;
+    public static <T extends ITreeNode> List<T> toTree(Collection<T> source) {
+        return toTree(source, false);
     }
 
     /**
      * 构建树节点
      */
-    public static <T extends TreeNode> List<T> build(List<T> treeNodes) {
-        List<T> result = new ArrayList<>();
-
-        //list转map
-        Map<Long, T> nodeMap = new LinkedHashMap<>(treeNodes.size());
-        for (T treeNode : treeNodes) {
-            nodeMap.put(treeNode.getId(), treeNode);
-        }
-
-        for (T node : nodeMap.values()) {
-            T parent = nodeMap.get(node.getPid());
-            if (parent != null && !(node.getId().equals(parent.getId()))) {
-                parent.getChildren().add(node);
-                continue;
-            }
-
-            result.add(node);
-        }
-
-        return result;
+    public static <T extends ITreeNode> List<T> toTree(Collection<T> source, boolean sortEnabled) {
+        return toTree(source, sortEnabled, false);
     }
 
+    /**
+     * 构建树节点
+     */
+    public static <T extends ITreeNode> List<T> toTree(Collection<T> source, boolean sortEnabled, boolean childrenEmptyToNull) {
+        if (CollectionUtils.isEmpty(source)) {
+            return Collections.emptyList();
+        } else {
+            List<T> resultTree = new ArrayList<>();
+            List<T> roots = findRootNode(source);
+            for (T root : roots) {
+                root.setChildren(buildChildren(source, root.getTreeNodeId(), sortEnabled, childrenEmptyToNull));
+                resultTree.add(root);
+            }
+            if (sortEnabled) {
+                resultTree.sort((o1, o2) -> Collator.getInstance(Locale.CHINA).compare(o1.getTreeNodeName(), o2.getTreeNodeName()));
+            }
+            return resultTree;
+        }
+    }
+
+    public static <T extends ITreeNode> List<T> findRootNode(@NotNull Collection<T> nodes) {
+        List<T> roots = new ArrayList<>();
+        Iterator<T> iterator = nodes.iterator();
+        while (true) {
+            while (iterator.hasNext()) {
+                T node = iterator.next();
+                boolean hasParent = false;
+                if (!StringUtils.isEmpty(node.getTreeNodeParent()) && !"0".equals(node.getTreeNodeParent())) {
+                    for (T parent : nodes) {
+                        if (node.getTreeNodeParent().equals(parent.getTreeNodeId())) {
+                            hasParent = true;
+                            break;
+                        }
+
+                    }
+                    if (!hasParent) {
+                        roots.add(node);
+                    }
+
+                } else {
+                    roots.add(node);
+                }
+
+            }
+            return roots;
+        }
+
+
+    }
+
+
+    public static <T extends ITreeNode> Collection<T> buildChildren(Collection<T> nodes, String parentId, boolean childrenEmptyToNull) {
+        return buildChildren(nodes, parentId, true, childrenEmptyToNull);
+    }
+
+    public static <T extends ITreeNode> Collection<T> buildChildren(Collection<T> nodes, String parentId, boolean sortEnable, boolean childrenEmptyToNull) {
+        if (CollectionUtils.isEmpty(nodes)) {
+            return Collections.EMPTY_SET;
+        } else {
+            Set<T> childrenNodes = sortEnable ? new TreeSet<>((Comparator<ITreeNode>) (o1, o2) -> Collator.getInstance(Locale.CHINA).compare(o1.getTreeNodeName(), o2.getTreeNodeName())) : new LinkedHashSet<>();
+            for (T node : nodes) {
+                if (!StringUtils.isEmpty(parentId) && parentId.equals(node.getTreeNodeParent())) {
+                    node.setChildren(buildChildren(nodes, node.getTreeNodeId(), sortEnable, childrenEmptyToNull));
+                    childrenNodes.add(node);
+                }
+
+            }
+            if (childrenEmptyToNull && CollectionUtils.isEmpty(childrenNodes)) {
+                return null;
+            } else {
+                return childrenNodes;
+            }
+
+
+        }
+    }
 }
