@@ -1,0 +1,2 @@
+com.zp.framework.security.config.GmallSecurityAutoConfiguration
+com.zp.framework.security.config.GmallWebSecurityConfigurerAdapter

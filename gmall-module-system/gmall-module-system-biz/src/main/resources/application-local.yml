@@ -1,0 +1,3 @@
+gmall:
+  security:
+    mock-enabled: true

@@ -1,0 +1,4 @@
+com.zp.framework.web.config.GmallWebAutoConfiguration
+com.zp.framework.apilog.config.GmallApiLogAutoConfiguration
+com.zp.framework.apilog.config.GmallApiLogRpcAutoConfiguration
+com.zp.framework.swagger.config.GmallSwaggerAutoConfiguration

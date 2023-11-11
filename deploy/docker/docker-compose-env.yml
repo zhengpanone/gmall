@@ -1,0 +1,75 @@
+version: '3'
+services:
+  mysql:
+    image: mysql:8.0.21
+    container_name: mysql
+    hostname: mysql
+    command: mysqld --character-set-server=utf8mb4 --collation-server=utf8mb4_unicode_ci #设置utf8字符集
+    # # restart: always
+    ports:
+      - "3306:3306"  # host物理直接映射端口为13306
+    environment:
+      MYSQL_ROOT_PASSWORD: 'root' # root管理员用户密码
+      TZ: 'Asia/Shanghai'
+    env_file:
+      - ./env/mysql.env
+    #    entrypoint:
+    #      sh -c "
+    #        echo 'CREATE DATABASE IF NOT EXISTS gmall_sms; CREATE DATABASE IF NOT EXISTS gmall_ums;CREATE DATABASE IF NOT EXISTS nacos;' > /docker-entrypoint-initdb.d/init.sql;
+    #        /usr/local/bin/docker-entrypoint.sh --character-set-server=utf8mb4 --collation-server=utf8mb4_unicode_ci"
+
+    volumes:
+      - /mydata/mysql/data:/var/lib/mysql # 数据文件挂载
+      - ./mysql/init:/docker-entrypoint-initdb.d/
+      - ./mysql/sql:/opt/sql
+    #     # - /mydata/mysql/mysql-files:/var/lib/mysql-files
+    #     # - /mydata/mysql/conf:/etc/mysql #配置文件挂载
+    #     - /mydata/mysql/log:/var/log/mysql #日志文件挂载
+
+    healthcheck:
+      test: [ "CMD", "mysqladmin" ,"ping", "-h", "localhost" ]
+      interval: 5s
+      timeout: 10s
+      retries: 10
+
+  nacos:
+    hostname: nacos
+    image: nacos/nacos-server:v2.1.2
+    container_name: nacos
+    privileged: true
+    # restart: always
+    networks:
+      - sharefly
+    environment:
+      TZ: Asia/Shanghai
+      MODE: standalone
+      PREFER_HOST_MODE: hostname #如果支持主机名可以使用hostname,否则使用ip，默认也是ip
+      SPRING_DATASOURCE_PLATFORM: mysql #数据源平台 仅支持mysql或不保存empty
+      MYSQL_SERVICE_HOST: mysql
+      MYSQL_SERVICE_DB_NAME: nacos
+      MYSQL_SERVICE_PORT: 3306
+      MYSQL_SERVICE_USER: root
+      MYSQL_SERVICE_PASSWORD: root
+      MYSQL_DATABASE_NUM: 1
+      NACOS_APPLICATION_PORT: 8848
+      MYSQL_SERVICE_DB_PARAM: characterEncoding=utf8&connectTimeout=10000&socketTimeout=3000&autoReconnect=true&useSSL=false&serverTimezone=UTC
+      NACOS_AUTH_TOKEN: 15baf51c4de4f206e9dece30afe5208a4095d5f7f6b17b80d1b0990ea934ba7e56a6dbfc3e93b1b89ae0359f55ca22c41ed4508f1444864ee803d46d412fe63b
+    volumes:
+      - /opt/dockerstore/nacos/logs:/home/nacos/logs
+      - /opt/dockerstore/nacos/plugins:/home/nacos/plugins
+      - /opt/dockerstore/nacos/conf:/home/nacos/conf
+
+    ports:
+      - "8848:8848"
+      - "9848:9848"
+  redis:
+    image: redis:7
+    container_name: redis
+    command: redis-server --appendonly yes
+    volumes:
+      - /mydata/redis/data/:/data # 数据文件挂载
+    ports:
+      - "6379:6379"
+networks:
+  sharefly:
+    external: true

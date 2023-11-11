@@ -1,0 +1,58 @@
+package com.zp.gateway.filter.grey;
+
+import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
+import org.aspectj.weaver.ast.Var;
+import org.springframework.beans.factory.ObjectProvider;
+import org.springframework.cloud.client.ServiceInstance;
+import org.springframework.cloud.client.loadbalancer.Request;
+import org.springframework.cloud.client.loadbalancer.RequestDataContext;
+import org.springframework.cloud.client.loadbalancer.Response;
+import org.springframework.cloud.loadbalancer.core.NoopServiceInstanceListSupplier;
+import org.springframework.cloud.loadbalancer.core.ReactorServiceInstanceLoadBalancer;
+import org.springframework.cloud.loadbalancer.core.ServiceInstanceListSupplier;
+import org.springframework.http.HttpHeaders;
+import reactor.core.publisher.Mono;
+
+import java.util.List;
+
+/**
+ * Author : zhengpanone
+ * Date : 2023/12/3 21:00
+ * Version : v1.0.0
+ * Description: 灰度{@link GrayLoadBalancer} 实现类
+ * 根据请求的 header[version] 匹配，筛选满足 metadata[version] 相等的服务实例列表，然后随机 + 权重进行选择一个
+ * 1. 假如请求的 header[version] 为空，则不进行筛选，所有服务实例都进行选择
+ * 2. 如果 metadata[version] 都不相等，则不进行筛选，所有服务实例都进行选择
+ * <p>
+ * 注意，考虑到实现的简易，它的权重是使用 Nacos 的 nacos.weight，所以随机 + 权重也是基于 {@link com.alibaba.cloud.nacos.balancer.NacosBalancer} 筛选。
+ * 也就是说，如果你不使用 Nacos 作为注册中心，需要微调一下筛选的实现逻辑
+ */
+@RequiredArgsConstructor
+@Slf4j
+public class GrayLoadBalancer implements ReactorServiceInstanceLoadBalancer {
+    private static final String VERSION = "version";
+
+    /**
+     * 用于获取 serviceId 对应的服务实例的列表
+     */
+    private final ObjectProvider<ServiceInstanceListSupplier> serviceInstanceListSupplierProvider;
+    /**
+     * 需要获取的服务实例名
+     * 暂时用于打印 logger 日志
+     */
+    private final String serviceId;
+
+    @Override
+    public Mono<Response<ServiceInstance>> choose(Request request) {
+        // 获得HttpHeaders属性，实现从header中获取version
+        HttpHeaders headers = ((RequestDataContext) request.getContext()).getClientRequest().getHeaders();
+        // 选择实例
+        ServiceInstanceListSupplier supplier = serviceInstanceListSupplierProvider.getIfAvailable(NoopServiceInstanceListSupplier::new);
+        return supplier.get(request).next().map(list -> getInstanceResponse(list, headers));
+    }
+
+    private Response<ServiceInstance> getInstanceResponse(List<ServiceInstance> instances, HttpHeaders headers) {
+        return null;
+    }
+}

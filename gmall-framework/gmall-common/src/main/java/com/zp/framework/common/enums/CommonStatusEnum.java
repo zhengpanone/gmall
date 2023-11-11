@@ -1,0 +1,47 @@
+package com.zp.framework.common.enums;
+
+import cn.hutool.core.util.ObjUtil;
+import com.zp.framework.common.core.IntArrayValuable;
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+
+import java.util.Arrays;
+
+/**
+ * Author : zhengpanone
+ * Date : 2023/12/20 17:20
+ * Version : v1.0.0
+ * Description: 通用状态枚举
+ */
+@Getter
+@AllArgsConstructor
+public enum CommonStatusEnum implements IntArrayValuable {
+    ENABLE(0, "开启"),
+    DISABLE(1, "关闭");
+
+    public static final int[] ARRAYS = Arrays.stream(values()).mapToInt(CommonStatusEnum::getStatus).toArray();
+    /**
+     * 状态值
+     */
+    private final Integer status;
+    /**
+     * 状态名
+     */
+    private final String name;
+
+    /**
+     * @return int数组
+     */
+    @Override
+    public int[] array() {
+        return ARRAYS;
+    }
+
+    public static boolean isEnabled(Integer status) {
+        return ObjUtil.equal(ENABLE.status, status);
+    }
+
+    public static boolean isDisable(Integer status) {
+        return ObjUtil.equal(DISABLE.status, status);
+    }
+}
