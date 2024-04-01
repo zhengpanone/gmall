@@ -52,9 +52,9 @@
             <groupId>org.springframework.cloud</groupId>
             <artifactId>spring-cloud-starter-gateway</artifactId>
         </dependency>
-
+        <!-- 接口文档 -->
         <dependency>
-            <groupId>com.github.xiaoymin</groupId> <!-- 接口文档 -->
+            <groupId>com.github.xiaoymin</groupId>
             <artifactId>knife4j-gateway-spring-boot-starter</artifactId>
         </dependency>
 

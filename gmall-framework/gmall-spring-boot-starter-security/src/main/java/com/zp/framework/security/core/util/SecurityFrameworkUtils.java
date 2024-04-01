@@ -34,4 +34,14 @@ public class SecurityFrameworkUtils {
         }
         return authentication.getPrincipal() instanceof LoginUser ? (LoginUser) authentication.getPrincipal() : null;
     }
+    /**
+     * 获得当前用户的编号，从上下文中
+     *
+     * @return 用户编号
+     */
+    @Nullable
+    public static Long getLoginUserId() {
+        LoginUser loginUser = getLoginUser();
+        return loginUser!=null ? loginUser.getId() : null;
+    }
 }

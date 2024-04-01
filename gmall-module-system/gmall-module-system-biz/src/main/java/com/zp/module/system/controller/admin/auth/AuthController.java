@@ -11,16 +11,12 @@ import jakarta.annotation.Resource;
 import jakarta.validation.Valid;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.validation.annotation.Validated;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 /**
  * Author : zhengpanone
  * Date : 2023/11/11 15:54
  * Version : v1.0.0
- 
  */
 @Tag(name = "管理后台-认证")
 @RestController
@@ -36,5 +32,17 @@ public class AuthController {
     // @OperateLog()
     public Result<AuthLoginVO> login(@RequestBody @Valid AuthLoginDTO authLoginDTO) {
         return Result.ok(authService.login(authLoginDTO));
+    }
+
+    @GetMapping("/test")
+    @Operation(summary = "测试接口")
+    public Result<String> test() {
+        return Result.ok("测试成功");
+    }
+
+    @GetMapping("/test2")
+    @Operation(summary = "测试接口")
+    public Result<String> test2() {
+        return Result.ok("测试成功");
     }
 }

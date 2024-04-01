@@ -1,13 +1,16 @@
 package com.zp.gateway.filter.grey;
 
+import cn.hutool.core.collection.CollUtil;
+import cn.hutool.core.util.StrUtil;
+import com.alibaba.cloud.nacos.balancer.NacosBalancer;
+import com.zp.framework.common.utils.collection.CollectionUtils;
+import com.zp.gateway.util.EnvUtils;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.aspectj.weaver.ast.Var;
 import org.springframework.beans.factory.ObjectProvider;
 import org.springframework.cloud.client.ServiceInstance;
-import org.springframework.cloud.client.loadbalancer.Request;
-import org.springframework.cloud.client.loadbalancer.RequestDataContext;
-import org.springframework.cloud.client.loadbalancer.Response;
+import org.springframework.cloud.client.loadbalancer.*;
 import org.springframework.cloud.loadbalancer.core.NoopServiceInstanceListSupplier;
 import org.springframework.cloud.loadbalancer.core.ReactorServiceInstanceLoadBalancer;
 import org.springframework.cloud.loadbalancer.core.ServiceInstanceListSupplier;
@@ -53,6 +56,55 @@ public class GrayLoadBalancer implements ReactorServiceInstanceLoadBalancer {
     }
 
     private Response<ServiceInstance> getInstanceResponse(List<ServiceInstance> instances, HttpHeaders headers) {
-        return null;
+        // 如果服务实例为空，则直接返回
+        if (CollUtil.isEmpty(instances)) {
+            log.warn("[getInstanceResponse][serviceId({}) 服务实例列表为空]", serviceId);
+            return new EmptyResponse();
+        }
+
+        // 筛选满足 version 条件的实例列表
+        String version = headers.getFirst(VERSION);
+        List<ServiceInstance> chooseInstances;
+        if (StrUtil.isEmpty(version)) {
+            chooseInstances = instances;
+        } else {
+            chooseInstances = CollectionUtils.filterList(instances, instance -> version.equals(instance.getMetadata().get("version")));
+            if (CollUtil.isEmpty(chooseInstances)) {
+                log.warn("[getInstanceResponse][serviceId({}) 没有满足版本({})的服务实例列表，直接使用所有服务实例列表]", serviceId, version);
+                chooseInstances = instances;
+            }
+        }
+
+        // 基于 tag 过滤实例列表
+        chooseInstances = filterTagServiceInstances(chooseInstances, headers);
+
+        // 随机 + 权重获取实例列表 TODO 芋艿：目前直接使用 Nacos 提供的方法，如果替换注册中心，需要重新失败该方法
+        return new DefaultResponse(NacosBalancer.getHostByRandomWeight3(chooseInstances));
+    }
+
+
+    /**
+     * 基于 tag 请求头，过滤匹配 tag 的服务实例列表
+     *
+     * copy from EnvLoadBalancerClient
+     *
+     * @param instances 服务实例列表
+     * @param headers 请求头
+     * @return 服务实例列表
+     */
+    private List<ServiceInstance> filterTagServiceInstances(List<ServiceInstance> instances, HttpHeaders headers) {
+        // 情况一，没有 tag 时，直接返回
+        String tag = EnvUtils.getTag(headers);
+        if (StrUtil.isEmpty(tag)) {
+            return instances;
+        }
+
+        // 情况二，有 tag 时，使用 tag 匹配服务实例
+        List<ServiceInstance> chooseInstances = CollectionUtils.filterList(instances, instance -> tag.equals(EnvUtils.getTag(instance)));
+        if (CollUtil.isEmpty(chooseInstances)) {
+            log.warn("[filterTagServiceInstances][serviceId({}) 没有满足 tag({}) 的服务实例列表，直接使用所有服务实例列表]", serviceId, tag);
+            chooseInstances = instances;
+        }
+        return chooseInstances;
     }
 }

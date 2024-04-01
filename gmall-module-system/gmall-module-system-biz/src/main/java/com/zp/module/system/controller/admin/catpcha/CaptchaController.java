@@ -22,7 +22,7 @@ import org.springframework.web.bind.annotation.RestController;
  * Version : v1.0.0
  * Description: 验证码
  */
-@Tag(name = "管理后天-验证码")
+@Tag(name = "管理后台-验证码")
 @RestController("adminCaptchaController")
 @RequestMapping("/system/captcha")
 public class CaptchaController {

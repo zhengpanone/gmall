@@ -1,6 +1,7 @@
 package com.zp.framework.security.config;
 
 import com.zp.framework.security.core.aop.PreAuthenticatedAspect;
+import com.zp.framework.security.core.handlere.AccessDeniedHandlerImpl;
 import com.zp.framework.security.core.handlere.AuthenticationEntryPointImpl;
 import jakarta.annotation.Resource;
 import org.springframework.boot.autoconfigure.AutoConfiguration;
@@ -10,7 +11,6 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.AuthenticationEntryPoint;
 import org.springframework.security.web.access.AccessDeniedHandler;
-import org.springframework.security.web.access.AccessDeniedHandlerImpl;
 
 /**
  * Author : zhengpanone

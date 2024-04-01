@@ -103,16 +103,23 @@ public class GmallSwaggerAutoConfiguration {
 
     }
 
-    // 分组OpenAPI配置
+    // ========== 分组 OpenAPI 配置 ==========
+    /**
+     * 所有模块的 API 分组
+     */
     @Bean
     public GroupedOpenApi allGroupedOpenApi() {
         return buildGroupedOpenApi("all", "");
     }
 
+    public static GroupedOpenApi buildGroupedOpenApi(String group) {
+        return buildGroupedOpenApi(group, group);
+    }
+
     public static GroupedOpenApi buildGroupedOpenApi(String group, String path) {
         return GroupedOpenApi.builder()
                 .group(group)
-                .pathsToMatch("/admin-api/" + path + "/**", "/app-api/" + path + "**")
+                .pathsToMatch("/admin-api/" + path + "/**", "/app-api/" + path + "/**")
                 .addOperationCustomizer((operation, handlerMethod) ->
                         operation.addParametersItem(buildTenantHeaderParameter())
                                 .addParametersItem(buildSecurityHeaderParameter())
@@ -122,7 +129,7 @@ public class GmallSwaggerAutoConfiguration {
     /**
      * 构建Tenant租户编号请求头参数
      *
-     * @return
+     * @return 多租户参数
      */
     private static Parameter buildTenantHeaderParameter() {
         return new Parameter()

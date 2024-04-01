@@ -11,3 +11,7 @@ server:
 logging:
   file:
     name: ${user.home}/log/${spring.application.name}.log # 日志文件名，全路径
+  level:
+    web: debug
+#    root: debug
+    com.zp: debug

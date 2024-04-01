@@ -7,6 +7,8 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configurers.AuthorizeHttpRequestsConfigurer;
 
+import static org.springframework.security.web.util.matcher.AntPathRequestMatcher.antMatcher;
+
 /**
  * Author : zhengpanone
  * Date : 2023/11/14 20:55
@@ -26,7 +28,7 @@ public class SecurityConfiguration {
                 registry.requestMatchers("/v3/api-docs/**").permitAll() // 元数据
                         .requestMatchers("/swagger-ui.html").permitAll() // Swagger UI
                       ;
-
+                registry.requestMatchers(antMatcher("/admin-api/system/auth/*")).permitAll();
                 // Druid 监控
                 registry.requestMatchers("/druid/**").permitAll();
                 // Spring Boot Actuator 的安全配置
