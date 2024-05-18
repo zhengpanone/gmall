@@ -49,11 +49,11 @@
             <artifactId>gmall-spring-boot-starter-biz-operatelog</artifactId>
             <version>1.0-SNAPSHOT</version>
         </dependency>
-        <dependency>
+        <!-- <dependency>
             <groupId>com.zp</groupId>
             <artifactId>gmall-spring-boot-starter-biz-tenant</artifactId>
             <version>1.0-SNAPSHOT</version>
-        </dependency>
+        </dependency> -->
         <!-- <dependency>
             <groupId>com.zp</groupId>
             <artifactId>gmall-spring-boot-starter-biz-error-code</artifactId>
@@ -71,10 +71,10 @@
             <groupId>com.zp</groupId>
             <artifactId>gmall-spring-boot-starter-mybatis</artifactId>
         </dependency> -->
-        <dependency>
+        <!-- <dependency>
             <groupId>com.baomidou</groupId>
-            <artifactId>mybatis-plus-generator</artifactId> <!-- 代码生成器，使用它解析表结构 -->
-        </dependency>
+            <artifactId>mybatis-plus-generator</artifactId> &lt;!&ndash; 代码生成器，使用它解析表结构 &ndash;&gt;
+        </dependency> -->
 
         <dependency>
             <groupId>com.zp</groupId>
@@ -130,14 +130,16 @@
             <version>1.0-SNAPSHOT</version>
         </dependency> -->
 
+        <!-- 实现代码生成 -->
         <dependency>
             <groupId>org.apache.velocity</groupId>
-            <artifactId>velocity-engine-core</artifactId> <!-- 实现代码生成 -->
+            <artifactId>velocity-engine-core</artifactId>
         </dependency>
 
+        <!-- 实现数据库文档 -->
         <dependency>
             <groupId>cn.smallbun.screw</groupId>
-            <artifactId>screw-core</artifactId> <!-- 实现数据库文档 -->
+            <artifactId>screw-core</artifactId>
         </dependency>
 
         <!-- 监控相关 -->
@@ -147,10 +149,11 @@
             <version>1.0-SNAPSHOT</version>
         </dependency> -->
 
-        <dependency>
+        <!-- 实现 Spring Boot Admin Server 服务端 -->
+        <!-- <dependency>
             <groupId>de.codecentric</groupId>
-            <artifactId>spring-boot-admin-starter-server</artifactId> <!-- 实现 Spring Boot Admin Server 服务端 -->
-        </dependency>
+            <artifactId>spring-boot-admin-starter-server</artifactId>
+        </dependency> -->
 
         <!-- 三方云服务相关 -->
        <!--  <dependency>

@@ -1,7 +1,7 @@
 # gmail
 
 #### Description
-学习尚硅谷谷粒商城
+学习yudao-cloud
 
 启动nacos
 ```shell
