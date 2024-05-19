@@ -1,10 +1,15 @@
 package com.zp.gateway.util;
 
 import cn.hutool.core.map.MapUtil;
+import com.zp.framework.common.utils.json.JsonUtils;
 import com.zp.gateway.filter.security.LoginUser;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.server.reactive.ServerHttpRequest;
 import org.springframework.util.StringUtils;
 import org.springframework.web.server.ServerWebExchange;
+
+import java.net.URLEncoder;
+import java.nio.charset.StandardCharsets;
 
 /**
  * Author : zhengpanone
@@ -14,6 +19,7 @@ import org.springframework.web.server.ServerWebExchange;
  * <p>
  * copy from yudao-spring-boot-starter-security 的 SecurityFrameworkUtils 类
  */
+@Slf4j
 public class SecurityFrameworkUtils {
     private static final String AUTHORIZATION_HEADER = "Authorization";
 
@@ -94,5 +100,22 @@ public class SecurityFrameworkUtils {
      */
     public static Integer getLoginUserType(ServerWebExchange exchange) {
         return MapUtil.getInt(exchange.getAttributes(), LOGIN_USER_TYPE_ATTR);
+    }
+
+    /**
+     * 将 user 并设置到 login-user 的请求头，使用 json 存储值
+     *
+     * @param builder 请求
+     * @param user 用户
+     */
+    public static void setLoginUserHeader(ServerHttpRequest.Builder builder, LoginUser user) {
+        try {
+            String userStr = JsonUtils.toJsonString(user);
+            userStr = URLEncoder.encode(userStr, StandardCharsets.UTF_8); // 编码，避免中文乱码
+            builder.header(LOGIN_USER_HEADER, userStr);
+        } catch (Exception ex) {
+            log.error("[setLoginUserHeader][序列化 user({}) 发生异常]", user, ex);
+            throw ex;
+        }
     }
 }

@@ -1,13 +1,17 @@
 package com.zp.framework.common.utils.servlet;
 
+import cn.hutool.core.util.StrUtil;
 import cn.hutool.extra.servlet.JakartaServletUtil;
 import com.zp.framework.common.utils.json.JsonUtils;
+import jakarta.servlet.ServletRequest;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import org.springframework.http.MediaType;
 import org.springframework.web.context.request.RequestAttributes;
 import org.springframework.web.context.request.RequestContextHolder;
 import org.springframework.web.context.request.ServletRequestAttributes;
+
+import java.util.Map;
 
 /**
  * Author : zhengpanone
@@ -72,5 +76,27 @@ public class ServletUtils {
         return JakartaServletUtil.getClientIP(request);
     }
 
-    // TODO https://gitee.com/zhijiantianya/yudao-cloud/blob/master-boot3/yudao-framework/yudao-common/src/main/java/cn/iocoder/yudao/framework/common/util/servlet/ServletUtils.java
+    public static boolean isJsonRequest(ServletRequest request) {
+        return StrUtil.startWithIgnoreCase(request.getContentType(), MediaType.APPLICATION_JSON_VALUE);
+    }
+
+    public static String getBody(HttpServletRequest request) {
+        // 只有在 json 请求在读取，因为只有 CacheRequestBodyFilter 才会进行缓存，支持重复读取
+        if (isJsonRequest(request)) {
+            return JakartaServletUtil.getBody(request);
+        }
+        return null;
+    }
+
+    public static byte[] getBodyBytes(HttpServletRequest request) {
+        // 只有在 json 请求在读取，因为只有 CacheRequestBodyFilter 才会进行缓存，支持重复读取
+        if (isJsonRequest(request)) {
+            return JakartaServletUtil.getBodyBytes(request);
+        }
+        return null;
+    }
+
+    public static Map<String, String> getParamMap(HttpServletRequest request) {
+        return JakartaServletUtil.getParamMap(request);
+    }
 }

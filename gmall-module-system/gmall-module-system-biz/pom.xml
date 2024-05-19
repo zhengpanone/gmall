@@ -99,10 +99,11 @@
         </dependency>
 
         <!-- DB 相关 -->
-        <!-- <dependency>
+        <dependency>
             <groupId>com.zp</groupId>
             <artifactId>gmall-spring-boot-starter-mybatis</artifactId>
-        </dependency> -->
+            <version>${project.version}</version>
+        </dependency>
 
         <dependency>
             <groupId>com.zp</groupId>

@@ -1,8 +1,10 @@
 package com.zp.gateway.filter.security;
 
 import lombok.Data;
+import lombok.experimental.Accessors;
 
 import java.util.List;
+import java.util.Map;
 
 /**
  * Author : zhengpanone
@@ -12,6 +14,7 @@ import java.util.List;
  * copy from yudao-spring-boot-starter-security 的 LoginUser 类
  */
 @Data
+@Accessors(chain = true)
 public class LoginUser {
     /**
      * 用户编号
@@ -21,6 +24,10 @@ public class LoginUser {
      * 用户类型
      */
     private Integer userType;
+    /**
+     * 额外的用户信息
+     */
+    private Map<String, String> info;
     /**
      * 租户编号
      */

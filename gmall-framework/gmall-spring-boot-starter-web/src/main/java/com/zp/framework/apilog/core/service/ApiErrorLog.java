@@ -71,6 +71,11 @@ public class ApiErrorLog {
     @NotNull(message = "异常发送的类全名不能为空")
     private String exceptionClassName;
     /**
+     * 异常发生的类文件
+     */
+    @NotNull(message = "异常发生的类文件不能为空")
+    private String exceptionFileName;
+    /**
      * 异常发生的方法名
      */
     @NotNull(message = "异常发生的方法名不能为空")

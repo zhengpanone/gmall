@@ -31,7 +31,7 @@ public class CaptchaController {
 
     @PostMapping("/getCaptcha")
     @Operation(summary = "获得验证码")
-    @PermitAll
+    //@PermitAll
     // @OperationLog(enable=false) // 避免Post请求被记录操作日志
     public Result<?> getCaptcha(@RequestBody CaptchaVO data, HttpServletRequest request) {
         assert request.getRemoteHost() != null;

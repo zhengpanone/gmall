@@ -51,7 +51,7 @@ public class JsonUtils {
     }
 
     @SneakyThrows
-    public static byte[] toJsonBytes(Object object) {
+    public static byte[] toJsonByte(Object object) {
         return objectMapper.writeValueAsBytes(object);
     }
 
