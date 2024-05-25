@@ -23,11 +23,11 @@
         </dependency>
 
         <!-- Web 相关 -->
-        <dependency>
+        <!-- <dependency>
             <groupId>com.zp</groupId>
             <artifactId>gmall-spring-boot-starter-security</artifactId>
             <version>${project.version}</version>
-        </dependency>
+        </dependency> -->
 
         <!-- DB 相关 -->
         <dependency>

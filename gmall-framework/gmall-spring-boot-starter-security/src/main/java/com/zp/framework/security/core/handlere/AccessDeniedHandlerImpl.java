@@ -1,7 +1,7 @@
 package com.zp.framework.security.core.handlere;
 
 import com.zp.framework.common.pojo.Result;
-import com.zp.framework.common.utils.servlet.ServletUtils;
+import com.zp.framework.common.util.servlet.ServletUtils;
 import com.zp.framework.security.core.util.SecurityFrameworkUtils;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;

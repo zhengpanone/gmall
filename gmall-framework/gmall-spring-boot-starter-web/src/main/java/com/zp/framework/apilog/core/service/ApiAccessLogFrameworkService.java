@@ -1,11 +1,19 @@
 package com.zp.framework.apilog.core.service;
 
+import com.zp.module.infra.api.logger.dto.ApiAccessLogCreateReqDTO;
+
 /**
- * Author : zhengpanone
- * Date : 2023/11/14 22:17
- * Version : v1.0.0
- * Description: API访问日志Framework Service接口
+ * API 访问日志 Framework Service 接口
+ *
+ * @author 芋道源码
  */
 public interface ApiAccessLogFrameworkService {
-    void createApiAccessLog(ApiAccessLog apiAccessLog);
+
+    /**
+     * 创建 API 访问日志
+     *
+     * @param reqDTO API 访问日志
+     */
+    void createApiAccessLog(ApiAccessLogCreateReqDTO reqDTO);
+
 }

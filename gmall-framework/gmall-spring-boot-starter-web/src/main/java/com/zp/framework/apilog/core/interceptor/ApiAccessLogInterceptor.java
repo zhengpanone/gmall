@@ -1,11 +1,9 @@
 package com.zp.framework.apilog.core.interceptor;
 
-
 import cn.hutool.core.collection.CollUtil;
 import cn.hutool.core.util.StrUtil;
-
-import com.zp.framework.common.utils.servlet.ServletUtils;
-import com.zp.framework.common.utils.spring.SpringUtils;
+import com.zp.framework.common.util.servlet.ServletUtils;
+import com.zp.framework.common.util.spring.SpringUtils;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import lombok.extern.slf4j.Slf4j;

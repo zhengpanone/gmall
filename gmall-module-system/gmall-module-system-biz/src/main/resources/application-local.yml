@@ -32,3 +32,6 @@ spring:
 gmall:
   security:
     mock-enabled: true
+  access-log: # 访问日志的配置项
+    enable: false
+  demo: false # 关闭演示模式

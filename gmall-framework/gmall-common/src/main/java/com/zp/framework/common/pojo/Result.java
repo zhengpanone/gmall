@@ -5,7 +5,7 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.zp.framework.common.enums.ResultEnum;
 import com.zp.framework.common.exception.ErrorCode;
 import com.zp.framework.common.exception.ServiceException;
-import com.zp.framework.common.utils.MessageUtils;
+import com.zp.framework.common.util.MessageUtils;
 import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.AllArgsConstructor;
 import lombok.Data;

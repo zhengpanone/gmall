@@ -1,6 +1,5 @@
 package com.zp.gateway.handler;
 
-
 import com.zp.framework.common.pojo.Result;
 import com.zp.gateway.util.WebFrameworkUtils;
 import lombok.extern.slf4j.Slf4j;
@@ -17,8 +16,8 @@ import reactor.core.publisher.Mono;
 import static com.zp.framework.common.exception.enums.GlobalErrorCodeConstants.INTERNAL_SERVER_ERROR;
 
 /**
- * Gateway 的全局异常处理器，将 Exception 翻译成 CommonResult + 对应的异常编号
- *
+ * Gateway 的全局异常处理器，将 Exception 翻译成 Result + 对应的异常编号
+ * <p>
  * 在功能上，和 yudao-spring-boot-starter-web 的 GlobalExceptionHandler 类是一致的
  *
  * @author 芋道源码
@@ -52,12 +51,11 @@ public class GlobalExceptionHandler implements ErrorWebExceptionHandler {
      * 处理 Spring Cloud Gateway 默认抛出的 ResponseStatusException 异常
      */
     private Result<?> responseStatusExceptionHandler(ServerWebExchange exchange,
-                                                           ResponseStatusException ex) {
+                                                     ResponseStatusException ex) {
         // TODO 芋艿：这里要精细化翻译，默认返回用户是看不懂的
         ServerHttpRequest request = exchange.getRequest();
         log.error("[responseStatusExceptionHandler][uri({}/{}) 发生异常]", request.getURI(), request.getMethod(), ex);
-        // TODO
-        return Result.failed(ex.getStatusCode().hashCode(), ex.getReason());
+        return Result.failed(ex.getStatusCode().value(), ex.getReason());
     }
 
     /**
@@ -65,7 +63,7 @@ public class GlobalExceptionHandler implements ErrorWebExceptionHandler {
      */
     @ExceptionHandler(value = Exception.class)
     public Result<?> defaultExceptionHandler(ServerWebExchange exchange,
-                                                   Throwable ex) {
+                                             Throwable ex) {
         ServerHttpRequest request = exchange.getRequest();
         log.error("[defaultExceptionHandler][uri({}/{}) 发生异常]", request.getURI(), request.getMethod(), ex);
         // TODO 芋艿：是否要插入异常日志呢？

@@ -2,7 +2,7 @@ package com.zp.framework.mybatis.core.type;
 
 import com.baomidou.mybatisplus.extension.handlers.AbstractJsonTypeHandler;
 import com.fasterxml.jackson.core.type.TypeReference;
-import com.zp.framework.common.utils.json.JsonUtils;
+import com.zp.framework.common.util.json.JsonUtils;
 
 import java.util.Set;
 

@@ -1,7 +1,7 @@
 package com.zp.gateway.util;
 
 import cn.hutool.core.map.MapUtil;
-import com.zp.framework.common.utils.json.JsonUtils;
+import com.zp.framework.common.util.json.JsonUtils;
 import com.zp.gateway.filter.security.LoginUser;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.server.reactive.ServerHttpRequest;

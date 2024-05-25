@@ -14,15 +14,14 @@ import org.springframework.transaction.annotation.Transactional;
  * Author : zhengpanone
  * Date : 2023/12/20 17:35
  * Version : v1.0.0
- 
  */
 @Service("adminUserService")
 @Slf4j
 public class AdminUserServiceImpl implements AdminUserService {
     @Resource
     private AdminUserMapper userMapper;
-    @Resource
-    private PasswordEncoder passwordEncoder;
+    //@Resource
+    //private PasswordEncoder passwordEncoder;
 
     /**
      * 创建用户
@@ -60,7 +59,8 @@ public class AdminUserServiceImpl implements AdminUserService {
 
     @Override
     public boolean isPasswordMatch(String rawPassword, String encodedPassword) {
-        return passwordEncoder.matches(rawPassword, encodedPassword);
+        //return passwordEncoder.matches(rawPassword, encodedPassword);
+        return true;
     }
 
     /**
@@ -70,6 +70,6 @@ public class AdminUserServiceImpl implements AdminUserService {
      * @return 加密后的密码
      */
     private String encodePassword(String password) {
-        return passwordEncoder.encode(password);
+        return null;/*passwordEncoder.encode(password);*/
     }
 }

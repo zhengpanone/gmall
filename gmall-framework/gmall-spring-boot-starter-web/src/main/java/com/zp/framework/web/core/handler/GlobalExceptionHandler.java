@@ -3,27 +3,26 @@ package com.zp.framework.web.core.handler;
 import cn.hutool.core.exceptions.ExceptionUtil;
 import cn.hutool.core.map.MapUtil;
 import cn.hutool.core.util.StrUtil;
-import com.zp.framework.apilog.core.service.ApiErrorLog;
+import cn.hutool.extra.servlet.JakartaServletUtil;
 import com.zp.framework.apilog.core.service.ApiErrorLogFrameworkService;
-import com.zp.framework.common.enums.ResultEnum;
 import com.zp.framework.common.exception.ServiceException;
 import com.zp.framework.common.pojo.Result;
-import com.zp.framework.common.utils.json.JsonUtils;
-import com.zp.framework.common.utils.monitor.TracerUtils;
-import com.zp.framework.common.utils.servlet.ServletUtils;
-import com.zp.framework.web.util.WebFrameworkUtils;
+import com.zp.framework.common.util.collection.SetUtils;
+import com.zp.framework.common.util.json.JsonUtils;
+import com.zp.framework.common.util.monitor.TracerUtils;
+import com.zp.framework.common.util.servlet.ServletUtils;
+import com.zp.framework.web.core.util.WebFrameworkUtils;
+import com.zp.module.infra.api.logger.dto.ApiErrorLogCreateReqDTO;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.validation.ConstraintViolation;
 import jakarta.validation.ConstraintViolationException;
 import jakarta.validation.ValidationException;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-
 import org.springframework.security.access.AccessDeniedException;
 import org.springframework.util.Assert;
 import org.springframework.validation.BindException;
 import org.springframework.validation.FieldError;
-
 import org.springframework.web.HttpRequestMethodNotSupportedException;
 import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.MissingServletRequestParameterException;
@@ -34,21 +33,28 @@ import org.springframework.web.servlet.NoHandlerFoundException;
 
 import java.time.LocalDateTime;
 import java.util.Map;
-import java.util.Objects;
+import java.util.Set;
 
 import static com.zp.framework.common.exception.enums.GlobalErrorCodeConstants.*;
 
-
-
 /**
- * 全局异常处理,，将 Exception 翻译成 Result + 对应的异常编号
+ * 全局异常处理器，将 Exception 翻译成 Result + 对应的异常编号
+ *
+ * @author 芋道源码
  */
 @RestControllerAdvice
 @AllArgsConstructor
 @Slf4j
 public class GlobalExceptionHandler {
 
+    /**
+     * 忽略的 ServiceException 错误提示，避免打印过多 logger
+     */
+    public static final Set<String> IGNORE_ERROR_MESSAGES = SetUtils.asSet("无效的刷新令牌");
+
+    @SuppressWarnings("SpringJavaInjectionPointsAutowiringInspection")
     private final String applicationName;
+
     private final ApiErrorLogFrameworkService apiErrorLogFrameworkService;
 
     /**
@@ -56,7 +62,7 @@ public class GlobalExceptionHandler {
      * 因为 Filter 不走 SpringMVC 的流程，但是我们又需要兜底处理异常，所以这里提供一个全量的异常处理过程，保持逻辑统一。
      *
      * @param request 请求
-     * @param ex      异常
+     * @param ex 异常
      * @return 通用返回
      */
     public Result<?> allExceptionHandler(HttpServletRequest request, Throwable ex) {
@@ -95,7 +101,7 @@ public class GlobalExceptionHandler {
 
     /**
      * 处理 SpringMVC 请求参数缺失
-     * <p>
+     *
      * 例如说，接口上设置了 @RequestParam("xx") 参数，结果并未传递 xx 参数
      */
     @ExceptionHandler(value = MissingServletRequestParameterException.class)
@@ -106,7 +112,7 @@ public class GlobalExceptionHandler {
 
     /**
      * 处理 SpringMVC 请求参数类型错误
-     * <p>
+     *
      * 例如说，接口上设置了 @RequestParam("xx") 参数为 Integer，结果传递 xx 参数类型为 String
      */
     @ExceptionHandler(MethodArgumentTypeMismatchException.class)
@@ -132,9 +138,9 @@ public class GlobalExceptionHandler {
     @ExceptionHandler(BindException.class)
     public Result<?> bindExceptionHandler(BindException ex) {
         log.warn("[handleBindException]", ex);
-        FieldError fieldfailed = ex.getFieldError();
-        assert fieldfailed != null; // 断言，避免告警
-        return Result.failed(BAD_REQUEST.code(), String.format("请求参数不正确:%s", fieldfailed.getDefaultMessage()));
+        FieldError fieldError = ex.getFieldError();
+        assert fieldError != null; // 断言，避免告警
+        return Result.failed(BAD_REQUEST.code(), String.format("请求参数不正确:%s", fieldError.getDefaultMessage()));
     }
 
     /**
@@ -159,7 +165,7 @@ public class GlobalExceptionHandler {
 
     /**
      * 处理 SpringMVC 请求地址不存在
-     * <p>
+     *
      * 注意，它需要设置如下两个配置项：
      * 1. spring.mvc.throw-exception-if-no-handler-found 为 true
      * 2. spring.mvc.static-path-pattern 为 /statics/**
@@ -172,7 +178,7 @@ public class GlobalExceptionHandler {
 
     /**
      * 处理 SpringMVC 请求方法不正确
-     * <p>
+     *
      * 例如说，A 接口的方法为 GET 方式，结果请求方法为 POST 方式，导致不匹配
      */
     @ExceptionHandler(HttpRequestMethodNotSupportedException.class)
@@ -182,16 +188,8 @@ public class GlobalExceptionHandler {
     }
 
     /**
-     * 处理 Resilience4j 限流抛出的异常
-     */
-    public Result<?> requestNotPermittedExceptionHandler(HttpServletRequest req, Throwable ex) {
-        log.warn("[requestNotPermittedExceptionHandler][url({}) 访问过于频繁]", req.getRequestURL(), ex);
-        return Result.failed(TOO_MANY_REQUESTS);
-    }
-
-    /**
      * 处理 Spring Security 权限不足的异常
-     * <p>
+     *
      * 来源是，使用 @PreAuthorize 注解，AOP 进行权限拦截
      */
     @ExceptionHandler(value = AccessDeniedException.class)
@@ -203,12 +201,15 @@ public class GlobalExceptionHandler {
 
     /**
      * 处理业务异常 ServiceException
-     * <p>
+     *
      * 例如说，商品库存不足，用户手机号已存在。
      */
     @ExceptionHandler(value = ServiceException.class)
     public Result<?> serviceExceptionHandler(ServiceException ex) {
-        log.info("[serviceExceptionHandler]", ex);
+        if (!IGNORE_ERROR_MESSAGES.contains(ex.getMessage())) {
+            // 不包含的时候，才进行打印，避免 ex 堆栈过多
+            log.info("[serviceExceptionHandler]", ex);
+        }
         return Result.failed(ex.getCode(), ex.getMessage());
     }
 
@@ -223,60 +224,55 @@ public class GlobalExceptionHandler {
             return tableNotExistsResult;
         }
 
-        // 情况二：部分特殊的库的处理
-        if (Objects.equals("io.github.resilience4j.ratelimiter.RequestNotPermitted", ex.getClass().getName())) {
-            return requestNotPermittedExceptionHandler(req, ex);
-        }
-
-        // 情况三：处理异常
+        // 情况二：处理异常
         log.error("[defaultExceptionHandler]", ex);
         // 插入异常日志
-        this.createExceptionLog(req, ex);
-        // 返回 failed Result
+        createExceptionLog(req, ex);
+        // 返回 ERROR Result
         return Result.failed(INTERNAL_SERVER_ERROR.code(), INTERNAL_SERVER_ERROR.message());
     }
 
     private void createExceptionLog(HttpServletRequest req, Throwable e) {
         // 插入错误日志
-        ApiErrorLog errorLog = new ApiErrorLog();
+        ApiErrorLogCreateReqDTO errorLog = new ApiErrorLogCreateReqDTO();
         try {
-            // 初始化 failedLog
-            initExceptionLog(errorLog, req, e);
-            // 执行插入 failedLog
+            // 初始化 errorLog
+            buildExceptionLog(errorLog, req, e);
+            // 执行插入 errorLog
             apiErrorLogFrameworkService.createApiErrorLog(errorLog);
         } catch (Throwable th) {
-            log.error("[createExceptionLog][url({}) log({}) 发生异常]", req.getRequestURI(), JsonUtils.toJsonString(errorLog), th);
+            log.error("[createExceptionLog][url({}) log({}) 发生异常]", req.getRequestURI(),  JsonUtils.toJsonString(errorLog), th);
         }
     }
 
-    private void initExceptionLog(ApiErrorLog failedLog, HttpServletRequest request, Throwable e) {
+    private void buildExceptionLog(ApiErrorLogCreateReqDTO errorLog, HttpServletRequest request, Throwable e) {
         // 处理用户信息
-        failedLog.setUserId(WebFrameworkUtils.getLoginUserId(request));
-        failedLog.setUserType(WebFrameworkUtils.getLoginUserType(request));
+        errorLog.setUserId(WebFrameworkUtils.getLoginUserId(request));
+        errorLog.setUserType(WebFrameworkUtils.getLoginUserType(request));
         // 设置异常字段
-        failedLog.setExceptionName(e.getClass().getName());
-        failedLog.setExceptionMessage(ExceptionUtil.getMessage(e));
-        failedLog.setExceptionRootCauseMessage(ExceptionUtil.getRootCauseMessage(e));
-        failedLog.setExceptionStackTrace(ExceptionUtil.stacktraceToString(e));
+        errorLog.setExceptionName(e.getClass().getName());
+        errorLog.setExceptionMessage(ExceptionUtil.getMessage(e));
+        errorLog.setExceptionRootCauseMessage(ExceptionUtil.getRootCauseMessage(e));
+        errorLog.setExceptionStackTrace(ExceptionUtil.stacktraceToString(e));
         StackTraceElement[] stackTraceElements = e.getStackTrace();
         Assert.notEmpty(stackTraceElements, "异常 stackTraceElements 不能为空");
         StackTraceElement stackTraceElement = stackTraceElements[0];
-        failedLog.setExceptionClassName(stackTraceElement.getClassName());
-        failedLog.setExceptionFileName(stackTraceElement.getFileName());
-        failedLog.setExceptionMethodName(stackTraceElement.getMethodName());
-        failedLog.setExceptionLineNumber(stackTraceElement.getLineNumber());
+        errorLog.setExceptionClassName(stackTraceElement.getClassName());
+        errorLog.setExceptionFileName(stackTraceElement.getFileName());
+        errorLog.setExceptionMethodName(stackTraceElement.getMethodName());
+        errorLog.setExceptionLineNumber(stackTraceElement.getLineNumber());
         // 设置其它字段
-        failedLog.setTraceId(TracerUtils.getTraceId());
-        failedLog.setApplicationName(applicationName);
-        failedLog.setRequestUrl(request.getRequestURI());
+        errorLog.setTraceId(TracerUtils.getTraceId());
+        errorLog.setApplicationName(applicationName);
+        errorLog.setRequestUrl(request.getRequestURI());
         Map<String, Object> requestParams = MapUtil.<String, Object>builder()
-                .put("query", ServletUtils.getParamMap(request))
-                .put("body", ServletUtils.getBody(request)).build();
-        failedLog.setRequestParams(JsonUtils.toJsonString(requestParams));
-        failedLog.setRequestMethod(request.getMethod());
-        failedLog.setUserAgent(ServletUtils.getUserAgent(request));
-        failedLog.setUserIp(ServletUtils.getClientIP(request));
-        failedLog.setExceptionTime(LocalDateTime.now());
+                .put("query", JakartaServletUtil.getParamMap(request))
+                .put("body", JakartaServletUtil.getBody(request)).build();
+        errorLog.setRequestParams(JsonUtils.toJsonString(requestParams));
+        errorLog.setRequestMethod(request.getMethod());
+        errorLog.setUserAgent(ServletUtils.getUserAgent(request));
+        errorLog.setUserIp(JakartaServletUtil.getClientIP(request));
+        errorLog.setExceptionTime(LocalDateTime.now());
     }
 
     /**
@@ -314,7 +310,19 @@ public class GlobalExceptionHandler {
             return Result.failed(NOT_IMPLEMENTED.code(),
                     "[商城系统 yudao-module-mall - 已禁用][参考 https://doc.iocoder.cn/mall/build/ 开启]");
         }
-        // 5. 支付平台
+        // 5. ERP 系统
+        if (message.contains("erp_")) {
+            log.error("[ERP 系统 yudao-module-erp - 表结构未导入][参考 https://doc.iocoder.cn/erp/build/ 开启]");
+            return Result.failed(NOT_IMPLEMENTED.code(),
+                    "[ERP 系统 yudao-module-erp - 表结构未导入][参考 https://doc.iocoder.cn/erp/build/ 开启]");
+        }
+        // 6. CRM 系统
+        if (message.contains("crm_")) {
+            log.error("[CRM 系统 yudao-module-crm - 表结构未导入][参考 https://doc.iocoder.cn/crm/build/ 开启]");
+            return Result.failed(NOT_IMPLEMENTED.code(),
+                    "[CRM 系统 yudao-module-crm - 表结构未导入][参考 https://doc.iocoder.cn/crm/build/ 开启]");
+        }
+        // 7. 支付平台
         if (message.contains("pay_")) {
             log.error("[支付模块 yudao-module-pay - 表结构未导入][参考 https://doc.iocoder.cn/pay/build/ 开启]");
             return Result.failed(NOT_IMPLEMENTED.code(),
@@ -322,4 +330,5 @@ public class GlobalExceptionHandler {
         }
         return null;
     }
+
 }

@@ -1,23 +1,22 @@
 package com.zp.framework.web.config;
 
-import cn.hutool.core.text.AntPathMatcher;
 import com.zp.framework.apilog.core.service.ApiErrorLogFrameworkService;
 import com.zp.framework.common.enums.WebFilterOrderEnum;
 import com.zp.framework.web.core.filter.CacheRequestBodyFilter;
 import com.zp.framework.web.core.filter.DemoFilter;
 import com.zp.framework.web.core.handler.GlobalExceptionHandler;
 import com.zp.framework.web.core.handler.GlobalResponseBodyHandler;
-import com.zp.framework.web.util.WebFrameworkUtils;
-import jakarta.annotation.Resource;
-import jakarta.servlet.Filter;
+import com.zp.framework.web.core.util.WebFrameworkUtils;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.autoconfigure.AutoConfiguration;
+import org.springframework.boot.autoconfigure.condition.ConditionalOnMissingBean;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
 import org.springframework.boot.autoconfigure.web.client.RestTemplateAutoConfiguration;
 import org.springframework.boot.context.properties.EnableConfigurationProperties;
 import org.springframework.boot.web.client.RestTemplateBuilder;
 import org.springframework.boot.web.servlet.FilterRegistrationBean;
 import org.springframework.context.annotation.Bean;
+import org.springframework.util.AntPathMatcher;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.client.RestTemplate;
 import org.springframework.web.cors.CorsConfiguration;
@@ -26,23 +25,20 @@ import org.springframework.web.filter.CorsFilter;
 import org.springframework.web.servlet.config.annotation.PathMatchConfigurer;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 
-/**
- * Author : zhengpanone
- * Date : 2023/11/14 21:51
- * Version : v1.0.0
- * Description:
- */
+import jakarta.annotation.Resource;
+import jakarta.servlet.Filter;
+
 @AutoConfiguration
 @EnableConfigurationProperties(WebProperties.class)
 public class GmallWebAutoConfiguration implements WebMvcConfigurer {
+
     @Resource
     private WebProperties webProperties;
     /**
      * 应用名
      */
-    @Value("${spring.application.name")
+    @Value("${spring.application.name}")
     private String applicationName;
-
 
     @Override
     public void configurePathMatch(PathMatchConfigurer configurer) {
@@ -51,15 +47,15 @@ public class GmallWebAutoConfiguration implements WebMvcConfigurer {
     }
 
     /**
-     * 设置API前缀，仅仅匹配controller包下的
+     * 设置 API 前缀，仅仅匹配 controller 包下的
      *
      * @param configurer 配置
-     * @param api        API配置
+     * @param api        API 配置
      */
     private void configurePathMatch(PathMatchConfigurer configurer, WebProperties.Api api) {
         AntPathMatcher antPathMatcher = new AntPathMatcher(".");
         configurer.addPathPrefix(api.getPrefix(), clazz -> clazz.isAnnotationPresent(RestController.class)
-                && antPathMatcher.match(api.getController(), clazz.getPackage().getName())); // 仅仅匹配controller
+                && antPathMatcher.match(api.getController(), clazz.getPackage().getName())); // 仅仅匹配 controller 包
     }
 
     @Bean
@@ -78,7 +74,6 @@ public class GmallWebAutoConfiguration implements WebMvcConfigurer {
         // 由于 WebFrameworkUtils 需要使用到 webProperties 属性，所以注册为一个 Bean
         return new WebFrameworkUtils(webProperties);
     }
-
 
     // ========== Filter 相关 ==========
 
@@ -111,7 +106,7 @@ public class GmallWebAutoConfiguration implements WebMvcConfigurer {
      * 创建 DemoFilter Bean，演示模式
      */
     @Bean
-    @ConditionalOnProperty(value = "yudao.demo", havingValue = "true")
+    @ConditionalOnProperty(value = "gmall.demo", havingValue = "true")
     public FilterRegistrationBean<DemoFilter> demoFilter() {
         return createFilterBean(new DemoFilter(), WebFilterOrderEnum.DEMO_FILTER);
     }
@@ -128,9 +123,9 @@ public class GmallWebAutoConfiguration implements WebMvcConfigurer {
      * @param restTemplateBuilder {@link RestTemplateAutoConfiguration#restTemplateBuilder}
      */
     @Bean
+    @ConditionalOnMissingBean
     public RestTemplate restTemplate(RestTemplateBuilder restTemplateBuilder) {
         return restTemplateBuilder.build();
     }
+
 }
-
-

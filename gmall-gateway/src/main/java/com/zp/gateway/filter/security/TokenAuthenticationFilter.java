@@ -6,7 +6,7 @@ import com.fasterxml.jackson.core.type.TypeReference;
 import com.google.common.cache.CacheLoader;
 import com.google.common.cache.LoadingCache;
 import com.zp.framework.common.pojo.Result;
-import com.zp.framework.common.utils.json.JsonUtils;
+import com.zp.framework.common.util.json.JsonUtils;
 import com.zp.gateway.util.SecurityFrameworkUtils;
 import com.zp.gateway.util.WebFrameworkUtils;
 import com.zp.module.system.api.oauth2.OAuth2TokenApi;
@@ -25,7 +25,7 @@ import java.time.Duration;
 import java.util.Objects;
 import java.util.function.Function;
 
-import static com.zp.framework.common.utils.cache.CacheUtils.buildAsyncReloadingCache;
+import static com.zp.framework.common.util.cache.CacheUtils.buildAsyncReloadingCache;
 
 import com.zp.framework.common.core.KeyValue;
 

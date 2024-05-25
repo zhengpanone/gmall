@@ -1,7 +1,6 @@
 package com.zp.framework.apilog.core.service.impl;
 
-import cn.hutool.core.bean.BeanUtil;
-import com.zp.framework.apilog.core.service.ApiErrorLog;
+
 import com.zp.framework.apilog.core.service.ApiErrorLogFrameworkService;
 import com.zp.module.infra.api.logger.ApiErrorLogApi;
 import com.zp.module.infra.api.logger.dto.ApiErrorLogCreateReqDTO;
@@ -21,8 +20,7 @@ public class ApiErrorLogFrameworkServiceImpl implements ApiErrorLogFrameworkServ
 
     @Override
     @Async
-    public void createApiErrorLog(ApiErrorLog apiErrorLog) {
-        ApiErrorLogCreateReqDTO reqDTO = BeanUtil.copyProperties(apiErrorLog, ApiErrorLogCreateReqDTO.class);
+    public void createApiErrorLog(ApiErrorLogCreateReqDTO reqDTO) {
         apiErrorLogApi.createApiErrorLog(reqDTO);
     }
 }

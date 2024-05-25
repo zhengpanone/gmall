@@ -5,13 +5,12 @@ import cn.hutool.core.map.MapUtil;
 import cn.hutool.json.JSONUtil;
 
 import com.alibaba.nacos.common.utils.StringUtils;
-import com.zp.framework.common.utils.json.JsonUtils;
+import com.zp.framework.common.util.json.JsonUtils;
 import com.zp.gateway.util.SecurityFrameworkUtils;
 import com.zp.gateway.util.WebFrameworkUtils;
 import jakarta.annotation.Resource;
 import lombok.extern.slf4j.Slf4j;
 import org.reactivestreams.Publisher;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cloud.gateway.filter.GatewayFilterChain;
 import org.springframework.cloud.gateway.filter.GlobalFilter;
 import org.springframework.cloud.gateway.filter.factory.rewrite.CachedBodyOutputMessage;

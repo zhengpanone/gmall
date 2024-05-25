@@ -1,12 +1,14 @@
 package com.zp.framework.common.enums;
 
 /**
- * Author : zhengpanone
- * Date : 2024/1/10 13:38
- * Version : v1.0.0
- * Description: TODO
+ * Web 过滤器顺序的枚举类，保证过滤器按照符合我们的预期
+ *
+ *  考虑到每个 starter 都需要用到该工具类，所以放到 common 模块下的 enum 包下
+ *
+ * @author 芋道源码
  */
 public interface WebFilterOrderEnum {
+
     int CORS_FILTER = Integer.MIN_VALUE;
 
     int TRACE_FILTER = CORS_FILTER + 1;
@@ -17,7 +19,7 @@ public interface WebFilterOrderEnum {
 
     // OrderedRequestContextFilter 默认为 -105，用于国际化上下文等等
 
-    int TENANT_CONTEXT_FILTER = -104; // 需要保证在 ApiAccessLogFilter 前面
+    int TENANT_CONTEXT_FILTER = - 104; // 需要保证在 ApiAccessLogFilter 前面
 
     int API_ACCESS_LOG_FILTER = -103; // 需要保证在 RequestBodyCacheFilter 后面
 
@@ -30,4 +32,5 @@ public interface WebFilterOrderEnum {
     int FLOWABLE_FILTER = -98; // 需要保证在 Spring Security 过滤后面
 
     int DEMO_FILTER = Integer.MAX_VALUE;
+
 }

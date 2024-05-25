@@ -30,8 +30,9 @@ knife4j:
 
 --- #################### 芋道相关配置 ####################
 gmall:
-  security:
-    mock-enabled: true
+  web:
+    admin-ui:
+      url: http://127.0.0.1:8080
   swagger:
     author: zhengpanone
     title: 管理后台

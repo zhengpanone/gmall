@@ -1,7 +1,6 @@
 package com.zp.framework.apilog.core.service.impl;
 
-import cn.hutool.core.bean.BeanUtil;
-import com.zp.framework.apilog.core.service.ApiAccessLog;
+
 import com.zp.framework.apilog.core.service.ApiAccessLogFrameworkService;
 import com.zp.module.infra.api.logger.ApiAccessLogApi;
 import com.zp.module.infra.api.logger.dto.ApiAccessLogCreateReqDTO;
@@ -21,8 +20,7 @@ public class ApiAccessLogFrameworkServiceImpl implements ApiAccessLogFrameworkSe
 
     @Override
     @Async
-    public void createApiAccessLog(ApiAccessLog apiAccessLog) {
-        ApiAccessLogCreateReqDTO reqDTO = BeanUtil.copyProperties(apiAccessLog,ApiAccessLogCreateReqDTO.class);
-        apiAccessLogApi.createApiAccessLog(reqDTO).checkError();
+    public void createApiAccessLog(ApiAccessLogCreateReqDTO reqDTO) {
+        apiAccessLogApi.createApiAccessLog(reqDTO);
     }
 }

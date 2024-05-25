@@ -1,15 +1,19 @@
 package com.zp.framework.apilog.core.service;
 
+import com.zp.module.infra.api.logger.dto.ApiErrorLogCreateReqDTO;
+
 /**
- * Author : zhengpanone
- * Date : 2023/11/16 16:57
- * Version : v1.0.0
- * Description:  API 错误日志 Framework Service 接口
+ * API 错误日志 Framework Service 接口
+ *
+ * @author 芋道源码
  */
 public interface ApiErrorLogFrameworkService {
+
     /**
-     * 创建API错误日志
-     * @param apiErrorLog
+     * 创建 API 错误日志
+     *
+     * @param reqDTO API 错误日志
      */
-    void createApiErrorLog(ApiErrorLog apiErrorLog);
+    void createApiErrorLog(ApiErrorLogCreateReqDTO reqDTO);
+
 }
