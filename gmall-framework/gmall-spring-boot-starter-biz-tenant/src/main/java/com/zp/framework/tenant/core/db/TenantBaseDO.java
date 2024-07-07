@@ -1,4 +1,4 @@
-package com.zp.framework.tenant.db;
+package com.zp.framework.tenant.core.db;
 
 import com.zp.framework.mybatis.core.dataobject.BaseDO;
 import lombok.Data;

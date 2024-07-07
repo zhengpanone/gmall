@@ -3,10 +3,12 @@ package com.zp.framework.security.config;
 import cn.hutool.core.collection.CollUtil;
 import com.google.common.collect.HashMultimap;
 import com.google.common.collect.Multimap;
+import com.zp.framework.security.core.filter.TokenAuthenticationFilter;
 import com.zp.framework.web.config.WebProperties;
 import jakarta.annotation.Resource;
 import jakarta.annotation.security.PermitAll;
 import org.springframework.boot.autoconfigure.AutoConfiguration;
+import org.springframework.boot.autoconfigure.AutoConfigureOrder;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.annotation.Bean;
 import org.springframework.http.HttpMethod;
@@ -21,17 +23,20 @@ import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.web.AuthenticationEntryPoint;
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.access.AccessDeniedHandler;
+import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.method.HandlerMethod;
 import org.springframework.web.servlet.mvc.method.RequestMappingInfo;
 import org.springframework.web.servlet.mvc.method.annotation.RequestMappingHandlerMapping;
+import org.springframework.web.util.pattern.PathPattern;
 
+import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
 import static org.springframework.security.web.util.matcher.AntPathRequestMatcher.antMatcher;
-
+import static com.zp.framework.common.util.collection.CollectionUtils.convertList;
 /**
  * Author : zhengpanone
  * Date : 2024/1/9 15:15
@@ -39,6 +44,7 @@ import static org.springframework.security.web.util.matcher.AntPathRequestMatche
  */
 
 @AutoConfiguration
+@AutoConfigureOrder(-1) // 目的：先于 Spring Security 自动配置，避免一键改包后，org.* 基础包无法生效
 @EnableMethodSecurity(securedEnabled = true)
 public class GmallWebSecurityConfigurerAdapter {
     @Resource
@@ -60,12 +66,13 @@ public class GmallWebSecurityConfigurerAdapter {
     /**
      * Token认证过滤器Bean
      */
-/*    @Resource
-    private TokenAuthenticationFilter authenticationTokenFilter;*/
+    @Resource
+    private TokenAuthenticationFilter authenticationTokenFilter;
 
 
     /**
      * 自定义的权限映射 Bean
+     *
      * @see #filterChain(HttpSecurity)
      */
     @Resource
@@ -125,8 +132,8 @@ public class GmallWebSecurityConfigurerAdapter {
                 // ①：全局共享规则
                 .authorizeHttpRequests(c -> c
                         // 1.1 静态资源，可匿名访问
-                        .requestMatchers(HttpMethod.GET,"/*.html", "/*.css", "/*.js","/doc.html","/favicon.ico","/swagger-resources").permitAll()
-                        .requestMatchers(antMatcher("/webjars/**"),antMatcher("/v2/**"),antMatcher("/v3/**"),antMatcher("/swagger-ui/**")).permitAll()
+                        .requestMatchers(HttpMethod.GET, "/*.html", "/*.css", "/*.js", "/doc.html", "/favicon.ico", "/swagger-resources").permitAll()
+                        .requestMatchers(antMatcher("/webjars/**"), antMatcher("/v2/**"), antMatcher("/v3/**"), antMatcher("/swagger-ui/**")).permitAll()
                         // 1.1 设置 @PermitAll 无需认证
                         .requestMatchers(HttpMethod.GET, permitAllUrls.get(HttpMethod.GET).toArray(new String[0])).permitAll()
                         .requestMatchers(HttpMethod.POST, permitAllUrls.get(HttpMethod.POST).toArray(new String[0])).permitAll()
@@ -145,7 +152,7 @@ public class GmallWebSecurityConfigurerAdapter {
                 .authorizeHttpRequests(c -> c.anyRequest().authenticated());
 
         // 添加 Token Filter
-        // httpSecurity.addFilterBefore(authenticationTokenFilter, UsernamePasswordAuthenticationFilter.class);
+        httpSecurity.addFilterBefore(authenticationTokenFilter, UsernamePasswordAuthenticationFilter.class);
         return httpSecurity.build();
     }
 
@@ -165,13 +172,19 @@ public class GmallWebSecurityConfigurerAdapter {
             if (!handlerMethod.hasMethodAnnotation(PermitAll.class)) {
                 continue;
             }
-            if (entry.getKey().getPatternsCondition() == null) {
+            Set<String> urls = new HashSet<>();
+            if (entry.getKey().getPatternsCondition() != null) {
+                urls.addAll(entry.getKey().getPatternsCondition().getPatterns());
+            }
+            if(entry.getKey().getPathPatternsCondition()!=null){
+                urls.addAll(convertList(entry.getKey().getPathPatternsCondition().getPatterns(), PathPattern::getPatternString));
+            }
+            if(urls.isEmpty()){
                 continue;
             }
-            Set<String> urls = entry.getKey().getPatternsCondition().getPatterns();
             // 特殊：使用 @RequestMapping 注解，并且未写 method 属性，此时认为都需要免登录
             Set<RequestMethod> methods = entry.getKey().getMethodsCondition().getMethods();
-            if (CollUtil.isEmpty(methods)) { //
+            if (CollUtil.isEmpty(methods)) {
                 result.putAll(HttpMethod.GET, urls);
                 result.putAll(HttpMethod.POST, urls);
                 result.putAll(HttpMethod.PUT, urls);

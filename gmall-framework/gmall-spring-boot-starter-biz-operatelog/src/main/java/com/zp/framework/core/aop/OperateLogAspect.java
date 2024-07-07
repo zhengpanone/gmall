@@ -4,7 +4,7 @@ import cn.hutool.core.util.ArrayUtil;
 import com.zp.framework.common.enums.UserTypeEnum;
 import com.zp.framework.core.service.OperateLog;
 import com.zp.framework.core.service.OperateLogFrameworkService;
-import com.zp.framework.web.util.WebFrameworkUtils;
+import com.zp.framework.web.core.util.WebFrameworkUtils;
 import io.swagger.v3.oas.annotations.Operation;
 import jakarta.annotation.Resource;
 import lombok.extern.slf4j.Slf4j;

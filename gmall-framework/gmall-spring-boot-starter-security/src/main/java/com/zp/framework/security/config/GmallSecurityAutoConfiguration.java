@@ -1,8 +1,11 @@
 package com.zp.framework.security.config;
 
 import com.zp.framework.security.core.aop.PreAuthenticatedAspect;
+import com.zp.framework.security.core.filter.TokenAuthenticationFilter;
 import com.zp.framework.security.core.handlere.AccessDeniedHandlerImpl;
 import com.zp.framework.security.core.handlere.AuthenticationEntryPointImpl;
+import com.zp.framework.web.core.handler.GlobalExceptionHandler;
+import com.zp.module.system.api.oauth2.OAuth2TokenApi;
 import jakarta.annotation.Resource;
 import org.springframework.boot.autoconfigure.AutoConfiguration;
 import org.springframework.boot.context.properties.EnableConfigurationProperties;
@@ -50,9 +53,23 @@ public class GmallSecurityAutoConfiguration {
         return new AccessDeniedHandlerImpl();
     }
 
-    // TODO
+    /**
+     * Spring Security 加密器
+     * 考虑到安全性，这里采用 BCryptPasswordEncoder 加密器
+     *
+     * @see <a href="http://stackabuse.com/password-encoding-with-spring-security/">Password Encoding with Spring Security</a>
+     */
+
     @Bean
     public PasswordEncoder passwordEncoder() {
         return new BCryptPasswordEncoder(securityProperties.getPasswordEncoderLength());
+    }
+
+    /**
+     * Token 认证过滤器 Bean
+     */
+    @Bean
+    public TokenAuthenticationFilter authenticationFilter(GlobalExceptionHandler globalExceptionHandler, OAuth2TokenApi oAuth2TokenApi) {
+        return new TokenAuthenticationFilter(securityProperties, globalExceptionHandler, oAuth2TokenApi);
     }
 }

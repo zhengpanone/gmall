@@ -6,7 +6,7 @@ import com.baomidou.mybatisplus.annotation.TableName;
 import com.baomidou.mybatisplus.annotation.KeySequence;
 import com.zp.framework.common.enums.CommonStatusEnum;
 import com.zp.framework.mybatis.core.type.JsonLongSetTypeHandler;
-import com.zp.framework.tenant.db.TenantBaseDO;
+import com.zp.framework.tenant.core.db.TenantBaseDO;
 import com.zp.module.system.enums.common.SexEnum;
 import lombok.*;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;

@@ -3,7 +3,9 @@ package com.zp.framework.security.core;
 import cn.hutool.core.map.MapUtil;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.zp.framework.common.enums.UserTypeEnum;
+import lombok.Builder;
 import lombok.Data;
+import lombok.experimental.Accessors;
 
 import java.util.HashMap;
 import java.util.List;
@@ -16,11 +18,14 @@ import java.util.Map;
  * Description: 登录用户信息
  */
 @Data
+@Accessors(chain = true)
 public class LoginUser {
+    public static final String INFO_KEY_NICKNAME = "nickname";
+    public static final String INFO_KEY_DEPT_ID = "deptId";
     /**
      * 用户编号
      */
-    private Long id;
+    private String id;
     /**
      * 用户类型
      * <p>
@@ -28,9 +33,13 @@ public class LoginUser {
      */
     private Integer userType;
     /**
+     * 额外的用户信息
+     */
+    private Map<String, String> info;
+    /**
      * 租户编号
      */
-    private Long tenantId;
+    private String tenantId;
     /**
      * 授权范围
      */

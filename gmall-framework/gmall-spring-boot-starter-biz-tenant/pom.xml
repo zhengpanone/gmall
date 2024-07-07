@@ -23,11 +23,11 @@
         </dependency>
 
         <!-- Web 相关 -->
-        <!-- <dependency>
+        <dependency>
             <groupId>com.zp</groupId>
             <artifactId>gmall-spring-boot-starter-security</artifactId>
             <version>${project.version}</version>
-        </dependency> -->
+        </dependency>
 
         <!-- DB 相关 -->
         <dependency>
@@ -63,6 +63,21 @@
             <groupId>com.zp</groupId>
             <artifactId>gmall-spring-boot-starter-mq</artifactId>
             <version>${project.version}</version>
+            <optional>true</optional>
+        </dependency>
+        <dependency>
+            <groupId>org.springframework.kafka</groupId>
+            <artifactId>spring-kafka</artifactId>
+            <optional>true</optional>
+        </dependency>
+        <dependency>
+            <groupId>org.springframework.amqp</groupId>
+            <artifactId>spring-rabbit</artifactId>
+            <optional>true</optional>
+        </dependency>
+        <dependency>
+            <groupId>org.apache.rocketmq</groupId>
+            <artifactId>rocketmq-spring-boot-starter</artifactId>
             <optional>true</optional>
         </dependency>
 

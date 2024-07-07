@@ -47,19 +47,19 @@ public class WebFrameworkUtils {
      * @param request 请求
      * @return 租户编号
      */
-    public static Long getTenantId(HttpServletRequest request) {
+    public static String getTenantId(HttpServletRequest request) {
         String tenantId = request.getHeader(HEADER_TENANT_ID);
-        return NumberUtil.isNumber(tenantId) ? Long.valueOf(tenantId) : null;
+        return tenantId;
     }
 
-    public static void setLoginUserId(ServletRequest request, Long userId) {
+    public static void setLoginUserId(ServletRequest request, String userId) {
         request.setAttribute(REQUEST_ATTRIBUTE_LOGIN_USER_ID, userId);
     }
 
     /**
      * 设置用户类型
      *
-     * @param request 请求
+     * @param request  请求
      * @param userType 用户类型
      */
     public static void setLoginUserType(ServletRequest request, Integer userType) {
@@ -154,7 +154,7 @@ public class WebFrameworkUtils {
 
     /**
      * 判断是否为 RPC 请求
-     *
+     * <p>
      * 约定大于配置，只要以 Api 结尾，都认为是 RPC 接口
      *
      * @param className 类名

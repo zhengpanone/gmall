@@ -9,11 +9,10 @@ import com.zp.framework.common.util.servlet.ServletUtils;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.annotation.Resource;
+import jakarta.annotation.security.PermitAll;
 import jakarta.servlet.http.HttpServletRequest;
 import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 /**
  * Author : zhengpanone
@@ -30,16 +29,29 @@ public class CaptchaController {
 
     @PostMapping("/getCaptcha")
     @Operation(summary = "获得验证码")
-    //@PermitAll
-    // @OperationLog(enable=false) // 避免Post请求被记录操作日志
+    @PermitAll
+    //@OperationLog(enable=false) // 避免Post请求被记录操作日志
     public Result<?> getCaptcha(@RequestBody CaptchaVO data, HttpServletRequest request) {
         assert request.getRemoteHost() != null;
         data.setBrowserInfo(getRemoteId(request));
         ResponseModel responseModel = captchaService.get(data);
         if (responseModel == null || !responseModel.isSuccess()) {
-            return Result.failed("获得验证码失败");
+            return Result.failed("获得验证码失败" + responseModel.getRepMsg());
         }
         return Result.ok(responseModel.getRepData());
+    }
+
+    @PostMapping("/checkCaptcha")
+    @Operation(summary = "校验验证码")
+    @PermitAll
+    public Result<?> checkCaptcha(@RequestBody CaptchaVO data, HttpServletRequest request) {
+        data.setBrowserInfo(getRemoteId(request));
+        ResponseModel responseModel = captchaService.check(data);
+        if (responseModel == null || !responseModel.isSuccess()) {
+            return Result.failed("获得验证码失败" + responseModel.getRepMsg());
+        }
+        return Result.ok(responseModel.getRepData());
+
     }
 
     public static String getRemoteId(HttpServletRequest request) {

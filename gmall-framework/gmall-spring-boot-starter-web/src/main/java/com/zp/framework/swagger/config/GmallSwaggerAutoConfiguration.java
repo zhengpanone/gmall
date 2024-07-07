@@ -31,7 +31,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.Optional;
 
-import static com.zp.framework.web.util.WebFrameworkUtils.HEADER_TENANT_ID;
+import static com.zp.framework.web.core.util.WebFrameworkUtils.HEADER_TENANT_ID;
 
 /**
  * Author : zhengpanone
@@ -104,6 +104,7 @@ public class GmallSwaggerAutoConfiguration {
     }
 
     // ========== 分组 OpenAPI 配置 ==========
+
     /**
      * 所有模块的 API 分组
      */

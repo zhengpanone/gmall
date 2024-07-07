@@ -7,6 +7,8 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configurers.AuthorizeHttpRequestsConfigurer;
 
+import static org.springframework.security.web.util.matcher.AntPathRequestMatcher.antMatcher;
+
 /**
  * System 模块的 Security 配置
  */
@@ -28,6 +30,8 @@ public class SecurityConfiguration {
                 // Spring Boot Actuator 的安全配置
                 registry.requestMatchers("/actuator").permitAll()
                         .requestMatchers("/actuator/**").permitAll();
+
+                //registry.requestMatchers(antMatcher("/admin-api/system/captcha/**")).permitAll();
                 // RPC 服务的安全配置
                 registry.requestMatchers(ApiConstants.PREFIX + "/**").permitAll();
             }

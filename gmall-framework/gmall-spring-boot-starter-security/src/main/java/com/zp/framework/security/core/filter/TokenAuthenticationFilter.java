@@ -1,15 +1,22 @@
-/*
+
 package com.zp.framework.security.core.filter;
 
 import cn.hutool.core.util.ObjectUtil;
 import cn.hutool.core.util.StrUtil;
+import com.zp.framework.common.exception.ServiceException;
 import com.zp.framework.common.pojo.Result;
-import com.zp.framework.common.utils.json.JsonUtils;
-import com.zp.framework.common.utils.servlet.ServletUtils;
+
+import com.zp.framework.common.util.json.JsonUtils;
+import com.zp.framework.common.util.servlet.ServletUtils;
+import com.zp.framework.security.config.SecurityProperties;
 import com.zp.framework.security.core.LoginUser;
+import com.zp.framework.security.core.util.SecurityFrameworkUtils;
 import com.zp.framework.web.core.handler.GlobalExceptionHandler;
-import com.zp.framework.web.util.WebFrameworkUtils;
+import com.zp.framework.web.core.util.WebFrameworkUtils;
+import com.zp.module.system.api.oauth2.OAuth2TokenApi;
+import com.zp.module.system.api.oauth2.dto.OAuth2AccessTokenCheckRespDTO;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.security.access.AccessDeniedException;
 import org.springframework.web.filter.OncePerRequestFilter;
 
@@ -17,17 +24,18 @@ import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
+
 import java.io.IOException;
 
-*/
+
 /**
  * Token 过滤器，验证 token 的有效性
  * 验证通过后，获得 {@link LoginUser} 信息，并加入到 Spring Security 上下文
  *
  * @author 芋道源码
- *//*
-
+ */
 @RequiredArgsConstructor
+@Slf4j
 public class TokenAuthenticationFilter extends OncePerRequestFilter {
 
     private final SecurityProperties securityProperties;
@@ -96,17 +104,17 @@ public class TokenAuthenticationFilter extends OncePerRequestFilter {
         }
     }
 
-    */
-/**
+
+    /**
      * 模拟登录用户，方便日常开发调试
-     *
+     * <p>
      * 注意，在线上环境下，一定要关闭该功能！！！
      *
-     * @param request 请求
-     * @param token 模拟的 token，格式为 {@link SecurityProperties#getMockSecret()} + 用户编号
+     * @param request  请求
+     * @param token    模拟的 token，格式为 {@link SecurityProperties#getMockSecret()} + 用户编号
      * @param userType 用户类型
      * @return 模拟的 LoginUser
-     *//*
+     */
 
     private LoginUser mockLoginUser(HttpServletRequest request, String token, Integer userType) {
         if (!securityProperties.getMockEnable()) {
@@ -117,7 +125,7 @@ public class TokenAuthenticationFilter extends OncePerRequestFilter {
             return null;
         }
         // 构建模拟用户
-        Long userId = Long.valueOf(token.substring(securityProperties.getMockSecret().length()));
+        String userId = token.substring(securityProperties.getMockSecret().length());
         return new LoginUser().setId(userId).setUserType(userType)
                 .setTenantId(WebFrameworkUtils.getTenantId(request));
     }
@@ -128,4 +136,4 @@ public class TokenAuthenticationFilter extends OncePerRequestFilter {
     }
 
 }
-*/
+
