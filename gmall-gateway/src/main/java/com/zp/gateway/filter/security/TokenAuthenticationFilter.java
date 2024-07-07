@@ -43,8 +43,7 @@ public class TokenAuthenticationFilter implements GlobalFilter, Ordered {
      * CommonResult<OAuth2AccessTokenCheckRespDTO> 对应的 TypeReference 结果，用于解析 checkToken 的结果
      */
     private static final TypeReference<Result<OAuth2AccessTokenCheckRespDTO>> CHECK_RESULT_TYPE_REFERENCE
-            = new TypeReference<Result<OAuth2AccessTokenCheckRespDTO>>() {
-    };
+            = new TypeReference<>() {};
 
     /**
      * 空的 LoginUser 的结果

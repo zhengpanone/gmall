@@ -54,10 +54,8 @@
         <module>gmall-spring-boot-starter-protection</module>
         <!--
         <module>gmall-spring-boot-starter-biz-sms</module>
-        <module>gmall-spring-boot-starter-biz-tenant</module>
         <module>gmall-spring-boot-starter-biz-data-permission</module>
         <module>gmall-spring-boot-starter-biz-error-code</module>
-
         <module>gmall-spring-boot-starter-websocket</module>
         -->
     </modules>

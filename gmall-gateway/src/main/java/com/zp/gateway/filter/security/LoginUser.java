@@ -19,7 +19,7 @@ public class LoginUser {
     /**
      * 用户编号
      */
-    private Long id;
+    private String id;
     /**
      * 用户类型
      */
@@ -31,7 +31,7 @@ public class LoginUser {
     /**
      * 租户编号
      */
-    private Long tenantId;
+    private String tenantId;
     /**
      * 授权范围
      */

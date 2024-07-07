@@ -4,9 +4,27 @@ spring:
     allow-bean-definition-overriding: true # 允许 Bean 覆盖，例如说 Feign 等会存在重复定义的服务
 
 --- #################### 接口文档配置 ####################
+
+springdoc:
+  api-docs:
+    enabled: true # 1. 是否开启 Swagger 接文档的元数据
+    path: /v3/api-docs
+  swagger-ui:
+    enabled: true # 2.1 是否开启 Swagger 文档的官方 UI 界面
+    path: /swagger-ui.html
+    default-flat-param-object: true # 参见 https://doc.xiaominfo.com/docs/faq/v4/knife4j-parameterobject-flat-param 文档
+
+
 # Spring Data Redis 配置
 spring:
   data:
     redis:
       repositories:
         enabled: false # 项目未使用到 Spring Data Redis 的 Repository，所以直接禁用，保证启动速度
+
+
+--- #################### 芋道相关配置 ####################
+gmall:
+  web:
+    admin-ui:
+      url: http://dashboard.yudao.iocoder.cn # Admin 管理后台 UI 的地址

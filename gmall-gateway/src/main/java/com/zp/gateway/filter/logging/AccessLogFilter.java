@@ -76,18 +76,21 @@ public class AccessLogFilter implements GlobalFilter, Ordered {
         // TODO 芋艿：暂未实现
 
         // 方式三：打印到控制台，方便排查错误
-        Map<String, Object> values = MapUtil.newHashMap(15, true); // 手工拼接，保证排序；15 保证不用扩容
+        // 手工拼接，保证排序；15 保证不用扩容
+        Map<String, Object> values = MapUtil.newHashMap(15, true);
         values.put("userId", gatewayLog.getUserId());
         values.put("userType", gatewayLog.getUserType());
         values.put("routeId", gatewayLog.getRoute() != null ? gatewayLog.getRoute().getId() : null);
         values.put("schema", gatewayLog.getSchema());
         values.put("requestUrl", gatewayLog.getRequestUrl());
         values.put("queryParams", gatewayLog.getQueryParams().toSingleValueMap());
-        values.put("requestBody", JsonUtils.isJSON(gatewayLog.getRequestBody()) ? // 保证 body 的展示好看
+        // 保证 body 的展示好看
+        values.put("requestBody", JsonUtils.isJSON(gatewayLog.getRequestBody()) ?
                 JSONUtil.parse(gatewayLog.getRequestBody()) : gatewayLog.getRequestBody());
         values.put("requestHeaders", JsonUtils.toJsonString(gatewayLog.getRequestHeaders().toSingleValueMap()));
         values.put("userIp", gatewayLog.getUserIp());
-        values.put("responseBody", JsonUtils.isJSON(gatewayLog.getResponseBody()) ? // 保证 body 的展示好看
+        // 保证 body 的展示好看
+        values.put("responseBody", JsonUtils.isJSON(gatewayLog.getResponseBody()) ?
                 JSONUtil.parse(gatewayLog.getResponseBody()) : gatewayLog.getResponseBody());
         values.put("responseHeaders", gatewayLog.getResponseHeaders() != null ?
                 JsonUtils.toJsonString(gatewayLog.getResponseHeaders().toSingleValueMap()) : null);
