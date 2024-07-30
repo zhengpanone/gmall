@@ -32,7 +32,7 @@ public class AdminUserDO extends TenantBaseDO {
      * 用户ID
      */
     @TableId
-    private Long id;
+    private String id;
     /**
      * 用户账号
      */

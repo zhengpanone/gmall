@@ -21,7 +21,7 @@ public class LoginLogCreateDTO {
     private String traceId;
 
     @Schema(description = "用户编号", example = "666")
-    private Long userId;
+    private String userId;
 
     @Schema(description = "用户类型,参见UserTypeEnum枚举", requiredMode = Schema.RequiredMode.REQUIRED, example = "2")
     @NotNull(message = "用户类型不能为空")

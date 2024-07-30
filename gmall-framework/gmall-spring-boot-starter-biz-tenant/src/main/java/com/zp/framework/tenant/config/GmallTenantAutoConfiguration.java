@@ -1,6 +1,9 @@
 package com.zp.framework.tenant.config;
 
+import com.baomidou.mybatisplus.extension.plugins.MybatisPlusInterceptor;
+import com.baomidou.mybatisplus.extension.plugins.inner.TenantLineInnerInterceptor;
 import com.zp.framework.common.enums.WebFilterOrderEnum;
+import com.zp.framework.mybatis.core.MyBatisUtils;
 import com.zp.framework.tenant.core.security.TenantSecurityWebFilter;
 import com.zp.framework.tenant.core.service.TenantFrameworkService;
 import com.zp.framework.tenant.core.service.impl.TenantFrameworkServiceImpl;
@@ -31,6 +34,18 @@ public class GmallTenantAutoConfiguration {
         return new TenantFrameworkServiceImpl(tenantApi);
     }
     // TODO
+
+    // ========== DB ==========
+
+/*    @Bean
+    public TenantLineInnerInterceptor tenantLineInnerInterceptor(TenantProperties properties,
+                                                                 MybatisPlusInterceptor interceptor) {
+        TenantLineInnerInterceptor inner = new TenantLineInnerInterceptor(new TenantDatabaseInterceptor(properties));
+        // 添加到 interceptor 中
+        // 需要加在首个，主要是为了在分页插件前面。这个是 MyBatis Plus 的规定
+        MyBatisUtils.addInterceptor(interceptor, inner, 0);
+        return inner;
+    }*/
 
 
     // ========== WEB ==========

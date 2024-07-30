@@ -48,11 +48,11 @@
         </dependency>
 
         <!-- RPC 远程调用相关 -->
-        <!--  <dependency>
-             <groupId>com.zp</groupId>
-             <artifactId>gmall-spring-boot-starter-rpc</artifactId>
-             <optional>true</optional>
-         </dependency> -->
+        <dependency>
+            <groupId>com.zp</groupId>
+            <artifactId>gmall-spring-boot-starter-rpc</artifactId>
+            <optional>true</optional>
+        </dependency>
 
         <!-- 业务组件 -->
         <dependency>

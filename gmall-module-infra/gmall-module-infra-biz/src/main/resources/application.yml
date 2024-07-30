@@ -25,6 +25,9 @@ spring:
 
 --- #################### 芋道相关配置 ####################
 gmall:
+  info:
+    version: 1.0.0
+    base-package: com.zp.module.infra
   web:
     admin-ui:
       url: http://dashboard.yudao.iocoder.cn # Admin 管理后台 UI 的地址

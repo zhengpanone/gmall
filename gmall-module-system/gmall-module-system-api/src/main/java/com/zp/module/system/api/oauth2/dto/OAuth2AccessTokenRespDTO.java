@@ -20,7 +20,7 @@ public class OAuth2AccessTokenRespDTO implements Serializable {
     private String refreshToken;
 
     @Schema(description = "用户编号", requiredMode = Schema.RequiredMode.REQUIRED, example = "10")
-    private Long userId;
+    private String userId;
 
     @Schema(description = "用户类型，参见 UserTypeEnum 枚举", requiredMode = Schema.RequiredMode.REQUIRED, example = "1" )
     private Integer userType;

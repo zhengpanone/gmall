@@ -87,8 +87,8 @@ public class SecurityFrameworkUtils {
      * @param exchange 请求
      * @return 用户编号
      */
-    public static Long getLoginUserId(ServerWebExchange exchange) {
-        return MapUtil.getLong(exchange.getAttributes(), LOGIN_USER_ID_ATTR);
+    public static String getLoginUserId(ServerWebExchange exchange) {
+        return MapUtil.getStr(exchange.getAttributes(), LOGIN_USER_ID_ATTR);
 
     }
 

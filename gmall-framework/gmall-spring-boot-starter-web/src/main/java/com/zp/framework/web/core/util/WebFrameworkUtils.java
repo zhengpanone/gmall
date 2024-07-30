@@ -73,11 +73,11 @@ public class WebFrameworkUtils {
      * @param request 请求
      * @return 用户编号
      */
-    public static Long getLoginUserId(HttpServletRequest request) {
+    public static String getLoginUserId(HttpServletRequest request) {
         if (request == null) {
             return null;
         }
-        return (Long) request.getAttribute(REQUEST_ATTRIBUTE_LOGIN_USER_ID);
+        return (String) request.getAttribute(REQUEST_ATTRIBUTE_LOGIN_USER_ID);
     }
 
     /**
@@ -111,7 +111,7 @@ public class WebFrameworkUtils {
         return getLoginUserType(request);
     }
 
-    public static Long getLoginUserId() {
+    public static String getLoginUserId() {
         HttpServletRequest request = getRequest();
         return getLoginUserId(request);
     }

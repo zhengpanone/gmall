@@ -17,7 +17,7 @@ public class ApiAccessLogCreateReqDTO {
     private String traceId;
 
     @Schema(description = "用户编号", requiredMode = Schema.RequiredMode.REQUIRED, example = "1024")
-    private Long userId;
+    private String userId;
     @Schema(description = "用户类型", requiredMode = Schema.RequiredMode.REQUIRED, example = "1")
     private Integer userType;
     @Schema(description = "应用名", requiredMode = Schema.RequiredMode.REQUIRED, example = "system-server")

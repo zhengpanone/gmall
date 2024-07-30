@@ -26,7 +26,7 @@ public class SecurityConfiguration {
                 registry.requestMatchers("/v3/api-docs/**").permitAll() // 元数据
                         .requestMatchers("/swagger-ui.html").permitAll(); // Swagger UI
                 // Druid 监控
-                registry.requestMatchers("/druid/**").permitAll();
+                registry.requestMatchers(antMatcher("/druid/**")).permitAll();
                 // Spring Boot Actuator 的安全配置
                 registry.requestMatchers("/actuator").permitAll()
                         .requestMatchers("/actuator/**").permitAll();

@@ -7,9 +7,12 @@ import com.zp.framework.security.core.handlere.AuthenticationEntryPointImpl;
 import com.zp.framework.web.core.handler.GlobalExceptionHandler;
 import com.zp.module.system.api.oauth2.OAuth2TokenApi;
 import jakarta.annotation.Resource;
+import org.springframework.beans.factory.config.MethodInvokingFactoryBean;
 import org.springframework.boot.autoconfigure.AutoConfiguration;
+import org.springframework.boot.autoconfigure.AutoConfigureOrder;
 import org.springframework.boot.context.properties.EnableConfigurationProperties;
 import org.springframework.context.annotation.Bean;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.AuthenticationEntryPoint;
@@ -24,6 +27,7 @@ import org.springframework.security.web.access.AccessDeniedHandler;
  * 参见 https://stackoverflow.com/questions/53847050/spring-boot-delegatebuilder-cannot-be-null-on-autowiring-authenticationmanager 文档。
  */
 @AutoConfiguration
+@AutoConfigureOrder(-1) // 目的：先于 Spring Security 自动配置，避免一键改包后，org.* 基础包无法生效
 @EnableConfigurationProperties(SecurityProperties.class)
 public class GmallSecurityAutoConfiguration {
     @Resource
@@ -72,4 +76,22 @@ public class GmallSecurityAutoConfiguration {
     public TokenAuthenticationFilter authenticationFilter(GlobalExceptionHandler globalExceptionHandler, OAuth2TokenApi oAuth2TokenApi) {
         return new TokenAuthenticationFilter(securityProperties, globalExceptionHandler, oAuth2TokenApi);
     }
+
+  /*  @Bean("ss") // 使用 Spring Security 的缩写，方便使用
+    public SecurityFrameworkService securityFrameworkService(PermissionApi permissionApi) {
+        return new SecurityFrameworkServiceImpl(permissionApi);
+    }*/
+
+    /**
+     * 声明调用 {@link SecurityContextHolder#setStrategyName(String)} 方法，
+     * 设置使用 {@link TransmittableThreadLocalSecurityContextHolderStrategy} 作为 Security 的上下文策略
+     */
+    /*@Bean
+    public MethodInvokingFactoryBean securityContextHolderMethodInvokingFactoryBean() {
+        MethodInvokingFactoryBean methodInvokingFactoryBean = new MethodInvokingFactoryBean();
+        methodInvokingFactoryBean.setTargetClass(SecurityContextHolder.class);
+        methodInvokingFactoryBean.setTargetMethod("setStrategyName");
+        methodInvokingFactoryBean.setArguments(TransmittableThreadLocalSecurityContextHolderStrategy.class.getName());
+        return methodInvokingFactoryBean;
+    }*/
 }

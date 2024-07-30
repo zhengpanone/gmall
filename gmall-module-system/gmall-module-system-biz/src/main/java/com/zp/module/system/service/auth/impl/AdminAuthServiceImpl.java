@@ -114,7 +114,7 @@ public class AdminAuthServiceImpl implements AdminAuthService {
 
     }
 
-    private void createLoginLog(Long userId, String username, LoginLogTypeEnum loginLogTypeEnum, LoginResultEnum loginResultEnum) {
+    private void createLoginLog(String userId, String username, LoginLogTypeEnum loginLogTypeEnum, LoginResultEnum loginResultEnum) {
         // 插入登录日志
         LoginLogCreateDTO loginLogCreateDTO = new LoginLogCreateDTO();
         loginLogCreateDTO.setLogType(loginLogTypeEnum.getType());

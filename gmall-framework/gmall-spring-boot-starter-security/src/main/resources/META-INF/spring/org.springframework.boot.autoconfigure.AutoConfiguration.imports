@@ -1,2 +1,3 @@
 com.zp.framework.security.config.GmallSecurityAutoConfiguration
 com.zp.framework.security.config.GmallWebSecurityConfigurerAdapter
+com.zp.framework.security.config.GmallSecurityRpcAutoConfiguration

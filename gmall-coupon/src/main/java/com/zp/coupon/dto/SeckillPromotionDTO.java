@@ -38,7 +38,7 @@ public class SeckillPromotionDTO implements Serializable {
 	private Date createTime;
 
 	@ApiModelProperty(value = "创建人")
-	private Long userId;
+	private String userId;
 
 
 }

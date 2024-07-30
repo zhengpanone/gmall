@@ -1,0 +1,2 @@
+com.zp.framework.datasource.config.GmallDataSourceAutoConfiguration
+com.zp.framework.mybatis.config.GmallMybatisAutoConfiguration

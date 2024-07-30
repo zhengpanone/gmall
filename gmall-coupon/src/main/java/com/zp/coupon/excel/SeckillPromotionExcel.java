@@ -26,6 +26,6 @@ public class SeckillPromotionExcel {
     @Excel(name = "创建时间")
     private Date createTime;
     @Excel(name = "创建人")
-    private Long userId;
+    private String userId;
 
 }

@@ -42,5 +42,5 @@ public class SeckillPromotionEntity extends BaseEntity {
     /**
      * 创建人
      */
-	private Long userId;
+	private String userId;
 }
