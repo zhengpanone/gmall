@@ -81,6 +81,7 @@
         <jimureport.version>1.5.8</jimureport.version>
         <xercesImpl.version>2.12.2</xercesImpl.version>
         <weixin-java.version>4.5.5.B</weixin-java.version>
+        <bizlog-sdk.version>3.0.3</bizlog-sdk.version>
     </properties>
 
     <dependencyManagement>
@@ -121,11 +122,6 @@
             </dependency>
             <dependency>
                 <groupId>com.zp</groupId>
-                <artifactId>gmall-spring-boot-starter-biz-dict</artifactId>
-               <version>1.0-SNAPSHOT</version>
-            </dependency>
-            <dependency>
-                <groupId>com.zp</groupId>
                 <artifactId>gmall-spring-boot-starter-biz-sms</artifactId>
                <version>1.0-SNAPSHOT</version>
             </dependency>
@@ -152,11 +148,6 @@
             <dependency>
                 <groupId>com.zp</groupId>
                 <artifactId>gmall-spring-boot-starter-biz-social</artifactId>
-               <version>${project.version}</version>
-            </dependency>
-            <dependency>
-                <groupId>com.zp</groupId>
-                <artifactId>gmall-spring-boot-starter-biz-error-code</artifactId>
                <version>${project.version}</version>
             </dependency>
             <dependency>
@@ -690,6 +681,14 @@
                 <version>${xercesImpl.version}</version>
             </dependency>
 
+
+            <dependency>
+                <!-- Spring Boot 通用操作日志组件，基于注解实现 -->
+                <!-- 此组件解决的问题是：「谁」在「什么时间」对「什么」做了「什么事」 -->
+                <groupId>io.github.mouzt</groupId>
+                <artifactId>bizlog-sdk</artifactId>
+                <version>${bizlog-sdk.version}</version>
+            </dependency>
         </dependencies>
     </dependencyManagement>
 

@@ -8,7 +8,7 @@ import jakarta.validation.Valid;
  * Author : zhengpanone
  * Date : 2023/12/20 17:35
  * Version : v1.0.0
- * Description: 后天用户Service接口
+ * Description: 后台用户Service接口
  */
 public interface AdminUserService {
     /**
@@ -36,4 +36,18 @@ public interface AdminUserService {
     AdminUserDO getUserByMobile(String mobile);
 
     boolean isPasswordMatch(String rawPassword, String encodedPassword);
+
+    /**
+     * 更新用户的最后登录信息
+     * @param id 用户编号
+     * @param loginIp 登录IP
+     */
+    void updateUserLogin(String id,String loginIp);
+
+    /**
+     * 通过用户ID查询用户
+     * @param id 用户ID
+     * @return 用户对象信息
+     */
+    AdminUserDO getUser(String id);
 }

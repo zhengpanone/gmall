@@ -26,4 +26,11 @@ public interface AdminAuthService {
      * @return 登录结果
      */
     AuthLoginVO login(@Valid AuthLoginDTO authLoginDTO);
+
+    /**
+     * 基于token退出登录
+     * @param token token
+     * @param type 登出类型
+     */
+    void logout(String token, Integer type);
 }

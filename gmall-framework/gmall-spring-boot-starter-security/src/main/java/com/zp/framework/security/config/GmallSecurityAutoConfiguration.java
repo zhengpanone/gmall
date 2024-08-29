@@ -4,8 +4,11 @@ import com.zp.framework.security.core.aop.PreAuthenticatedAspect;
 import com.zp.framework.security.core.filter.TokenAuthenticationFilter;
 import com.zp.framework.security.core.handlere.AccessDeniedHandlerImpl;
 import com.zp.framework.security.core.handlere.AuthenticationEntryPointImpl;
+import com.zp.framework.security.core.service.SecurityFrameworkService;
+import com.zp.framework.security.core.service.impl.SecurityFrameworkServiceImpl;
 import com.zp.framework.web.core.handler.GlobalExceptionHandler;
 import com.zp.module.system.api.oauth2.OAuth2TokenApi;
+import com.zp.module.system.api.permission.PermissionApi;
 import jakarta.annotation.Resource;
 import org.springframework.beans.factory.config.MethodInvokingFactoryBean;
 import org.springframework.boot.autoconfigure.AutoConfiguration;
@@ -77,10 +80,10 @@ public class GmallSecurityAutoConfiguration {
         return new TokenAuthenticationFilter(securityProperties, globalExceptionHandler, oAuth2TokenApi);
     }
 
-  /*  @Bean("ss") // 使用 Spring Security 的缩写，方便使用
+    @Bean("ss") // 使用 Spring Security 的缩写，方便使用
     public SecurityFrameworkService securityFrameworkService(PermissionApi permissionApi) {
         return new SecurityFrameworkServiceImpl(permissionApi);
-    }*/
+    }
 
     /**
      * 声明调用 {@link SecurityContextHolder#setStrategyName(String)} 方法，

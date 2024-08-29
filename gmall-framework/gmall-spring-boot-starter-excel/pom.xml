@@ -22,13 +22,7 @@
             <version>${project.version}</version>
         </dependency>
 
-        <!-- 业务组件 -->
-        <dependency>
-            <groupId>com.zp</groupId>
-            <artifactId>gmall-spring-boot-starter-biz-dict</artifactId>
-            <version>${project.version}</version>
-            <optional>true</optional> <!-- 如果希望使用 @DictFormat 注解，需要引入该依赖 -->
-        </dependency>
+
 
         <!-- Web 相关 -->
         <dependency>

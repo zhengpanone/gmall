@@ -3,12 +3,12 @@ package com.zp.module.system.dal.dataobject.user;
 import com.baomidou.mybatisplus.annotation.TableField;
 import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.annotation.TableName;
-import com.baomidou.mybatisplus.annotation.KeySequence;
 import com.zp.framework.common.enums.CommonStatusEnum;
 import com.zp.framework.mybatis.core.type.JsonLongSetTypeHandler;
 import com.zp.framework.tenant.core.db.TenantBaseDO;
 import com.zp.module.system.enums.common.SexEnum;
 import lombok.*;
+import lombok.experimental.Accessors;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 
 import java.time.LocalDateTime;
@@ -18,12 +18,12 @@ import java.util.Set;
  * Author : zhengpanone
  * Date : 2023/12/20 15:09
  * Version : v1.0.0
- 
+ * 管理后台的用户 DO
  */
 @EqualsAndHashCode(callSuper = true)
-@TableName(value = "system_users", autoResultMap = true) // 由于 SQL Server 的 system_user 是关键字，所以使用 system_users
-@KeySequence("system_user_seq") // 用于 Oracle、PostgreSQL、Kingbase、DB2、H2 数据库的主键自增。如果是 MySQL 等数据库，可不写。
+@TableName(value = "sys_users", autoResultMap = true) // 由于 SQL Server 的 system_user 是关键字，所以使用 system_users
 @Data
+@Accessors(chain = true)
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
