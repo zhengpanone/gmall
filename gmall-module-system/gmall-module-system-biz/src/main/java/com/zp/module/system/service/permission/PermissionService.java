@@ -1,6 +1,6 @@
 package com.zp.module.system.service.permission;
 
-import com.zp.module.system.api.permission.dto.DeptDataPermissionRespDTO;
+import com.zp.module.system.api.permission.dto.DeptDataPermissionVO;
 
 import java.util.Collection;
 import java.util.Set;
@@ -140,5 +140,5 @@ public interface PermissionService {
      * @param userId 用户编号
      * @return 部门数据权限
      */
-    DeptDataPermissionRespDTO getDeptDataPermission(String userId);
+    DeptDataPermissionVO getDeptDataPermission(String userId);
 }

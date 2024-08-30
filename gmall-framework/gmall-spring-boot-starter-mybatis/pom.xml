@@ -27,7 +27,8 @@
         <dependency>
             <groupId>com.zp</groupId>
             <artifactId>gmall-spring-boot-starter-web</artifactId>
-            <scope>provided</scope> <!-- 设置为 provided，只有 OncePerRequestFilter 使用到 -->
+            <!-- 设置为 provided，只有 OncePerRequestFilter 使用到 -->
+            <scope>provided</scope>
             <version>${project.version}</version>
         </dependency>
 
@@ -76,6 +77,14 @@
         <dependency>
             <groupId>com.github.yulichang</groupId>
             <artifactId>mybatis-plus-join-boot-starter</artifactId> <!-- MyBatis 联表查询 -->
+        </dependency>
+        <dependency>
+            <groupId>com.fhs-opensource</groupId> <!-- VO 数据翻译 -->
+            <artifactId>easy-trans-spring-boot-starter</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>com.fhs-opensource</groupId>
+            <artifactId>easy-trans-mybatis-plus-extend</artifactId>
         </dependency>
     </dependencies>
 

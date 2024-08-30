@@ -47,7 +47,6 @@
         <dependency>
             <groupId>com.zp</groupId>
             <artifactId>gmall-spring-boot-starter-banner</artifactId>
-            <version>1.0-SNAPSHOT</version>
         </dependency>
         <dependency>
             <groupId>com.zp</groupId>
@@ -88,11 +87,11 @@
         </dependency>
 
         <!-- Web 相关 -->
-          <dependency>
-              <groupId>com.zp</groupId>
-              <artifactId>gmall-spring-boot-starter-security</artifactId>
-              <version>${project.version}</version>
-          </dependency>
+        <dependency>
+            <groupId>com.zp</groupId>
+            <artifactId>gmall-spring-boot-starter-security</artifactId>
+            <version>${project.version}</version>
+        </dependency>
 
         <!-- DB 相关 -->
         <dependency>
@@ -199,6 +198,26 @@
                     </execution>
                 </executions>
             </plugin>
+
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-enforcer-plugin</artifactId>
+                <version>3.1.0</version>
+                <executions>
+                    <execution>
+                        <id>enforce</id>
+                        <goals>
+                            <goal>enforce</goal>
+                        </goals>
+                        <configuration>
+                            <rules>
+                                <DependencyConvergence/>
+                            </rules>
+                        </configuration>
+                    </execution>
+                </executions>
+            </plugin>
+
             <!-- <plugin>
                 <groupId>com.google.cloud.tools</groupId>
                 <artifactId>jib-maven-plugin</artifactId>

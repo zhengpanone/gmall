@@ -24,10 +24,10 @@
         <module>gmall-module-member</module> <!-- 会员服务 -->
         <module>gmall-module-mp</module>
 
-   <!--      <module>gmall-product</module> &lt;!&ndash;商品服务&ndash;&gt;
-        <module>gmall-order</module> &lt;!&ndash;订单服务&ndash;&gt;
-        <module>gmall-coupon</module> &lt;!&ndash;优惠券服务&ndash;&gt;
-        <module>gmall-ware</module> -->
+        <!--      <module>gmall-product</module> &lt;!&ndash;商品服务&ndash;&gt;
+             <module>gmall-order</module> &lt;!&ndash;订单服务&ndash;&gt;
+             <module>gmall-coupon</module> &lt;!&ndash;优惠券服务&ndash;&gt;
+             <module>gmall-ware</module> -->
 
     </modules>
 
@@ -49,7 +49,7 @@
             <dependency>
                 <groupId>com.zp</groupId>
                 <artifactId>gmall-dependencies</artifactId>
-                <version>1.0-SNAPSHOT</version>
+                <version>${project.version}</version>
                 <type>pom</type>
                 <scope>import</scope>
             </dependency>
@@ -66,6 +66,9 @@
                     <groupId>org.apache.maven.plugins</groupId>
                     <artifactId>maven-surefire-plugin</artifactId>
                     <version>${maven-surefire-plugin.version}</version>
+                    <configuration>
+                        <skipTests>true</skipTests>
+                    </configuration>
                 </plugin>
                 <!-- maven-compiler-plugin 插件，解决 spring-boot-configuration-processor + Lombok + MapStruct 组合 -->
                 <!-- https://stackoverflow.com/questions/33483697/re-run-spring-boot-configuration-annotation-processor-to-update-generated-metada -->

@@ -15,7 +15,7 @@ import java.util.Set;
  * Version : v1.0.0
  * Description: 租户套餐 DO
  */
-@TableName(value = "system_tenant_package", autoResultMap = true)
+@TableName(value = "sys_tenant_package", autoResultMap = true)
 @Data
 @EqualsAndHashCode(callSuper = true)
 @Builder

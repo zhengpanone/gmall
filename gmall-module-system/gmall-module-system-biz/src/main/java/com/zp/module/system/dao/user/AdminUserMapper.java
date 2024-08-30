@@ -8,13 +8,16 @@ import org.apache.ibatis.annotations.Mapper;
  * Author : zhengpanone
  * Date : 2023/12/20 17:49
  * Version : v1.0.0
- 
  */
 @Mapper
 public interface AdminUserMapper extends BaseMapperX<AdminUserDO> {
 
     default AdminUserDO selectByUsername(String username) {
         return selectOne(AdminUserDO::getUsername, username);
+    }
+
+    default AdminUserDO selectByEmail(String email) {
+        return selectOne(AdminUserDO::getEmail, email);
     }
 
     default AdminUserDO selectByMobile(String mobile) {

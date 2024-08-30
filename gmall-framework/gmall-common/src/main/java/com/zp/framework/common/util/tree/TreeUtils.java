@@ -52,31 +52,23 @@ public class TreeUtils {
 
     public static <T extends ITreeNode> List<T> findRootNode(@NotNull Collection<T> nodes) {
         List<T> roots = new ArrayList<>();
-        Iterator<T> iterator = nodes.iterator();
-        while (true) {
-            while (iterator.hasNext()) {
-                T node = iterator.next();
-                boolean hasParent = false;
-                if (!StringUtils.isEmpty(node.getTreeNodeParent()) && !"0".equals(node.getTreeNodeParent())) {
-                    for (T parent : nodes) {
-                        if (node.getTreeNodeParent().equals(parent.getTreeNodeId())) {
-                            hasParent = true;
-                            break;
-                        }
-
+        for (T node : nodes) {
+            boolean hasParent = false;
+            if (!StringUtils.isEmpty(node.getTreeNodeParent()) && !"0".equals(node.getTreeNodeParent())) {
+                for (T parent : nodes) {
+                    if (node.getTreeNodeParent().equals(parent.getTreeNodeId())) {
+                        hasParent = true;
+                        break;
                     }
-                    if (!hasParent) {
-                        roots.add(node);
-                    }
-
-                } else {
+                }
+                if (!hasParent) {
                     roots.add(node);
                 }
-
+            } else {
+                roots.add(node);
             }
-            return roots;
         }
-
+        return roots;
 
     }
 
@@ -87,7 +79,7 @@ public class TreeUtils {
 
     public static <T extends ITreeNode> Collection<T> buildChildren(Collection<T> nodes, String parentId, boolean sortEnable, boolean childrenEmptyToNull) {
         if (CollectionUtil.isEmpty(nodes)) {
-            return Collections.EMPTY_SET;
+            return Collections.emptySet();
         } else {
             Set<T> childrenNodes = sortEnable ? new TreeSet<>((Comparator<ITreeNode>) (o1, o2) -> Collator.getInstance(Locale.CHINA).compare(o1.getTreeNodeName(), o2.getTreeNodeName())) : new LinkedHashSet<>();
             for (T node : nodes) {

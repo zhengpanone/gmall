@@ -5,6 +5,7 @@ import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.annotation.TableName;
 import com.zp.framework.common.enums.CommonStatusEnum;
 import com.zp.framework.mybatis.core.type.JsonLongSetTypeHandler;
+import com.zp.framework.mybatis.core.type.JsonStringSetTypeHandler;
 import com.zp.framework.tenant.core.db.TenantBaseDO;
 import com.zp.module.system.enums.common.SexEnum;
 import lombok.*;
@@ -53,12 +54,12 @@ public class AdminUserDO extends TenantBaseDO {
     /**
      * 部门ID
      */
-    private Long deptId;
+    private String deptId;
     /**
      * 岗位编号数组
      */
-    @TableField(typeHandler = JsonLongSetTypeHandler.class)
-    private Set<Long> postIds;
+    @TableField(typeHandler =  JsonStringSetTypeHandler.class)
+    private Set<String> postIds;
     /**
      * 用户邮箱
      */

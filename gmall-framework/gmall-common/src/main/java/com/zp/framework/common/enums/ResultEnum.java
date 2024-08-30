@@ -7,7 +7,7 @@ import lombok.AllArgsConstructor;
 
 @AllArgsConstructor
 public enum ResultEnum implements IResult {
-    SUCCESS(2001, "接口调用成功"),
+    SUCCESS(0, "接口调用成功"),
     VALIDATE_FAILED(2002, "参数校验失败"),
     COMMON_FAILED(2003, "接口调用失败"),
 

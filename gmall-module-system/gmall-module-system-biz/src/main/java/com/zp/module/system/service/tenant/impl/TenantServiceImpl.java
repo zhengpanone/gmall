@@ -1,9 +1,11 @@
 package com.zp.module.system.service.tenant.impl;
 
 import com.zp.framework.tenant.config.TenantProperties;
+import com.zp.framework.tenant.core.context.TenantContextHolder;
 import com.zp.module.system.dal.dataobject.tenant.TenantDO;
 import com.zp.module.system.dao.tenant.TenantMapper;
 import com.zp.module.system.service.tenant.TenantService;
+import com.zp.module.system.service.tenant.handler.TenantInfoHandler;
 import jakarta.annotation.Resource;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -26,6 +28,11 @@ public class TenantServiceImpl implements TenantService {
     @Resource
     private TenantMapper tenantMapper;
 
+    @Override
+    public TenantDO getTenant(String id) {
+        return tenantMapper.selectById(id);
+    }
+
     /**
      * 获得域名对应的租户
      *
@@ -35,6 +42,19 @@ public class TenantServiceImpl implements TenantService {
     @Override
     public TenantDO getTenantByWebsite(String website) {
         return tenantMapper.selectByWebsite(website);
+    }
+
+    @Override
+    public void handleTenantInfo(TenantInfoHandler handler) {
+        // 如果禁用，则不执行逻辑
+        if (isTenantDisable()) {
+            return;
+        }
+        // 获得租户
+        TenantDO tenant = getTenant(TenantContextHolder.getTenantId());
+        // 执行处理器
+        handler.handle(tenant);
+
     }
 
     private boolean isTenantDisable() {

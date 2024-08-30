@@ -14,7 +14,7 @@ import java.time.LocalDateTime;
  * Version : v1.0.0
  * Description: 租户 DO
  */
-@TableName(value = "system_tenant", autoResultMap = true)
+@TableName(value = "sys_tenant", autoResultMap = true)
 @Data
 @EqualsAndHashCode(callSuper = true)
 @ToString(callSuper = true)

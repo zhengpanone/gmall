@@ -1,6 +1,6 @@
 package com.zp.module.system.service.permission.impl;
 
-import com.zp.module.system.api.permission.dto.DeptDataPermissionRespDTO;
+import com.zp.module.system.api.permission.dto.DeptDataPermissionVO;
 import com.zp.module.system.service.permission.PermissionService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
@@ -180,7 +180,7 @@ public class PermissionServiceImpl implements PermissionService {
      * @return 部门数据权限
      */
     @Override
-    public DeptDataPermissionRespDTO getDeptDataPermission(String userId) {
+    public DeptDataPermissionVO getDeptDataPermission(String userId) {
         return null;
     }
 }

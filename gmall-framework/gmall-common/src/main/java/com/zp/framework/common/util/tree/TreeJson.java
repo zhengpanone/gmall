@@ -4,17 +4,19 @@ import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
+import java.io.Serial;
+
 
 /**
  * Author : zhengpanone
  * Date : 2023/11/10 23:34
  * Version : v1.0.0
- 
  */
 @Schema(description = "树形节点")
 @NoArgsConstructor
 @Getter
 public class TreeJson extends TreeNode {
+    @Serial
     private static final long serialVersionUID = 1L;
 
     @Schema(description = "节点ID", accessMode = Schema.AccessMode.READ_ONLY)
@@ -39,10 +41,12 @@ public class TreeJson extends TreeNode {
         this.setParentId(parentId);
     }
 
+    @Override
     public void setSelected(boolean selected) {
         super.setSelected(selected);
         this.setSelFag(selected ? "1" : "0");
     }
+
     public void setId(String id) {
         this.id = id;
         this.setTreeNodeId(id);
@@ -52,17 +56,21 @@ public class TreeJson extends TreeNode {
         this.name = name;
         this.setTreeNodeName(name);
     }
+
     public void setCode(String code) {
-        this.code =code;
+        this.code = code;
     }
+
     public void setType(String type) {
-        this.type =type;
+        this.type = type;
         this.setTreeNodeType(type);
     }
-    public void setSelFag(String selFag){
+
+    public void setSelFag(String selFag) {
         this.selFag = selFag;
     }
-    public void setParentId(String parentId){
+
+    public void setParentId(String parentId) {
         this.parentId = parentId;
         this.setTreeNodeParent(parentId);
     }

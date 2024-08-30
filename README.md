@@ -2,6 +2,11 @@
 前端代码地址：https://github.com/zhengpanone/gmall-ui-admin-vben
 #### Description
 学习yudao-cloud
+```shell
+mvn clean install -U -DskipTests
+mvn clean install -Dmaven.test.skip=true
+```
+
 
 启动nacos
 ```shell

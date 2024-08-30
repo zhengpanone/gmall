@@ -22,7 +22,8 @@
         <dependency>
             <groupId>org.springframework</groupId>
             <artifactId>spring-core</artifactId>
-            <scope>provided</scope> <!-- 设置为 provided，只有工具类需要使用到 -->
+            <!-- 设置为 provided，只有工具类需要使用到 -->
+            <scope>provided</scope>
         </dependency>
         <dependency>
             <groupId>org.springframework</groupId>
@@ -63,7 +64,8 @@
         <dependency>
             <groupId>org.springdoc</groupId>
             <artifactId>springdoc-openapi-starter-webmvc-api</artifactId>
-            <scope>provided</scope> <!-- 设置为 provided，主要是 PageParam 使用到-->
+            <!-- 设置为 provided，主要是 PageParam 使用到-->
+            <scope>provided</scope>
         </dependency>
 
         <!-- 监控相关 -->

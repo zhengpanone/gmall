@@ -1,7 +1,7 @@
 package com.zp.module.system.api.permission;
 
 import com.zp.framework.common.pojo.Result;
-import com.zp.module.system.api.permission.dto.DeptDataPermissionRespDTO;
+import com.zp.module.system.api.permission.dto.DeptDataPermissionVO;
 import com.zp.module.system.enums.ApiConstants;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.Parameter;
@@ -51,5 +51,5 @@ public interface PermissionApi {
     @GetMapping(PREFIX + "/get-dept-data-permission")
     @Operation(summary = "获得登陆用户的部门数据权限")
     @Parameter(name = "userId", description = "用户编号", example = "2", required = true)
-    Result<DeptDataPermissionRespDTO> getDeptDataPermission(@RequestParam("userId") String userId);
+    Result<DeptDataPermissionVO> getDeptDataPermission(@RequestParam("userId") String userId);
 }

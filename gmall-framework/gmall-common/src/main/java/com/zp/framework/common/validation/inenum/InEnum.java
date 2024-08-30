@@ -1,10 +1,8 @@
-package com.zp.framework.common.validation;
+package com.zp.framework.common.validation.inenum;
 
 import com.zp.framework.common.core.IntArrayValuable;
 
 import java.lang.annotation.Documented;
-
-import com.zp.framework.common.core.IntArrayValuable;
 
 import jakarta.validation.Constraint;
 import jakarta.validation.Payload;

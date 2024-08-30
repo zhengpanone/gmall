@@ -1,6 +1,5 @@
 package com.zp.module.system.controller.admin.auth.dto;
 
-import com.zp.framework.common.validation.InEnum;
 import io.swagger.v3.oas.annotations.media.Schema;
 import jakarta.validation.constraints.NotEmpty;
 import jakarta.validation.constraints.Pattern;

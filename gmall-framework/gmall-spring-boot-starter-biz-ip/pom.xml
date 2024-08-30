@@ -49,7 +49,6 @@
         <dependency>
             <groupId>com.zp</groupId>
             <artifactId>gmall-spring-boot-starter-test</artifactId>
-            <version>1.0-SNAPSHOT</version>
             <scope>test</scope>
         </dependency>
     </dependencies>

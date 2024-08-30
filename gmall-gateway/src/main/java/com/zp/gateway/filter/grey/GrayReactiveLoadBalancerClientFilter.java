@@ -48,14 +48,16 @@ public class GrayReactiveLoadBalancerClientFilter implements GlobalFilter, Order
         addOriginalRequestUrl(exchange, url);
 
         if (log.isTraceEnabled()) {
-            log.trace(ReactiveLoadBalancerClientFilter.class.getSimpleName() + " url before: " + url);
+            log.trace("{} url before: {}", ReactiveLoadBalancerClientFilter.class.getSimpleName(), url);
         }
 
         URI requestUri = exchange.getAttribute(GATEWAY_REQUEST_URL_ATTR);
         String serviceId = requestUri.getHost();
+
         Set<LoadBalancerLifecycle> supportedLifecycleProcessors = LoadBalancerLifecycleValidator
                 .getSupportedLifecycleProcessors(clientFactory.getInstances(serviceId, LoadBalancerLifecycle.class),
                         RequestDataContext.class, ResponseData.class, ServiceInstance.class);
+
         DefaultRequest<RequestDataContext> lbRequest = new DefaultRequest<>(
                 new RequestDataContext(new RequestData(exchange.getRequest()), getHint(serviceId)));
         return choose(lbRequest, serviceId, supportedLifecycleProcessors).doOnNext(response -> {
@@ -80,10 +82,10 @@ public class GrayReactiveLoadBalancerClientFilter implements GlobalFilter, Order
                     DelegatingServiceInstance serviceInstance = new DelegatingServiceInstance(retrievedInstance,
                             overrideScheme);
 
-                    URI requestUrl = reconstructURI(serviceInstance, uri);
+                    URI requestUrl = reConstructURI(serviceInstance, uri);
 
                     if (log.isTraceEnabled()) {
-                        log.trace("LoadBalancerClientFilter url chosen: " + requestUrl);
+                        log.trace("LoadBalancerClientFilter url chosen: {}", requestUrl);
                     }
                     exchange.getAttributes().put(GATEWAY_REQUEST_URL_ATTR, requestUrl);
                     exchange.getAttributes().put(GATEWAY_LOADBALANCER_RESPONSE_ATTR, response);
@@ -100,7 +102,7 @@ public class GrayReactiveLoadBalancerClientFilter implements GlobalFilter, Order
                                 new ResponseData(exchange.getResponse(), new RequestData(exchange.getRequest()))))));
     }
 
-    protected URI reconstructURI(ServiceInstance serviceInstance, URI original) {
+    protected URI reConstructURI(ServiceInstance serviceInstance, URI original) {
         return LoadBalancerUriTools.reconstructURI(serviceInstance, original);
     }
 

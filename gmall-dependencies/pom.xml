@@ -21,7 +21,7 @@
         <spring.cloud.alibaba.version>2022.0.0.0</spring.cloud.alibaba.version>
         <!-- Web 相关 -->
         <servlet.versoin>2.5</servlet.versoin>
-        <springdoc.version>2.2.0</springdoc.version>
+        <springdoc.version>2.6.0</springdoc.version>
         <knife4j.version>4.3.0</knife4j.version>
         <!-- DB 相关 -->
         <druid.version>1.2.19</druid.version>
@@ -56,12 +56,12 @@
         <jsoup.version>1.16.1</jsoup.version>
         <lombok.version>1.18.30</lombok.version>
         <mapstruct.version>1.5.5.Final</mapstruct.version>
-        <hutool.version>5.8.22</hutool.version>
+        <hutool.version>5.8.31</hutool.version>
         <easyexcel.verion>3.3.2</easyexcel.verion>
         <velocity.version>2.3</velocity.version>
         <screw.version>1.0.5</screw.version>
         <fastjson.version>1.2.83</fastjson.version>
-        <guava.version>32.1.2-jre</guava.version>
+        <guava.version>33.3.0-jre</guava.version>
         <guice.version>5.1.0</guice.version>
         <transmittable-thread-local.version>2.14.2</transmittable-thread-local.version>
         <commons-net.version>3.9.0</commons-net.version>
@@ -82,6 +82,7 @@
         <xercesImpl.version>2.12.2</xercesImpl.version>
         <weixin-java.version>4.5.5.B</weixin-java.version>
         <bizlog-sdk.version>3.0.3</bizlog-sdk.version>
+        <easy-trans.version>3.0.5</easy-trans.version>
     </properties>
 
     <dependencyManagement>
@@ -113,17 +114,17 @@
             <dependency>
                 <groupId>com.zp</groupId>
                 <artifactId>gmall-spring-boot-starter-banner</artifactId>
-               <version>1.0-SNAPSHOT</version>
+               <version>${project.version}</version>
             </dependency>
             <dependency>
                 <groupId>com.zp</groupId>
                 <artifactId>gmall-spring-boot-starter-biz-operatelog</artifactId>
-               <version>1.0-SNAPSHOT</version>
+               <version>${project.version}</version>
             </dependency>
             <dependency>
                 <groupId>com.zp</groupId>
                 <artifactId>gmall-spring-boot-starter-biz-sms</artifactId>
-               <version>1.0-SNAPSHOT</version>
+                <version>${project.version}</version>
             </dependency>
             <dependency>
                 <groupId>com.zp</groupId>
@@ -213,7 +214,7 @@
             <dependency>
                 <groupId>com.zp</groupId>
                 <artifactId>gmall-spring-boot-starter-mybatis</artifactId>
-               <version>1.0-SNAPSHOT</version>
+                <version>${project.version}</version>
             </dependency>
 
             <dependency>
@@ -243,15 +244,56 @@
             </dependency>
 
             <dependency>
+                <groupId>com.fhs-opensource</groupId> <!-- VO 数据翻译 -->
+                <artifactId>easy-trans-spring-boot-starter</artifactId>
+                <version>${easy-trans.version}</version>
+                <exclusions>
+                    <exclusion>
+                        <groupId>org.springframework</groupId>
+                        <artifactId>spring-context</artifactId>
+                    </exclusion>
+                    <exclusion>
+                        <groupId>org.springframework.cloud</groupId>
+                        <artifactId>spring-cloud-commons</artifactId>
+                    </exclusion>
+                    <exclusion>
+                        <groupId>com.google.errorprone</groupId>
+                        <artifactId>error_prone_annotations</artifactId>
+                    </exclusion>
+                    <exclusion>
+                        <groupId>org.checkerframework</groupId>
+                        <artifactId>checker-qual</artifactId>
+                    </exclusion>
+                </exclusions>
+            </dependency>
+            <dependency>
+                <groupId>com.fhs-opensource</groupId>
+                <artifactId>easy-trans-mybatis-plus-extend</artifactId>
+                <version>${easy-trans.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>com.fhs-opensource</groupId>
+                <artifactId>easy-trans-anno</artifactId>
+                <version>${easy-trans.version}</version>
+            </dependency>
+
+            <dependency>
                 <groupId>com.zp</groupId>
                 <artifactId>gmall-spring-boot-starter-redis</artifactId>
-               <version>1.0-SNAPSHOT</version>
+                <version>${project.version}</version>
             </dependency>
 
             <dependency>
                 <groupId>org.redisson</groupId>
                 <artifactId>redisson-spring-boot-starter</artifactId>
                 <version>${redisson.version}</version>
+                <exclusions>
+                    <exclusion>
+                        <groupId>org.redisson</groupId>
+                        <!-- 使用 redisson-spring-data-27 替代，解决 Tuple NoClassDefFoundError 报错 -->
+                        <artifactId>redisson-spring-data-33</artifactId>
+                    </exclusion>
+                </exclusions>
             </dependency>
 
             <dependency>
@@ -264,7 +306,7 @@
             <dependency>
                 <groupId>com.zp</groupId>
                 <artifactId>gmall-spring-boot-starter-rpc</artifactId>
-               <version>1.0-SNAPSHOT</version>
+                <version>${project.version}</version>
             </dependency>
 
             <!-- Registry 注册中心相关 -->
@@ -300,7 +342,7 @@
             <dependency>
                 <groupId>com.zp</groupId>
                 <artifactId>gmall-spring-boot-starter-protection</artifactId>
-               <version>1.0-SNAPSHOT</version>
+                <version>${project.version}</version>
             </dependency>
 
             <dependency>
@@ -330,7 +372,7 @@
             <dependency>
                 <groupId>com.zp</groupId>
                 <artifactId>gmall-spring-boot-starter-monitor</artifactId>
-               <version>1.0-SNAPSHOT</version>
+                <version>${project.version}</version>
             </dependency>
 
             <dependency>
@@ -389,7 +431,7 @@
             <dependency>
                 <groupId>com.zp</groupId>
                 <artifactId>gmall-spring-boot-starter-test</artifactId>
-               <version>1.0-SNAPSHOT</version>
+                <version>${project.version}</version>
                 <scope>test</scope>
             </dependency>
 
@@ -431,7 +473,7 @@
             <dependency>
                 <groupId>com.zp</groupId>
                 <artifactId>gmall-spring-boot-starter-flowable</artifactId>
-               <version>1.0-SNAPSHOT</version>
+                <version>${project.version}</version>
             </dependency>
             <dependency>
                 <groupId>org.flowable</groupId>
@@ -449,13 +491,13 @@
             <dependency>
                 <groupId>com.zp</groupId>
                 <artifactId>gmall-common</artifactId>
-               <version>1.0-SNAPSHOT</version>
+                <version>${project.version}</version>
             </dependency>
 
             <dependency>
                 <groupId>com.zp</groupId>
                 <artifactId>gmall-spring-boot-starter-excel</artifactId>
-               <version>1.0-SNAPSHOT</version>
+                <version>${project.version}</version>
             </dependency>
 
             <dependency>
@@ -599,7 +641,7 @@
             <dependency>
                 <groupId>com.zp</groupId>
                 <artifactId>gmall-spring-boot-starter-file</artifactId>
-               <version>1.0-SNAPSHOT</version>
+                <version>${project.version}</version>
             </dependency>
             <dependency>
                 <groupId>io.minio</groupId>
@@ -688,6 +730,16 @@
                 <groupId>io.github.mouzt</groupId>
                 <artifactId>bizlog-sdk</artifactId>
                 <version>${bizlog-sdk.version}</version>
+                <exclusions>
+                    <exclusion> <!-- 排除掉springboot依赖使用项目的 -->
+                        <groupId>org.springframework.boot</groupId>
+                        <artifactId>spring-boot-starter</artifactId>
+                    </exclusion>
+                    <exclusion>
+                        <groupId>com.google.code.findbugs</groupId>
+                        <artifactId>jsr305</artifactId>
+                    </exclusion>
+                </exclusions>
             </dependency>
         </dependencies>
     </dependencyManagement>

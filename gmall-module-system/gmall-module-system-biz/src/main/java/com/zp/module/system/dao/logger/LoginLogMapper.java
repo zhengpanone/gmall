@@ -16,6 +16,7 @@ import org.apache.ibatis.annotations.Mapper;
  */
 @Mapper
 public interface LoginLogMapper extends BaseMapperX<LoginLogDO> {
+
     default PageResult<LoginLogDO> selectPage(LoginLogPageDTO dto) {
         LambdaQueryWrapperX<LoginLogDO> query = new LambdaQueryWrapperX<LoginLogDO>()
                 .likeIfPresent(LoginLogDO::getUserIp, dto.getUserIp())

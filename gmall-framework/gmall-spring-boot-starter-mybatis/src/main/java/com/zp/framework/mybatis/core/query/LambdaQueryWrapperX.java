@@ -1,5 +1,6 @@
 package com.zp.framework.mybatis.core.query;
 
+import cn.hutool.core.util.ArrayUtil;
 import cn.hutool.core.util.ObjectUtil;
 import com.baomidou.mybatisplus.core.conditions.AbstractWrapper;
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
@@ -21,6 +22,20 @@ import java.util.Collection;
  * @param <T> 数据类型
  */
 public class LambdaQueryWrapperX<T> extends LambdaQueryWrapper<T> {
+
+    public LambdaQueryWrapperX<T> inIfPresent(SFunction<T, ?> column, Collection<?> values) {
+        if (ObjectUtil.isAllNotEmpty(values) && !ArrayUtil.isEmpty(values)) {
+            return (LambdaQueryWrapperX<T>) super.in(column, values);
+        }
+        return this;
+    }
+
+    public LambdaQueryWrapperX<T> inIfPresent(SFunction<T, ?> column, Object... values) {
+        if (ObjectUtil.isAllNotEmpty(values) && !ArrayUtil.isEmpty(values)) {
+            return (LambdaQueryWrapperX<T>) super.in(column, values);
+        }
+        return this;
+    }
 
     public LambdaQueryWrapperX<T> likeIfPresent(SFunction<T, ?> column, String val) {
         if (StringUtils.hasText(val)) {
@@ -57,8 +72,6 @@ public class LambdaQueryWrapperX<T> extends LambdaQueryWrapper<T> {
 
 
     // ========== 重写父类方法，方便链式调用 ==========
-
-
 
 
     @Override

@@ -6,6 +6,7 @@ import com.baomidou.mybatisplus.annotation.TableName;
 import com.baomidou.mybatisplus.extension.handlers.JacksonTypeHandler;
 import com.zp.framework.common.enums.CommonStatusEnum;
 import com.zp.framework.tenant.core.db.TenantBaseDO;
+import com.zp.module.system.enums.permission.DataScopeEnum;
 import com.zp.module.system.enums.permission.RoleTypeEnum;
 import lombok.Data;
 import lombok.EqualsAndHashCode;

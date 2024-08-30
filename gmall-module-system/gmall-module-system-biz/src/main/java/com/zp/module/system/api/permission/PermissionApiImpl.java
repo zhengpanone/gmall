@@ -1,7 +1,7 @@
 package com.zp.module.system.api.permission;
 
 import com.zp.framework.common.pojo.Result;
-import com.zp.module.system.api.permission.dto.DeptDataPermissionRespDTO;
+import com.zp.module.system.api.permission.dto.DeptDataPermissionVO;
 import com.zp.module.system.service.permission.PermissionService;
 import jakarta.annotation.Resource;
 import org.springframework.validation.annotation.Validated;
@@ -38,7 +38,7 @@ public class PermissionApiImpl implements PermissionApi {
     }
 
     @Override
-    public Result<DeptDataPermissionRespDTO> getDeptDataPermission(String userId) {
+    public Result<DeptDataPermissionVO> getDeptDataPermission(String userId) {
         return Result.ok(permissionService.getDeptDataPermission(userId));
     }
 }
