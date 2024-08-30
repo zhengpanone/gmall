@@ -47,6 +47,8 @@ spring:
           username: root
           password: root
 gmall:
+  captcha:
+    enable: false
   security:
     mock-enabled: true
   access-log: # 访问日志的配置项

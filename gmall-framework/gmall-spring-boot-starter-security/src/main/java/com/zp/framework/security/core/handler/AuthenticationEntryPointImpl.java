@@ -1,4 +1,4 @@
-package com.zp.framework.security.core.handlere;
+package com.zp.framework.security.core.handler;
 
 import com.zp.framework.common.exception.enums.GlobalErrorCodeConstants;
 import com.zp.framework.common.pojo.Result;

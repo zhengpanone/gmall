@@ -35,7 +35,7 @@ public class OperateLogCreateDTO {
 
     @Schema(description = "操作模块业务编号", requiredMode = Schema.RequiredMode.REQUIRED, example = "188")
     @NotNull(message = "操作模块业务编号不能为空")
-    private Long bizId;
+    private String bizId;
 
     @Schema(description = "操作内容", requiredMode = Schema.RequiredMode.REQUIRED,
             example = "修改编号为 1 的用户信息，将性别从男改成女，将姓名从芋道改成源码")

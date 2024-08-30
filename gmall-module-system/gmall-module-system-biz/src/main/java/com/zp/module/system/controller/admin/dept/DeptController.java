@@ -13,6 +13,7 @@ import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.Parameter;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.annotation.Resource;
+import jakarta.annotation.security.PermitAll;
 import jakarta.validation.Valid;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.validation.annotation.Validated;
@@ -38,6 +39,7 @@ public class DeptController {
 
     @PostMapping("create")
     @Operation(summary = "创建部门")
+    @PermitAll
     //@PreAuthorize("@ss.hasPermission('system:dept:create')")
     public Result<String> createDept(@Valid @RequestBody DeptSaveDTO createDTO) {
         String deptId = deptService.createDept(createDTO);
@@ -46,6 +48,7 @@ public class DeptController {
 
     @PutMapping("update")
     @Operation(summary = "更新部门")
+    @PermitAll
     //@PreAuthorize("@ss.hasPermission('system:dept:update')")
     public Result<Boolean> updateDept(@Valid @RequestBody DeptSaveDTO updateDTO) {
         deptService.updateDept(updateDTO);
@@ -54,6 +57,7 @@ public class DeptController {
 
     @DeleteMapping("delete")
     @Operation(summary = "删除部门")
+    @PermitAll
     @Parameter(name = "id", description = "编号", required = true, example = "1024")
     //@PreAuthorize("@ss.hasPermission('system:dept:delete')")
     public Result<Boolean> deleteDept(@RequestParam("id") String id) {
@@ -63,6 +67,7 @@ public class DeptController {
 
     @GetMapping("/list")
     @Operation(summary = "获取部门列表")
+    @PermitAll
     //@PreAuthorize("@ss.hasPermission('system:dept:query')")
     public Result<List<DeptVO>> getDeptList(DeptListDTO reqDTO) {
         List<DeptDO> list = deptService.getDeptList(reqDTO);
@@ -78,6 +83,7 @@ public class DeptController {
 
     @GetMapping("/get")
     @Operation(summary = "获得部门信息")
+    @PermitAll
     @Parameter(name = "id", description = "编号", required = true, example = "1024")
     //@PreAuthorize("@ss.hasPermission('system:dept:query')")
     public Result<DeptVO> getDept(@RequestParam("id") String id) {

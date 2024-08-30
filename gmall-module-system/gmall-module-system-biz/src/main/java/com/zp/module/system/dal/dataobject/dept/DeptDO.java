@@ -18,7 +18,7 @@ import lombok.EqualsAndHashCode;
 @Data
 @EqualsAndHashCode(callSuper = true)
 public class DeptDO extends TenantBaseDO {
-    public static final Long PARENT_ID_ROOT = 0L;
+    public static final String PARENT_ID_ROOT = "0";
 
     /**
      * 部门ID

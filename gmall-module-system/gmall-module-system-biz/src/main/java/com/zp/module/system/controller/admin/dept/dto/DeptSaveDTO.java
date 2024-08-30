@@ -20,7 +20,7 @@ import lombok.Data;
 public class DeptSaveDTO {
 
     @Schema(description = "部门编号", example = "1024")
-    private Long id;
+    private String id;
 
     @Schema(description = "部门名称", requiredMode = Schema.RequiredMode.REQUIRED, example = "芋道")
     @NotBlank(message = "部门名称不能为空")
@@ -28,7 +28,7 @@ public class DeptSaveDTO {
     private String name;
 
     @Schema(description = "父部门 ID", example = "1024")
-    private Long parentId;
+    private String parentId;
 
     @Schema(description = "显示顺序", requiredMode = Schema.RequiredMode.REQUIRED, example = "1024")
     @NotNull(message = "显示顺序不能为空")

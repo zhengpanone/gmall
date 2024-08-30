@@ -2,15 +2,14 @@ package com.zp.framework.security.config;
 
 import com.zp.framework.security.core.aop.PreAuthenticatedAspect;
 import com.zp.framework.security.core.filter.TokenAuthenticationFilter;
-import com.zp.framework.security.core.handlere.AccessDeniedHandlerImpl;
-import com.zp.framework.security.core.handlere.AuthenticationEntryPointImpl;
+import com.zp.framework.security.core.handler.AccessDeniedHandlerImpl;
+import com.zp.framework.security.core.handler.AuthenticationEntryPointImpl;
 import com.zp.framework.security.core.service.SecurityFrameworkService;
 import com.zp.framework.security.core.service.impl.SecurityFrameworkServiceImpl;
 import com.zp.framework.web.core.handler.GlobalExceptionHandler;
 import com.zp.module.system.api.oauth2.OAuth2TokenApi;
 import com.zp.module.system.api.permission.PermissionApi;
 import jakarta.annotation.Resource;
-import org.springframework.beans.factory.config.MethodInvokingFactoryBean;
 import org.springframework.boot.autoconfigure.AutoConfiguration;
 import org.springframework.boot.autoconfigure.AutoConfigureOrder;
 import org.springframework.boot.context.properties.EnableConfigurationProperties;
