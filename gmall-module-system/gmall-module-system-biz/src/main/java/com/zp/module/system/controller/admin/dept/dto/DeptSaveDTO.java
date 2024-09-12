@@ -13,7 +13,7 @@ import lombok.Data;
  * Author : zhengpanone
  * Date : 2024/8/29 12:35
  * Version : v1.0.0
- * Description: TODO
+ * Description:
  */
 @Schema(description = "管理后台 - 部门创建/修改 DTO")
 @Data

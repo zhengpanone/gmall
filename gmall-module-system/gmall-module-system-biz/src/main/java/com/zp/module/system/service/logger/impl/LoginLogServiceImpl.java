@@ -14,7 +14,7 @@ import org.springframework.stereotype.Service;
  * Author : zhengpanone
  * Date : 2024/8/5 11:18
  * Version : v1.0.0
- * Description: TODO
+ * Description:
  */
 @Service
 public class LoginLogServiceImpl implements LoginLogService {

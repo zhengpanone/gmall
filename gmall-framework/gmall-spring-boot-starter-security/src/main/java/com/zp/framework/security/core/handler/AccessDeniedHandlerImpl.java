@@ -18,7 +18,7 @@ import static com.zp.framework.common.exception.enums.GlobalErrorCodeConstants.F
  * Author : zhengpanone
  * Date : 2024/2/2 15:51
  * Version : v1.0.0
- * Description: TODO
+ * Description:
  * 访问一个需要认证的 URL 资源，已经认证（登录）但是没有权限的情况下，返回 {@link GlobalErrorCodeConstants#FORBIDDEN} 错误码。
  * 补充：Spring Security 通过 {@link ExceptionTranslationFilter#handleAccessDeniedException(HttpServletRequest, HttpServletResponse, FilterChain, AccessDeniedException)} 方法，调用当前类
  */

@@ -15,7 +15,7 @@ import java.util.List;
  * Author : zhengpanone
  * Date : 2024/7/7 16:32
  * Version : v1.0.0
- * Description: TODO
+ * Description:
  */
 @FeignClient(name = ApiConstants.NAME)
 @Tag(name = "RPC 服务 - 多租户")

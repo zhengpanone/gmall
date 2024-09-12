@@ -12,7 +12,7 @@ import org.apache.ibatis.annotations.Mapper;
  * Author : zhengpanone
  * Date : 2024/8/5 11:20
  * Version : v1.0.0
- * Description: TODO
+ * Description:
  */
 @Mapper
 public interface LoginLogMapper extends BaseMapperX<LoginLogDO> {

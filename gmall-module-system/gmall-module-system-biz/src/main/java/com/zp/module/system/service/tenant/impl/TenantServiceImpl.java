@@ -1,15 +1,22 @@
 package com.zp.module.system.service.tenant.impl;
 
+import com.zp.framework.common.pojo.PageResult;
 import com.zp.framework.tenant.config.TenantProperties;
 import com.zp.framework.tenant.core.context.TenantContextHolder;
+import com.zp.module.system.controller.admin.tenant.dto.TenantPageDTO;
+import com.zp.module.system.controller.admin.tenant.dto.TenantSaveDTO;
 import com.zp.module.system.dal.dataobject.tenant.TenantDO;
 import com.zp.module.system.dao.tenant.TenantMapper;
 import com.zp.module.system.service.tenant.TenantService;
 import com.zp.module.system.service.tenant.handler.TenantInfoHandler;
+import com.zp.module.system.service.tenant.handler.TenantMenuHandler;
 import jakarta.annotation.Resource;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+
+import java.util.List;
+import java.util.Set;
 
 /**
  * Author : zhengpanone
@@ -29,9 +36,30 @@ public class TenantServiceImpl implements TenantService {
     private TenantMapper tenantMapper;
 
     @Override
+    public String createTenant(TenantSaveDTO createDTO) {
+        return "";
+    }
+
+    @Override
+    public void updateTenant(TenantSaveDTO updateDTO) {
+
+    }
+
+    @Override
+    public void updateTenantRoleMenu(String tenantId, Set<String> menuIds) {
+
+    }
+
+    @Override
+    public void deleteTenant(String id) {
+
+    }
+
+    @Override
     public TenantDO getTenant(String id) {
         return tenantMapper.selectById(id);
     }
+
 
     /**
      * 获得域名对应的租户
@@ -54,6 +82,41 @@ public class TenantServiceImpl implements TenantService {
         TenantDO tenant = getTenant(TenantContextHolder.getTenantId());
         // 执行处理器
         handler.handle(tenant);
+
+    }
+
+    @Override
+    public PageResult<TenantDO> getTenantPage(TenantPageDTO pageDTO) {
+        return null;
+    }
+
+    @Override
+    public TenantDO getTenantByName(String name) {
+        return null;
+    }
+
+    @Override
+    public String getTenantCountByPackageId(String packageId) {
+        return "";
+    }
+
+    @Override
+    public List<TenantDO> getTenantListByPackageId(String packageId) {
+        return List.of();
+    }
+
+    @Override
+    public void handleTenantMenu(TenantMenuHandler handler) {
+
+    }
+
+    @Override
+    public List<String> getTenantIdList() {
+        return List.of();
+    }
+
+    @Override
+    public void validTenant(String id) {
 
     }
 

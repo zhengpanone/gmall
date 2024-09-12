@@ -9,7 +9,7 @@ import java.time.LocalDateTime;
  * Author : zhengpanone
  * Date : 2024/7/31 17:00
  * Version : v1.0.0
- * Description: TODO
+ * Description:
  */
 @Schema(description = "RPC 服务 - 用户信息 Response VO")
 @Data

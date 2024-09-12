@@ -14,7 +14,7 @@ import java.io.IOException;
  * Date : 2024/7/7 10:14
  * Version : v1.0.0
  * Description: 签名图片抠图工具类
- * TODO: 先转灰度值，再阈值判断会更好
+ *  先转灰度值，再阈值判断会更好
  */
 @Slf4j
 public class ImgMattingUtil {

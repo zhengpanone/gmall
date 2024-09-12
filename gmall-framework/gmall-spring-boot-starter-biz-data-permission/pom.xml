@@ -36,13 +36,19 @@
             <artifactId>gmall-spring-boot-starter-mybatis</artifactId>
         </dependency>
 
-        <!-- RPC 远程调用相关 -->
         <dependency>
-            <groupId>com.zp</groupId>
-            <artifactId>gmall-spring-boot-starter-rpc</artifactId>
+            <groupId>org.springframework.cloud</groupId>
+            <artifactId>spring-cloud-starter-loadbalancer</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.springframework.cloud</groupId>
+            <artifactId>spring-cloud-starter-openfeign</artifactId>
             <optional>true</optional>
         </dependency>
-
+        <dependency>
+            <groupId>io.github.openfeign</groupId>
+            <artifactId>feign-okhttp</artifactId>
+        </dependency>
         <!-- 业务组件 -->
         <dependency>
             <groupId>com.zp</groupId>

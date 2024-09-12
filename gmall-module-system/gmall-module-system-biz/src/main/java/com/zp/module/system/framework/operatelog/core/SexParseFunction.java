@@ -7,7 +7,7 @@ import com.mzt.logapi.service.IParseFunction;
  * Author : zhengpanone
  * Date : 2024/8/29 13:11
  * Version : v1.0.0
- * Description: TODO
+ * Description:
  */
 public class SexParseFunction implements IParseFunction {
     public static final String NAME = "getSex";

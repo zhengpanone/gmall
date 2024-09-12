@@ -114,12 +114,7 @@
             <dependency>
                 <groupId>com.zp</groupId>
                 <artifactId>gmall-spring-boot-starter-banner</artifactId>
-               <version>${project.version}</version>
-            </dependency>
-            <dependency>
-                <groupId>com.zp</groupId>
-                <artifactId>gmall-spring-boot-starter-biz-operatelog</artifactId>
-               <version>${project.version}</version>
+                <version>${project.version}</version>
             </dependency>
             <dependency>
                 <groupId>com.zp</groupId>
@@ -129,42 +124,37 @@
             <dependency>
                 <groupId>com.zp</groupId>
                 <artifactId>gmall-spring-boot-starter-biz-pay</artifactId>
-               <version>${project.version}</version>
+                <version>${project.version}</version>
             </dependency>
             <dependency>
                 <groupId>com.zp</groupId>
                 <artifactId>gmall-spring-boot-starter-biz-weixin</artifactId>
-               <version>${project.version}</version>
+                <version>${project.version}</version>
             </dependency>
             <dependency>
                 <groupId>com.zp</groupId>
                 <artifactId>gmall-spring-boot-starter-biz-tenant</artifactId>
-               <version>${project.version}</version>
+                <version>${project.version}</version>
             </dependency>
             <dependency>
                 <groupId>com.zp</groupId>
                 <artifactId>gmall-spring-boot-starter-biz-data-permission</artifactId>
-               <version>${project.version}</version>
+                <version>${project.version}</version>
             </dependency>
             <dependency>
                 <groupId>com.zp</groupId>
                 <artifactId>gmall-spring-boot-starter-biz-social</artifactId>
-               <version>${project.version}</version>
-            </dependency>
-            <dependency>
-                <groupId>com.zp</groupId>
-                <artifactId>gmall-spring-boot-starter-biz-ip</artifactId>
-               <version>${project.version}</version>
+                <version>${project.version}</version>
             </dependency>
             <dependency>
                 <groupId>com.zp</groupId>
                 <artifactId>gmall-spring-boot-starter-captcha</artifactId>
-               <version>${project.version}</version>
+                <version>${project.version}</version>
             </dependency>
             <dependency>
                 <groupId>com.zp</groupId>
                 <artifactId>gmall-spring-boot-starter-desensitize</artifactId>
-               <version>${project.version}</version>
+                <version>${project.version}</version>
             </dependency>
 
             <!-- Spring 核心 -->
@@ -178,20 +168,20 @@
             <dependency>
                 <groupId>com.zp</groupId>
                 <artifactId>gmall-spring-boot-starter-env</artifactId>
-               <version>${project.version}</version>
+                <version>${project.version}</version>
             </dependency>
 
             <!-- Web 相关 -->
             <dependency>
                 <groupId>com.zp</groupId>
                 <artifactId>gmall-spring-boot-starter-web</artifactId>
-               <version>${project.version}</version>
+                <version>${project.version}</version>
             </dependency>
 
             <dependency>
                 <groupId>com.zp</groupId>
                 <artifactId>gmall-spring-boot-starter-security</artifactId>
-               <version>${project.version}</version>
+                <version>${project.version}</version>
             </dependency>
 
             <dependency>
@@ -302,13 +292,6 @@
                 <version>${dm8.jdbc.version}</version>
             </dependency>
 
-            <!-- RPC 远程调用相关 -->
-            <dependency>
-                <groupId>com.zp</groupId>
-                <artifactId>gmall-spring-boot-starter-rpc</artifactId>
-                <version>${project.version}</version>
-            </dependency>
-
             <!-- Registry 注册中心相关 -->
 
             <!-- Config 配置中心相关 -->
@@ -322,14 +305,14 @@
             <dependency>
                 <groupId>com.zp</groupId>
                 <artifactId>gmall-spring-boot-starter-job</artifactId>
-               <version>${project.version}</version>
+                <version>${project.version}</version>
             </dependency>
 
             <!-- 消息队列相关 -->
             <dependency>
                 <groupId>com.zp</groupId>
                 <artifactId>gmall-spring-boot-starter-mq</artifactId>
-               <version>${project.version}</version>
+                <version>${project.version}</version>
             </dependency>
 
             <dependency>
@@ -497,6 +480,13 @@
             <dependency>
                 <groupId>com.zp</groupId>
                 <artifactId>gmall-spring-boot-starter-excel</artifactId>
+                <version>${project.version}</version>
+            </dependency>
+
+            <!-- 业务组件 -->
+            <dependency>
+                <groupId>com.zp</groupId>
+                <artifactId>gmall-module-system-api</artifactId>
                 <version>${project.version}</version>
             </dependency>
 

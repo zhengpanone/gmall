@@ -14,7 +14,7 @@ import org.springframework.web.bind.annotation.RequestParam;
  * Author : zhengpanone
  * Date : 2024/7/31 16:51
  * Version : v1.0.0
- * Description: TODO
+ * Description:
  */
 @FeignClient(name = ApiConstants.NAME)
 @Tag(name = "RPC 服务 - 会员用户")

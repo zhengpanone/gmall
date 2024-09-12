@@ -8,7 +8,7 @@ import org.springframework.boot.context.properties.ConfigurationProperties;
  * Author : zhengpanone
  * Date : 2024/1/19 17:29
  * Version : v1.0.0
- * Description: TODO
+ * Description:
  */
 @ConfigurationProperties("gmall.swagger")
 @Data

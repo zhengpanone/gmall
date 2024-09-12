@@ -11,7 +11,7 @@ import org.springframework.context.annotation.Bean;
  * Author : zhengpanone
  * Date : 2024/7/7 17:08
  * Version : v1.0.0
- * Description: TODO
+ * Description:
  */
 @AutoConfiguration
 // 允许使用 yudao.tenant.enable=false 禁用多租户

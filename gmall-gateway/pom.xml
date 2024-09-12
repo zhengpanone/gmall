@@ -27,25 +27,11 @@
         <dependency>
             <groupId>com.zp</groupId>
             <artifactId>gmall-module-system-api</artifactId>
-            <version>${project.version}</version>
-            <exclusions>
-                <exclusion>
-                    <groupId>org.springdoc</groupId>
-                    <artifactId>springdoc-openapi-webmvc-core</artifactId>
-                </exclusion>
-            </exclusions>
         </dependency>
 
         <dependency>
             <groupId>com.zp</groupId>
             <artifactId>gmall-spring-boot-starter-banner</artifactId>
-            <version>${project.version}</version>
-            <exclusions>
-                <exclusion>
-                    <groupId>org.springdoc</groupId>
-                    <artifactId>springdoc-openapi-webmvc-core</artifactId>
-                </exclusion>
-            </exclusions>
         </dependency>
 
         <!-- Gateway 网关相关 -->

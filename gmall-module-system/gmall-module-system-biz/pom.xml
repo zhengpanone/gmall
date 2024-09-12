@@ -55,11 +55,6 @@
         </dependency>
         <dependency>
             <groupId>com.zp</groupId>
-            <artifactId>gmall-spring-boot-starter-biz-operatelog</artifactId>
-            <version>1.0-SNAPSHOT</version>
-        </dependency>
-        <dependency>
-            <groupId>com.zp</groupId>
             <artifactId>gmall-spring-boot-starter-biz-sms</artifactId>
             <version>1.0-SNAPSHOT</version>
         </dependency>
@@ -80,11 +75,6 @@
             <artifactId>gmall-spring-boot-starter-biz-error-code</artifactId>
             <version>1.0-SNAPSHOT</version>
         </dependency> -->
-        <dependency>
-            <groupId>com.zp</groupId>
-            <artifactId>gmall-spring-boot-starter-biz-ip</artifactId>
-            <version>1.0-SNAPSHOT</version>
-        </dependency>
 
         <!-- Web 相关 -->
         <dependency>
@@ -106,11 +96,18 @@
             <version>${project.version}</version>
         </dependency>
 
-        <!-- RPC 远程调用相关 -->
         <dependency>
-            <groupId>com.zp</groupId>
-            <artifactId>gmall-spring-boot-starter-rpc</artifactId>
-            <version>${project.version}</version>
+            <groupId>org.springframework.cloud</groupId>
+            <artifactId>spring-cloud-starter-loadbalancer</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.springframework.cloud</groupId>
+            <artifactId>spring-cloud-starter-openfeign</artifactId>
+            <optional>true</optional>
+        </dependency>
+        <dependency>
+            <groupId>io.github.openfeign</groupId>
+            <artifactId>feign-okhttp</artifactId>
         </dependency>
 
         <!-- Registry 注册中心相关 -->
@@ -156,13 +153,11 @@
         <dependency>
             <groupId>com.zp</groupId>
             <artifactId>gmall-spring-boot-starter-excel</artifactId>
-            <version>${project.version}</version>
         </dependency>
 
         <dependency>
             <groupId>com.zp</groupId>
             <artifactId>gmall-spring-boot-starter-captcha</artifactId>
-            <version>${project.version}</version>
         </dependency>
 
         <dependency>

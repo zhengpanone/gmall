@@ -38,12 +38,9 @@
         <module>gmall-spring-boot-starter-file</module>
         <module>gmall-spring-boot-starter-test</module>
         <module>gmall-spring-boot-starter-desensitize</module>
-        <module>gmall-spring-boot-starter-rpc</module>
         <module>gmall-spring-boot-starter-mq</module>
         <module>gmall-spring-boot-starter-flowable</module>
-        <module>gmall-spring-boot-starter-biz-ip</module>
         <module>gmall-spring-boot-starter-biz-pay</module>
-        <module>gmall-spring-boot-starter-biz-operatelog</module>
         <module>gmall-spring-boot-starter-monitor</module>
         <module>gmall-spring-boot-starter-biz-social</module>
         <module>gmall-spring-boot-starter-biz-tenant</module>

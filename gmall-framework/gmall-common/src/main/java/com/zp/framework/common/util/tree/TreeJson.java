@@ -41,9 +41,8 @@ public class TreeJson extends TreeNode {
         this.setParentId(parentId);
     }
 
-    @Override
-    public void setSelected(boolean selected) {
-        super.setSelected(selected);
+
+    public void setSelFag(boolean selected) {
         this.setSelFag(selected ? "1" : "0");
     }
 

@@ -11,7 +11,7 @@ import static com.zp.framework.web.core.util.WebFrameworkUtils.HEADER_TENANT_ID;
  * Author : zhengpanone
  * Date : 2024/7/7 17:11
  * Version : v1.0.0
- * Description: TODO
+ * Description:
  */
 public class TenantRequestInterceptor implements RequestInterceptor {
     @Override

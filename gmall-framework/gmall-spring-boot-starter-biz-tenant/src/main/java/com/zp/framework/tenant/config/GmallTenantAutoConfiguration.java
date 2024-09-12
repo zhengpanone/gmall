@@ -21,7 +21,7 @@ import org.springframework.context.annotation.Bean;
  * Author : zhengpanone
  * Date : 2024/7/7 12:52
  * Version : v1.0.0
- * Description: TODO
+ * Description:
  */
 @AutoConfiguration
 // 允许使用 gmall.tenant.enable=false 禁用多租户

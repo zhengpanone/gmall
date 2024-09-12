@@ -20,7 +20,7 @@ import org.springframework.test.context.jdbc.Sql;
  * Author : zhengpanone
  * Date : 2024/8/6 16:13
  * Version : v1.0.0
- * Description: TODO
+ * Description:
  */
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.NONE, classes = BaseDbAndRedisUnitTest.Application.class)
 @ActiveProfiles("test") // 设置使用 application-unit-test 配置文件

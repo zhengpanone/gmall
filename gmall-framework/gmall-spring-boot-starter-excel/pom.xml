@@ -19,28 +19,57 @@
         <dependency>
             <groupId>com.zp</groupId>
             <artifactId>gmall-common</artifactId>
-            <version>${project.version}</version>
+        </dependency>
+        <!-- Spring 核心 -->
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter</artifactId>
         </dependency>
 
-
-
+        <!-- 业务组件 -->
+        <dependency>
+            <groupId>com.zp</groupId>
+            <artifactId>gmall-module-system-api</artifactId>
+            <!-- 需要使用它，进行 Dict 的查询 -->
+        </dependency>
         <!-- Web 相关 -->
         <dependency>
             <groupId>org.springframework</groupId>
             <artifactId>spring-web</artifactId>
-            <scope>provided</scope> <!-- 设置为 provided，只有 ExcelUtils 使用 -->
+            <!-- 设置为 provided，只有 ExcelUtils 使用 -->
+            <scope>provided</scope>
         </dependency>
+
 
         <dependency>
             <groupId>jakarta.servlet</groupId>
             <artifactId>jakarta.servlet-api</artifactId>
-            <scope>provided</scope> <!-- 设置为 provided，只有 ExcelUtils 使用 -->
+            <!-- 设置为 provided，只有 ExcelUtils 使用 -->
+            <scope>provided</scope>
         </dependency>
 
         <!-- 工具类相关 -->
         <dependency>
             <groupId>com.alibaba</groupId>
             <artifactId>easyexcel</artifactId>
+        </dependency>
+
+        <dependency>
+            <groupId>com.google.guava</groupId>
+            <artifactId>guava</artifactId>
+        </dependency>
+
+        <!-- Test 测试相关 -->
+        <dependency>
+            <groupId>com.zp</groupId>
+            <artifactId>gmall-spring-boot-starter-test</artifactId>
+            <scope>test</scope>
+        </dependency>
+        <dependency>
+            <groupId>org.jeecgframework</groupId>
+            <artifactId>autopoi</artifactId>
+            <version>1.4.7</version>
+            <scope>compile</scope>
         </dependency>
     </dependencies>
 

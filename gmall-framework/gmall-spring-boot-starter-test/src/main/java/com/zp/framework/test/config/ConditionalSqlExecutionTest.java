@@ -16,7 +16,7 @@ import java.nio.file.Paths;
  * Author : zhengpanone
  * Date : 2024/8/29 14:38
  * Version : v1.0.0
- * Description: TODO
+ * Description:
  */
 @SpringJUnitConfig // 替换为你的配置类或使用 @SpringBootTest
 public class ConditionalSqlExecutionTest {

@@ -22,7 +22,7 @@ import static com.zp.framework.common.util.collection.CollectionUtils.convertSet
  * Author : zhengpanone
  * Date : 2024/7/31 17:29
  * Version : v1.0.0
- * Description: TODO
+ * Description:
  */
 @Mapper
 public interface AuthConvert {

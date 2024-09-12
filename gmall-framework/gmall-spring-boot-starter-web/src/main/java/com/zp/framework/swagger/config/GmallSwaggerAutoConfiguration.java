@@ -37,7 +37,7 @@ import static com.zp.framework.web.core.util.WebFrameworkUtils.HEADER_TENANT_ID;
  * Author : zhengpanone
  * Date : 2024/1/19 17:30
  * Version : v1.0.0
- * Description: TODO
+ * Description:
  */
 @AutoConfiguration
 @ConditionalOnClass({OpenAPI.class})

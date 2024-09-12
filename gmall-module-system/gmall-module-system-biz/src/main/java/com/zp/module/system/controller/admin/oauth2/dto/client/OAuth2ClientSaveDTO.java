@@ -15,7 +15,7 @@ import java.util.List;
  * Author : zhengpanone
  * Date : 2024/8/6 13:38
  * Version : v1.0.0
- * Description: TODO
+ * Description:
  */
 @Schema(description = "管理后台 - OAuth2 客户端创建/修改 Request VO")
 @Data

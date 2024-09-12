@@ -15,7 +15,6 @@ import java.util.Collections;
  * @author zhengpanone@hotmail.com
  * @since 1.0.0
  */
-@Data
 @EqualsAndHashCode
 public abstract class TreeNode implements ITreeNode, Serializable {
     @Serial
@@ -43,9 +42,9 @@ public abstract class TreeNode implements ITreeNode, Serializable {
 
     @Schema(description = "排序", accessMode = Schema.AccessMode.READ_ONLY)
     private String sort;
-
-    private boolean selected ;
-
+    @Schema(description = "是否被选中", accessMode = Schema.AccessMode.READ_ONLY)
+    private boolean selected;
+    @Schema(description = "子孙数量", accessMode = Schema.AccessMode.READ_ONLY)
     private String sonNum;
 
     public TreeNode() {
@@ -68,8 +67,23 @@ public abstract class TreeNode implements ITreeNode, Serializable {
     }
 
     @Override
-    public void setChildren(Collection<? extends ITreeNode> children) {
-        this.children = children;
+    public String getTreeNodeId() {
+        return treeNodeId;
+    }
+
+    @Override
+    public void setTreeNodeId(String treeNodeId) {
+        this.treeNodeId = treeNodeId;
+    }
+
+    @Override
+    public String getTreeNodeName() {
+        return treeNodeName;
+    }
+
+    @Override
+    public void setTreeNodeName(String treeNodeName) {
+        this.treeNodeName = treeNodeName;
     }
 
     @Override
@@ -77,5 +91,50 @@ public abstract class TreeNode implements ITreeNode, Serializable {
         this.treeNodeParent = treeNodeParent;
     }
 
+    @Override
+    public String getTreeNodeParent() {
+        return treeNodeParent;
+    }
+
+    @Override
+    public void setTreeNodeType(String treeNodeType) {
+        this.treeNodeType = treeNodeType;
+    }
+
+    @Override
+    public String getTreeNodeType() {
+        return this.treeNodeType;
+    }
+
+    @Override
+    public String getTreeNodeBizType() {
+        return treeNodeBizType;
+    }
+
+    @Override
+    public void setTreeNodeBizType(String treeNodeBizType) {
+        this.treeNodeBizType = treeNodeBizType;
+    }
+
+
+    @Override
+    public void setChildren(Collection<? extends ITreeNode> children) {
+        this.children = children;
+    }
+
+    @Override
+    public Collection<? extends ITreeNode> getChildren() {
+        return children;
+    }
+
+    @Override
+    public String getSort() {
+        return sort;
+    }
+
+    @Override
+    public void setSort(String sort) {
+        this.sort = sort;
+    }
 
 }

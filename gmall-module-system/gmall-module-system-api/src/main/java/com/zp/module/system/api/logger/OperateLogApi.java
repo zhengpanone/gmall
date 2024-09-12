@@ -19,7 +19,7 @@ import org.springframework.web.bind.annotation.RequestBody;
  * Author : zhengpanone
  * Date : 2024/8/5 13:29
  * Version : v1.0.0
- * Description: TODO
+ * Description:
  */
 @FeignClient(name = ApiConstants.NAME)
 @Tag(name = "RPC 服务 - 操作日志")
@@ -32,5 +32,5 @@ public interface OperateLogApi {
 
     @GetMapping(PREFIX + "/page")
     @Operation(summary = "获取指定模块的指定数据的操作日志分页")
-    Result<PageResult<OperateLogVO>> getOperateLogPage(@SpringQueryMap OperateLogPageDTO pageReqDTO);
+    Result<PageResult<OperateLogVO>> getOperateLogPage(@SpringQueryMap OperateLogPageDTO pageDTO);
 }

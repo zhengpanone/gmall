@@ -1,4 +1,4 @@
-package com.zp.module.system.controller.admin.tenant.vo.tenant;
+package com.zp.module.system.controller.admin.tenant.vo;
 
 import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.Data;
@@ -11,7 +11,7 @@ import lombok.Data;
  */
 @Schema(description = "管理后台 - 租户精简 Response VO")
 @Data
-public class TenantSimpleRespVO {
+public class TenantSimpleVO {
     @Schema(description = "租户编号", requiredMode = Schema.RequiredMode.REQUIRED, example = "1024")
     private Long id;
 
