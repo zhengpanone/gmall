@@ -1,0 +1,136 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <parent>
+        <groupId>com.zp</groupId>
+        <artifactId>gmall-module-pay</artifactId>
+       <version>1.0-SNAPSHOT</version>
+    </parent>
+    <modelVersion>4.0.0</modelVersion>
+    <artifactId>gmall-module-pay-biz</artifactId>
+    <packaging>jar</packaging>
+
+    <name>${project.artifactId}</name>
+    <description>
+        pay 模块，我们放支付业务，提供业务的支付能力。
+        例如说：商户、应用、支付、退款等等
+    </description>
+
+    <dependencies>
+        <!-- Spring Cloud 基础 -->
+        <dependency>
+            <groupId>org.springframework.cloud</groupId>
+            <artifactId>spring-cloud-starter-bootstrap</artifactId>
+        </dependency>
+
+        <!-- 依赖服务 -->
+        <dependency>
+            <groupId>com.zp</groupId>
+            <artifactId>gmall-module-pay-api</artifactId>
+           <version>1.0-SNAPSHOT</version>
+        </dependency>
+        <dependency>
+            <groupId>com.zp</groupId>
+            <artifactId>gmall-module-member-api</artifactId>
+           <version>1.0-SNAPSHOT</version>
+        </dependency>
+
+        <!-- 业务组件 -->
+        <dependency>
+            <groupId>com.zp</groupId>
+            <artifactId>gmall-spring-boot-starter-banner</artifactId>
+            <version>1.0-SNAPSHOT</version>
+        </dependency>
+        <dependency>
+            <groupId>com.zp</groupId>
+            <artifactId>gmall-spring-boot-starter-biz-operatelog</artifactId>
+            <version>1.0-SNAPSHOT</version>
+        </dependency>
+        <dependency>
+            <groupId>com.zp</groupId>
+            <artifactId>gmall-spring-boot-starter-biz-tenant</artifactId>
+            <version>1.0-SNAPSHOT</version>
+        </dependency>
+        <!-- <dependency>
+            <groupId>com.zp</groupId>
+            <artifactId>gmall-spring-boot-starter-biz-error-code</artifactId>
+            <version>1.0-SNAPSHOT</version>
+        </dependency> -->
+        <dependency>
+            <groupId>com.zp</groupId>
+            <artifactId>gmall-spring-boot-starter-biz-pay</artifactId>
+            <version>1.0-SNAPSHOT</version>
+        </dependency>
+
+        <!-- Web 相关 -->
+        <dependency>
+            <groupId>com.zp</groupId>
+            <artifactId>gmall-spring-boot-starter-security</artifactId>
+            <version>1.0-SNAPSHOT</version>
+        </dependency>
+
+        <!-- DB 相关 -->
+        <dependency>
+            <groupId>com.zp</groupId>
+            <artifactId>gmall-spring-boot-starter-mybatis</artifactId>
+            <version>1.0-SNAPSHOT</version>
+        </dependency>
+
+        <dependency>
+            <groupId>com.zp</groupId>
+            <artifactId>gmall-spring-boot-starter-redis</artifactId>
+            <version>1.0-SNAPSHOT</version>
+        </dependency>
+
+        <!-- RPC 远程调用相关 -->
+        <dependency>
+            <groupId>com.zp</groupId>
+            <artifactId>gmall-spring-boot-starter-rpc</artifactId>
+            <version>1.0-SNAPSHOT</version>
+        </dependency>
+
+        <!-- Registry 注册中心相关 -->
+        <dependency>
+            <groupId>com.alibaba.cloud</groupId>
+            <artifactId>spring-cloud-starter-alibaba-nacos-discovery</artifactId>
+        </dependency>
+
+        <!-- Config 配置中心相关 -->
+        <dependency>
+            <groupId>com.alibaba.cloud</groupId>
+            <artifactId>spring-cloud-starter-alibaba-nacos-config</artifactId>
+        </dependency>
+
+        <!-- Job 定时任务相关 -->
+        <dependency>
+            <groupId>com.zp</groupId>
+            <artifactId>gmall-spring-boot-starter-job</artifactId>
+            <version>1.0-SNAPSHOT</version>
+        </dependency>
+
+        <!-- Test 测试相关 -->
+        <dependency>
+            <groupId>com.zp</groupId>
+            <artifactId>gmall-spring-boot-starter-test</artifactId>
+            <version>1.0-SNAPSHOT</version>
+            <scope>test</scope>
+        </dependency>
+
+        <!-- 监控相关 -->
+        <dependency>
+            <groupId>com.zp</groupId>
+            <artifactId>gmall-spring-boot-starter-monitor</artifactId>
+            <version>1.0-SNAPSHOT</version>
+        </dependency>
+
+        <!-- 工具类相关 -->
+        <dependency>
+            <groupId>com.zp</groupId>
+            <artifactId>gmall-spring-boot-starter-excel</artifactId>
+            <version>1.0-SNAPSHOT</version>
+        </dependency>
+
+    </dependencies>
+
+</project>

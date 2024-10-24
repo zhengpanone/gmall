@@ -1,0 +1,21 @@
+--- #################### 注册中心相关配置 ####################
+spring:
+  cloud:
+    nacos:
+      server-addr: 127.0.0.1:8848
+      discovery:
+        group: gmall # 命名空间。这里使用 gmall 开发环境
+        namespace: 3807ee3b-617b-41fc-84e1-f358bcd4ea28
+
+--- #################### 配置中心相关配置 ####################
+spring:
+  cloud:
+    nacos:
+      # Nacos Config 配置项，对应 NacosConfigProperties 配置属性类
+      config:
+        server-addr: 127.0.0.1:8848
+        enabled: true
+        file-extension: yaml
+        group: gmall
+        namespace: 3807ee3b-617b-41fc-84e1-f358bcd4ea28
+

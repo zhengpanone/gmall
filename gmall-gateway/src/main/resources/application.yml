@@ -1,5 +1,65 @@
 spring:
-  profiles:
-    active: dev
   main:
-    web-application-type: reactive
+    allow-circular-references: true # 允许循环依赖，因为项目是三层架构，无法避免这个情况。
+  cloud:
+    # Spring Cloud Gateway 配置项，对应 GatewayProperties 类
+    gateway:
+      discovery:
+        locator:
+          enabled: true #开启从注册中心动态创建路由的功能，利用微服务名进行路由
+      # 路由配置项，对应 RouteDefinition 数组
+      routes:
+         # system-server 服务
+        - id: system-admin-api # 路由的编号
+          uri: grayLb://system-server
+          predicates: # 断言，作为路由的匹配条件，对应 RouteDefinition 数组
+            - Path=/admin-api/system/**
+          filters:
+            - RewritePath=/admin-api/system/v3/api-docs, /v3/api-docs # 配置，保证转发到 /v3/api-docs
+
+        - id: system-app-api # 路由的编号
+          uri: grayLb://system-server
+          predicates: # 断言，作为路由的匹配条件，对应 RouteDefinition 数组
+            - Path=/app-api/system/**
+          filters:
+            - RewritePath=/app-api/system/v3/api-docs, /v3/api-docs
+
+        ## infra-server 服务
+        - id: infra-admin-api # 路由的编号
+          uri: grayLb://infra-server
+          predicates: # 断言，作为路由的匹配条件，对应 RouteDefinition 数组
+            - Path=/admin-api/infra/**
+          filters:
+            - RewritePath=/admin-api/infra/v3/api-docs, /v3/api-docs
+        - id: infra-app-api # 路由的编号
+          uri: grayLb://infra-server
+          predicates: # 断言，作为路由的匹配条件，对应 RouteDefinition 数组
+            - Path=/app-api/infra/**
+          filters:
+            - RewritePath=/app-api/infra/v3/api-docs, /v3/api-docs
+        - id: infra-spring-boot-admin # 路由的编号（Spring Boot Admin）
+          uri: grayLb://infra-server
+          predicates: # 断言，作为路由的匹配条件，对应 RouteDefinition 数组
+            - Path=/admin/**
+        - id: infra-websocket # 路由的编号（WebSocket）
+          uri: grayLb://infra-server
+          predicates: # 断言，作为路由的匹配条件，对应 RouteDefinition 数组
+            - Path=/infra/ws/**
+
+
+      x-forwarded:
+        prefix-enabled: false # 避免 Swagger 重复带上额外的 /admin-api/system 前缀
+
+knife4j:
+  gateway:
+    discover:
+      enabled: true
+    enabled: true
+    strategy: discover
+    routes:
+      - name: system-server
+        service-name: system-server
+        url: /admin-api/system/v3/api-docs
+      - name: infra-server
+        service-name: infra-server
+        url: /admin-api/infra/v3/api-docs

@@ -1,0 +1,21 @@
+--- #注册中心相关配置
+spring:
+  cloud:
+    nacos:
+      server-addr: 127.0.0.1:8848
+      discovery:
+        group: gmall
+        namespace: 3807ee3b-617b-41fc-84e1-f358bcd4ea28
+        metadata:
+          version: 1.0.0 # 服务实例的版本号，可用于灰度发布
+--- #配置中心相关配置
+spring:
+  cloud:
+    nacos:
+      config:
+        server-addr: 127.0.0.1:8848
+        group: gmall
+        namespace: 3807ee3b-617b-41fc-84e1-f358bcd4ea28
+        name: ${spring.application.name}
+        file-extension: yaml
+

@@ -1,0 +1,253 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <parent>
+        <groupId>com.zp</groupId>
+        <artifactId>gmall-module-system</artifactId>
+        <version>1.0-SNAPSHOT</version>
+    </parent>
+    <modelVersion>4.0.0</modelVersion>
+    <artifactId>gmall-module-system-biz</artifactId>
+    <version>1.0-SNAPSHOT</version>
+    <packaging>jar</packaging>
+
+    <name>${project.artifactId}</name>
+    <description>
+        system 模块下，我们放通用业务，支撑上层的核心业务。
+        例如说：用户、部门、权限、数据字典等等
+    </description>
+
+    <dependencies>
+        <!-- Spring Cloud 基础 -->
+        <dependency>
+            <groupId>org.springframework.cloud</groupId>
+            <artifactId>spring-cloud-starter-bootstrap</artifactId>
+        </dependency>
+
+        <dependency>
+            <groupId>com.zp</groupId>
+            <artifactId>gmall-spring-boot-starter-env</artifactId>
+            <version>1.0-SNAPSHOT</version>
+        </dependency>
+
+        <!-- 依赖服务 -->
+        <dependency>
+            <groupId>com.zp</groupId>
+            <artifactId>gmall-module-system-api</artifactId>
+            <version>1.0-SNAPSHOT</version>
+        </dependency>
+        <dependency>
+            <groupId>com.zp</groupId>
+            <artifactId>gmall-module-infra-api</artifactId>
+            <version>1.0-SNAPSHOT</version>
+        </dependency>
+
+        <!-- 业务组件 -->
+        <dependency>
+            <groupId>com.zp</groupId>
+            <artifactId>gmall-spring-boot-starter-banner</artifactId>
+            <version>1.0-SNAPSHOT</version>
+        </dependency>
+        <dependency>
+            <groupId>com.zp</groupId>
+            <artifactId>gmall-spring-boot-starter-biz-tenant</artifactId>
+            <version>1.0-SNAPSHOT</version>
+        </dependency>
+        <dependency>
+            <groupId>com.zp</groupId>
+            <artifactId>gmall-spring-boot-starter-biz-operatelog</artifactId>
+            <version>1.0-SNAPSHOT</version>
+        </dependency>
+        <dependency>
+            <groupId>com.zp</groupId>
+            <artifactId>gmall-spring-boot-starter-biz-sms</artifactId>
+            <version>1.0-SNAPSHOT</version>
+        </dependency>
+        <dependency>
+            <groupId>com.zp</groupId>
+            <artifactId>gmall-spring-boot-starter-biz-dict</artifactId>
+            <version>1.0-SNAPSHOT</version>
+        </dependency>
+        <!-- <dependency>
+            <groupId>com.zp</groupId>
+            <artifactId>gmall-spring-boot-starter-biz-data-permission</artifactId>
+            <version>1.0-SNAPSHOT</version>
+        </dependency> -->
+        <dependency>
+            <groupId>com.zp</groupId>
+            <artifactId>gmall-spring-boot-starter-biz-social</artifactId>
+            <version>1.0-SNAPSHOT</version>
+        </dependency>
+
+        <!-- <dependency>
+            <groupId>com.zp</groupId>
+            <artifactId>gmall-spring-boot-starter-biz-error-code</artifactId>
+            <version>1.0-SNAPSHOT</version>
+        </dependency> -->
+        <dependency>
+            <groupId>com.zp</groupId>
+            <artifactId>gmall-spring-boot-starter-biz-ip</artifactId>
+            <version>1.0-SNAPSHOT</version>
+        </dependency>
+
+        <!-- Web 相关 -->
+          <dependency>
+              <groupId>com.zp</groupId>
+              <artifactId>gmall-spring-boot-starter-security</artifactId>
+              <version>${project.version}</version>
+          </dependency>
+
+        <!-- DB 相关 -->
+        <dependency>
+            <groupId>com.zp</groupId>
+            <artifactId>gmall-spring-boot-starter-mybatis</artifactId>
+            <version>${project.version}</version>
+        </dependency>
+
+        <dependency>
+            <groupId>com.zp</groupId>
+            <artifactId>gmall-spring-boot-starter-redis</artifactId>
+            <version>${project.version}</version>
+        </dependency>
+
+        <!-- RPC 远程调用相关 -->
+        <dependency>
+            <groupId>com.zp</groupId>
+            <artifactId>gmall-spring-boot-starter-rpc</artifactId>
+            <version>${project.version}</version>
+        </dependency>
+
+        <!-- Registry 注册中心相关 -->
+        <dependency>
+            <groupId>com.alibaba.cloud</groupId>
+            <artifactId>spring-cloud-starter-alibaba-nacos-discovery</artifactId>
+        </dependency>
+
+        <!-- Config 配置中心相关 -->
+        <dependency>
+            <groupId>com.alibaba.cloud</groupId>
+            <artifactId>spring-cloud-starter-alibaba-nacos-config</artifactId>
+        </dependency>
+
+        <!-- Job 定时任务相关 -->
+        <!--  <dependency>
+             <groupId>com.zp</groupId>
+             <artifactId>gmall-spring-boot-starter-job</artifactId>
+         </dependency> -->
+
+        <!-- 消息队列相关 -->
+        <dependency>
+            <groupId>com.zp</groupId>
+            <artifactId>gmall-spring-boot-starter-mq</artifactId>
+            <version>${project.version}</version>
+        </dependency>
+
+        <!-- 服务保障相关 TODO 芋艿：暂时去掉 -->
+        <!--        <dependency>-->
+        <!--            <groupId>com.zp</groupId>-->
+        <!--            <artifactId>gmall-spring-boot-starter-protection</artifactId>-->
+        <!--        </dependency>-->
+
+        <!-- Test 测试相关 -->
+        <dependency>
+            <groupId>com.zp</groupId>
+            <artifactId>gmall-spring-boot-starter-test</artifactId>
+            <version>${project.version}</version>
+            <scope>test</scope>
+        </dependency>
+
+        <!-- 工具类相关 -->
+        <dependency>
+            <groupId>com.zp</groupId>
+            <artifactId>gmall-spring-boot-starter-excel</artifactId>
+            <version>${project.version}</version>
+        </dependency>
+
+        <dependency>
+            <groupId>com.zp</groupId>
+            <artifactId>gmall-spring-boot-starter-captcha</artifactId>
+            <version>${project.version}</version>
+        </dependency>
+
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-mail</artifactId>
+        </dependency>
+
+        <!-- 监控相关 -->
+        <!--  <dependency>
+             <groupId>com.zp</groupId>
+             <artifactId>gmall-spring-boot-starter-monitor</artifactId>
+         </dependency> -->
+
+    </dependencies>
+    <build>
+        <!-- 设置构建的 jar 包名 -->
+        <finalName>${project.artifactId}</finalName>
+        <plugins>
+            <!-- 打包 -->
+            <plugin>
+                <groupId>org.springframework.boot</groupId>
+                <artifactId>spring-boot-maven-plugin</artifactId>
+                <version>${spring.boot.version}</version>
+                <executions>
+                    <execution>
+                        <goals>
+                            <goal>repackage</goal> <!-- 将引入的 jar 打入其中 -->
+                        </goals>
+                    </execution>
+                </executions>
+            </plugin>
+            <!-- <plugin>
+                <groupId>com.google.cloud.tools</groupId>
+                <artifactId>jib-maven-plugin</artifactId>
+                <version>3.4.0</version>
+                <configuration>
+                    &lt;!&ndash;基础镜像，来自dockerhub,如果是私服，需要加上鉴权信息，和to下的auth节点相同&ndash;&gt;
+                    <from>
+                        <image>192.168.1.130:5000/library/openjdk:8-jdk-alpine</image>
+                        <auth>
+                            <username>admin</username>
+                            <password>Har12.34Bor</password>
+                        </auth>
+                    </from>
+                    &lt;!&ndash;容器相关设置&ndash;&gt;
+                    <container>
+                        &lt;!&ndash;创建时间&ndash;&gt;
+                        <creationTime>${maven.build.timestamp}</creationTime>
+                        &lt;!&ndash;放置应用程序内容的容器上的根目录&ndash;&gt;
+                        <appRoot>/deploy/service/${project.artifactId}</appRoot>
+                        &lt;!&ndash;容器在运行时公开的端口&ndash;&gt;
+                        <ports>8080</ports>
+                        &lt;!&ndash;容器中的工作目录&ndash;&gt;
+                        <workingDirectory>/deploy/service/${project.artifactId}</workingDirectory>
+                    </container>
+                    &lt;!&ndash;构建后的镜像名称以及私服地址、鉴权信息&ndash;&gt;
+                    <to>
+                        <image>192.168.1.130:5000/library/${project.name}:${project.version}</image>
+                        <auth>
+                            <username>admin</username>
+                            <password>Har12.34Bor</password>
+                        </auth>
+                    </to>
+                    &lt;!&ndash;允许非https&ndash;&gt;
+                    <allowInsecureRegistries>true</allowInsecureRegistries>
+                </configuration>
+                &lt;!&ndash;将jib与mvn构建的生命周期绑定 mvn package自动构造镜像&ndash;&gt;
+                &lt;!&ndash;打包及推送命令 mvn  -DsendCredentialsOverHttp=true clean package&ndash;&gt;
+                <executions>
+                    <execution>
+                        <phase>package</phase>
+                        <goals>
+                            <goal>build</goal>
+                        </goals>
+                    </execution>
+                </executions>
+            </plugin> -->
+        </plugins>
+
+
+    </build>
+
+</project>
