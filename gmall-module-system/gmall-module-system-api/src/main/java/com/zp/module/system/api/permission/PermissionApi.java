@@ -20,7 +20,7 @@ import java.util.Set;
  * Version : v1.0.0
  * Description:
  */
-@FeignClient(name = ApiConstants.NAME)
+@FeignClient(contextId = "permissionApi", name = ApiConstants.NAME)
 @Tag(name = "RPC 服务-权限")
 public interface PermissionApi {
     String PREFIX = ApiConstants.PREFIX + "/permission";

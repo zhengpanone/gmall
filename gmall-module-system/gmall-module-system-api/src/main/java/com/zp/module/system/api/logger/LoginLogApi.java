@@ -16,7 +16,7 @@ import org.springframework.web.bind.annotation.RequestBody;
  * Version : v1.0.0
  * Description: RPC 服务 - 登录日志
  */
-@FeignClient(name = ApiConstants.NAME)
+@FeignClient(contextId = "loginLogApi", name = ApiConstants.NAME)
 @Tag(name = "RPC 服务 - 登录日志")
 public interface LoginLogApi {
     String PREFIX = ApiConstants.PREFIX + "/login-log";

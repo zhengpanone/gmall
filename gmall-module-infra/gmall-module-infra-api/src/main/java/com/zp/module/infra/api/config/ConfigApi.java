@@ -14,7 +14,7 @@ import org.springframework.web.bind.annotation.RequestParam;
  * Version : v1.0.0
  * Description:
  */
-@FeignClient(name = ApiConstants.NAME)
+@FeignClient(contextId = "configApi", name = ApiConstants.NAME)
 @Tag(name = "RPC 服务 - 参数配置")
 public interface ConfigApi {
 

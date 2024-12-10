@@ -21,7 +21,7 @@ import org.springframework.web.bind.annotation.RequestBody;
  * Version : v1.0.0
  * Description:
  */
-@FeignClient(name = ApiConstants.NAME)
+@FeignClient(contextId = "operateLogApi", name = ApiConstants.NAME)
 @Tag(name = "RPC 服务 - 操作日志")
 public interface OperateLogApi {
     String PREFIX = ApiConstants.PREFIX + "/operate-log";

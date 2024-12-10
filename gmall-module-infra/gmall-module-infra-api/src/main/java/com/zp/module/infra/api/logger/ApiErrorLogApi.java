@@ -16,7 +16,7 @@ import org.springframework.web.bind.annotation.RequestBody;
  * Version : v1.0.0
  
  */
-@FeignClient(name = ApiConstants.NAME)
+@FeignClient(contextId = "apiErrorLogApi", name = ApiConstants.NAME)
 @Tag(name = "RPC 服务 - API 异常日志")
 public interface ApiErrorLogApi {
     String PREFIX = ApiConstants.PREFIX + "/api-error-log";

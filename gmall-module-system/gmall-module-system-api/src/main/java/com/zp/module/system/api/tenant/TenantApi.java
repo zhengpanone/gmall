@@ -17,7 +17,7 @@ import java.util.List;
  * Version : v1.0.0
  * Description:
  */
-@FeignClient(name = ApiConstants.NAME)
+@FeignClient(contextId = "tenantApi", name = ApiConstants.NAME)
 @Tag(name = "RPC 服务 - 多租户")
 public interface TenantApi {
     String PREFIX = ApiConstants.PREFIX + "/tenant";

@@ -15,7 +15,7 @@ import org.springframework.web.bind.annotation.RequestParam;
  * Version : v1.0.0
  
  */
-@FeignClient(name = ApiConstants.NAME)
+@FeignClient(contextId = "adminUserApi", name = ApiConstants.NAME)
 @Tag(name = "RPC服务-管理员用户")
 public interface AdminUserApi {
     String PREFIX = ApiConstants.PREFIX + "/user";
