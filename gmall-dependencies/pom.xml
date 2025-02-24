@@ -24,10 +24,10 @@
         <springdoc.version>2.6.0</springdoc.version>
         <knife4j.version>4.3.0</knife4j.version>
         <!-- DB 相关 -->
-        <druid.version>1.2.19</druid.version>
+        <!-- <druid.version>1.2.23</druid.version> -->
         <mybatis-plus.version>3.5.3.2</mybatis-plus.version>
         <mybatis-plus-generator.version>3.5.3.2</mybatis-plus-generator.version>
-        <dynamic-datasource.version>3.6.1</dynamic-datasource.version>
+        <dynamic-datasource.version>4.3.1</dynamic-datasource.version>
         <mybatis-plus-join-boot-starter.version>1.4.6</mybatis-plus-join-boot-starter.version>
         <redisson.version>3.23.4</redisson.version>
         <dm8.jdbc.version>8.1.2.141</dm8.jdbc.version>
@@ -207,11 +207,11 @@
                 <version>${project.version}</version>
             </dependency>
 
-            <dependency>
-                <groupId>com.alibaba</groupId>
-                <artifactId>druid-spring-boot-3-starter</artifactId>
-                <version>${druid.version}</version>
-            </dependency>
+            <!-- <dependency> -->
+            <!--     <groupId>com.alibaba</groupId> -->
+            <!--     <artifactId>druid-spring-boot-3-starter</artifactId> -->
+            <!--     <version>${druid.version}</version> -->
+            <!-- </dependency> -->
             <dependency>
                 <groupId>com.baomidou</groupId>
                 <artifactId>mybatis-plus-boot-starter</artifactId>
@@ -224,7 +224,7 @@
             </dependency>
             <dependency>
                 <groupId>com.baomidou</groupId>
-                <artifactId>dynamic-datasource-spring-boot-starter</artifactId> <!-- 多数据源 -->
+                <artifactId>dynamic-datasource-spring-boot3-starter</artifactId> <!-- 多数据源 -->
                 <version>${dynamic-datasource.version}</version>
             </dependency>
             <dependency>
@@ -345,11 +345,11 @@
                 <artifactId>resilience4j-ratelimiter</artifactId>
                 <version>${resilience4j.version}</version>
             </dependency>
-            <dependency>
+            <!-- <dependency>
                 <groupId>io.github.resilience4j</groupId>
                 <artifactId>resilience4j-spring-boot3</artifactId>
                 <version>${resilience4j.version}</version>
-            </dependency>
+            </dependency> -->
 
             <!-- 监控相关 -->
             <dependency>
@@ -399,11 +399,11 @@
                 <version>${opentracing.version}</version>
             </dependency>
 
-            <dependency>
+           <!--  <dependency>
                 <groupId>de.codecentric</groupId>
-                <artifactId>spring-boot-admin-starter-server</artifactId> <!-- 实现 Spring Boot Admin Server 服务端 -->
+                <artifactId>spring-boot-admin-starter-server</artifactId> &lt;!&ndash; 实现 Spring Boot Admin Server 服务端 &ndash;&gt;
                 <version>${spring-boot-admin.version}</version>
-            </dependency>
+            </dependency> -->
             <dependency>
                 <groupId>de.codecentric</groupId>
                 <artifactId>spring-boot-admin-starter-client</artifactId> <!-- 实现 Spring Boot Admin Server 服务端 -->

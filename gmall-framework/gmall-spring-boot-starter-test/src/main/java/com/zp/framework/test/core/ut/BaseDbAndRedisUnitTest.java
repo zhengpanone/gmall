@@ -1,8 +1,8 @@
 package com.zp.framework.test.core.ut;
 
-import com.alibaba.druid.spring.boot3.autoconfigure.DruidDataSourceAutoConfigure;
+//import com.alibaba.druid.spring.boot3.autoconfigure.DruidDataSourceAutoConfigure;
 import com.baomidou.mybatisplus.autoconfigure.MybatisPlusAutoConfiguration;
-import com.zp.framework.datasource.config.GmallDataSourceAutoConfiguration;
+//import com.zp.framework.datasource.config.GmallDataSourceAutoConfiguration;
 import com.zp.framework.mybatis.config.GmallMybatisAutoConfiguration;
 import com.zp.framework.redis.config.GmallRedisAutoConfiguration;
 import com.zp.framework.test.config.RedisTestConfiguration;
@@ -29,10 +29,10 @@ public class BaseDbAndRedisUnitTest {
 
     @Import({
             // DB 配置类
-            GmallDataSourceAutoConfiguration.class, // 自己的 DB 配置类
+            //GmallDataSourceAutoConfiguration.class, // 自己的 DB 配置类
             DataSourceAutoConfiguration.class, // Spring DB 自动配置类
             DataSourceTransactionManagerAutoConfiguration.class, // Spring 事务自动配置类
-            DruidDataSourceAutoConfigure.class, // Druid 自动配置类
+            //DruidDataSourceAutoConfigure.class, // Druid 自动配置类
             SqlInitializationTestConfiguration.class, // SQL 初始化
             // MyBatis 配置类
             GmallMybatisAutoConfiguration.class, // 自己的 MyBatis 配置类

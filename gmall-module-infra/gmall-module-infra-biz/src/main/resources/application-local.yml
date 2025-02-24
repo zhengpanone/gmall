@@ -1,12 +1,12 @@
 --- #################### 数据库相关配置 ####################
 spring:
   # 数据源配置项
-  autoconfigure:
-    exclude:
-      - de.codecentric.boot.admin.server.config.AdminServerAutoConfiguration # 禁用 Spring Boot Admin 的 Server 的自动配置
-      - de.codecentric.boot.admin.server.cloud.config.AdminServerDiscoveryAutoConfiguration # 禁用 Spring Boot Admin 的 Server 的自动配置
-      - de.codecentric.boot.admin.server.ui.config.AdminServerUiAutoConfiguration # 禁用 Spring Boot Admin 的 Server UI 的自动配置
-      - de.codecentric.boot.admin.client.config.SpringBootAdminClientAutoConfiguration # 禁用 Spring Boot Admin 的 Client 的自动配置
+#  autoconfigure:
+#    exclude:
+#      - de.codecentric.boot.admin.server.config.AdminServerAutoConfiguration # 禁用 Spring Boot Admin 的 Server 的自动配置
+#      - de.codecentric.boot.admin.server.cloud.config.AdminServerDiscoveryAutoConfiguration # 禁用 Spring Boot Admin 的 Server 的自动配置
+#      - de.codecentric.boot.admin.server.ui.config.AdminServerUiAutoConfiguration # 禁用 Spring Boot Admin 的 Server UI 的自动配置
+#      - de.codecentric.boot.admin.client.config.SpringBootAdminClientAutoConfiguration # 禁用 Spring Boot Admin 的 Client 的自动配置
   datasource:
     druid:
       web-stat-filter:
@@ -26,6 +26,7 @@ spring:
           wall:
             config:
               multi-statement-allow: true
+
     dynamic: # 多数据源配置
         druid: # Druid 【连接池】相关的全局配置
           initial-size: 1 # 初始连接数

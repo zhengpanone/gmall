@@ -35,8 +35,8 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
-import static org.springframework.security.web.util.matcher.AntPathRequestMatcher.antMatcher;
 import static com.zp.framework.common.util.collection.CollectionUtils.convertList;
+
 /**
  * Author : zhengpanone
  * Date : 2024/1/9 15:15
@@ -123,17 +123,16 @@ public class GmallWebSecurityConfigurerAdapter {
                 // 一堆自定义的 Spring Security 处理器
                 .exceptionHandling(c -> c.authenticationEntryPoint(authenticationEntryPoint)
                         .accessDeniedHandler(accessDeniedHandler));
-        // 登录、登录暂时不使用 Spring Security 的拓展点，主要考虑一方面拓展多用户、多种登录方式相对复杂，一方面用户的学习成本较高
 
         // 获得 @PermitAll 带来的 URL 列表，免登录
         Multimap<HttpMethod, String> permitAllUrls = getPermitAllUrlsFromAnnotations();
+
         // 设置每个请求的权限
         httpSecurity
                 // ①：全局共享规则
                 .authorizeHttpRequests(c -> c
                         // 1.1 静态资源，可匿名访问
-                        .requestMatchers(HttpMethod.GET, "/*.html", "/*.css", "/*.js", "/doc.html", "/favicon.ico", "/swagger-resources").permitAll()
-                        .requestMatchers(antMatcher("/webjars/**"), antMatcher("/v2/**"), antMatcher("/v3/**"), antMatcher("/swagger-ui/**")).permitAll()
+                        .requestMatchers("/*.html", "/*.css", "/*.js", "/doc.html", "/favicon.ico", "/swagger-resources").permitAll()
                         // 1.1 设置 @PermitAll 无需认证
                         .requestMatchers(HttpMethod.GET, permitAllUrls.get(HttpMethod.GET).toArray(new String[0])).permitAll()
                         .requestMatchers(HttpMethod.POST, permitAllUrls.get(HttpMethod.POST).toArray(new String[0])).permitAll()
@@ -141,7 +140,7 @@ public class GmallWebSecurityConfigurerAdapter {
                         .requestMatchers(HttpMethod.DELETE, permitAllUrls.get(HttpMethod.DELETE).toArray(new String[0])).permitAll()
                         .requestMatchers(HttpMethod.HEAD, permitAllUrls.get(HttpMethod.HEAD).toArray(new String[0])).permitAll()
                         .requestMatchers(HttpMethod.PATCH, permitAllUrls.get(HttpMethod.PATCH).toArray(new String[0])).permitAll()
-                        // 1.2 基于 gmall.security.permit-all-urls 无需认证
+                        // 1.3 基于 gmall.security.permit-all-urls 无需认证
                         .requestMatchers(securityProperties.getPermitAllUrls().toArray(new String[0])).permitAll()
                         // 1.3 设置 App API 无需认证
                         .requestMatchers(buildAppApi("/**")).permitAll()
@@ -176,10 +175,10 @@ public class GmallWebSecurityConfigurerAdapter {
             if (entry.getKey().getPatternsCondition() != null) {
                 urls.addAll(entry.getKey().getPatternsCondition().getPatterns());
             }
-            if(entry.getKey().getPathPatternsCondition()!=null){
+            if (entry.getKey().getPathPatternsCondition() != null) {
                 urls.addAll(convertList(entry.getKey().getPathPatternsCondition().getPatterns(), PathPattern::getPatternString));
             }
-            if(urls.isEmpty()){
+            if (urls.isEmpty()) {
                 continue;
             }
             // 特殊：使用 @RequestMapping 注解，并且未写 method 属性，此时认为都需要免登录

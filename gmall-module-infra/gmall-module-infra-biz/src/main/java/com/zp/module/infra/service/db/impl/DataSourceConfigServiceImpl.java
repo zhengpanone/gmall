@@ -1,6 +1,6 @@
 package com.zp.module.infra.service.db.impl;
 
-import com.baomidou.dynamic.datasource.spring.boot.autoconfigure.DataSourceProperty;
+import com.baomidou.dynamic.datasource.creator.DataSourceProperty;
 import com.baomidou.dynamic.datasource.spring.boot.autoconfigure.DynamicDataSourceProperties;
 import com.zp.module.infra.controller.admin.db.dto.DataSourceConfigSaveReqDTO;
 import com.zp.module.infra.dal.dataobject.db.DataSourceConfigDO;

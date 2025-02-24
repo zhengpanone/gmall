@@ -1,6 +1,5 @@
 package com.zp.framework.mybatis.config;
 
-import com.alibaba.druid.sql.ast.statement.SQLConstraint;
 import com.baomidou.mybatisplus.annotation.DbType;
 import com.baomidou.mybatisplus.annotation.IdType;
 import com.zp.framework.mybatis.core.enums.SqlConstants;
