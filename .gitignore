@@ -3,3 +3,5 @@
 *.iml
 **/target
 **/rebel.xml
+**/.flattened-pom.xml
+gmall-ui/

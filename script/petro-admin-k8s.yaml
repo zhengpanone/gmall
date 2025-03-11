@@ -1,0 +1,135 @@
+---
+# 指定API版本
+apiVersion: apps/v1
+# Deployment资源类型
+kind: Deployment
+# 定义Deployment资源元数据
+metadata:
+  # 定义标签,自定义内容
+  labels:
+    # 区分是前端(frontend)还是后端(backend)
+    tier: backend
+    # 具体服务名
+    app: petro-admin
+    # 所属系统名
+    component: petro-ecs
+  # 名称
+  name: petro-admin
+  # 命名空间
+  namespace: petro-ecs
+# Deployment的详细规范
+spec:
+  # 于各种原因升级卡住（这个时候还没有明确的升级失败），比如在拉取被墙的镜像，权限不够等错误。
+  # 那么这个时候就需要有个 deadline ，在 deadline 之内如果还卡着，那么就上报这个情况，这个时候这个 Deployment 状态就被标记为 False，并且注明原因。
+  # 但是它并不会阻止 Deployment 继续进行卡住后面的操作。完全由用户进行控制。单位为秒
+  progressDeadlineSeconds: 600
+  # 设置副本数据量为3
+  replicas: 3
+  # 设置选择器,定义如何选择匹配Pod
+  selector:
+    # 设置匹配标签
+    matchLabels:
+      app: petro-admin
+      tier: backend
+      component: petro-ecs
+  # 定义pod替换更新策略
+  strategy:
+    rollingUpdate:
+      # 可以超出期望的 Pod 数量（spec.replicas）的最大数量；例如，如果 Deployment 的 replicas 设置为 10，则在更新过程中，可以有多达 2.5（10 * 0.25）个额外的 Pod 被创建
+      maxSurge: 25%
+      # 可以低于期望的 Pod 数量（spec.replicas）的最大数量；例如，如果 Deployment 的 replicas 设置为 10，则在更新过程中，可以有多达 2.5（10 * 0.25）个 Pod 被终止，等待新的 Pod 就绪
+      maxUnavailable: 25%
+    # 使用滚动更新策略
+    type: RollingUpdate
+  # 定义pod模板
+  template:
+    # 定义pod模板的元数据
+    metadata:
+      labels:
+        app: petro-admin
+        tier: backend
+        component: petro-ecs
+    # 定义pod的详细规范
+    spec:
+      # 定义环境变量
+      containers:
+        - name: petro-html # 定义容器名
+          image: "K8S_TARGET_REPO_IMAGE" # 指定了容器使用的镜像 easzlab.io.local:5000/ecs/petro-admin:1.0.0
+          imagePullPolicy: Always # 镜像拉取策略；总是从仓库拉取镜像
+          ports:
+            - containerPort: 10141
+              protocol: TCP
+          # 指定 Pod 运行所需资源量
+          resources:
+            requests: # 最小资源
+              memory: "1024Mi" # 单位有Mi（Mebibytes）、Gi（Gibibytes）
+              cpu: "500m" #0.5 个 CPU 核心
+            limits: # 最大资源
+              memory: "2048Mi"
+              cpu: "1000m" # 1 个 CPU 核心
+          # 定义存活探针，用于检测 Pod 是否健康
+          livenessProbe:
+            # 连续三次探测都失败，Kubernetes 将重启容器
+            failureThreshold: 3
+            # 容器启动后 5 分钟才开始进行存活探针检查
+            initialDelaySeconds: 300
+            # 每 10 秒检查一次
+            periodSeconds: 10
+            # 只要有一次探测成功，就认为容器是健康的
+            successThreshold: 1
+            # 使用TCP 10141 端口探测
+            tcpSocket:
+              port: 10141
+            # 在超时时间内没有得到响应，探测将被认为失败
+            timeoutSeconds: 1
+          # 定义就绪探针，用于检测 Pod 是否准备好接受流量
+          readinessProbe:
+            # 连续三次探测都失败，Kubernetes 将认为容器未准备好
+            failureThreshold: 3
+            # 容器启动后 30 秒才开始进行就绪探针检查
+            initialDelaySeconds: 30
+            # 每 10 秒检查一次
+            periodSeconds: 10
+            # 只要有一次探测成功，就认为容器是准备好的
+            successThreshold: 1
+            # 设置10141 TCP 端口
+            tcpSocket:
+              port: 10141
+            # 超时时间内没有得到响应，探测将被认为失败
+            timeoutSeconds: 1
+          envFrom:
+            - configMapRef:
+                name: petro-ecs-cm
+      # 设置 DNS 策略为 ClusterFirst；如果域名是集群内部的服务或 Pod，它将使用集群内部的 DNS 记录。
+      # 如果 DNS 查询在集群内部无法解析，查询将 fallback 到上游 DNS 服务器（通常是节点的 DNS 设置）
+      dnsPolicy: ClusterFirst
+      # 无论何种情况下，Pod 都会重启
+      restartPolicy: Always
+---
+apiVersion: v1
+# 设置Service类型资源
+kind: Service
+metadata:
+  labels:
+    app: petro-admin
+    component: petro-ecs
+  name: petro-admin
+  namespace: petro-ecs
+spec:
+  # 定义 Service 监听的端口
+  ports:
+    - name: http
+      port: 10141 # svc监听集群中的端口号
+      protocol: TCP
+      targetPort: 10141 # 应用容器监听的端口号
+  selector:
+    app: petro-admin
+    component: petro-ecs
+    tier: backend
+  # 设置会话亲和性，None 表示没有会话亲和性，即不对客户端的连接进行粘滞
+  sessionAffinity: None
+  # NodePort: 可被集群外部访问；
+  # ClusterIP：默认类型，集群内部使用，集群外部无法访问
+  # ExternalName：将一个service映射到一个域名上
+  # LoadBalancer：如果云厂商提供外部负载均衡器，可以将service类型设置为LoadBalancer
+  type: ClusterIP

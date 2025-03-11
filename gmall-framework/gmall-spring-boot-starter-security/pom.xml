@@ -2,85 +2,40 @@
 <project xmlns="http://maven.apache.org/POM/4.0.0"
          xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
-    <parent>
-        <groupId>com.zp</groupId>
-        <artifactId>gmall-framework</artifactId>
-        <version>1.0-SNAPSHOT</version>
-    </parent>
     <modelVersion>4.0.0</modelVersion>
+    <parent>
+        <groupId>com.zp.gmall</groupId>
+        <artifactId>gmall-framework</artifactId>
+        <version>${revision}</version>
+    </parent>
     <artifactId>gmall-spring-boot-starter-security</artifactId>
-    <name>${project.artifactId}</name>
-    <version>1.0-SNAPSHOT</version>
     <packaging>jar</packaging>
-
-    <description>用户的认证、权限的校验</description>
-    <url>https://github.com/YunaiV/ruoyi-vue-pro</url>
+    <version>${revision}</version>
+    <name>${project.artifactId}</name>
+    <description>
+        security：用户的认证、权限的校验，实现「谁」可以做「什么事」
+    </description>
 
     <dependencies>
         <dependency>
-            <groupId>com.zp</groupId>
+            <groupId>com.zp.gmall</groupId>
             <artifactId>gmall-common</artifactId>
-            <version>${project.version}</version>
         </dependency>
-
-        <!-- Spring 核心 -->
-        <dependency>
-            <groupId>org.springframework.boot</groupId>
-            <artifactId>spring-boot-starter-aop</artifactId>
-        </dependency>
-
-        <!-- Web 相关 -->
-        <dependency>
-            <groupId>com.zp</groupId>
-            <artifactId>gmall-spring-boot-starter-web</artifactId>
-            <version>1.0-SNAPSHOT</version>
-        </dependency>
-        <!-- spring boot 配置所需依赖 -->
+        <!-- Spring Boot 配置所需依赖 -->
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-configuration-processor</artifactId>
             <optional>true</optional>
         </dependency>
+        <!-- Web 相关 -->
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-web</artifactId>
+        </dependency>
 
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-security</artifactId>
-        </dependency>
-
-        <!-- RPC 远程调用相关 -->
-        <dependency>
-            <groupId>org.springframework.cloud</groupId>
-            <artifactId>spring-cloud-starter-loadbalancer</artifactId>
-        </dependency>
-        <dependency>
-            <groupId>org.springframework.cloud</groupId>
-            <artifactId>spring-cloud-starter-openfeign</artifactId>
-            <optional>true</optional>
-        </dependency>
-        <dependency>
-            <groupId>io.github.openfeign</groupId>
-            <artifactId>feign-okhttp</artifactId>
-        </dependency>
-
-        <!-- 业务组件 -->
-        <dependency>
-            <groupId>com.zp</groupId>
-            <artifactId>gmall-module-system-api</artifactId> <!-- 需要使用它，进行 Token 的校验 -->
-            <version>1.0-SNAPSHOT</version>
-        </dependency>
-
-
-        <!-- 工具类相关 -->
-        <dependency>
-            <groupId>com.google.guava</groupId>
-            <artifactId>guava</artifactId>
-        </dependency>
-
-        <dependency>
-            <!-- Spring Boot 通用操作日志组件，基于注解实现 -->
-            <!-- 此组件解决的问题是：「谁」在「什么时间」对「什么」做了「什么事」 -->
-            <groupId>io.github.mouzt</groupId>
-            <artifactId>bizlog-sdk</artifactId>
         </dependency>
     </dependencies>
 

@@ -2,54 +2,69 @@
 <project xmlns="http://maven.apache.org/POM/4.0.0"
          xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
-    <parent>
-        <artifactId>gmall</artifactId>
-        <groupId>com.zp</groupId>
-        <version>1.0-SNAPSHOT</version>
-    </parent>
     <modelVersion>4.0.0</modelVersion>
+    <parent>
+        <groupId>com.zp.gmall</groupId>
+        <artifactId>gmall</artifactId>
+        <version>${revision}</version>
+    </parent>
     <artifactId>gmall-gateway</artifactId>
-    <packaging>jar</packaging>
-    <version>1.0-SNAPSHOT</version>
-
     <name>${project.artifactId}</name>
+    <packaging>jar</packaging>
     <description>API 服务网关，基于 Spring Cloud Gateway 实现</description>
-    <url>https://github.com/YunaiV/yudao-cloud</url>
 
     <dependencies>
-        <!-- Spring Cloud 基础 -->
+
+        <dependency>
+            <groupId>com.zp.gmall</groupId>
+            <artifactId>gmall-common</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>com.mysql</groupId>
+            <artifactId>mysql-connector-j</artifactId>
+        </dependency>
+
+        <dependency>
+            <groupId>org.projectlombok</groupId>
+            <artifactId>lombok</artifactId>
+        </dependency>
+
+        <dependency>
+            <groupId>org.flywaydb</groupId>
+            <artifactId>flyway-core</artifactId>
+        </dependency>
+
+        <dependency>
+            <groupId>org.flywaydb</groupId>
+            <artifactId>flyway-mysql</artifactId>
+        </dependency>
+
+        <dependency>
+            <groupId>com.baomidou</groupId>
+            <artifactId>mybatis-plus-spring-boot3-starter</artifactId>
+        </dependency>
+
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-data-redis-reactive</artifactId>
+        </dependency>
+
         <dependency>
             <groupId>org.springframework.cloud</groupId>
             <artifactId>spring-cloud-starter-bootstrap</artifactId>
-        </dependency>
-
-        <!-- 业务组件 -->
-        <dependency>
-            <groupId>com.zp</groupId>
-            <artifactId>gmall-module-system-api</artifactId>
-        </dependency>
-
-        <dependency>
-            <groupId>com.zp</groupId>
-            <artifactId>gmall-spring-boot-starter-banner</artifactId>
         </dependency>
 
         <!-- Gateway 网关相关 -->
         <dependency>
             <groupId>org.springframework.cloud</groupId>
             <artifactId>spring-cloud-starter-gateway</artifactId>
-            <exclusions>
-                <exclusion>
-                    <groupId>org.springframework.boot</groupId>
-                    <artifactId>spring-boot-starter-web</artifactId>
-                </exclusion>
-            </exclusions>
         </dependency>
-        <!-- 接口文档 -->
-        <dependency>
-            <groupId>com.github.xiaoymin</groupId>
-            <artifactId>knife4j-gateway-spring-boot-starter</artifactId>
-        </dependency>
+
+        <!-- AMQP: RabbitMQ -->
+       <!--  <dependency>
+            <groupId>org.springframework.cloud</groupId>
+            <artifactId>spring-cloud-starter-bus-amqp</artifactId>
+        </dependency> -->
 
         <!-- RPC 远程调用相关 -->
         <dependency>
@@ -57,32 +72,31 @@
             <artifactId>spring-cloud-starter-loadbalancer</artifactId>
         </dependency>
 
+        <!-- 接口文档 -->
+        <dependency>
+            <groupId>org.springdoc</groupId>
+            <artifactId>springdoc-openapi-starter-webflux-ui</artifactId>
+        </dependency>
+
+
         <!-- Registry 注册中心相关 -->
         <dependency>
             <groupId>com.alibaba.cloud</groupId>
             <artifactId>spring-cloud-starter-alibaba-nacos-discovery</artifactId>
         </dependency>
 
-        <!-- Config 配置中心相关 -->
+        <!-- Registry 注册中心相关 -->
         <dependency>
             <groupId>com.alibaba.cloud</groupId>
             <artifactId>spring-cloud-starter-alibaba-nacos-config</artifactId>
         </dependency>
 
-        <!-- 监控相关 -->
         <dependency>
-            <groupId>com.zp</groupId>
-            <artifactId>gmall-spring-boot-starter-monitor</artifactId>
-            <version>${project.version}</version>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-actuator</artifactId>
         </dependency>
 
-        <!-- 工具类相关 -->
-        <dependency>
-            <groupId>com.google.guava</groupId>
-            <artifactId>guava</artifactId>
-        </dependency>
     </dependencies>
-
 
     <build>
         <!-- 设置构建的 jar 包名 -->
@@ -103,5 +117,4 @@
             </plugin>
         </plugins>
     </build>
-
 </project>

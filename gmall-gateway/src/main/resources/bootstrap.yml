@@ -2,13 +2,41 @@ spring:
   application:
     name: gateway-server
   profiles:
-    active: local
+    active: @profiles.active@
+  jmx:
+    enabled: true
 
 server:
   port: 48080
+#  servlet:
+#    context-path: /gateway
+
+--- #################### 注册中心相关配置 ####################
+spring:
+  cloud:
+    nacos:
+      username: @nacos.username@
+      password: @nacos.password@
+      discovery:
+        server-addr: @nacos.server@
+        group: ${spring.profiles.active} # 命名空间。这里使用 gmall 开发环境
+        namespace: @nacos.namespace@
+        watch:
+          enabled: true
+        watch-delay: 1000
+      config:
+        group: ${spring.profiles.active}
+        namespace: @nacos.namespace@
+        file-extension: yaml
+
 
 # 日志文件配置。注意，如果 logging.file.name 不放在 bootstrap.yaml 配置文件，
-#  而是放在 application.yaml 中，会导致出现 LOG_FILE_IS_UNDEFINED 文件
+# 而是放在 application.yaml 中，会导致出现 LOG_FILE_IS_UNDEFINED 文件
 logging:
   file:
-    name: ${user.name}/logs/${spring.application.name}.log # 日志文件名，全路径
+    # name: ${user.home}/log/${spring.application.name}.log # 日志文件名，全路径
+    name: /data/gmall/log/${spring.application.name}/${spring.application.name}.log
+  level:
+    root: info
+    com.github.xiaoymin: debug
+#    org.springframework.cloud.gateway: debug

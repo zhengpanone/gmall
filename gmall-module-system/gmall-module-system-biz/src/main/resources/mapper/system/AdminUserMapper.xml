@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.zp.gmall.module.system.mapper.user.AdminUserMapper">
+
+<!--     <select id="selectList" resultType="com.zp.gmall.module.system.entity.AdminUserDO">
+        SELECT * FROM sys_users
+    </select> -->
+</mapper>

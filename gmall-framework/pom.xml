@@ -4,12 +4,12 @@
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
     <parent>
+        <groupId>com.zp.gmall</groupId>
         <artifactId>gmall</artifactId>
-        <groupId>com.zp</groupId>
-        <version>1.0-SNAPSHOT</version>
+        <version>${revision}</version>
     </parent>
     <artifactId>gmall-framework</artifactId>
-    <version>1.0-SNAPSHOT</version>
+    <version>${revision}</version>
     <packaging>pom</packaging>
     <description>
         该包是技术组件，每个子包，代表一个组件。每个组件包括两部分：
@@ -25,36 +25,10 @@
 
     <modules>
         <module>gmall-common</module>
-        <module>gmall-spring-boot-starter-banner</module>
-        <module>gmall-spring-boot-starter-env</module>
-        <module>gmall-spring-boot-starter-biz-sms</module>
-        <module>gmall-spring-boot-starter-redis</module>
-
-        <module>gmall-spring-boot-starter-captcha</module>
-
-        <module>gmall-spring-boot-starter-web</module>
-        <module>gmall-spring-boot-starter-security</module>
+        <module>gmall-spring-boot-starter-tenant</module>
         <module>gmall-spring-boot-starter-mybatis</module>
-        <module>gmall-spring-boot-starter-file</module>
-        <module>gmall-spring-boot-starter-test</module>
-        <module>gmall-spring-boot-starter-desensitize</module>
-        <module>gmall-spring-boot-starter-mq</module>
-        <module>gmall-spring-boot-starter-flowable</module>
-        <module>gmall-spring-boot-starter-biz-pay</module>
-        <module>gmall-spring-boot-starter-monitor</module>
-        <module>gmall-spring-boot-starter-biz-social</module>
-        <module>gmall-spring-boot-starter-biz-tenant</module>
-        <module>gmall-spring-boot-starter-biz-weixin</module>
-        <module>gmall-spring-boot-starter-excel</module>
-        <module>gmall-spring-boot-starter-job</module>
-        <module>gmall-spring-boot-starter-protection</module>
-        <module>gmall-spring-boot-starter-biz-data-permission</module>
-        <!--
-        <module>gmall-spring-boot-starter-biz-sms</module>
-
-
-        <module>gmall-spring-boot-starter-websocket</module>
-        -->
+        <module>gmall-spring-boot-starter-security</module>
+        <module>gmall-spring-boot-starter-web</module>
     </modules>
 
 
