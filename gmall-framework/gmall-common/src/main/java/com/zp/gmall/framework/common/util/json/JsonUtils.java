@@ -4,6 +4,7 @@ import cn.hutool.core.util.ArrayUtil;
 import cn.hutool.core.util.StrUtil;
 import cn.hutool.json.JSONUtil;
 import com.fasterxml.jackson.annotation.JsonInclude;
+import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.DeserializationFeature;
 import com.fasterxml.jackson.databind.JsonNode;
@@ -19,9 +20,12 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- * JSON 工具类
- *
- * @author 芋道源码
+ * JSON 工具类（基于 Jackson 实现）
+ * <p>
+ * 1. 线程安全的 ObjectMapper 单例
+ * 2. 支持 Java 8 时间类型
+ * 3. 完善的异常处理
+ * 4. 类型安全的泛型支持
  */
 @Slf4j
 public class JsonUtils {
@@ -31,8 +35,10 @@ public class JsonUtils {
     static {
         objectMapper.configure(SerializationFeature.FAIL_ON_EMPTY_BEANS, false);
         objectMapper.configure(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES, false);
-        objectMapper.setSerializationInclusion(JsonInclude.Include.NON_NULL); // 忽略 null 值
-        objectMapper.registerModules(new JavaTimeModule()); // 解决 LocalDateTime 的序列化
+        // 忽略 null 值
+        objectMapper.setSerializationInclusion(JsonInclude.Include.NON_NULL);
+        // 解决 LocalDateTime 的序列化
+        objectMapper.registerModules(new JavaTimeModule());
     }
 
     /**
@@ -48,7 +54,12 @@ public class JsonUtils {
 
     @SneakyThrows
     public static String toJsonString(Object object) {
-        return objectMapper.writeValueAsString(object);
+        try {
+            return objectMapper.writeValueAsString(object);
+        } catch (JsonProcessingException e) {
+            log.error("对象序列化为JSON字符串失败", e);
+            throw new RuntimeException("JSON序列化失败", e);
+        }
     }
 
     @SneakyThrows

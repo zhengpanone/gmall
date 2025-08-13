@@ -1,4 +1,4 @@
-package com.zp.gmall.module.bpm.controller.admin.definition;
+package com.zp.gmall.module.bpm.controller.admin;
 
 import com.zp.gmall.framework.common.pojo.Result;
 import io.swagger.v3.oas.annotations.Operation;

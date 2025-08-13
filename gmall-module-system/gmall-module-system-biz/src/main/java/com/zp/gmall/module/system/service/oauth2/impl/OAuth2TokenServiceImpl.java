@@ -18,6 +18,6 @@ public class OAuth2TokenServiceImpl implements IOAuth2TokenService {
     @Override
     public OAuth2AccessTokenDO createAccessToken(Long userId, Integer userType, String clientId, List<String> scopes) {
 
-        return null;
+        return new OAuth2AccessTokenDO();
     }
 }

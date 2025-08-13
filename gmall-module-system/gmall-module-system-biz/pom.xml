@@ -37,6 +37,11 @@
         </dependency>
 
         <dependency>
+            <groupId>org.springframework.security</groupId>
+            <artifactId>spring-security-oauth2-authorization-server</artifactId>
+        </dependency>
+
+        <dependency>
             <groupId>com.zp.gmall</groupId>
             <artifactId>gmall-spring-boot-starter-tenant</artifactId>
         </dependency>
