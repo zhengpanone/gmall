@@ -1,0 +1,269 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+
+    <groupId>com.zp.gmall</groupId>
+    <artifactId>gmall</artifactId>
+    <version>${revision}</version>
+    <packaging>pom</packaging>
+    <description>商城项目- 基础脚手架</description>
+    <url>https://github.com/zhengpanone/gmall</url>
+
+    <modules>
+        <module>gmall-dependencies</module>
+        <module>gmall-framework</module>
+        <!--        <module>gmall-gateway</module>-->
+        <!--  各种 module 拓展 -->
+        <module>gmall-module-system</module>
+        <!--        <module>gmall-module-infra</module>-->
+        <!--        <module>gmall-module-bpm</module>-->
+        <!--        <module>gmall-module-pay</module>-->
+        <!--        <module>gmall-module-report</module>-->
+        <!--        <module>gmall-module-mall</module>-->
+        <!--        <module>gmall-module-member</module> &lt;!&ndash; 会员服务 &ndash;&gt;-->
+        <!--        <module>gmall-module-mp</module>-->
+
+        <!--      <module>gmall-product</module> &lt;!&ndash;商品服务&ndash;&gt;
+             <module>gmall-order</module> &lt;!&ndash;订单服务&ndash;&gt;
+             <module>gmall-coupon</module> &lt;!&ndash;优惠券服务&ndash;&gt;
+             <module>gmall-ware</module> -->
+        <module>gmall-module-ai</module>
+
+    </modules>
+
+    <properties>
+        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+        <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
+        <revision>1.0-SNAPSHOT</revision>
+        <flatten-maven-plugin.version>1.6.0</flatten-maven-plugin.version>
+        <java.version>21</java.version>
+        <maven.compiler.source>${java.version}</maven.compiler.source>
+        <maven.compiler.target>${java.version}</maven.compiler.target>
+        <maven-surefire-plugin.version>3.1.2</maven-surefire-plugin.version>
+        <maven-compiler-plugin.version>3.11.0</maven-compiler-plugin.version>
+        <maven-enforcer-plugin.version>3.4.1</maven-enforcer-plugin.version>
+        <jib-maven-plugin.version>3.4.3</jib-maven-plugin.version>
+        <jib.base.image>eclipse-temurin:17-jre</jib.base.image>
+
+        <lombok.version>1.18.36</lombok.version>
+        <spring.boot.version>3.4.1</spring.boot.version>
+        <mapstruct.version>1.6.3</mapstruct.version>
+
+    </properties>
+
+    <profiles>
+        <profile>
+            <id>local</id>
+            <activation>
+                <activeByDefault>true</activeByDefault>
+            </activation>
+            <properties>
+                <profiles.active>local</profiles.active>
+                <nacos.server>127.0.0.1:30848</nacos.server>
+                <nacos.namespace>gmall</nacos.namespace>
+                <nacos.group>local</nacos.group>
+                <nacos.username>nacos</nacos.username>
+                <nacos.password>nacos</nacos.password>
+                <logstash.address>127.0.0.1:4560</logstash.address>
+                <ai.dashscope.base-url>https://dashscope.aliyuncs.com/compatible-mode</ai.dashscope.base-url>
+                <ai.dashscope.model-id>qwen3.5-plus</ai.dashscope.model-id>
+            </properties>
+        </profile>
+        <profile>
+            <id>dev</id>
+            <properties>
+                <profiles.active>dev</profiles.active>
+                <nacos.server>127.0.0.1:8848</nacos.server>
+                <nacos.namespace>gmall</nacos.namespace>
+                <nacos.group>local</nacos.group>
+                <nacos.username>nacos</nacos.username>
+                <nacos.password>nacos</nacos.password>
+                <logstash.address>127.0.0.1:4560</logstash.address>
+                <ai.dashscope.agent.url>https://dashscope.aliyuncs.com/api/v1</ai.dashscope.agent.url>
+                <ai.dashscope.agent.model-id>qwen3.5-plus</ai.dashscope.agent.model-id>
+            </properties>
+        </profile>
+        <profile>
+            <id>prod</id>
+            <properties>
+                <profiles.active>prod</profiles.active>
+                <nacos.server>127.0.0.1:8848</nacos.server>
+                <nacos.namespace>gmall</nacos.namespace>
+                <nacos.group>local</nacos.group>
+                <nacos.username>nacos</nacos.username>
+                <nacos.password>nacos</nacos.password>
+                <logstash.address>127.0.0.1:4560</logstash.address>
+            </properties>
+        </profile>
+    </profiles>
+
+
+    <dependencyManagement>
+        <dependencies>
+            <dependency>
+                <groupId>com.zp.gmall</groupId>
+                <artifactId>gmall-dependencies</artifactId>
+                <version>${revision}</version>
+                <type>pom</type>
+                <scope>import</scope>
+            </dependency>
+        </dependencies>
+    </dependencyManagement>
+
+
+    <build>
+
+        <!-- 资源文件处理（如配置文件、静态资源） -->
+        <resources>
+            <resource>
+                <directory>src/main/resources</directory>
+                <!-- 是否替换资源文件中的占位符 -->
+                <filtering>true</filtering>
+            </resource>
+        </resources>
+
+        <pluginManagement>
+            <plugins>
+                <!-- maven-surefire-plugin 插件，用于运行单元测试。 -->
+                <!-- 注意，需要使用 3.0.X+，因为要支持 Junit 5 版本 -->
+                <plugin>
+                    <groupId>org.apache.maven.plugins</groupId>
+                    <artifactId>maven-surefire-plugin</artifactId>
+                    <version>${maven-surefire-plugin.version}</version>
+                    <configuration>
+                        <skipTests>true</skipTests>
+                    </configuration>
+                </plugin>
+                <!-- maven-compiler-plugin 插件，解决 spring-boot-configuration-processor + Lombok + MapStruct 组合 -->
+                <!-- https://stackoverflow.com/questions/33483697/re-run-spring-boot-configuration-annotation-processor-to-update-generated-metada -->
+                <plugin>
+                    <groupId>org.apache.maven.plugins</groupId>
+                    <artifactId>maven-compiler-plugin</artifactId>
+                    <version>${maven-compiler-plugin.version}</version>
+                    <configuration>
+                        <release>${java.version}</release>
+                        <annotationProcessorPaths>
+                            <path>
+                                <groupId>org.springframework.boot</groupId>
+                                <artifactId>spring-boot-configuration-processor</artifactId>
+                                <version>${spring.boot.version}</version>
+                            </path>
+                            <path>
+                                <groupId>org.projectlombok</groupId>
+                                <artifactId>lombok</artifactId>
+                                <version>${lombok.version}</version>
+                            </path>
+                            <path>
+                                <groupId>org.mapstruct</groupId>
+                                <artifactId>mapstruct-processor</artifactId>
+                                <version>${mapstruct.version}</version>
+                            </path>
+                        </annotationProcessorPaths>
+                    </configuration>
+                </plugin>
+                <plugin>
+                    <groupId>org.apache.maven.plugins</groupId>
+                    <artifactId>maven-enforcer-plugin</artifactId>
+                    <version>${maven-enforcer-plugin.version}</version>
+                    <executions>
+                        <execution>
+                            <id>enforce</id>
+                            <phase>validate</phase>
+                            <goals>
+                                <goal>enforce</goal>
+                            </goals>
+                            <configuration>
+                                <rules>
+                                    <!-- JDK 版本 -->
+                                    <requireJavaVersion>
+                                        <version>[17,)</version>
+                                    </requireJavaVersion>
+                                    <!-- Maven 版本 -->
+                                    <requireMavenVersion>
+                                        <version>[3.9,)</version>
+                                    </requireMavenVersion>
+                                    <!-- 依赖收敛 -->
+                                    <dependencyConvergence/>
+
+                                    <!-- 🚫 禁止依赖 -->
+                                    <bannedDependencies>
+                                        <excludes>
+                                            <!-- Spring Boot 3 禁止 javax -->
+                                            <exclude>javax.*:*</exclude>
+
+                                            <!-- 禁止 mybatis-spring 2.x -->
+                                            <exclude>org.mybatis:mybatis-spring:(,3.0.0)</exclude>
+                                        </excludes>
+                                    </bannedDependencies>
+                                </rules>
+                                <fail>true</fail>
+                            </configuration>
+                        </execution>
+                    </executions>
+                </plugin>
+
+                <plugin>
+                    <groupId>com.google.cloud.tools</groupId>
+                    <artifactId>jib-maven-plugin</artifactId>
+                    <version>${jib-maven-plugin.version}</version>
+                </plugin>
+            </plugins>
+        </pluginManagement>
+
+
+        <extensions>
+            <!-- 自动检测操作系统 -->
+            <!-- mvn help:evaluate -Dexpression=os.detected.classifier -->
+            <extension>
+                <groupId>kr.motd.maven</groupId>
+                <artifactId>os-maven-plugin</artifactId>
+                <version>1.7.1</version>
+            </extension>
+        </extensions>
+
+        <plugins>
+            <!-- 统一 rversion 版本 -->
+            <plugin>
+                <groupId>org.codehaus.mojo</groupId>
+                <artifactId>flatten-maven-plugin</artifactId>
+                <version>${flatten-maven-plugin.version}</version>
+                <configuration>
+                    <flattenMode>oss</flattenMode>
+                    <updatePomFile>true</updatePomFile>
+                </configuration>
+                <executions>
+                    <execution>
+                        <id>flatten</id>
+                        <goals>
+                            <goal>flatten</goal>
+                        </goals>
+                        <phase>process-resources</phase>
+                    </execution>
+                    <execution>
+                        <id>flatten.clean</id>
+                        <goals>
+                            <goal>clean</goal>
+                        </goals>
+                        <phase>clean</phase>
+                    </execution>
+                </executions>
+            </plugin>
+        </plugins>
+    </build>
+
+    <!-- 使用 huawei / aliyun 的 Maven 源，提升下载速度 -->
+    <repositories>
+        <repository>
+            <id>huaweicloud</id>
+            <name>huawei</name>
+            <url>https://mirrors.huaweicloud.com/repository/maven/</url>
+        </repository>
+        <repository>
+            <id>aliyunmaven</id>
+            <name>aliyun</name>
+            <url>https://maven.aliyun.com/repository/public</url>
+        </repository>
+    </repositories>
+</project>
