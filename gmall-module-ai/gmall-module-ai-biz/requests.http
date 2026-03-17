@@ -1,0 +1,8 @@
+
+### 普通对话
+GET http://localhost:48085/ai/chat/chat?
+    prompt="你好，请问你叫什么名字？"
+
+### 流式对话
+GET http://localhost:48085/ai/chat/chatStream?
+    prompt="你好，请问你叫什么名字？"

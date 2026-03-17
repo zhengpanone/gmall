@@ -18,6 +18,7 @@
         <module>gmall-module-infra</module>
         <module>gmall-module-system</module>
         <module>gmall-module-bpm</module>
+        <module>gmall-module-ai</module>
     </modules>
 
     <properties>
@@ -50,6 +51,8 @@
                 <nacos.username>nacos</nacos.username>
                 <nacos.password>nacos</nacos.password>
                 <logstash.address>127.0.0.1:4560</logstash.address>
+                <ai.dashscope.base-url>https://dashscope.aliyuncs.com/api/v1</ai.dashscope.base-url>
+                <ai.dashscope.model-id>qwen3.5-plus</ai.dashscope.model-id>
             </properties>
         </profile>
         <profile>
@@ -62,6 +65,8 @@
                 <nacos.username>nacos</nacos.username>
                 <nacos.password>nacos</nacos.password>
                 <logstash.address>127.0.0.1:4560</logstash.address>
+                <ai.dashscope.agent.url>https://dashscope.aliyuncs.com/api/v1</ai.dashscope.agent.url>
+                <ai.dashscope.agent.model-id>qwen3.5-plus</ai.dashscope.agent.model-id>
             </properties>
         </profile>
         <profile>

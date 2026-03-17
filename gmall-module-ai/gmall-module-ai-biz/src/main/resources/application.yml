@@ -1,0 +1,15 @@
+spring:
+  ai:
+    dashscope:
+      base-url: @ai.dashscope.base-url@
+      api-key: ${QWEN_API_KEY}
+      chat:
+        options:
+          model: @ai.dashscope.model-id@
+
+
+--- #################### gmall相关配置 ####################
+gmall:
+  web:
+    admin-ui:
+      url: http://dashboard.gmall.cn
