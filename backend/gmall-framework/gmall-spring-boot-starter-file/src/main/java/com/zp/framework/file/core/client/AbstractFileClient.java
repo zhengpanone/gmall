@@ -1,4 +1,4 @@
-package com.zp.framework.file.core.client;
+package com.zp.gmall.framework.file.core.client;
 
 import cn.hutool.core.util.StrUtil;
 import lombok.extern.slf4j.Slf4j;

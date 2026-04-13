@@ -1,18 +1,18 @@
 
-package com.zp.framework.security.core.filter;
+package com.zp.gmall.framework.security.core.filter;
 
 import cn.hutool.core.util.ObjectUtil;
 import cn.hutool.core.util.StrUtil;
-import com.zp.framework.common.exception.ServiceException;
-import com.zp.framework.common.pojo.Result;
+import com.zp.gmall.framework.common.exception.ServiceException;
+import com.zp.gmall.framework.common.pojo.Result;
 
-import com.zp.framework.common.util.json.JsonUtils;
-import com.zp.framework.common.util.servlet.ServletUtils;
-import com.zp.framework.security.config.SecurityProperties;
-import com.zp.framework.security.core.LoginUser;
-import com.zp.framework.security.core.util.SecurityFrameworkUtils;
-import com.zp.framework.web.core.handler.GlobalExceptionHandler;
-import com.zp.framework.web.core.util.WebFrameworkUtils;
+import com.zp.gmall.framework.common.util.json.JsonUtils;
+import com.zp.gmall.framework.common.util.servlet.ServletUtils;
+import com.zp.gmall.framework.security.config.SecurityProperties;
+import com.zp.gmall.framework.security.core.LoginUser;
+import com.zp.gmall.framework.security.core.util.SecurityFrameworkUtils;
+import com.zp.gmall.framework.web.core.handler.GlobalExceptionHandler;
+import com.zp.gmall.framework.web.core.util.WebFrameworkUtils;
 import com.zp.module.system.api.oauth2.OAuth2TokenApi;
 import com.zp.module.system.api.oauth2.dto.OAuth2AccessTokenCheckRespDTO;
 import lombok.RequiredArgsConstructor;

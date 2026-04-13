@@ -1,12 +1,12 @@
-package com.zp.framework.test.core.ut;
+package com.zp.gmall.framework.test.core.ut;
 
 //import com.alibaba.druid.spring.boot3.autoconfigure.DruidDataSourceAutoConfigure;
 import com.baomidou.mybatisplus.autoconfigure.MybatisPlusAutoConfiguration;
-//import com.zp.framework.datasource.config.GmallDataSourceAutoConfiguration;
-import com.zp.framework.mybatis.config.GmallMybatisAutoConfiguration;
-import com.zp.framework.redis.config.GmallRedisAutoConfiguration;
-import com.zp.framework.test.config.RedisTestConfiguration;
-import com.zp.framework.test.config.SqlInitializationTestConfiguration;
+//import com.zp.gmall.framework.datasource.config.GmallDataSourceAutoConfiguration;
+import com.zp.gmall.framework.mybatis.config.GmallMybatisAutoConfiguration;
+import com.zp.gmall.framework.redis.config.GmallRedisAutoConfiguration;
+import com.zp.gmall.framework.test.config.RedisTestConfiguration;
+import com.zp.gmall.framework.test.config.SqlInitializationTestConfiguration;
 import org.redisson.spring.starter.RedissonAutoConfiguration;
 import org.springframework.boot.autoconfigure.data.redis.RedisAutoConfiguration;
 import org.springframework.boot.autoconfigure.jdbc.DataSourceAutoConfiguration;

@@ -1,4 +1,4 @@
-package com.zp.framework.file.core.client.s3;
+package com.zp.gmall.framework.file.core.client.s3;
 
 /**
  * Author : zhengpanone

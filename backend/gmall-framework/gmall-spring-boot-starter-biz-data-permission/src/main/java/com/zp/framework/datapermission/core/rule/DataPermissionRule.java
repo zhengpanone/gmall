@@ -1,4 +1,4 @@
-package com.zp.framework.datapermission.core.rule;
+package com.zp.gmall.framework.datapermission.core.rule;
 
 import com.baomidou.mybatisplus.core.metadata.TableInfoHelper;
 import net.sf.jsqlparser.expression.Alias;

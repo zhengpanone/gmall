@@ -1,4 +1,4 @@
-package com.zp.framework.redis.config;
+package com.zp.gmall.framework.redis.config;
 
 import cn.hutool.core.util.ReflectUtil;
 import com.fasterxml.jackson.databind.ObjectMapper;

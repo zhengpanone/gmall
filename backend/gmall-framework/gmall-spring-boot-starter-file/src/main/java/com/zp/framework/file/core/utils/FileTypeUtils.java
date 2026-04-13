@@ -1,4 +1,4 @@
-package com.zp.framework.file.core.utils;
+package com.zp.gmall.framework.file.core.utils;
 
 import com.alibaba.ttl.TransmittableThreadLocal;
 import lombok.SneakyThrows;

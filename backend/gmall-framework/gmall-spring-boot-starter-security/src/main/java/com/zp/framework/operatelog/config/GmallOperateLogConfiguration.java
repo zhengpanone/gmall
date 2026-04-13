@@ -1,8 +1,8 @@
-package com.zp.framework.operatelog.config;
+package com.zp.gmall.framework.operatelog.config;
 
 import com.mzt.logapi.service.ILogRecordService;
 import com.mzt.logapi.starter.annotation.EnableLogRecord;
-import com.zp.framework.operatelog.core.service.LogRecordServiceImpl;
+import com.zp.gmall.framework.operatelog.core.service.LogRecordServiceImpl;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.boot.autoconfigure.AutoConfiguration;
 import org.springframework.context.annotation.Bean;

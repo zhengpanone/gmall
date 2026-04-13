@@ -1,1 +1,1 @@
-com.zp.framework.redis.config.GmallRedisAutoConfiguration
+com.zp.gmall.framework.redis.config.GmallRedisAutoConfiguration

@@ -1,11 +1,13 @@
 package com.zp.gmall.module.system.api.oauth2.dto;
 
-import com.zp.framework.common.enums.UserTypeEnum;
-import com.zp.framework.common.validation.inenum.InEnum;
+
+import com.zp.gmall.framework.common.enums.UserTypeEnum;
+import com.zp.gmall.framework.common.validation.inenum.InEnum;
 import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.Data;
 
 import jakarta.validation.constraints.NotNull;
+
 import java.io.Serializable;
 import java.util.List;
 

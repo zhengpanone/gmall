@@ -23,7 +23,7 @@
 
         <!-- Web 相关 -->
         <!--<dependency>
-            <groupId>com.zp</groupId>
+            <groupId>com.zp.gmall</groupId>
             <artifactId>gmall-spring-boot-starter-web</artifactId>
             &lt;!&ndash; 设置为 provided，只有 OncePerRequestFilter 使用到 &ndash;&gt;
             <scope>provided</scope>

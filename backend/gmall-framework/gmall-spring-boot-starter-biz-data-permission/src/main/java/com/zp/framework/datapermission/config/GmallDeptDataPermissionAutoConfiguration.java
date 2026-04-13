@@ -1,8 +1,8 @@
-package com.zp.framework.datapermission.config;
+package com.zp.gmall.framework.datapermission.config;
 
-import com.zp.framework.datapermission.core.rule.dept.DeptDataPermissionRule;
-import com.zp.framework.datapermission.core.rule.dept.DeptDataPermissionRuleCustomizer;
-import com.zp.framework.security.core.LoginUser;
+import com.zp.gmall.framework.datapermission.core.rule.dept.DeptDataPermissionRule;
+import com.zp.gmall.framework.datapermission.core.rule.dept.DeptDataPermissionRuleCustomizer;
+import com.zp.gmall.framework.security.core.LoginUser;
 import com.zp.module.system.api.permission.PermissionApi;
 import org.springframework.boot.autoconfigure.AutoConfiguration;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnBean;

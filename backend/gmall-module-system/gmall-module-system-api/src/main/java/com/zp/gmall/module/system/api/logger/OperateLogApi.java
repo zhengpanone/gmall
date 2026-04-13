@@ -1,7 +1,7 @@
 package com.zp.gmall.module.system.api.logger;
 
-import com.zp.framework.common.pojo.PageResult;
-import com.zp.framework.common.pojo.Result;
+import com.zp.gmall.framework.common.pojo.PageResult;
+import com.zp.gmall.framework.common.pojo.Result;
 import com.zp.gmall.module.system.api.logger.dto.OperateLogCreateDTO;
 import com.zp.gmall.module.system.api.logger.dto.OperateLogPageDTO;
 import com.zp.gmall.module.system.api.logger.vo.OperateLogVO;

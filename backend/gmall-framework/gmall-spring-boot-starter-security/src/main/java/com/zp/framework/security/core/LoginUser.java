@@ -1,8 +1,8 @@
-package com.zp.framework.security.core;
+package com.zp.gmall.framework.security.core;
 
 import cn.hutool.core.map.MapUtil;
 import com.fasterxml.jackson.annotation.JsonIgnore;
-import com.zp.framework.common.enums.UserTypeEnum;
+import com.zp.gmall.framework.common.enums.UserTypeEnum;
 import lombok.Builder;
 import lombok.Data;
 import lombok.experimental.Accessors;

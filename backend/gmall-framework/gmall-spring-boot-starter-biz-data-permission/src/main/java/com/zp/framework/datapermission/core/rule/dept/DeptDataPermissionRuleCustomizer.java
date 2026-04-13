@@ -1,4 +1,4 @@
-package com.zp.framework.datapermission.core.rule.dept;
+package com.zp.gmall.framework.datapermission.core.rule.dept;
 
 /**
  * Author : zhengpanone

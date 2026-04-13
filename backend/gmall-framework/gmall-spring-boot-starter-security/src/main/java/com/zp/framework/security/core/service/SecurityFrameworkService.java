@@ -1,4 +1,4 @@
-package com.zp.framework.security.core.service;
+package com.zp.gmall.framework.security.core.service;
 
 /**
  * Author : zhengpanone

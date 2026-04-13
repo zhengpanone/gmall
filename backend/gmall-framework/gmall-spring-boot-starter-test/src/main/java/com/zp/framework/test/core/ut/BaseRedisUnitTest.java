@@ -1,7 +1,7 @@
-package com.zp.framework.test.core.ut;
+package com.zp.gmall.framework.test.core.ut;
 
-import com.zp.framework.redis.config.GmallRedisAutoConfiguration;
-import com.zp.framework.test.config.RedisTestConfiguration;
+import com.zp.gmall.framework.redis.config.GmallRedisAutoConfiguration;
+import com.zp.gmall.framework.test.config.RedisTestConfiguration;
 import org.redisson.spring.starter.RedissonAutoConfiguration;
 import org.springframework.boot.autoconfigure.data.redis.RedisAutoConfiguration;
 import org.springframework.boot.test.context.SpringBootTest;

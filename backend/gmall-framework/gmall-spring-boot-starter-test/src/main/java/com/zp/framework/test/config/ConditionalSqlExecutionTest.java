@@ -1,4 +1,4 @@
-package com.zp.framework.test.config;
+package com.zp.gmall.framework.test.config;
 
 import jakarta.annotation.Resource;
 import org.junit.jupiter.api.AfterEach;

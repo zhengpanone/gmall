@@ -1,11 +1,11 @@
-package com.zp.framework.test.core.ut;
+package com.zp.gmall.framework.test.core.ut;
 
 //import com.alibaba.druid.spring.boot3.autoconfigure.DruidDataSourceAutoConfigure;
 import com.baomidou.mybatisplus.autoconfigure.MybatisPlusAutoConfiguration;
 import com.github.yulichang.autoconfigure.MybatisPlusJoinAutoConfiguration;
-//import com.zp.framework.datasource.config.GmallDataSourceAutoConfiguration;
-import com.zp.framework.mybatis.config.GmallMybatisAutoConfiguration;
-import com.zp.framework.test.config.SqlInitializationTestConfiguration;
+//import com.zp.gmall.framework.datasource.config.GmallDataSourceAutoConfiguration;
+import com.zp.gmall.framework.mybatis.config.GmallMybatisAutoConfiguration;
+import com.zp.gmall.framework.test.config.SqlInitializationTestConfiguration;
 import org.springframework.boot.autoconfigure.jdbc.DataSourceAutoConfiguration;
 import org.springframework.boot.autoconfigure.jdbc.DataSourceTransactionManagerAutoConfiguration;
 import org.springframework.boot.test.context.SpringBootTest;

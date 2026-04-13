@@ -1,14 +1,14 @@
-package com.zp.framework.security.core.aop;
+package com.zp.gmall.framework.security.core.aop;
 
-import com.zp.framework.security.core.annotations.PreAuthenticated;
-import com.zp.framework.security.core.util.SecurityFrameworkUtils;
+import com.zp.gmall.framework.security.core.annotations.PreAuthenticated;
+import com.zp.gmall.framework.security.core.util.SecurityFrameworkUtils;
 import lombok.extern.slf4j.Slf4j;
 import org.aspectj.lang.ProceedingJoinPoint;
 import org.aspectj.lang.annotation.Around;
 import org.aspectj.lang.annotation.Aspect;
 
-import static com.zp.framework.common.exception.enums.GlobalErrorCodeConstants.UNAUTHORIZED;
-import static com.zp.framework.common.exception.util.ServiceExceptionUtils.exception;
+import static com.zp.gmall.framework.common.exception.enums.GlobalErrorCodeConstants.UNAUTHORIZED;
+import static com.zp.gmall.framework.common.exception.util.ServiceExceptionUtils.exception;
 
 /**
  * Author : zhengpanone

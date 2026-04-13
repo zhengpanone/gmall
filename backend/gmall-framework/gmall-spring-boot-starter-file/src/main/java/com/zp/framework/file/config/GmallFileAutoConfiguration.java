@@ -1,7 +1,7 @@
-package com.zp.framework.file.config;
+package com.zp.gmall.framework.file.config;
 
-import com.zp.framework.file.core.client.FileClientFactory;
-import com.zp.framework.file.core.client.FileClientFactoryImpl;
+import com.zp.gmall.framework.file.core.client.FileClientFactory;
+import com.zp.gmall.framework.file.core.client.FileClientFactoryImpl;
 import org.springframework.boot.autoconfigure.AutoConfiguration;
 
 /**

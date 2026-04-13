@@ -1,4 +1,4 @@
-package com.zp.framework.test.core.utils;
+package com.zp.gmall.framework.test.core.utils;
 
 import cn.hutool.core.util.ArrayUtil;
 import cn.hutool.core.util.ReflectUtil;

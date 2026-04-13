@@ -1,4 +1,4 @@
-package com.zp.framework.security.config;
+package com.zp.gmall.framework.security.config;
 
 import jakarta.validation.constraints.NotEmpty;
 import jakarta.validation.constraints.NotNull;

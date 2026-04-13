@@ -1,4 +1,4 @@
-package com.zp.framework.file.core.client.ftp;
+package com.zp.gmall.framework.file.core.client.ftp;
 
 /**
  * Author : zhengpanone

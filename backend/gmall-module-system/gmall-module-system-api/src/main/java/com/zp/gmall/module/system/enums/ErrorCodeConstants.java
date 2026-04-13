@@ -1,6 +1,6 @@
 package com.zp.gmall.module.system.enums;
 
-import com.zp.framework.common.exception.ErrorCode;
+import com.zp.gmall.framework.common.exception.ErrorCode;
 
 /**
  * Author : zhengpanone

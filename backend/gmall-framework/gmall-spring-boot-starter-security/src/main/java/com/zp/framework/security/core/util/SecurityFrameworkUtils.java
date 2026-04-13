@@ -1,9 +1,9 @@
-package com.zp.framework.security.core.util;
+package com.zp.gmall.framework.security.core.util;
 
 import cn.hutool.core.map.MapUtil;
 import cn.hutool.core.util.StrUtil;
-import com.zp.framework.security.core.LoginUser;
-import com.zp.framework.web.core.util.WebFrameworkUtils;
+import com.zp.gmall.framework.security.core.LoginUser;
+import com.zp.gmall.framework.web.core.util.WebFrameworkUtils;
 import jakarta.annotation.Nullable;
 import jakarta.servlet.http.HttpServletRequest;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;

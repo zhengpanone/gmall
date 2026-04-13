@@ -1,2 +1,2 @@
-com.zp.framework.tenant.config.GmallTenantAutoConfiguration
-com.zp.framework.tenant.config.GmallTenantRpcAutoConfiguration
+#com.zp.gmall.framework.tenant.config.GmallTenantAutoConfiguration
+#com.zp.gmall.framework.tenant.config.GmallTenantRpcAutoConfiguration

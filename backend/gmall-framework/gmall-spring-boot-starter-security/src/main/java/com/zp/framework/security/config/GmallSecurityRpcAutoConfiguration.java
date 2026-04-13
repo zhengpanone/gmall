@@ -1,6 +1,6 @@
-package com.zp.framework.security.config;
+package com.zp.gmall.framework.security.config;
 
-import com.zp.framework.security.core.rpc.LoginUserRequestInterceptor;
+import com.zp.gmall.framework.security.core.rpc.LoginUserRequestInterceptor;
 import com.zp.module.system.api.oauth2.OAuth2TokenApi;
 import com.zp.module.system.api.permission.PermissionApi;
 import org.springframework.boot.autoconfigure.AutoConfiguration;

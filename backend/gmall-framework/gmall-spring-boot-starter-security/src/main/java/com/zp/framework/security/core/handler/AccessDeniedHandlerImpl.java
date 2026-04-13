@@ -1,8 +1,8 @@
-package com.zp.framework.security.core.handler;
+package com.zp.gmall.framework.security.core.handler;
 
-import com.zp.framework.common.pojo.Result;
-import com.zp.framework.common.util.servlet.ServletUtils;
-import com.zp.framework.security.core.util.SecurityFrameworkUtils;
+import com.zp.gmall.framework.common.pojo.Result;
+import com.zp.gmall.framework.common.util.servlet.ServletUtils;
+import com.zp.gmall.framework.security.core.util.SecurityFrameworkUtils;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
@@ -12,7 +12,7 @@ import org.springframework.security.web.access.AccessDeniedHandler;
 
 import java.io.IOException;
 
-import static com.zp.framework.common.exception.enums.GlobalErrorCodeConstants.FORBIDDEN;
+import static com.zp.gmall.framework.common.exception.enums.GlobalErrorCodeConstants.FORBIDDEN;
 
 /**
  * Author : zhengpanone

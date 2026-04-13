@@ -1,6 +1,6 @@
-package com.zp.framework.file.core.client.db;
+package com.zp.gmall.framework.file.core.client.db;
 
-import com.zp.framework.file.core.client.AbstractFileClient;
+import com.zp.gmall.framework.file.core.client.AbstractFileClient;
 import lombok.Data;
 
 /**

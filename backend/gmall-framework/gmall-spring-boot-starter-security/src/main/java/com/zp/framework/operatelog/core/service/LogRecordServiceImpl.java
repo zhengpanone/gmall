@@ -1,11 +1,11 @@
-package com.zp.framework.operatelog.core.service;
+package com.zp.gmall.framework.operatelog.core.service;
 
 import com.mzt.logapi.beans.LogRecord;
 import com.mzt.logapi.service.ILogRecordService;
-import com.zp.framework.common.util.monitor.TracerUtils;
-import com.zp.framework.common.util.servlet.ServletUtils;
-import com.zp.framework.security.core.LoginUser;
-import com.zp.framework.security.core.util.SecurityFrameworkUtils;
+import com.zp.gmall.framework.common.util.monitor.TracerUtils;
+import com.zp.gmall.framework.common.util.servlet.ServletUtils;
+import com.zp.gmall.framework.security.core.LoginUser;
+import com.zp.gmall.framework.security.core.util.SecurityFrameworkUtils;
 import com.zp.module.system.api.logger.OperateLogApi;
 import com.zp.module.system.api.logger.dto.OperateLogCreateDTO;
 import jakarta.annotation.Resource;

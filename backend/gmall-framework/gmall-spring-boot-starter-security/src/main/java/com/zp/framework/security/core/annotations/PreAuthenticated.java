@@ -1,4 +1,4 @@
-package com.zp.framework.security.core.annotations;
+package com.zp.gmall.framework.security.core.annotations;
 
 import lombok.extern.slf4j.Slf4j;
 import org.aspectj.lang.annotation.Aspect;

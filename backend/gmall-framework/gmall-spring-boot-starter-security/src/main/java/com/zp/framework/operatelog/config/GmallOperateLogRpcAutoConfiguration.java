@@ -1,4 +1,4 @@
-package com.zp.framework.operatelog.config;
+package com.zp.gmall.framework.operatelog.config;
 
 import com.zp.module.system.api.logger.OperateLogApi;
 import org.springframework.boot.autoconfigure.AutoConfiguration;

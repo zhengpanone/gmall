@@ -1,6 +1,6 @@
-package com.zp.framework.security.config;
+package com.zp.gmall.framework.security.config;
 
-import com.zp.framework.web.config.WebProperties;
+import com.zp.gmall.framework.web.config.WebProperties;
 import jakarta.annotation.Resource;
 import org.springframework.core.Ordered;
 import org.springframework.security.config.Customizer;

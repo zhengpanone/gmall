@@ -1,4 +1,4 @@
-package com.zp.framework.test.config;
+package com.zp.gmall.framework.test.config;
 
 import org.springframework.boot.autoconfigure.condition.ConditionalOnClass;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnMissingBean;

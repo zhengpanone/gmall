@@ -24,16 +24,17 @@
 
     <modules>
         <module>gmall-common</module>
+<!--        <module>gmall-spring-boot-starter-web</module>-->
+        <module>gmall-spring-boot-starter-mybatis</module>
+        <module>gmall-spring-boot-starter-biz-tenant</module>
         <!--        <module>gmall-spring-boot-starter-banner</module>-->
         <!--        <module>gmall-spring-boot-starter-env</module>-->
         <!--        <module>gmall-spring-boot-starter-biz-sms</module>-->
         <!--        <module>gmall-spring-boot-starter-redis</module>-->
 
         <!--        <module>gmall-spring-boot-starter-captcha</module>-->
-
-        <module>gmall-spring-boot-starter-web</module>
         <!--        <module>gmall-spring-boot-starter-security</module>-->
-        <module>gmall-spring-boot-starter-mybatis</module>
+
         <!--        <module>gmall-spring-boot-starter-file</module>-->
         <!--        <module>gmall-spring-boot-starter-test</module>-->
         <!--        <module>gmall-spring-boot-starter-desensitize</module>-->
@@ -42,18 +43,16 @@
         <!--        <module>gmall-spring-boot-starter-biz-pay</module>-->
         <!--        <module>gmall-spring-boot-starter-monitor</module>-->
         <!--        <module>gmall-spring-boot-starter-biz-social</module>-->
-        <!--        <module>gmall-spring-boot-starter-biz-tenant</module>-->
+
         <!--        <module>gmall-spring-boot-starter-biz-weixin</module>-->
         <!--        <module>gmall-spring-boot-starter-excel</module>-->
         <!--        <module>gmall-spring-boot-starter-job</module>-->
         <!--        <module>gmall-spring-boot-starter-protection</module>-->
         <!--        <module>gmall-spring-boot-starter-biz-data-permission</module>-->
-        <!--
-        <module>gmall-spring-boot-starter-biz-sms</module>
 
+        <!--        <module>gmall-spring-boot-starter-biz-sms</module>-->
+        <!--        <module>gmall-spring-boot-starter-websocket</module>-->
 
-        <module>gmall-spring-boot-starter-websocket</module>
-        -->
     </modules>
 
 

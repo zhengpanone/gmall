@@ -1,17 +1,17 @@
-package com.zp.framework.datapermission.core.rule.dept;
+package com.zp.gmall.framework.datapermission.core.rule.dept;
 
 import cn.hutool.core.collection.CollUtil;
 import cn.hutool.core.util.ObjectUtil;
 import cn.hutool.core.util.StrUtil;
 import com.baomidou.mybatisplus.core.metadata.TableInfoHelper;
-import com.zp.framework.common.enums.UserTypeEnum;
-import com.zp.framework.common.util.collection.CollectionUtils;
-import com.zp.framework.common.util.json.JsonUtils;
-import com.zp.framework.datapermission.core.rule.DataPermissionRule;
-import com.zp.framework.mybatis.core.MyBatisUtils;
-import com.zp.framework.mybatis.core.dataobject.BaseDO;
-import com.zp.framework.security.core.LoginUser;
-import com.zp.framework.security.core.util.SecurityFrameworkUtils;
+import com.zp.gmall.framework.common.enums.UserTypeEnum;
+import com.zp.gmall.framework.common.util.collection.CollectionUtils;
+import com.zp.gmall.framework.common.util.json.JsonUtils;
+import com.zp.gmall.framework.datapermission.core.rule.DataPermissionRule;
+import com.zp.gmall.framework.mybatis.core.MyBatisUtils;
+import com.zp.gmall.framework.mybatis.core.dataobject.BaseDO;
+import com.zp.gmall.framework.security.core.LoginUser;
+import com.zp.gmall.framework.security.core.util.SecurityFrameworkUtils;
 import com.zp.module.system.api.permission.PermissionApi;
 import com.zp.module.system.api.permission.dto.DeptDataPermissionVO;
 import lombok.AllArgsConstructor;

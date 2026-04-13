@@ -3,21 +3,21 @@
          xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
-
     <groupId>com.zp.gmall</groupId>
     <artifactId>gmall</artifactId>
     <version>${revision}</version>
     <packaging>pom</packaging>
-    <description>商城项目- 基础脚手架</description>
+    <description>商城项目-基础脚手架</description>
     <url>https://github.com/zhengpanone/gmall</url>
 
     <modules>
         <module>gmall-dependencies</module>
         <module>gmall-framework</module>
+        <module>gmall-module-system</module>
         <!--        <module>gmall-gateway</module>-->
         <!--  各种 module 拓展 -->
-        <module>gmall-module-system</module>
-        <!--        <module>gmall-module-infra</module>-->
+
+        <module>gmall-module-infra</module>
         <!--        <module>gmall-module-bpm</module>-->
         <!--        <module>gmall-module-pay</module>-->
         <!--        <module>gmall-module-report</module>-->
@@ -29,8 +29,7 @@
              <module>gmall-order</module> &lt;!&ndash;订单服务&ndash;&gt;
              <module>gmall-coupon</module> &lt;!&ndash;优惠券服务&ndash;&gt;
              <module>gmall-ware</module> -->
-        <module>gmall-module-ai</module>
-
+        <!--        <module>gmall-module-ai</module>-->
     </modules>
 
     <properties>
@@ -224,7 +223,7 @@
         </extensions>
 
         <plugins>
-            <!-- 统一 rversion 版本 -->
+            <!-- 统一 revision 版本 -->
             <plugin>
                 <groupId>org.codehaus.mojo</groupId>
                 <artifactId>flatten-maven-plugin</artifactId>

@@ -1,4 +1,4 @@
-package com.zp.framework.file.core.client.local;
+package com.zp.gmall.framework.file.core.client.local;
 
 /**
  * Author : zhengpanone

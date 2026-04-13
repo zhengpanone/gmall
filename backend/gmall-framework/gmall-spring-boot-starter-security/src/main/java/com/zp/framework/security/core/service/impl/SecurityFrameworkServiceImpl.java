@@ -1,10 +1,10 @@
-package com.zp.framework.security.core.service.impl;
+package com.zp.gmall.framework.security.core.service.impl;
 
 import cn.hutool.core.util.StrUtil;
 import com.google.common.cache.CacheLoader;
 import com.google.common.cache.LoadingCache;
-import com.zp.framework.common.core.KeyValue;
-import com.zp.framework.security.core.service.SecurityFrameworkService;
+import com.zp.gmall.framework.common.core.KeyValue;
+import com.zp.gmall.framework.security.core.service.SecurityFrameworkService;
 import com.zp.module.system.api.permission.PermissionApi;
 import lombok.AllArgsConstructor;
 import lombok.SneakyThrows;
@@ -14,8 +14,8 @@ import org.springframework.stereotype.Service;
 import java.util.Arrays;
 import java.util.List;
 
-import static com.zp.framework.common.util.cache.CacheUtils.buildCache;
-import static com.zp.framework.security.core.util.SecurityFrameworkUtils.getLoginUserId;
+import static com.zp.gmall.framework.common.util.cache.CacheUtils.buildCache;
+import static com.zp.gmall.framework.security.core.util.SecurityFrameworkUtils.getLoginUserId;
 
 import java.time.Duration;
 

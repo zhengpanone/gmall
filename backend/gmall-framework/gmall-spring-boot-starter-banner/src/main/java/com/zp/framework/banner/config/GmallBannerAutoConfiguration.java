@@ -1,6 +1,6 @@
-package com.zp.framework.banner.config;
+package com.zp.gmall.framework.banner.config;
 
-import com.zp.framework.banner.core.BannerApplicationRunner;
+import com.zp.gmall.framework.banner.core.BannerApplicationRunner;
 import org.springframework.boot.autoconfigure.AutoConfiguration;
 
 /**

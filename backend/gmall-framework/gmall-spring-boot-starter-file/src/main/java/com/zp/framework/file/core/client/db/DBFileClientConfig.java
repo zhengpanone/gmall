@@ -1,6 +1,6 @@
-package com.zp.framework.file.core.client.db;
+package com.zp.gmall.framework.file.core.client.db;
 
-import com.zp.framework.file.core.client.FileClientConfig;
+import com.zp.gmall.framework.file.core.client.FileClientConfig;
 import jakarta.validation.constraints.NotEmpty;
 import lombok.Data;
 import org.hibernate.validator.constraints.URL;

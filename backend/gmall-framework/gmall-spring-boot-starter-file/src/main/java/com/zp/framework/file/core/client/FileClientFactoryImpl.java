@@ -1,8 +1,8 @@
-package com.zp.framework.file.core.client;
+package com.zp.gmall.framework.file.core.client;
 
-import com.zp.framework.file.core.client.FileClient;
-import com.zp.framework.file.core.client.FileClientConfig;
-import com.zp.framework.file.core.client.FileClientFactory;
+import com.zp.gmall.framework.file.core.client.FileClient;
+import com.zp.gmall.framework.file.core.client.FileClientConfig;
+import com.zp.gmall.framework.file.core.client.FileClientFactory;
 
 /**
  * Author : zhengpanone

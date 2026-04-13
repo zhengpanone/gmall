@@ -1,8 +1,8 @@
-package com.zp.framework.security.core.rpc;
+package com.zp.gmall.framework.security.core.rpc;
 
-import com.zp.framework.common.util.json.JsonUtils;
-import com.zp.framework.security.core.LoginUser;
-import com.zp.framework.security.core.util.SecurityFrameworkUtils;
+import com.zp.gmall.framework.common.util.json.JsonUtils;
+import com.zp.gmall.framework.security.core.LoginUser;
+import com.zp.gmall.framework.security.core.util.SecurityFrameworkUtils;
 import feign.RequestInterceptor;
 import feign.RequestTemplate;
 import lombok.extern.slf4j.Slf4j;

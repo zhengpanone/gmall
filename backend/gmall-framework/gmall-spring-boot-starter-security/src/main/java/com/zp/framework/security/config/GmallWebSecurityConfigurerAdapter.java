@@ -1,10 +1,10 @@
-package com.zp.framework.security.config;
+package com.zp.gmall.framework.security.config;
 
 import cn.hutool.core.collection.CollUtil;
 import com.google.common.collect.HashMultimap;
 import com.google.common.collect.Multimap;
-import com.zp.framework.security.core.filter.TokenAuthenticationFilter;
-import com.zp.framework.web.config.WebProperties;
+import com.zp.gmall.framework.security.core.filter.TokenAuthenticationFilter;
+import com.zp.gmall.framework.web.config.WebProperties;
 import jakarta.annotation.Resource;
 import jakarta.annotation.security.PermitAll;
 import org.springframework.boot.autoconfigure.AutoConfiguration;
@@ -35,7 +35,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
-import static com.zp.framework.common.util.collection.CollectionUtils.convertList;
+import static com.zp.gmall.framework.common.util.collection.CollectionUtils.convertList;
 
 /**
  * Author : zhengpanone

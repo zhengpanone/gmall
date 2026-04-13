@@ -1,12 +1,12 @@
-package com.zp.framework.security.config;
+package com.zp.gmall.framework.security.config;
 
-import com.zp.framework.security.core.aop.PreAuthenticatedAspect;
-import com.zp.framework.security.core.filter.TokenAuthenticationFilter;
-import com.zp.framework.security.core.handler.AccessDeniedHandlerImpl;
-import com.zp.framework.security.core.handler.AuthenticationEntryPointImpl;
-import com.zp.framework.security.core.service.SecurityFrameworkService;
-import com.zp.framework.security.core.service.impl.SecurityFrameworkServiceImpl;
-import com.zp.framework.web.core.handler.GlobalExceptionHandler;
+import com.zp.gmall.framework.security.core.aop.PreAuthenticatedAspect;
+import com.zp.gmall.framework.security.core.filter.TokenAuthenticationFilter;
+import com.zp.gmall.framework.security.core.handler.AccessDeniedHandlerImpl;
+import com.zp.gmall.framework.security.core.handler.AuthenticationEntryPointImpl;
+import com.zp.gmall.framework.security.core.service.SecurityFrameworkService;
+import com.zp.gmall.framework.security.core.service.impl.SecurityFrameworkServiceImpl;
+import com.zp.gmall.framework.web.core.handler.GlobalExceptionHandler;
 import com.zp.module.system.api.oauth2.OAuth2TokenApi;
 import com.zp.module.system.api.permission.PermissionApi;
 import jakarta.annotation.Resource;

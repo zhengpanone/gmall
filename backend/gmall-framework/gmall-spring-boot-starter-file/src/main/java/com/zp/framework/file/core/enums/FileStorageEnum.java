@@ -1,10 +1,10 @@
-package com.zp.framework.file.core.enums;
+package com.zp.gmall.framework.file.core.enums;
 
 import cn.hutool.core.util.ArrayUtil;
-import com.zp.framework.file.core.client.FileClient;
-import com.zp.framework.file.core.client.FileClientConfig;
-import com.zp.framework.file.core.client.db.DBFileClient;
-import com.zp.framework.file.core.client.db.DBFileClientConfig;
+import com.zp.gmall.framework.file.core.client.FileClient;
+import com.zp.gmall.framework.file.core.client.FileClientConfig;
+import com.zp.gmall.framework.file.core.client.db.DBFileClient;
+import com.zp.gmall.framework.file.core.client.db.DBFileClientConfig;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 

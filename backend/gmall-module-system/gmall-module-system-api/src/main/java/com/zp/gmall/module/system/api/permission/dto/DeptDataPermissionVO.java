@@ -1,5 +1,7 @@
 package com.zp.gmall.module.system.api.permission.dto;
 
+import static io.swagger.v3.oas.annotations.media.Schema.RequiredMode.REQUIRED;
+
 import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.Data;
 
@@ -14,13 +16,13 @@ import java.util.Set;
 @Schema(description = "RPC 服务 - 部门的数据权限 Response VO")
 @Data
 public class DeptDataPermissionVO {
-    @Schema(description = "是否可查看全部数据", requiredMode = Schema.RequiredMode.REQUIRED, example = "true")
+    @Schema(description = "是否可查看全部数据", requiredMode =REQUIRED, example = "true")
     private Boolean all;
 
-    @Schema(description = "是否可查看自己的数据", requiredMode = Schema.RequiredMode.REQUIRED, example = "true")
+    @Schema(description = "是否可查看自己的数据", requiredMode = REQUIRED, example = "true")
     private Boolean self;
 
-    @Schema(description = "可查看的部门编号数组", requiredMode = Schema.RequiredMode.REQUIRED, example = "[1, 3]")
+    @Schema(description = "可查看的部门编号数组", requiredMode = REQUIRED, example = "[1, 3]")
     private Set<String> deptIds;
 
     public DeptDataPermissionVO() {

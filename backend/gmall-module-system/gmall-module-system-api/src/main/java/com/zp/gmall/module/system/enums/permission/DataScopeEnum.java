@@ -1,6 +1,6 @@
 package com.zp.gmall.module.system.enums.permission;
 
-import com.zp.framework.common.core.IntArrayValuable;
+import com.zp.gmall.framework.common.core.IntArrayValuable;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 

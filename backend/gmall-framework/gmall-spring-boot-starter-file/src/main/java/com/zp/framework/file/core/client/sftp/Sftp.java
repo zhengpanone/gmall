@@ -1,4 +1,4 @@
-package com.zp.framework.file.core.client.sftp;
+package com.zp.gmall.framework.file.core.client.sftp;
 
 /**
  * Author : zhengpanone

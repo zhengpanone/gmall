@@ -1,0 +1,4 @@
+### Redis监控
+GET {{baseUrl}}/infra/redis/get-monitor-info
+#Authorization: Bearer {{token}}
+#tenant-id: {{adminTenantId}}
