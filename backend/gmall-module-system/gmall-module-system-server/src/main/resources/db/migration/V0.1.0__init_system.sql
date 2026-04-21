@@ -41,21 +41,21 @@ create table sys_login_log
 
 create table sys_tenant
 (
-    id              varchar(32)  null comment '租户编号',
-    name            varchar(100) null comment '租户名',
-    contact_user_id varchar(32)  null comment '租户编号',
-    contact_name    varchar(32)  null comment '联系人',
-    contact_mobile  varchar(32)  null comment '联系手机',
-    status          tinyint      null comment '租户状态',
-    website         varchar(32)  null comment '绑定域名',
-    package_id      varchar(32)  null comment '租户套餐编号',
-    expire_time     timestamp    null comment '过期时间',
-    account_count   int          null comment '账号数量',
-    create_time     timestamp    null comment '创建时间',
-    update_time     timestamp    null comment '更新时间',
-    creator         varchar(32)  null comment '创建人',
-    updater         varchar(32)  null comment '更新人',
-    deleted         tinyint(1)   null comment '是否删除'
+    id              varchar(32)      null comment '租户编号',
+    name            varchar(100)     null comment '租户名',
+    contact_user_id varchar(32)      null comment '租户编号',
+    contact_name    varchar(32)      null comment '联系人',
+    contact_mobile  varchar(32)      null comment '联系手机',
+    status          tinyint          null comment '租户状态',
+    website         varchar(32)      null comment '绑定域名',
+    package_id      varchar(32)      null comment '租户套餐编号',
+    expire_time     timestamp        null comment '过期时间',
+    account_count   int              null comment '账号数量',
+    create_time     timestamp        null comment '创建时间',
+    update_time     timestamp        null comment '更新时间',
+    creator         varchar(32)      null comment '创建人',
+    updater         varchar(32)      null comment '更新人',
+    deleted         bit default b'0' null comment '是否删除'
 );
 
 create table sys_users
@@ -83,4 +83,20 @@ create table sys_users
     tenant_id   bigint       default 0                 not null comment '租户编号'
 )
     comment '用户信息表' collate = utf8mb4_unicode_ci;
+
+
+CREATE TABLE system_dict_type
+(
+    id           varchar(32)                            NOT NULL comment '字典主键' PRIMARY KEY,
+    name         varchar(100) DEFAULT ''                NULL comment '字典名称',
+    type         varchar(100) DEFAULT ''                NULL comment '字典类型',
+    status       smallint     DEFAULT 0                 NOT NULL comment '状态（0正常 1停用）',
+    remark       varchar(500) DEFAULT NULL              NULL comment '备注',
+    creator      varchar(64)  DEFAULT ''                NULL comment '创建者',
+    create_time  datetime     DEFAULT CURRENT_TIMESTAMP NOT NULL comment '创建时间',
+    updater      varchar(64)  DEFAULT ''                NULL comment '更新者',
+    update_time  datetime     DEFAULT CURRENT_TIMESTAMP NOT NULL ON UPDATE CURRENT_TIMESTAMP comment '更新时间',
+    deleted      bit          DEFAULT b'0'              NOT NULL comment '是否删除',
+    deleted_time datetime     DEFAULT NULL              NULL comment '删除时间'
+) comment '字典类型表' collate = utf8mb4_unicode_ci;
 
