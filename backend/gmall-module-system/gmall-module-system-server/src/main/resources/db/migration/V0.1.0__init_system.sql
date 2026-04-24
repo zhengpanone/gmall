@@ -1,28 +1,46 @@
 # CREATE DATABASE IF NOT EXISTS gmall_system CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;
 
+
+CREATE TABLE IF NOT EXISTS sys_role
+(
+    id          varchar(36)                            NOT NULL COMMENT '角色ID' PRIMARY KEY,
+    name        varchar(30)                            NOT NULL COMMENT '角色名称',
+    code        varchar(100)                           NOT NULL COMMENT '角色权限字符串',
+    sort        int                                    NOT NULL DEFAULT 1 COMMENT '显示顺序',
+    status      tinyint      DEFAULT 0                 NOT NULL COMMENT '角色状态（0正常 1停用）',
+    type        tinyint                                NOT NULL COMMENT '角色类型',
+    remark      varchar(500) DEFAULT NULL              NULL COMMENT '备注',
+    creator     varchar(64)  DEFAULT ''                NULL COMMENT '创建者',
+    create_time datetime     DEFAULT CURRENT_TIMESTAMP NOT NULL COMMENT '创建时间',
+    updater     varchar(64)  DEFAULT ''                NULL COMMENT '更新者',
+    update_time datetime     DEFAULT CURRENT_TIMESTAMP NOT NULL ON UPDATE CURRENT_TIMESTAMP COMMENT '更新时间',
+    deleted     bit          DEFAULT b'0'              NOT NULL COMMENT '是否删除',
+    tenant_id   bigint       DEFAULT 0                 NOT NULL COMMENT '租户编号'
+) COMMENT '角色信息表' COLLATE = utf8mb4_unicode_ci;
+
 CREATE TABLE IF NOT EXISTS sys_dept
 (
-    id             varchar(32)                           not null comment '部门id'
+    id             varchar(36)                           NOT NULL COMMENT '部门id'
         primary key,
-    name           varchar(30) default ''                not null comment '部门名称',
-    parent_id      varchar(32)                           not null comment '父部门id',
-    sort           int         default 0                 not null comment '显示顺序',
-    leader_user_id bigint                                null comment '负责人',
-    phone          varchar(11)                           null comment '联系电话',
-    email          varchar(50)                           null comment '邮箱',
-    status         tinyint                               not null comment '部门状态（0正常 1停用）',
-    creator        varchar(64) default ''                null comment '创建者',
-    create_time    datetime    default CURRENT_TIMESTAMP not null comment '创建时间',
-    updater        varchar(64) default ''                null comment '更新者',
-    update_time    datetime    default CURRENT_TIMESTAMP not null on update CURRENT_TIMESTAMP comment '更新时间',
-    deleted        bit         default b'0'              not null comment '是否删除',
-    tenant_id      bigint      default 0                 not null comment '租户编号'
+    name           varchar(30) DEFAULT ''                NOT NULL COMMENT '部门名称',
+    parent_id      varchar(32)                           NOT NULL COMMENT '父部门id',
+    sort           int         DEFAULT 0                 NOT NULL COMMENT '显示顺序',
+    leader_user_id bigint                                NULL COMMENT '负责人',
+    phone          varchar(11)                           NULL COMMENT '联系电话',
+    email          varchar(50)                           NULL COMMENT '邮箱',
+    status         tinyint     DEFAULT 0                 NOT NULL COMMENT '部门状态（0正常 1停用）',
+    creator        varchar(64) DEFAULT ''                NULL COMMENT '创建者',
+    create_time    datetime    DEFAULT CURRENT_TIMESTAMP NOT NULL COMMENT '创建时间',
+    updater        varchar(64) DEFAULT ''                NULL COMMENT '更新者',
+    update_time    datetime    DEFAULT CURRENT_TIMESTAMP NOT NULL ON UPDATE CURRENT_TIMESTAMP COMMENT '更新时间',
+    deleted        bit         DEFAULT b'0'              NOT NULL COMMENT '是否删除',
+    tenant_id      bigint      DEFAULT 0                 NOT NULL COMMENT '租户编号'
 )
     comment '部门表' collate = utf8mb4_unicode_ci;
 
 CREATE TABLE IF NOT EXISTS sys_login_log
 (
-    id          varchar(32)                           not null comment '访问ID'
+    id          varchar(36)                           not null comment '访问ID'
         primary key,
     log_type    bigint                                not null comment '日志类型',
     trace_id    varchar(64) default ''                not null comment '链路追踪编号',
@@ -43,7 +61,7 @@ CREATE TABLE IF NOT EXISTS sys_login_log
 
 CREATE TABLE IF NOT EXISTS sys_tenant
 (
-    id              varchar(32)      null comment '租户编号',
+    id              varchar(36)      null comment '租户编号',
     name            varchar(100)     null comment '租户名',
     contact_user_id varchar(32)      null comment '租户编号',
     contact_name    varchar(32)      null comment '联系人',
@@ -62,14 +80,12 @@ CREATE TABLE IF NOT EXISTS sys_tenant
 
 create table sys_user
 (
-    id           varchar(32)                            not null comment '用户ID'
+    id           varchar(36)                            not null comment '用户ID'
         primary key,
     username     varchar(30)                            not null comment '用户账号',
     password     varchar(100) default ''                not null comment '密码',
     nickname     varchar(30)                            not null comment '用户昵称',
     remark       varchar(500)                           null comment '备注',
-    dept_id      bigint                                 null comment '部门ID',
-    post_ids     varchar(255)                           null comment '岗位编号数组',
     email        varchar(50)  default ''                null comment '用户邮箱',
     mobile       varchar(11)  default ''                null comment '手机号码',
     sex          tinyint      default 0                 null comment '用户性别',
@@ -90,7 +106,7 @@ create table sys_user
 
 CREATE TABLE sys_dict
 (
-    id           varchar(32)                            NOT NULL comment '字典主键' PRIMARY KEY,
+    id           varchar(36)                            NOT NULL comment '字典主键' PRIMARY KEY,
     dict_code    varchar(100) DEFAULT ''                NULL comment '字典编码',
     dict_name    varchar(100) DEFAULT ''                NULL comment '字典名称',
     dict_type    varchar(100) DEFAULT ''                NULL comment '字典类型：1-系统字典 2-业务字典',
@@ -113,7 +129,7 @@ CREATE TABLE sys_dict
 
 CREATE TABLE sys_dict_item
 (
-    id           varchar(32)                             NOT NULL comment '主键ID' PRIMARY KEY,
+    id           varchar(36)                             NOT NULL comment '主键ID' PRIMARY KEY,
     dict_id      varchar(32)                             NOT NULL COMMENT '字典ID',
     item_code    varchar(100)  DEFAULT ''                NULL comment '字典项编码',
     item_name    varchar(100)  DEFAULT ''                NULL comment '字典项名称',

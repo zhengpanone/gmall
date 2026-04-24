@@ -1,9 +1,7 @@
 package com.zp.gmall.module.system.entity.user;
 
-import com.baomidou.mybatisplus.annotation.TableField;
 import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.annotation.TableName;
-import com.baomidou.mybatisplus.extension.handlers.JacksonTypeHandler;
 import com.zp.gmall.framework.common.enums.CommonStatusEnum;
 import com.zp.gmall.framework.tenant.core.db.TenantBaseDO;
 import com.zp.gmall.module.system.enums.common.SexEnum;
@@ -12,7 +10,6 @@ import lombok.experimental.Accessors;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 
 import java.time.LocalDateTime;
-import java.util.Set;
 
 /**
  * Author : zhengpanone
@@ -27,12 +24,12 @@ import java.util.Set;
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
-public class AdminUserDO extends TenantBaseDO {
+public class UserDO extends TenantBaseDO {
     /**
      * 用户ID
      */
     @TableId
-    private Long id;
+    private String id;
     /**
      * 用户账号
      */
@@ -50,16 +47,7 @@ public class AdminUserDO extends TenantBaseDO {
      * 备注
      */
     private String remark;
-    /**
-     * 部门ID
-     */
-    private String deptId;
-    /**
-     * 岗位编号数组
-     * 数据库存储 JSON 数组
-     */
-    @TableField(typeHandler = JacksonTypeHandler.class)
-    private Set<String> postIds;
+
     /**
      * 用户邮箱
      */

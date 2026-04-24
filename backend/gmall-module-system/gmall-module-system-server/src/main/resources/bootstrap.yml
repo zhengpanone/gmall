@@ -16,4 +16,4 @@ logging:
   level:
     web: debug
 #    root: debug
-    com.zp: debug
+    com.zp.gmall: debug

@@ -9,30 +9,27 @@ import lombok.Data;
 
 import java.util.Set;
 
-@Schema(description = "管理后台 - 用户创建/修改 Request VO")
+@Schema(description = "管理后台 - 用户保存DTO")
 @Data
 public class UserSaveDTO {
 
     @Schema(description = "用户编号", example = "f47ac10b-58cc-4372-a567-0e02b2c3d479")
     private String id;
 
-    @Schema(description = "用户账号", requiredMode = Schema.RequiredMode.REQUIRED, example = "admin")
+    @Schema(description = "用户账号", requiredMode = Schema.RequiredMode.REQUIRED, type = "string", example = "admin")
     @NotBlank(message = "用户账号不能为空")
     @Pattern(regexp = "^[a-zA-Z0-9]+$", message = "用户账号由 数字、字母 组成")
     @Size(min = 4, max = 30, message = "用户账号长度为 4-30 个字符")
     private String username;
 
-    @Schema(description = "用户昵称", requiredMode = Schema.RequiredMode.REQUIRED, example = "管理员")
+    @Schema(description = "用户昵称", requiredMode = Schema.RequiredMode.REQUIRED, type = "string", example = "管理员")
     @Size(max = 30, message = "用户昵称长度不能超过30个字符")
     private String nickname;
 
-    @Schema(description = "备注", example = "我是管理员")
+    @Schema(description = "备注", type = "string", example = "我是管理员")
     private String remark;
 
-    @Schema(description = "部门编号", example = "我是一个用户")
-    private Long deptId;
-
-    @Schema(description = "岗位编号数组", example = "1")
+    @Schema(description = "岗位编号数组", type = "array", implementation = String.class, example = "[\"f47ac10b-58cc-4372-a567-0e02b2c3d479\"]")
     private Set<String> postIds;
 
     @Schema(description = "用户邮箱", example = "admin@qq.com")

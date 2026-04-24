@@ -1,4 +1,4 @@
-package com.zp.gmall.module.system.mapper;
+package com.zp.gmall.module.system.mapper.dict;
 
 import com.baomidou.mybatisplus.test.autoconfigure.MybatisPlusTest;
 import com.zp.gmall.framework.mybatis.config.MybatisPlusConfiguration;

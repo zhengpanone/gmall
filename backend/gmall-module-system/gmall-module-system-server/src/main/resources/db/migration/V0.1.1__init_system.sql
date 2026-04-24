@@ -1,0 +1,1 @@
+INSERT INTO sys_role (id, name, code, sort, status, type, remark, creator, create_time, updater, update_time, deleted, tenant_id) VALUES ('1', '系统管理员', 'admin', 1, 0, 1, '系统管理员', 'system', '2026-04-25 00:10:00', 'system', '2026-04-25 00:10:46', false, 0);

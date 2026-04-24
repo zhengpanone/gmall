@@ -4,7 +4,7 @@ import com.baomidou.mybatisplus.extension.service.IService;
 import com.zp.gmall.module.system.controller.admin.user.dto.UserSaveDTO;
 import com.zp.gmall.module.system.controller.admin.user.dto.UserUpdateDTO;
 import com.zp.gmall.module.system.controller.admin.user.vo.AdminUserVO;
-import com.zp.gmall.module.system.entity.user.AdminUserDO;
+import com.zp.gmall.module.system.entity.user.UserDO;
 import jakarta.validation.Valid;
 
 import java.io.Serializable;
@@ -17,7 +17,7 @@ import java.util.List;
  * Version : v1.0.0
  * Description:
  */
-public interface IAdminUserService extends IService<AdminUserDO> {
+public interface IUserService extends IService<UserDO> {
 
     /**
      * 创建用户
@@ -34,7 +34,7 @@ public interface IAdminUserService extends IService<AdminUserDO> {
      * @param userUpdateDTO 用户信息
      * @return 用户编号
      */
-    Long updateUser(@Valid UserUpdateDTO userUpdateDTO);
+    String updateUser(@Valid UserUpdateDTO userUpdateDTO);
 
     /**
      * 获得用户列表
@@ -50,7 +50,7 @@ public interface IAdminUserService extends IService<AdminUserDO> {
      * @param username 用户名
      * @return 用户对象信息
      */
-    AdminUserDO getUserByUsername(String username);
+    UserDO getUserByUsername(String username);
 
     /**
      * 通过用户ID查询用户

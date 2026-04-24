@@ -140,7 +140,7 @@ public class GmallSwaggerAutoConfiguration {
                 .name(HEADER_TENANT_ID)
                 .description("租户编号")
                 .in(String.valueOf(SecurityScheme.In.HEADER))
-                .schema(new IntegerSchema()._default(1L).name(HEADER_TENANT_ID)
+                .schema(new StringSchema()._default("0").name(HEADER_TENANT_ID)
                         .description("租户编号"));
     }
 

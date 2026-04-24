@@ -4,7 +4,7 @@ import com.zp.gmall.framework.common.pojo.Result;
 import com.zp.gmall.module.system.controller.admin.user.dto.UserSaveDTO;
 import com.zp.gmall.module.system.controller.admin.user.dto.UserUpdateDTO;
 import com.zp.gmall.module.system.controller.admin.user.vo.AdminUserVO;
-import com.zp.gmall.module.system.service.user.IAdminUserService;
+import com.zp.gmall.module.system.service.user.IUserService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.Parameter;
 import io.swagger.v3.oas.annotations.tags.Tag;
@@ -27,7 +27,7 @@ import java.util.List;
 @Validated
 public class UserController {
     @Resource
-    private IAdminUserService adminUserService;
+    private IUserService adminUserService;
 
     @Operation(summary = "根据ID获取用户")
     @GetMapping("/{id}")

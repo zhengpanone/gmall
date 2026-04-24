@@ -2,7 +2,7 @@ package com.zp.gmall.module.system.service.auth;
 
 import com.zp.gmall.module.system.controller.admin.auth.dto.AuthLoginDTO;
 import com.zp.gmall.module.system.controller.admin.auth.vo.AuthLoginVO;
-import com.zp.gmall.module.system.entity.user.AdminUserDO;
+import com.zp.gmall.module.system.entity.user.UserDO;
 import jakarta.validation.Valid;
 
 /**
@@ -31,6 +31,6 @@ public interface IAdminAuthService {
      * @param password 密码
      * @return 用户
      */
-    AdminUserDO authenticate(String username, String password);
+    UserDO authenticate(String username, String password);
 
 }

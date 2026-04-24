@@ -5,12 +5,12 @@ import com.zp.gmall.module.system.controller.admin.auth.dto.AuthLoginDTO;
 import com.zp.gmall.module.system.controller.admin.auth.vo.AuthLoginVO;
 import com.zp.gmall.module.system.convert.auth.AuthConvert;
 import com.zp.gmall.module.system.entity.oauth2.OAuth2AccessTokenDO;
-import com.zp.gmall.module.system.entity.user.AdminUserDO;
+import com.zp.gmall.module.system.entity.user.UserDO;
 import com.zp.gmall.module.system.enums.logger.LoginLogTypeEnum;
 import com.zp.gmall.module.system.enums.oauth2.OAuth2ClientConstants;
 import com.zp.gmall.module.system.service.auth.IAdminAuthService;
 import com.zp.gmall.module.system.service.oauth2.IOAuth2TokenService;
-import com.zp.gmall.module.system.service.user.IAdminUserService;
+import com.zp.gmall.module.system.service.user.IUserService;
 import jakarta.annotation.Resource;
 import org.springframework.stereotype.Service;
 
@@ -31,19 +31,19 @@ public class AdminAuthServiceImpl implements IAdminAuthService {
     @Resource
     private IOAuth2TokenService oauth2TokenService;
     @Resource
-    private IAdminUserService userService;
+    private IUserService userService;
 
     @Override
     public AuthLoginVO login(AuthLoginDTO authLoginDTO) {
-        AdminUserDO user = authenticate(authLoginDTO.getUsername(), authLoginDTO.getPassword());
+        UserDO user = authenticate(authLoginDTO.getUsername(), authLoginDTO.getPassword());
 
         return createTokenAfterLoginSuccess(user.getId(),authLoginDTO.getUsername(),LoginLogTypeEnum.LOGIN_USERNAME);
     }
 
     @Override
-    public AdminUserDO authenticate(String username, String password) {
+    public UserDO authenticate(String username, String password) {
         final LoginLogTypeEnum logTypeEnum = LoginLogTypeEnum.LOGIN_USERNAME;
-        AdminUserDO user = userService.getUserByUsername(username);
+        UserDO user = userService.getUserByUsername(username);
         if(Objects.isNull(user)){
             throw exception(AUTH_LOGIN_BAD_CREDENTIALS);
         }
@@ -52,7 +52,7 @@ public class AdminAuthServiceImpl implements IAdminAuthService {
 
 
 
-    private AuthLoginVO createTokenAfterLoginSuccess(Long userId, String username, LoginLogTypeEnum logType) {
+    private AuthLoginVO createTokenAfterLoginSuccess(String userId, String username, LoginLogTypeEnum logType) {
         // 创建访问令牌
         OAuth2AccessTokenDO accessTokenDO = oauth2TokenService.createAccessToken(userId, getUserType().getValue(),
                 OAuth2ClientConstants.CLIENT_ID_DEFAULT, null);
