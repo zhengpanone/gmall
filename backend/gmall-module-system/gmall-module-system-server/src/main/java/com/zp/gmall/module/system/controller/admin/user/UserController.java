@@ -6,13 +6,12 @@ import com.zp.gmall.module.system.controller.admin.user.dto.UserUpdateDTO;
 import com.zp.gmall.module.system.controller.admin.user.vo.AdminUserVO;
 import com.zp.gmall.module.system.service.user.IAdminUserService;
 import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.Parameter;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.annotation.Resource;
+import jakarta.validation.Valid;
 import org.springframework.validation.annotation.Validated;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
@@ -30,19 +29,24 @@ public class UserController {
     @Resource
     private IAdminUserService adminUserService;
 
-    @GetMapping("/test")
-    public Result<?> test() {
-        return Result.ok("system is start");
+    @Operation(summary = "根据ID获取用户")
+    @GetMapping("/{id}")
+    public Result<?> getUserById(
+            @Parameter(description = "用户ID", required = true, example = "1")
+            @PathVariable String id) {
+        return Result.ok(adminUserService.getUserById(id));
     }
 
     @PostMapping("/create")
     @Operation(summary = "新增用户")
-    public Result<Long> createUser(UserSaveDTO userSaveDTO) {
-        adminUserService.createUser(userSaveDTO);
-        return Result.ok(1L);
+    public Result<String> createUser(@RequestBody @Valid UserSaveDTO userSaveDTO) {
+        String userId = adminUserService.createUser(userSaveDTO);
+        return Result.ok(userId);
     }
 
-    public Result<?> updateUser(UserUpdateDTO userUpdateDTO) {
+    @PutMapping("/update")
+    @Operation(summary = "根据ID更新用户")
+    public Result<Void> updateUser(UserUpdateDTO userUpdateDTO) {
         adminUserService.updateUser(userUpdateDTO);
         return Result.ok();
     }

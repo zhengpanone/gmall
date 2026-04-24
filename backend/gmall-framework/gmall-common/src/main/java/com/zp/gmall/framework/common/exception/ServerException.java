@@ -29,8 +29,8 @@ public class ServerException extends RuntimeException {
     }
 
     public ServerException(ErrorCode errorCode) {
-        this.code = errorCode.code();
-        this.msg = errorCode.message();
+        this.code = errorCode.getCode();
+        this.msg = errorCode.getMsg();
     }
 
 

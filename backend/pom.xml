@@ -14,7 +14,7 @@
         <module>gmall-dependencies</module>
         <module>gmall-framework</module>
         <module>gmall-module-system</module>
-        <!--        <module>gmall-gateway</module>-->
+        <module>gmall-gateway</module>
         <!--  各种 module 拓展 -->
 
         <module>gmall-module-infra</module>
@@ -143,6 +143,7 @@
                     <version>${maven-compiler-plugin.version}</version>
                     <configuration>
                         <release>${java.version}</release>
+                        <parameters>true</parameters>
                         <annotationProcessorPaths>
                             <path>
                                 <groupId>org.springframework.boot</groupId>

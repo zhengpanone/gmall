@@ -1,3 +1,18 @@
+### 创建用户
+POST http://127.0.0.1:48081/system/admin-api/user/create
+Content-Type: application/json
+
+{
+    "password": "admin123",
+    "nickname": "管理员",
+    "email": "admin@qq.com",
+    "phone": "13800138000",
+    "status": 1,
+    "remark": "管理员"
+}
+
+
+### 创建字典
 POST http://localhost:48081/system/dict
 
 ###

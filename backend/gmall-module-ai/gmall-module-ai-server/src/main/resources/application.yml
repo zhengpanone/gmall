@@ -5,7 +5,7 @@ spring:
 #      base-url: @ai.dashscope.base-url@
       chat:
         options:
-          model: @ai.dashscope.model-id@
+          model: qwen3.5-plus
           temperature: 0.7
 
 logging:

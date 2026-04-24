@@ -1,4 +1,4 @@
-package com.zp.gateway.filter.security;
+package com.zp.gmall.gateway.filter.security;
 
 import lombok.Data;
 import lombok.experimental.Accessors;

@@ -27,33 +27,38 @@ import java.util.List;
 @Slf4j
 @Service
 public class AdminUserServiceImpl extends ServiceImpl<AdminUserMapper, AdminUserDO> implements IAdminUserService {
-    @Resource
-    private AdminUserMapper userMapper;
+
 
     private final AdminUserConvertMapper convertMapper = Mappers.getMapper(AdminUserConvertMapper.class);
 
     @Override
-    public Long createUser(UserSaveDTO userSaveDTO) {
+    public String createUser(UserSaveDTO userSaveDTO) {
         AdminUserDO adminUserDO = convertMapper.convert(userSaveDTO);
-        userMapper.insert(adminUserDO);
-        return Convert.toLong(adminUserDO.getId());
+        baseMapper.insert(adminUserDO);
+        return Convert.toStr(adminUserDO.getId());
     }
 
     @Override
     public Long updateUser(UserUpdateDTO userUpdateDTO) {
         AdminUserDO adminUserDO = convertMapper.convert(userUpdateDTO);
-        userMapper.updateById(adminUserDO);
+        baseMapper.updateById(adminUserDO);
         return 0L;
     }
 
     @Override
     public List<AdminUserVO> getUserListByIds(Collection<? extends Serializable> ids) {
-        List<AdminUserDO> adminUserList = userMapper.selectByIds(ids);
+        List<AdminUserDO> adminUserList = baseMapper.selectByIds(ids);
         return convertMapper.convert(adminUserList);
     }
 
     @Override
     public AdminUserDO getUserByUsername(String username) {
-        return userMapper.selectByUsername(username);
+        return baseMapper.selectByUsername(username);
+    }
+
+    @Override
+    public AdminUserVO getUserById(String id) {
+        AdminUserDO adminUserDO = baseMapper.selectById(id);
+        return convertMapper.convert(adminUserDO);
     }
 }

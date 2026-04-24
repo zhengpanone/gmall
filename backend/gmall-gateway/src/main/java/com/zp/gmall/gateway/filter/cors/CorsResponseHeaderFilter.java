@@ -1,4 +1,4 @@
-package com.zp.gateway.filter.cors;
+package com.zp.gmall.gateway.filter.cors;
 
 import org.springframework.cloud.gateway.filter.GatewayFilterChain;
 import org.springframework.cloud.gateway.filter.GlobalFilter;

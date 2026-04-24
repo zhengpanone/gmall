@@ -1,2 +1,2 @@
-#com.zp.gmall.framework.swagger.config.GmallSwaggerAutoConfiguration
+com.zp.gmall.framework.swagger.config.GmallSwaggerAutoConfiguration
 com.zp.gmall.framework.web.config.GmallWebAutoConfiguration

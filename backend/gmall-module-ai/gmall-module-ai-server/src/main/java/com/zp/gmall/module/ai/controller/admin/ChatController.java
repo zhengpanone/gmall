@@ -1,4 +1,4 @@
-package com.zp.gmall.module.ai.controller;
+package com.zp.gmall.module.ai.controller.admin;
 
 import com.zp.gmall.module.ai.service.IChatService;
 import lombok.RequiredArgsConstructor;

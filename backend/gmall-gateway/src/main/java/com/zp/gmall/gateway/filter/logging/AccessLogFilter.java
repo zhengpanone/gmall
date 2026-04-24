@@ -1,4 +1,4 @@
-package com.zp.gateway.filter.logging;
+package com.zp.gmall.gateway.filter.logging;
 
 import cn.hutool.core.date.LocalDateTimeUtil;
 import cn.hutool.core.map.MapUtil;
@@ -6,8 +6,8 @@ import cn.hutool.json.JSONUtil;
 
 import com.alibaba.nacos.common.utils.StringUtils;
 import com.zp.gmall.framework.common.util.json.JsonUtils;
-import com.zp.gateway.util.SecurityFrameworkUtils;
-import com.zp.gateway.util.WebFrameworkUtils;
+import com.zp.gmall.gateway.util.SecurityFrameworkUtils;
+import com.zp.gmall.gateway.util.WebFrameworkUtils;
 import jakarta.annotation.Resource;
 import lombok.extern.slf4j.Slf4j;
 import org.reactivestreams.Publisher;

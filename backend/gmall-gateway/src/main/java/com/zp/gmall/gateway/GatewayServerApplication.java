@@ -1,4 +1,4 @@
-package com.zp.gateway;
+package com.zp.gmall.gateway;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
@@ -6,8 +6,8 @@ import org.springframework.boot.autoconfigure.jdbc.DataSourceAutoConfiguration;
 
 
 @SpringBootApplication(exclude = {DataSourceAutoConfiguration.class})
-public class GmallGatewayServerApplication {
+public class GatewayServerApplication {
     public static void main(String[] args) {
-        SpringApplication.run(GmallGatewayServerApplication.class, args);
+        SpringApplication.run(GatewayServerApplication.class, args);
     }
 }

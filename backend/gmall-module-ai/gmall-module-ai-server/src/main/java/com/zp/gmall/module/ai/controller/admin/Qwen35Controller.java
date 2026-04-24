@@ -1,4 +1,4 @@
-package com.zp.gmall.module.ai.controller;
+package com.zp.gmall.module.ai.controller.admin;
 
 import com.alibaba.cloud.ai.dashscope.api.DashScopeApi;
 import lombok.RequiredArgsConstructor;

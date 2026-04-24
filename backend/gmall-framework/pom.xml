@@ -24,7 +24,7 @@
 
     <modules>
         <module>gmall-common</module>
-<!--        <module>gmall-spring-boot-starter-web</module>-->
+       <module>gmall-spring-boot-starter-web</module>
         <module>gmall-spring-boot-starter-mybatis</module>
         <module>gmall-spring-boot-starter-biz-tenant</module>
         <!--        <module>gmall-spring-boot-starter-banner</module>-->

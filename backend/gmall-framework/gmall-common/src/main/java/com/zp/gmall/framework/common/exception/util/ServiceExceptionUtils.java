@@ -18,8 +18,8 @@ public class ServiceExceptionUtils {
     private static final ConcurrentMap<Integer, String> MESSAGES = new ConcurrentHashMap<>();
 
     public static ServiceException exception(ErrorCode errorCode) {
-        String messagePattern = MESSAGES.getOrDefault(errorCode.code(), errorCode.message());
-        return exception(errorCode.code(), messagePattern);
+        String messagePattern = MESSAGES.getOrDefault(errorCode.getCode(), errorCode.getMsg());
+        return exception(errorCode.getCode(), messagePattern);
     }
 
     public static ServiceException exception(Integer code, String messagePattern, Object... params) {
@@ -29,8 +29,8 @@ public class ServiceExceptionUtils {
     }
 
     public static ServiceException exception(ErrorCode errorCode, Object... params) {
-        String messagePattern = MESSAGES.getOrDefault(errorCode.code(), errorCode.message());
-        return exception(errorCode.code(), messagePattern, params);
+        String messagePattern = MESSAGES.getOrDefault(errorCode.getCode(), errorCode.getMsg());
+        return exception(errorCode.getCode(), messagePattern, params);
 
     }
 

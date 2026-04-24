@@ -1,4 +1,4 @@
-package com.zp.gateway.util;
+package com.zp.gmall.gateway.util;
 
 import cn.hutool.core.net.NetUtil;
 import cn.hutool.core.util.ArrayUtil;

@@ -21,7 +21,7 @@ import java.util.Set;
  * 管理后台的用户 DO
  */
 @EqualsAndHashCode(callSuper = true)
-@TableName(value = "system_user", autoResultMap = true)
+@TableName(value = "sys_user", autoResultMap = true)
 @Data
 @Accessors(chain = true)
 @Builder

@@ -25,7 +25,7 @@ public interface IAdminUserService extends IService<AdminUserDO> {
      * @param userSaveDTO 用户信息
      * @return 用户编号
      */
-    Long createUser(@Valid UserSaveDTO userSaveDTO);
+    String createUser(@Valid UserSaveDTO userSaveDTO);
 
 
     /**
@@ -51,4 +51,11 @@ public interface IAdminUserService extends IService<AdminUserDO> {
      * @return 用户对象信息
      */
     AdminUserDO getUserByUsername(String username);
+
+    /**
+     * 通过用户ID查询用户
+     * @param id 用户ID
+     * @return 用户对象信息
+     */
+    AdminUserVO getUserById(String id);
 }

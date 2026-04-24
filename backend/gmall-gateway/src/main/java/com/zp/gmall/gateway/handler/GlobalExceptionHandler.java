@@ -1,7 +1,7 @@
-package com.zp.gateway.handler;
+package com.zp.gmall.gateway.handler;
 
 import com.zp.gmall.framework.common.pojo.Result;
-import com.zp.gateway.util.WebFrameworkUtils;
+import com.zp.gmall.gateway.util.WebFrameworkUtils;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.boot.web.reactive.error.ErrorWebExceptionHandler;
 import org.springframework.core.annotation.Order;
@@ -68,7 +68,7 @@ public class GlobalExceptionHandler implements ErrorWebExceptionHandler {
         log.error("[defaultExceptionHandler][uri({}/{}) 发生异常]", request.getURI(), request.getMethod(), ex);
         // TODO 芋艿：是否要插入异常日志呢？
         // 返回 ERROR CommonResult
-        return Result.failed(INTERNAL_SERVER_ERROR.code(), INTERNAL_SERVER_ERROR.message());
+        return Result.failed(INTERNAL_SERVER_ERROR.getCode(), INTERNAL_SERVER_ERROR.getMsg());
     }
 
 }

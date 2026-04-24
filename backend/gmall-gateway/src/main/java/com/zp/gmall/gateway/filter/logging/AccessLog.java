@@ -1,4 +1,4 @@
-package com.zp.gateway.filter.logging;
+package com.zp.gmall.gateway.filter.logging;
 
 import lombok.Data;
 import org.springframework.cloud.gateway.route.Route;

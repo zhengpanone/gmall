@@ -49,7 +49,7 @@ public class Result<T> implements Serializable {
         this.msg = message;
     }
 
-    public static Result<?> ok() {
+    public static Result<Void> ok() {
         return instance(ResultEnum.SUCCESS.getCode(), ResultEnum.SUCCESS.getMessage(), null);
     }
 
@@ -67,7 +67,7 @@ public class Result<T> implements Serializable {
     }
 
     public static Result<?> failed(ErrorCode errorCode) {
-        return instance(errorCode.code(), errorCode.message(), null);
+        return instance(errorCode.getCode(), errorCode.getMsg(), null);
     }
 
     public static Result<?> failed(int code) {

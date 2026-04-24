@@ -1,4 +1,4 @@
-package com.zp.gateway.filter.security;
+package com.zp.gmall.gateway.filter.security;
 
 import cn.hutool.core.util.StrUtil;
 
@@ -7,10 +7,10 @@ import com.google.common.cache.CacheLoader;
 import com.google.common.cache.LoadingCache;
 import com.zp.gmall.framework.common.pojo.Result;
 import com.zp.gmall.framework.common.util.json.JsonUtils;
-import com.zp.gateway.util.SecurityFrameworkUtils;
-import com.zp.gateway.util.WebFrameworkUtils;
-import com.zp.module.system.api.oauth2.OAuth2TokenApi;
-import com.zp.module.system.api.oauth2.dto.OAuth2AccessTokenCheckRespDTO;
+import com.zp.gmall.gateway.util.SecurityFrameworkUtils;
+import com.zp.gmall.gateway.util.WebFrameworkUtils;
+import com.zp.gmall.module.system.api.oauth2.OAuth2TokenApi;
+import com.zp.gmall.module.system.api.oauth2.dto.OAuth2AccessTokenCheckRespDTO;
 import org.springframework.cloud.client.loadbalancer.reactive.ReactorLoadBalancerExchangeFilterFunction;
 import org.springframework.cloud.gateway.filter.GatewayFilterChain;
 import org.springframework.cloud.gateway.filter.GlobalFilter;
