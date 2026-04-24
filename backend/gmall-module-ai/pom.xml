@@ -16,7 +16,7 @@
     </description>
     <modules>
         <module>gmall-module-ai-api</module>
-        <module>gmall-module-ai-biz</module>
+        <module>gmall-module-ai-server</module>
     </modules>
 
 </project>

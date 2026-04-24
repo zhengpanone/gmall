@@ -1,6 +1,5 @@
 package com.zp.gmall.module.ai.service.impl;
 
-import com.alibaba.cloud.ai.dashscope.api.DashScopeApi;
 import com.alibaba.cloud.ai.dashscope.chat.DashScopeChatModel;
 import com.zp.gmall.module.ai.service.IChatService;
 import lombok.RequiredArgsConstructor;

@@ -8,15 +8,15 @@
         <artifactId>gmall-module-ai</artifactId>
         <version>${revision}</version>
     </parent>
-    <artifactId>gmall-module-ai-biz</artifactId>
+    <artifactId>gmall-module-ai-server</artifactId>
     <name>${project.artifactId}</name>
     <packaging>jar</packaging>
+    <description>AI 模块</description>
 
     <dependencies>
         <dependency>
             <groupId>com.zp.gmall</groupId>
             <artifactId>gmall-module-ai-api</artifactId>
-            <version>${revision}</version>
         </dependency>
 
         <dependency>
@@ -32,6 +32,11 @@
         <dependency>
             <groupId>com.alibaba.cloud</groupId>
             <artifactId>spring-cloud-starter-alibaba-nacos-config</artifactId>
+        </dependency>
+
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-web</artifactId>
         </dependency>
         <dependency>
             <groupId>org.springframework.boot</groupId>

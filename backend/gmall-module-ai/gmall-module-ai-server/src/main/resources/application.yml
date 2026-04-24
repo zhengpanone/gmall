@@ -1,7 +1,7 @@
 spring:
   ai:
     dashscope:
-      api-key: ${QWEN_API_KEY}
+      api-key: ${DASHSCOPE_API_KEY}
 #      base-url: @ai.dashscope.base-url@
       chat:
         options:

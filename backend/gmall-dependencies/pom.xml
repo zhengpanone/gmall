@@ -180,7 +180,7 @@
             <dependency>
                 <groupId>com.zp.gmall</groupId>
                 <artifactId>gmall-spring-boot-starter-web</artifactId>
-                <version>1.0-SNAPSHOT</version>
+                <version>${revision}</version>
             </dependency>
 
             <dependency>
@@ -480,7 +480,7 @@
             </dependency>
             <dependency>
                 <groupId>com.zp.gmall</groupId>
-                <artifactId>gmall-module-ai-biz</artifactId>
+                <artifactId>gmall-module-ai-server</artifactId>
                 <version>${revision}</version>
             </dependency>
 

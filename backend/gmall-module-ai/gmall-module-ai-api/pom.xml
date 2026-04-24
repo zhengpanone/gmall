@@ -15,7 +15,7 @@
     <dependencies>
         <dependency>
             <groupId>com.zp.gmall</groupId>
-            <artifactId>gmall-spring-boot-starter-web</artifactId>
+            <artifactId>gmall-common</artifactId>
         </dependency>
         <dependency>
             <groupId>com.alibaba.cloud.ai</groupId>
