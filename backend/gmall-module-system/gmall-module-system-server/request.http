@@ -1,5 +1,5 @@
 ### 创建用户
-POST http://127.0.0.1:48081/system/admin-api/user/create
+POST {{sysBaseUrl}}/admin-api/user/create
 Content-Type: application/json
 
 {
@@ -13,7 +13,7 @@ Content-Type: application/json
 
 
 ### 创建角色
-POST http://127.0.0.1:48081/system/admin-api/role/create
+POST {{sysBaseUrl}}/admin-api/role/create
 Content-Type: application/json
 
 {
@@ -24,7 +24,7 @@ Content-Type: application/json
 }
 
 ### 删除角色
-POST http://localhost:48081/system/admin-api/role/delete
+POST {{sysBaseUrl}}/admin-api/role/delete
 Content-Type: application/json
 
 {
@@ -32,7 +32,8 @@ Content-Type: application/json
 }
 
 ### 创建字典
-POST http://localhost:48081/system/dict
+POST {{sysBaseUrl}}/admin-api/dict/create
+Content-Type: application/json
 
 ###
 

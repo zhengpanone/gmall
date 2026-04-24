@@ -22,7 +22,7 @@ public class DictController {
     private final IDictService dictService;
 
     // 字典相关接口
-    @PostMapping
+    @PostMapping("/create")
     @Operation(summary = "创建字典")
     public Result<DictVO> createDict(@Valid @RequestBody DictSaveDTO dictDTO) {
         DictVO dictVO = dictService.createDict(dictDTO);
