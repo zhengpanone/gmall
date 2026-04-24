@@ -3,7 +3,7 @@ package com.zp.gateway.filter.grey;
 import cn.hutool.core.collection.CollUtil;
 import cn.hutool.core.util.StrUtil;
 import com.alibaba.cloud.nacos.balancer.NacosBalancer;
-import com.zp.framework.common.util.collection.CollectionUtils;
+import com.zp.gmall.framework.common.util.collection.CollectionUtils;
 import com.zp.gateway.util.EnvUtils;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;

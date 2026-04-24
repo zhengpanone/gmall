@@ -1,4 +1,4 @@
-package com.zp.gmall.module.system.mapper;
+package com.zp.gmall.module.system.mapper.user;
 
 
 import com.zp.gmall.framework.common.pojo.PageResult;

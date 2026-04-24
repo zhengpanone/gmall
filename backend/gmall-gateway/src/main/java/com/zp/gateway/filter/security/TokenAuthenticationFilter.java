@@ -5,8 +5,8 @@ import cn.hutool.core.util.StrUtil;
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.google.common.cache.CacheLoader;
 import com.google.common.cache.LoadingCache;
-import com.zp.framework.common.pojo.Result;
-import com.zp.framework.common.util.json.JsonUtils;
+import com.zp.gmall.framework.common.pojo.Result;
+import com.zp.gmall.framework.common.util.json.JsonUtils;
 import com.zp.gateway.util.SecurityFrameworkUtils;
 import com.zp.gateway.util.WebFrameworkUtils;
 import com.zp.module.system.api.oauth2.OAuth2TokenApi;
@@ -25,9 +25,9 @@ import java.time.Duration;
 import java.util.Objects;
 import java.util.function.Function;
 
-import static com.zp.framework.common.util.cache.CacheUtils.buildAsyncReloadingCache;
+import static com.zp.gmall.framework.common.util.cache.CacheUtils.buildAsyncReloadingCache;
 
-import com.zp.framework.common.core.KeyValue;
+import com.zp.gmall.framework.common.core.KeyValue;
 
 /**
  * Token 过滤器，验证 token 的有效性

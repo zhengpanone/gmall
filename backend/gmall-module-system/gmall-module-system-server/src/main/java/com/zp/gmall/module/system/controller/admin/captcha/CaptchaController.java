@@ -17,7 +17,7 @@ import org.springframework.web.bind.annotation.RestController;
 @Component
 @Tag(name = "管理后台 - 验证码")
 @RestController
-@RequestMapping("/system/captcha")
+@RequestMapping("/captcha")
 public class CaptchaController {
 
     @PostMapping("/getCaptcha")

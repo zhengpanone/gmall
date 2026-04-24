@@ -1,6 +1,6 @@
 package com.zp.module.member.api.user;
 
-import com.zp.framework.common.pojo.Result;
+import com.zp.gmall.framework.common.pojo.Result;
 import com.zp.module.member.api.user.dto.MemberUserVO;
 import com.zp.module.member.enums.ApiConstants;
 import io.swagger.v3.oas.annotations.Operation;

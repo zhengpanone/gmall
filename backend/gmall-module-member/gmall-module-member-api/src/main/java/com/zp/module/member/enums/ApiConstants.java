@@ -1,6 +1,6 @@
 package com.zp.module.member.enums;
 
-import com.zp.framework.common.enums.RpcConstants;
+import com.zp.gmall.framework.common.enums.RpcConstants;
 
 /**
  * Author : zhengpanone

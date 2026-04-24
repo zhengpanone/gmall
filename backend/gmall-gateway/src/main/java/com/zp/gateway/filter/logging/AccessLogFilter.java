@@ -5,7 +5,7 @@ import cn.hutool.core.map.MapUtil;
 import cn.hutool.json.JSONUtil;
 
 import com.alibaba.nacos.common.utils.StringUtils;
-import com.zp.framework.common.util.json.JsonUtils;
+import com.zp.gmall.framework.common.util.json.JsonUtils;
 import com.zp.gateway.util.SecurityFrameworkUtils;
 import com.zp.gateway.util.WebFrameworkUtils;
 import jakarta.annotation.Resource;

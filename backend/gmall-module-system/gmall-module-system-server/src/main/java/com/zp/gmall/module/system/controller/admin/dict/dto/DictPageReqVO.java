@@ -22,7 +22,7 @@ import static com.zp.gmall.framework.common.util.date.DateUtils.FORMAT_YEAR_MONT
 @Schema(description = "管理后台 - 字典类型分页列表 Request VO")
 @Data
 @EqualsAndHashCode(callSuper = true)
-public class DictTypePageReqVO extends PageParam {
+public class DictPageReqVO extends PageParam {
 
     @Schema(description = "字典类型名称，模糊匹配", example = "芋道")
     private String name;

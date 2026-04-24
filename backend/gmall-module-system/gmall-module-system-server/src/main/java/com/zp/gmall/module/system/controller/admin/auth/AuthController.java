@@ -29,7 +29,7 @@ import static com.zp.gmall.framework.common.pojo.Result.ok;
 
 @Tag(name = "管理后台 - 认证")
 @RestController
-@RequestMapping("/system/auth")
+@RequestMapping("/auth")
 @Slf4j
 @RequiredArgsConstructor
 public class AuthController {

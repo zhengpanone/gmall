@@ -1,4 +1,6 @@
-create table sys_dept
+# CREATE DATABASE IF NOT EXISTS gmall_system CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;
+
+CREATE TABLE IF NOT EXISTS sys_dept
 (
     id             varchar(32)                           not null comment '部门id'
         primary key,
@@ -18,7 +20,7 @@ create table sys_dept
 )
     comment '部门表' collate = utf8mb4_unicode_ci;
 
-create table sys_login_log
+CREATE TABLE IF NOT EXISTS sys_login_log
 (
     id          varchar(32)                           not null comment '访问ID'
         primary key,
@@ -39,7 +41,7 @@ create table sys_login_log
 )
     comment '系统访问记录' collate = utf8mb4_unicode_ci;
 
-create table sys_tenant
+CREATE TABLE IF NOT EXISTS sys_tenant
 (
     id              varchar(32)      null comment '租户编号',
     name            varchar(100)     null comment '租户名',
@@ -85,18 +87,52 @@ create table sys_users
     comment '用户信息表' collate = utf8mb4_unicode_ci;
 
 
-CREATE TABLE system_dict_type
+CREATE TABLE sys_dict
 (
     id           varchar(32)                            NOT NULL comment '字典主键' PRIMARY KEY,
-    name         varchar(100) DEFAULT ''                NULL comment '字典名称',
-    type         varchar(100) DEFAULT ''                NULL comment '字典类型',
-    status       smallint     DEFAULT 0                 NOT NULL comment '状态（0正常 1停用）',
+    dict_code    varchar(100) DEFAULT ''                NULL comment '字典编码',
+    dict_name    varchar(100) DEFAULT ''                NULL comment '字典名称',
+    dict_type    varchar(100) DEFAULT ''                NULL comment '字典类型：1-系统字典 2-业务字典',
+    status       smallint     DEFAULT 0                 NOT NULL comment '状态：0-启用 1禁用',
     remark       varchar(500) DEFAULT NULL              NULL comment '备注',
+    sort         int(11)                                NOT NULL DEFAULT '0' COMMENT '排序',
     creator      varchar(64)  DEFAULT ''                NULL comment '创建者',
     create_time  datetime     DEFAULT CURRENT_TIMESTAMP NOT NULL comment '创建时间',
     updater      varchar(64)  DEFAULT ''                NULL comment '更新者',
     update_time  datetime     DEFAULT CURRENT_TIMESTAMP NOT NULL ON UPDATE CURRENT_TIMESTAMP comment '更新时间',
-    deleted      bit          DEFAULT b'0'              NOT NULL comment '是否删除',
-    deleted_time datetime     DEFAULT NULL              NULL comment '删除时间'
-) comment '字典类型表' collate = utf8mb4_unicode_ci;
+    deleted      bit          DEFAULT b'0'              NOT NULL comment '逻辑删除：0-未删除 1-已删除',
+    deleted_time datetime     DEFAULT NULL              NULL comment '删除时间',
+    UNIQUE KEY `uk_dict_code` (`dict_code`) USING BTREE,
+    KEY `idx_dict_type` (`dict_type`) USING BTREE,
+    KEY `idx_status` (`status`) USING BTREE,
+    KEY `idx_deleted` (`deleted`) USING BTREE,
+    KEY `idx_create_time` (`create_time`) USING BTREE,
+    KEY `idx_update_time` (`update_time`) USING BTREE
+) comment '字典主表' collate = utf8mb4_unicode_ci;
 
+CREATE TABLE sys_dict_item
+(
+    id           varchar(32)                             NOT NULL comment '主键ID' PRIMARY KEY,
+    dict_id      varchar(32)                             NOT NULL COMMENT '字典ID',
+    item_code    varchar(100)  DEFAULT ''                NULL comment '字典项编码',
+    item_name    varchar(100)  DEFAULT ''                NULL comment '字典项名称',
+    item_value   varchar(500)                            NOT NULL COMMENT '字典项值',
+    extend_info  varchar(1000) DEFAULT NULL COMMENT '扩展信息',
+    status       smallint      DEFAULT 0                 NOT NULL comment '状态（0正常 1停用）',
+    remark       varchar(500)  DEFAULT NULL              NULL comment '备注',
+    sort         int(11)                                 NOT NULL DEFAULT '0' COMMENT '排序',
+    creator      varchar(64)   DEFAULT ''                NULL comment '创建者',
+    create_time  datetime      DEFAULT CURRENT_TIMESTAMP NOT NULL comment '创建时间',
+    updater      varchar(64)   DEFAULT ''                NULL comment '更新者',
+    update_time  datetime      DEFAULT CURRENT_TIMESTAMP NOT NULL ON UPDATE CURRENT_TIMESTAMP comment '更新时间',
+    deleted      bit           DEFAULT b'0'              NOT NULL comment '是否删除',
+    deleted_time datetime      DEFAULT NULL              NULL comment '删除时间',
+    UNIQUE KEY `uk_dict_item_code` (`dict_id`, `item_code`) USING BTREE,
+    KEY `idx_dict_id` (`dict_id`) USING BTREE,
+    KEY `idx_item_code` (`item_code`) USING BTREE,
+    KEY `idx_status` (`status`) USING BTREE,
+    KEY `idx_deleted` (`deleted`) USING BTREE,
+    KEY `idx_sort` (`sort`) USING BTREE,
+    KEY `idx_create_time` (`create_time`) USING BTREE,
+    KEY `idx_update_time` (`update_time`) USING BTREE
+) comment '字典项表' collate = utf8mb4_unicode_ci;

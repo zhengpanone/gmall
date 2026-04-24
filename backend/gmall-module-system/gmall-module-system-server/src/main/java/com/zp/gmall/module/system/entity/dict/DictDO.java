@@ -6,35 +6,39 @@ import com.zp.gmall.framework.common.enums.CommonStatusEnum;
 import com.zp.gmall.framework.mybatis.core.dataobject.BaseDO;
 import lombok.*;
 
-import java.time.LocalDateTime;
-
 /**
  * 字典类型表
  *
  * @author ruoyi
  */
-@TableName("system_dict_type")
+@TableName("sys_dict")
 @Data
 @EqualsAndHashCode(callSuper = true)
 @ToString(callSuper = true)
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
-public class DictTypeDO extends BaseDO {
+public class DictDO extends BaseDO {
 
     /**
      * 字典主键
      */
     @TableId
     private String id;
+
+    /**
+     * 字典code
+     */
+    private String dictCode;
+
     /**
      * 字典名称
      */
-    private String name;
+    private String dictName;
     /**
      * 字典类型
      */
-    private String type;
+    private String dictType;
     /**
      * 状态
      * <p>
@@ -47,8 +51,8 @@ public class DictTypeDO extends BaseDO {
     private String remark;
 
     /**
-     * 删除时间
+     * 排序
      */
-    private LocalDateTime deletedTime;
+    private Integer sort;
 
 }

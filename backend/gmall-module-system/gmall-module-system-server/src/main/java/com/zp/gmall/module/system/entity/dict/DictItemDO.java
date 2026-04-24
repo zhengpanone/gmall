@@ -12,35 +12,34 @@ import lombok.EqualsAndHashCode;
  * Version : v1.0.0
  * Description:
  */
-@TableName("system_dict_data")
-@KeySequence("system_dict_data_seq") // 用于 Oracle、PostgreSQL、Kingbase、DB2、H2 数据库的主键自增。如果是 MySQL 等数据库，可不写。
+@TableName("sys_dict_data")
 @Data
 @EqualsAndHashCode(callSuper = true)
-public class DictDataDO extends BaseDO {
+public class DictItemDO extends BaseDO {
 
     /**
      * 字典数据编号
      */
     @TableId
-    private Long id;
-    /**
-     * 字典排序
-     */
-    private Integer sort;
+    private String id;
+
+    private String dictId;
+
     /**
      * 字典标签
      */
     private String label;
+
     /**
-     * 字典值
+     * 字典项编码
      */
-    private String value;
+    private String itemCode;
+
     /**
-     * 字典类型
-     * <p>
-     * 冗余 {@link DictDataDO#getDictType()}
+     * 字典项名称
      */
-    private String dictType;
+    private String itemValue;
+
     /**
      * 状态
      * <p>
@@ -53,15 +52,21 @@ public class DictDataDO extends BaseDO {
      * 对应到 element-ui 为 default、primary、success、info、warning、danger
      */
     private String colorType;
+
     /**
      * css 样式
      */
     @TableField(updateStrategy = FieldStrategy.ALWAYS)
     private String cssClass;
+
     /**
      * 备注
      */
     private String remark;
 
-}
+    /**
+     * 字典排序
+     */
+    private Integer sort;
 
+}

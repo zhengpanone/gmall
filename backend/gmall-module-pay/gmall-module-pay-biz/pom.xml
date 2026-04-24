@@ -3,7 +3,7 @@
          xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <parent>
-        <groupId>com.zp</groupId>
+        <groupId>com.zp.gmall</groupId>
         <artifactId>gmall-module-pay</artifactId>
        <version>1.0-SNAPSHOT</version>
     </parent>
@@ -26,54 +26,54 @@
 
         <!-- 依赖服务 -->
         <dependency>
-            <groupId>com.zp</groupId>
+            <groupId>com.zp.gmall</groupId>
             <artifactId>gmall-module-pay-api</artifactId>
            <version>1.0-SNAPSHOT</version>
         </dependency>
         <dependency>
-            <groupId>com.zp</groupId>
+            <groupId>com.zp.gmall</groupId>
             <artifactId>gmall-module-member-api</artifactId>
            <version>1.0-SNAPSHOT</version>
         </dependency>
 
         <!-- 业务组件 -->
         <dependency>
-            <groupId>com.zp</groupId>
+            <groupId>com.zp.gmall</groupId>
             <artifactId>gmall-spring-boot-starter-banner</artifactId>
             <version>1.0-SNAPSHOT</version>
         </dependency>
         <dependency>
-            <groupId>com.zp</groupId>
+            <groupId>com.zp.gmall</groupId>
             <artifactId>gmall-spring-boot-starter-biz-tenant</artifactId>
             <version>1.0-SNAPSHOT</version>
         </dependency>
         <!-- <dependency>
-            <groupId>com.zp</groupId>
+            <groupId>com.zp.gmall</groupId>
             <artifactId>gmall-spring-boot-starter-biz-error-code</artifactId>
             <version>1.0-SNAPSHOT</version>
         </dependency> -->
         <dependency>
-            <groupId>com.zp</groupId>
+            <groupId>com.zp.gmall</groupId>
             <artifactId>gmall-spring-boot-starter-biz-pay</artifactId>
             <version>1.0-SNAPSHOT</version>
         </dependency>
 
         <!-- Web 相关 -->
         <dependency>
-            <groupId>com.zp</groupId>
+            <groupId>com.zp.gmall</groupId>
             <artifactId>gmall-spring-boot-starter-security</artifactId>
             <version>1.0-SNAPSHOT</version>
         </dependency>
 
         <!-- DB 相关 -->
         <dependency>
-            <groupId>com.zp</groupId>
+            <groupId>com.zp.gmall</groupId>
             <artifactId>gmall-spring-boot-starter-mybatis</artifactId>
             <version>1.0-SNAPSHOT</version>
         </dependency>
 
         <dependency>
-            <groupId>com.zp</groupId>
+            <groupId>com.zp.gmall</groupId>
             <artifactId>gmall-spring-boot-starter-redis</artifactId>
             <version>1.0-SNAPSHOT</version>
         </dependency>
@@ -107,14 +107,14 @@
 
         <!-- Job 定时任务相关 -->
         <dependency>
-            <groupId>com.zp</groupId>
+            <groupId>com.zp.gmall</groupId>
             <artifactId>gmall-spring-boot-starter-job</artifactId>
             <version>1.0-SNAPSHOT</version>
         </dependency>
 
         <!-- Test 测试相关 -->
         <dependency>
-            <groupId>com.zp</groupId>
+            <groupId>com.zp.gmall</groupId>
             <artifactId>gmall-spring-boot-starter-test</artifactId>
             <version>1.0-SNAPSHOT</version>
             <scope>test</scope>
@@ -122,14 +122,14 @@
 
         <!-- 监控相关 -->
         <dependency>
-            <groupId>com.zp</groupId>
+            <groupId>com.zp.gmall</groupId>
             <artifactId>gmall-spring-boot-starter-monitor</artifactId>
             <version>1.0-SNAPSHOT</version>
         </dependency>
 
         <!-- 工具类相关 -->
         <dependency>
-            <groupId>com.zp</groupId>
+            <groupId>com.zp.gmall</groupId>
             <artifactId>gmall-spring-boot-starter-excel</artifactId>
             <version>1.0-SNAPSHOT</version>
         </dependency>

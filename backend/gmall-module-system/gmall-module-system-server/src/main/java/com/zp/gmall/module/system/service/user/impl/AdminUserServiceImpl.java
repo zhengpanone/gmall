@@ -1,12 +1,13 @@
 package com.zp.gmall.module.system.service.user.impl;
 
 import cn.hutool.core.convert.Convert;
+import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.zp.gmall.module.system.controller.admin.user.dto.UserSaveDTO;
 import com.zp.gmall.module.system.controller.admin.user.dto.UserUpdateDTO;
 import com.zp.gmall.module.system.controller.admin.user.vo.AdminUserVO;
 import com.zp.gmall.module.system.convert.user.AdminUserConvertMapper;
 import com.zp.gmall.module.system.entity.user.AdminUserDO;
-import com.zp.gmall.module.system.mapper.AdminUserMapper;
+import com.zp.gmall.module.system.mapper.user.AdminUserMapper;
 import com.zp.gmall.module.system.service.user.IAdminUserService;
 import jakarta.annotation.Resource;
 import lombok.extern.slf4j.Slf4j;
@@ -25,7 +26,7 @@ import java.util.List;
  */
 @Slf4j
 @Service
-public class AdminUserServiceImpl implements IAdminUserService {
+public class AdminUserServiceImpl extends ServiceImpl<AdminUserMapper, AdminUserDO> implements IAdminUserService {
     @Resource
     private AdminUserMapper userMapper;
 

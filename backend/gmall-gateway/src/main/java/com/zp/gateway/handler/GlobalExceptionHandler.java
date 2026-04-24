@@ -1,6 +1,6 @@
 package com.zp.gateway.handler;
 
-import com.zp.framework.common.pojo.Result;
+import com.zp.gmall.framework.common.pojo.Result;
 import com.zp.gateway.util.WebFrameworkUtils;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.boot.web.reactive.error.ErrorWebExceptionHandler;
@@ -13,7 +13,7 @@ import org.springframework.web.server.ResponseStatusException;
 import org.springframework.web.server.ServerWebExchange;
 import reactor.core.publisher.Mono;
 
-import static com.zp.framework.common.exception.enums.GlobalErrorCodeConstants.INTERNAL_SERVER_ERROR;
+import static com.zp.gmall.framework.common.exception.enums.GlobalErrorCodeConstants.INTERNAL_SERVER_ERROR;
 
 /**
  * Gateway 的全局异常处理器，将 Exception 翻译成 Result + 对应的异常编号

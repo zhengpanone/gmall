@@ -1,5 +1,6 @@
 package com.zp.gmall.module.system.service.user;
 
+import com.baomidou.mybatisplus.extension.service.IService;
 import com.zp.gmall.module.system.controller.admin.user.dto.UserSaveDTO;
 import com.zp.gmall.module.system.controller.admin.user.dto.UserUpdateDTO;
 import com.zp.gmall.module.system.controller.admin.user.vo.AdminUserVO;
@@ -16,7 +17,7 @@ import java.util.List;
  * Version : v1.0.0
  * Description:
  */
-public interface IAdminUserService {
+public interface IAdminUserService extends IService<AdminUserDO> {
 
     /**
      * 创建用户

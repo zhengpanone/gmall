@@ -24,7 +24,7 @@ import java.util.List;
  */
 @Tag(name = "管理后台 - 用户")
 @RestController
-@RequestMapping("/system/user")
+@RequestMapping("/user")
 @Validated
 public class UserController {
     @Resource
