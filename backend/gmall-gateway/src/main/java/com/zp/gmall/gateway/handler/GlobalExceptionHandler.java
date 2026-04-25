@@ -1,6 +1,6 @@
 package com.zp.gmall.gateway.handler;
 
-import com.zp.gmall.framework.common.pojo.Result;
+import com.zp.gmall.framework.common.domain.vo.Result;
 import com.zp.gmall.gateway.util.WebFrameworkUtils;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.boot.web.reactive.error.ErrorWebExceptionHandler;

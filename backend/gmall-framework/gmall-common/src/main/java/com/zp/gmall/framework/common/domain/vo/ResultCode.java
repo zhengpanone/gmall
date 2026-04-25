@@ -1,4 +1,4 @@
-package com.zp.gmall.framework.common.pojo;
+package com.zp.gmall.framework.common.domain.vo;
 
 import jakarta.validation.constraints.NotNull;
 import lombok.AllArgsConstructor;

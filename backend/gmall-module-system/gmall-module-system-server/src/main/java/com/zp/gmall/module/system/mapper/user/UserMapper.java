@@ -1,7 +1,7 @@
 package com.zp.gmall.module.system.mapper.user;
 
 
-import com.zp.gmall.framework.common.pojo.PageResult;
+import com.zp.gmall.framework.common.domain.vo.PageResult;
 import com.zp.gmall.framework.mybatis.core.mapper.BaseMapperX;
 import com.zp.gmall.framework.mybatis.core.util.LambdaQueryWrapperX;
 import com.zp.gmall.module.system.controller.admin.user.dto.UserPageReqDTO;

@@ -1,4 +1,4 @@
-package com.zp.gmall.framework.common.pojo;
+package com.zp.gmall.framework.common.domain.dto;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;

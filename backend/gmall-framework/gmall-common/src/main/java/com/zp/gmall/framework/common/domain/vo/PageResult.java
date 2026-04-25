@@ -1,4 +1,4 @@
-package com.zp.gmall.framework.common.pojo;
+package com.zp.gmall.framework.common.domain.vo;
 
 import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.Data;

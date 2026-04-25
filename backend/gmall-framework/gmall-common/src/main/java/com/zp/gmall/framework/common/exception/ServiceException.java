@@ -1,5 +1,6 @@
 package com.zp.gmall.framework.common.exception;
 
+import com.zp.gmall.framework.common.enums.ResultEnum;
 import com.zp.gmall.framework.common.exception.enums.ServiceErrorCodeRange;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
@@ -30,6 +31,11 @@ public final class ServiceException extends RuntimeException {
     public ServiceException(ErrorCode errorCode) {
         this.code = errorCode.getCode();
         this.message = errorCode.getMsg();
+    }
+
+    public ServiceException(String message) {
+        this.code = ResultEnum.INTERNAL_SERVER_ERROR.getCode();
+        this.message = message;
     }
 
     public ServiceException(Integer code, String message) {

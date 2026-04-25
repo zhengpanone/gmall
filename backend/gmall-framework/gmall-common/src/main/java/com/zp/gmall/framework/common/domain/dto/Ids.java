@@ -1,4 +1,4 @@
-package com.zp.gmall.framework.common.pojo;
+package com.zp.gmall.framework.common.domain.dto;
 
 import jakarta.validation.constraints.NotEmpty;
 import lombok.Data;

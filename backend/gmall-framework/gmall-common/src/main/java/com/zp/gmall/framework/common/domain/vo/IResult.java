@@ -1,4 +1,4 @@
-package com.zp.gmall.framework.common.pojo;
+package com.zp.gmall.framework.common.domain.vo;
 
 /**
  * 定义返回数据结构

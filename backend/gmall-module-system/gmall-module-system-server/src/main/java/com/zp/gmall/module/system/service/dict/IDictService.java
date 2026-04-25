@@ -1,7 +1,7 @@
 package com.zp.gmall.module.system.service.dict;
 
 import com.baomidou.mybatisplus.extension.service.IService;
-import com.zp.gmall.framework.common.pojo.Ids;
+import com.zp.gmall.framework.common.domain.dto.Ids;
 import com.zp.gmall.module.system.controller.admin.dict.dto.DictSaveDTO;
 import com.zp.gmall.module.system.controller.admin.dict.dto.DictUpdateDTO;
 import com.zp.gmall.module.system.controller.admin.dict.vo.DictVO;

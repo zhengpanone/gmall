@@ -5,7 +5,7 @@ import cn.hutool.core.util.StrUtil;
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.google.common.cache.CacheLoader;
 import com.google.common.cache.LoadingCache;
-import com.zp.gmall.framework.common.pojo.Result;
+import com.zp.gmall.framework.common.domain.vo.Result;
 import com.zp.gmall.framework.common.util.json.JsonUtils;
 import com.zp.gmall.gateway.util.SecurityFrameworkUtils;
 import com.zp.gmall.gateway.util.WebFrameworkUtils;

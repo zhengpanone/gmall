@@ -2,7 +2,7 @@ package com.zp.gmall.module.system.service.dict.impl;
 
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
-import com.zp.gmall.framework.common.pojo.Ids;
+import com.zp.gmall.framework.common.domain.dto.Ids;
 import com.zp.gmall.module.system.controller.admin.dict.dto.DictSaveDTO;
 import com.zp.gmall.module.system.controller.admin.dict.dto.DictUpdateDTO;
 import com.zp.gmall.module.system.controller.admin.dict.vo.DictVO;

@@ -1,6 +1,6 @@
 package com.zp.gmall.module.infra.api.logger;
 
-import com.zp.gmall.framework.common.pojo.Result;
+import com.zp.gmall.framework.common.domain.vo.Result;
 import com.zp.gmall.module.infra.api.logger.dto.ApiAccessLogCreateReqDTO;
 import com.zp.gmall.module.infra.enums.ApiConstants;
 import io.swagger.v3.oas.annotations.Operation;

@@ -65,6 +65,8 @@ public interface Constant {
      */
     String CLOUD_STORAGE_CONFIG_KEY = "CLOUD_STORAGE_CONFIG_KEY";
 
+    String DEFAULT_ROOT="0";
+
     /**
      * 定时任务状态
      */

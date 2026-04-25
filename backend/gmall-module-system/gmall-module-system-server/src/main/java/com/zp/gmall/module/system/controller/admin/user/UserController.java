@@ -1,6 +1,6 @@
 package com.zp.gmall.module.system.controller.admin.user;
 
-import com.zp.gmall.framework.common.pojo.Result;
+import com.zp.gmall.framework.common.domain.vo.Result;
 import com.zp.gmall.module.system.controller.admin.user.dto.UserSaveDTO;
 import com.zp.gmall.module.system.controller.admin.user.dto.UserUpdateDTO;
 import com.zp.gmall.module.system.controller.admin.user.vo.AdminUserVO;

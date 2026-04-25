@@ -3,7 +3,7 @@
 //import cn.hutool.core.collection.CollUtil;
 //import cn.hutool.core.util.StrUtil;
 //import com.zp.gmall.framework.common.exception.enums.GlobalErrorCodeConstants;
-//import com.zp.gmall.framework.common.pojo.Result;
+//import com.zp.gmall.framework.common.domain.vo.Result;
 //import com.zp.gmall.framework.common.util.servlet.ServletUtils;
 //import com.zp.gmall.framework.security.core.LoginUser;
 //import com.zp.gmall.framework.security.core.util.SecurityFrameworkUtils;

@@ -1,6 +1,6 @@
 package com.zp.gmall.module.system.controller.admin.auth;
 
-import com.zp.gmall.framework.common.pojo.Result;
+import com.zp.gmall.framework.common.domain.vo.Result;
 import com.zp.gmall.module.system.controller.admin.auth.dto.AuthLoginDTO;
 import com.zp.gmall.module.system.service.auth.IAdminAuthService;
 import io.swagger.v3.oas.annotations.Operation;
@@ -13,7 +13,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import static com.zp.gmall.framework.common.pojo.Result.ok;
+import static com.zp.gmall.framework.common.domain.vo.Result.ok;
 
 /**
  * 使用 @RequiredArgsConstructor + final @NonNull field 实现构造器注入Bean

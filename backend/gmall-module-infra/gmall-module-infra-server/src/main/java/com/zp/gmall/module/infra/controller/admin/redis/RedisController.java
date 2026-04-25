@@ -1,6 +1,6 @@
 package com.zp.gmall.module.infra.controller.admin.redis;
 
-import com.zp.gmall.framework.common.pojo.Result;
+import com.zp.gmall.framework.common.domain.vo.Result;
 import com.zp.gmall.module.infra.controller.admin.redis.vo.RedisMonitorRespVO;
 import com.zp.gmall.module.infra.convert.redis.RedisConvert;
 import jakarta.annotation.Resource;
@@ -16,7 +16,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import java.util.Properties;
 
-import static com.zp.gmall.framework.common.pojo.Result.ok;
+import static com.zp.gmall.framework.common.domain.vo.Result.ok;
 
 @Tag(name = "管理后台 - Redis 监控")
 @RequestMapping("/infra/redis")

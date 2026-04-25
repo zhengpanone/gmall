@@ -1,6 +1,6 @@
 package com.zp.gmall.module.system.controller.admin.user.dto;
 
-import com.zp.gmall.framework.common.pojo.PageParam;
+import com.zp.gmall.framework.common.domain.dto.PageParam;
 import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.AllArgsConstructor;
 import lombok.Data;

@@ -1,6 +1,6 @@
 package com.zp.gmall.module.system.api.logger.dto;
 
-import com.zp.gmall.framework.common.pojo.PageParam;
+import com.zp.gmall.framework.common.domain.dto.PageParam;
 import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
