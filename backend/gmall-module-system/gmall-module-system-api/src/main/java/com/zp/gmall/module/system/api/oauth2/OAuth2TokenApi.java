@@ -1,7 +1,7 @@
 package com.zp.gmall.module.system.api.oauth2;
 
 
-import com.zp.gmall.framework.common.pojo.Result;
+import com.zp.gmall.framework.common.domain.vo.Result;
 import com.zp.gmall.module.system.api.oauth2.dto.OAuth2AccessTokenCheckRespDTO;
 import com.zp.gmall.module.system.api.oauth2.dto.OAuth2AccessTokenCreateReqDTO;
 import com.zp.gmall.module.system.api.oauth2.dto.OAuth2AccessTokenRespDTO;

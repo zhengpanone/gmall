@@ -1,4 +1,4 @@
-package com.zp.gmall.framework.common.pojo;
+package com.zp.gmall.framework.common.domain.vo;
 
 import cn.hutool.core.lang.Assert;
 import com.fasterxml.jackson.annotation.JsonIgnore;
@@ -74,7 +74,7 @@ public class Result<T> implements Serializable {
         return new Result<>(code, MessageUtils.getMessage(code));
     }
 
-    public static Result<?> failed(String msg) {
+    public static Result<Void> failed(String msg) {
         return instance(ResultEnum.COMMON_FAILED.getCode(), msg, null);
     }
 

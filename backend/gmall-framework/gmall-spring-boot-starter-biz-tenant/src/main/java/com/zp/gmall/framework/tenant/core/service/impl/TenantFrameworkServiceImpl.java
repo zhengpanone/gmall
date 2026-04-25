@@ -2,7 +2,7 @@
 //
 //import com.google.common.cache.CacheLoader;
 //import com.google.common.cache.LoadingCache;
-//import com.zp.gmall.framework.common.pojo.Result;
+//import com.zp.gmall.framework.common.domain.vo.Result;
 //import com.zp.gmall.framework.tenant.core.service.TenantFrameworkService;
 //import com.zp.module.system.api.tenant.TenantApi;
 //import lombok.RequiredArgsConstructor;

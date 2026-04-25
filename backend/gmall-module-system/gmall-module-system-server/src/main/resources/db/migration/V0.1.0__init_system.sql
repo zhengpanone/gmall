@@ -153,3 +153,54 @@ CREATE TABLE sys_dict_item
     KEY `idx_create_time` (`create_time`) USING BTREE,
     KEY `idx_update_time` (`update_time`) USING BTREE
 ) comment '字典项表' collate = utf8mb4_unicode_ci;
+
+-- 优化后的菜单表
+CREATE TABLE IF NOT EXISTS sys_menu
+(
+    id           varchar(36) not null comment '菜单ID' PRIMARY KEY,
+    parent_id    varchar(36) DEFAULT '0' COMMENT '父ID，0表示根节点',
+    ancestor_ids VARCHAR(500) COMMENT '祖先ID列表，逗号分隔，用于快速查询层级',
+    name         VARCHAR(50) COMMENT '菜单名称（英文标识，用于路由name）',
+    title        VARCHAR(50) COMMENT '菜单标题（显示名称）',
+    path         VARCHAR(255) COMMENT '路由路径',
+    component    VARCHAR(255) COMMENT '组件路径（Vue组件路径）',
+    icon         VARCHAR(50) COMMENT '图标名称',
+    sort         INT         DEFAULT 0 COMMENT '排序号，值越小越靠前',
+    type         TINYINT COMMENT '类型：0目录 1菜单 2按钮 3外链',
+    permission   VARCHAR(100) COMMENT '权限标识，如：sys:user:add',
+    visible      TINYINT     DEFAULT 1 COMMENT '是否显示：0隐藏 1显示',
+    status       TINYINT     DEFAULT 1 COMMENT '状态：0停用 1正常',
+    keep_alive   TINYINT     DEFAULT 0 COMMENT '是否缓存页面：0不缓存 1缓存',
+    affix        TINYINT     DEFAULT 0 COMMENT '是否固定到标签页：0不固定 1固定',
+    frame_src    VARCHAR(500) COMMENT '内嵌地址（iframe链接）',
+    redirect     VARCHAR(255) COMMENT '重定向路径',
+    active_menu  VARCHAR(255) COMMENT '激活的菜单，用于隐藏菜单时设置',
+    breadcrumb   TINYINT     DEFAULT 1 COMMENT '是否显示面包屑：0隐藏 1显示',
+    remark       VARCHAR(500) COMMENT '备注',
+    create_by    BIGINT COMMENT '创建人ID',
+    update_by    BIGINT COMMENT '更新人ID',
+    create_time  DATETIME    DEFAULT CURRENT_TIMESTAMP COMMENT '创建时间',
+    update_time  DATETIME    DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT '更新时间',
+
+    -- 添加索引
+    INDEX idx_parent_id (parent_id),
+    INDEX idx_sort (sort),
+    INDEX idx_type (type),
+    INDEX idx_status (status)
+
+) COMMENT = '系统菜单表';
+
+-- 优化后的角色菜单关联表
+CREATE TABLE IF NOT EXISTS sys_role_menu
+(
+    id      varchar(36) not null comment '主键ID' PRIMARY KEY,
+    role_id varchar(36) NOT NULL COMMENT '角色ID',
+    menu_id varchar(36) NOT NULL COMMENT '菜单ID',
+
+    -- 添加索引
+    INDEX idx_role_id (role_id),
+    INDEX idx_menu_id (menu_id),
+
+    -- 唯一约束
+    UNIQUE uk_role_menu (role_id, menu_id)
+) COMMENT = '角色菜单关联表';

@@ -1,7 +1,7 @@
 
 package com.zp.gmall.framework.common.enums;
 
-import com.zp.gmall.framework.common.pojo.IResult;
+import com.zp.gmall.framework.common.domain.vo.IResult;
 import lombok.AllArgsConstructor;
 
 

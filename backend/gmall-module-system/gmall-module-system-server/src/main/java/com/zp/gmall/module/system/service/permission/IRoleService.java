@@ -1,8 +1,8 @@
 package com.zp.gmall.module.system.service.permission;
 
 import com.baomidou.mybatisplus.extension.service.IService;
-import com.zp.gmall.framework.common.pojo.Ids;
-import com.zp.gmall.framework.common.pojo.PageResult;
+import com.zp.gmall.framework.common.domain.dto.Ids;
+import com.zp.gmall.framework.common.domain.vo.PageResult;
 import com.zp.gmall.module.system.controller.admin.permission.dto.RolePageDTO;
 import com.zp.gmall.module.system.controller.admin.permission.dto.RoleSaveDTO;
 import com.zp.gmall.module.system.controller.admin.permission.dto.RoleUpdateDTO;

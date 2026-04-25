@@ -1,7 +1,7 @@
 package com.zp.gmall.module.system.controller.admin.permission;
 
-import com.zp.gmall.framework.common.pojo.Ids;
-import com.zp.gmall.framework.common.pojo.Result;
+import com.zp.gmall.framework.common.domain.dto.Ids;
+import com.zp.gmall.framework.common.domain.vo.Result;
 import com.zp.gmall.module.system.controller.admin.permission.dto.RoleSaveDTO;
 import com.zp.gmall.module.system.controller.admin.permission.dto.RoleUpdateDTO;
 import com.zp.gmall.module.system.service.permission.IRoleService;

@@ -1,7 +1,7 @@
 package com.zp.gmall.framework.common.util.object;
 
 import cn.hutool.core.bean.BeanUtil;
-import com.zp.gmall.framework.common.pojo.PageResult;
+import com.zp.gmall.framework.common.domain.vo.PageResult;
 import com.zp.gmall.framework.common.util.collection.CollectionUtils;
 
 import java.util.List;
