@@ -66,7 +66,7 @@ public class RoleServiceImpl extends ServiceImpl<RoleMapper, RoleDO> implements 
 
     @Override
     public void deleteRole(Ids ids) {
-
+        baseMapper.deleteBatchIds(ids.getIds());
     }
 
 

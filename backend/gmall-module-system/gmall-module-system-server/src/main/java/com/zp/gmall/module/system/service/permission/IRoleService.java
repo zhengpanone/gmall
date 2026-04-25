@@ -50,5 +50,10 @@ public interface IRoleService extends IService<RoleDO> {
      */
     String updateRole(RoleUpdateDTO roleUpdateDTO);
 
+    /**
+     * 删除角色
+     *
+     * @param ids 角色编号
+     */
     void deleteRole(Ids ids);
 }

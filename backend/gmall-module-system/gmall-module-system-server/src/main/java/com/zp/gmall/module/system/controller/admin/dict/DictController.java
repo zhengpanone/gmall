@@ -1,7 +1,9 @@
 package com.zp.gmall.module.system.controller.admin.dict;
 
+import com.zp.gmall.framework.common.pojo.Ids;
 import com.zp.gmall.framework.common.pojo.Result;
 import com.zp.gmall.module.system.controller.admin.dict.dto.DictSaveDTO;
+import com.zp.gmall.module.system.controller.admin.dict.dto.DictUpdateDTO;
 import com.zp.gmall.module.system.controller.admin.dict.vo.DictVO;
 import com.zp.gmall.module.system.service.dict.IDictService;
 import io.swagger.v3.oas.annotations.Operation;
@@ -27,5 +29,19 @@ public class DictController {
     public Result<DictVO> createDict(@Valid @RequestBody DictSaveDTO dictDTO) {
         DictVO dictVO = dictService.createDict(dictDTO);
         return Result.ok(dictVO);
+    }
+
+    @PostMapping("/update")
+    @Operation(summary = "更新字典")
+    public Result<DictVO> updateDict(@Valid @RequestBody DictUpdateDTO dictDTO) {
+        DictVO dictVO =  dictService.updateDict(dictDTO);
+        return Result.ok(dictVO);
+    }
+
+    @PostMapping("/delete")
+    @Operation(summary = "删除字典")
+    public Result<Void> deleteDict(@Valid @RequestBody Ids ids) {
+        dictService.deleteDict(ids);
+        return Result.ok();
     }
 }
