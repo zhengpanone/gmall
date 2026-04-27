@@ -15,7 +15,7 @@ export namespace SystemMenuApi {
     permission: string;
     type: MenuTypeEnum | number;
     sort: number;
-    parentId: number;
+    parentId: string;
     path: string;
     icon: string;
     component: string;

@@ -41,19 +41,19 @@ const schema: VbenFormSchema[] = [
     label: $t('system.menu.type'),
   },
   {
-    component: 'TreeSelect',
+    component: 'ApiTreeSelect',
     componentProps: {
       allowClear: true,
       api: getMenuOptions,
       class: 'w-full',
-      dataFields: {
-        label: 'name',
-        value: 'id',
-        children: 'children',
-      },
+      childrenField: 'children',
+      labelField: 'name',
       placeholder: $t('system.menu.parentPlaceholder'),
+      props: { label: 'name' },
       showSearch: true,
+      valueField: 'id',
     },
+    defaultValue: undefined,
     fieldName: 'parentId',
     label: $t('system.menu.parent'),
   },
@@ -141,7 +141,9 @@ const [Drawer, drawerApi] = useVbenDrawer({
       const data = drawerApi.getData<SystemMenuApi.Menu>();
       if (data) {
         formData.value = data;
-        formApi.setValues(data);
+        // 如果 parentId 为 0，设置为 undefined 以显示 placeholder
+        const formValues = { ...data };
+        formApi.setValues(formValues);
       } else {
         formData.value = {} as SystemMenuApi.Menu;
         formApi.resetForm();
@@ -155,9 +157,6 @@ async function onSubmit() {
   if (valid) {
     drawerApi.lock();
     const values = await formApi.getValues();
-    if (values.parentId == null) {
-      values.parentId = '0';
-    }
     try {
       if (formData.value?.id) {
         await updateMenu(formData.value.id, values as SystemMenuApi.UpdateMenuParams);

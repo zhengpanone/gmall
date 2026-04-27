@@ -96,7 +96,7 @@ public class MenuServiceImpl extends ServiceImpl<MenuMapper, MenuDO> implements 
 
         MenuDO menuDO = menuConvertMapper.convert(dto);
         // 设置祖先ID
-        if (StrUtil.isNotEmpty(menuDO.getParentId())&& !"0".equals(menuDO.getParentId())) {
+        if (StrUtil.isNotEmpty(menuDO.getParentId()) && !"0".equals(menuDO.getParentId())) {
             MenuDO parentMenu = getById(menuDO.getParentId());
             if (parentMenu == null) {
                 throw new ServerException("父菜单不存在");
@@ -157,7 +157,50 @@ public class MenuServiceImpl extends ServiceImpl<MenuMapper, MenuDO> implements 
 
     @Override
     public List<TreeSelectVO> getMenuTreeSelect() {
-        return List.of();
+        // 查询所有菜单
+        List<MenuDO> menuList = baseMapper.selectList(
+                new QueryWrapper<MenuDO>()
+                        .eq("status", 1)
+                        .orderByAsc("sort")
+        );
+
+        // 转换为 MenuTreeVO
+        List<MenuTreeVO> menuTreeVOS = menuConvertMapper.convertMenuTreeList(menuList);
+
+        // 构建树形结构
+        List<MenuTreeVO> menuTree = buildMenuTreeNode(menuTreeVOS, "0");
+
+        // 转换为 TreeSelectVO
+        return convertToTreeSelect(menuTree);
+    }
+
+    /**
+     * 构建树形节点
+     */
+    private List<MenuTreeVO> buildMenuTreeNode(List<MenuTreeVO> menus, String parentId) {
+        return menus.stream()
+                .filter(menu -> parentId.equals(menu.getParentId()))
+                .peek(menu -> menu.setChildren(buildMenuTreeNode(menus, menu.getId())))
+                .collect(Collectors.toList());
+    }
+
+    /**
+     * 转换为 TreeSelectVO
+     */
+    private List<TreeSelectVO> convertToTreeSelect(List<MenuTreeVO> menuTrees) {
+        if (menuTrees == null || menuTrees.isEmpty()) {
+            return List.of();
+        }
+        return menuTrees.stream().map(menu -> {
+            TreeSelectVO vo = new TreeSelectVO();
+            vo.setId(menu.getId());
+            vo.setValue(menu.getName());
+            vo.setLabel(menu.getName());
+            vo.setParentId(menu.getParentId());
+            vo.setMenuKey(menu.getCode());
+            vo.setChildren(convertToTreeSelect(menu.getChildren()));
+            return vo;
+        }).collect(Collectors.toList());
     }
 
     @Override

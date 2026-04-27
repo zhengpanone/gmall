@@ -13,16 +13,16 @@ import java.util.List;
 public class TreeSelectVO {
 
     @Schema(title = "节点ID")
-    private Long id;
+    private String id;
 
     @Schema(title = "节点标签")
     private String label;
 
     @Schema(title = "节点值")
-    private Long value;
+    private String value;
 
     @Schema(title = "父节点ID")
-    private Long parentId;
+    private String parentId;
 
     @Schema(title = "菜单标识")
     private String menuKey;
@@ -36,9 +36,9 @@ public class TreeSelectVO {
     public TreeSelectVO() {
     }
 
-    public TreeSelectVO(Long id, String label) {
+    public TreeSelectVO(String id, String label) {
         this.id = id;
-        this.value = id;
+        this.value = label;
         this.label = label;
     }
 }

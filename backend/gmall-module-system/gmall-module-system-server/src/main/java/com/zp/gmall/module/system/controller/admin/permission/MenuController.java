@@ -2,6 +2,7 @@ package com.zp.gmall.module.system.controller.admin.permission;
 
 import com.zp.gmall.framework.common.domain.dto.Ids;
 import com.zp.gmall.framework.common.domain.vo.Result;
+import com.zp.gmall.framework.common.domain.vo.TreeSelectVO;
 import com.zp.gmall.module.system.controller.admin.permission.dto.MenuDTO;
 import com.zp.gmall.module.system.controller.admin.permission.vo.MenuVO;
 import com.zp.gmall.module.system.controller.admin.permission.vo.RouteVO;
@@ -97,6 +98,16 @@ public class MenuController {
         String userId = "";
         List<RouteVO> routes = menuService.getRoutesByUserId(userId);
         return Result.ok(routes);
+    }
+
+    /**
+     * 获取菜单下拉树列表
+     */
+    @GetMapping("/options")
+    @Operation(summary = "获取菜单下拉树列表")
+    public Result<List<TreeSelectVO>> getMenuOptions() {
+        List<TreeSelectVO> options = menuService.getMenuTreeSelect();
+        return Result.ok(options);
     }
 
     // 构建菜单树
