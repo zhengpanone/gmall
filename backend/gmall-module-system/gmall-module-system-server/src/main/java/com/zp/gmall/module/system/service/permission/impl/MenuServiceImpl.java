@@ -90,13 +90,13 @@ public class MenuServiceImpl extends ServiceImpl<MenuMapper, MenuDO> implements 
     public void addMenu(MenuDTO dto) {
         // 校验菜单标识唯一性
         if (!checkMenuKeyUnique(dto)) {
-            throw new ServerException("新增菜单'" + dto.getMenuName() + "'失败，菜单标识已存在");
+            throw new ServerException("新增菜单'" + dto.getName() + "'失败，菜单标识已存在");
         }
 
 
         MenuDO menuDO = menuConvertMapper.convert(dto);
         // 设置祖先ID
-        if (StrUtil.isNotEmpty(menuDO.getParentId())) {
+        if (StrUtil.isNotEmpty(menuDO.getParentId())&& !"0".equals(menuDO.getParentId())) {
             MenuDO parentMenu = getById(menuDO.getParentId());
             if (parentMenu == null) {
                 throw new ServerException("父菜单不存在");
@@ -134,7 +134,10 @@ public class MenuServiceImpl extends ServiceImpl<MenuMapper, MenuDO> implements 
 
     @Override
     public boolean checkMenuKeyUnique(MenuDTO dto) {
-        return false;
+        String menuId = dto.getId();
+        int count = baseMapper.checkMenuKeyUnique(dto.getCode(), menuId);
+        return count == 0;
+
     }
 
     @Override

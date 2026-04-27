@@ -17,9 +17,6 @@ import java.util.List;
 @Mapper(componentModel = "spring")
 public interface MenuConvertMapper {
 
-    @Mapping(source = "menuName", target = "name")
-    @Mapping(source = "menuCode", target = "code")
-    @Mapping(source = "menuType", target = "type")
     MenuDO convert(MenuDTO dto);
 
 

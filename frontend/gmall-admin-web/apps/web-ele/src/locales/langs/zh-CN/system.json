@@ -7,6 +7,7 @@
     "type1": "目录",
     "type2": "菜单",
     "type3": "按钮",
+    "menuCode": "菜单编码",
     "menuName": "菜单名称",
     "menuTitle": "菜单标题",
     "parent": "上级菜单",

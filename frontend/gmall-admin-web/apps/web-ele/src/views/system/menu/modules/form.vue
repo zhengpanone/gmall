@@ -59,6 +59,12 @@ const schema: VbenFormSchema[] = [
   },
   {
     component: 'Input',
+    fieldName: 'code',
+    label: $t('system.menu.menuCode'),
+    rules: 'required',
+  },
+  {
+    component: 'Input',
     fieldName: 'name',
     label: $t('system.menu.menuName'),
     rules: 'required',
@@ -149,6 +155,9 @@ async function onSubmit() {
   if (valid) {
     drawerApi.lock();
     const values = await formApi.getValues();
+    if (values.parentId == null) {
+      values.parentId = '0';
+    }
     try {
       if (formData.value?.id) {
         await updateMenu(formData.value.id, values as SystemMenuApi.UpdateMenuParams);

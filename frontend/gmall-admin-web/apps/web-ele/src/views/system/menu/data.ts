@@ -19,6 +19,13 @@ export function useColumns(
     },
     {
       align: 'center',
+      field: 'parentId',
+      slots: { default: 'parentId' },
+      title: $t('system.menu.parent'),
+      width: 150,
+    },
+    {
+      align: 'center',
       cellRender: { name: 'CellTag', options: SystemMenuTypeOptions },
       field: 'type',
       title: $t('system.menu.type'),

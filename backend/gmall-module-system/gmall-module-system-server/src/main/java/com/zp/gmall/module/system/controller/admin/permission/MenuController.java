@@ -7,7 +7,6 @@ import com.zp.gmall.module.system.controller.admin.permission.vo.MenuVO;
 import com.zp.gmall.module.system.controller.admin.permission.vo.RouteVO;
 import com.zp.gmall.module.system.service.permission.IMenuService;
 import io.swagger.v3.oas.annotations.Operation;
-import io.swagger.v3.oas.annotations.Parameter;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
@@ -31,7 +30,7 @@ public class MenuController {
     @PostMapping("/create")
     public Result<?> add(@Valid @RequestBody MenuDTO dto) {
         if (!menuService.checkMenuKeyUnique(dto)) {
-            return Result.failed("新增菜单'" + dto.getMenuName() + "'失败，菜单标识已存在");
+            return Result.failed("新增菜单'" + dto.getName() + "'失败，菜单标识已存在");
         }
         menuService.addMenu(dto);
         return Result.ok();
@@ -41,10 +40,10 @@ public class MenuController {
     @PutMapping("/update")
     public Result<Void> edit(@Valid @RequestBody MenuDTO dto) {
         if (!menuService.checkMenuKeyUnique(dto)) {
-            return Result.failed("修改菜单'" + dto.getMenuName() + "'失败，菜单标识已存在");
+            return Result.failed("修改菜单'" + dto.getName() + "'失败，菜单标识已存在");
         }
         if (dto.getId().equals(dto.getParentId())) {
-            return Result.failed("修改菜单'" + dto.getMenuName() + "'失败，上级菜单不能选择自己");
+            return Result.failed("修改菜单'" + dto.getName() + "'失败，上级菜单不能选择自己");
         }
         menuService.updateMenu(dto);
         return Result.ok();

@@ -24,4 +24,9 @@
           AND m.permission IS NOT NULL
           AND m.permission != ''
     </select>
+
+    <select id="checkMenuKeyUnique" resultType="int">
+        SELECT COUNT(1) FROM sys_menu WHERE code = #{code} AND deleted = 0
+            AND (#{menuId} IS NULL OR id != #{menuId})
+    </select>
 </mapper>

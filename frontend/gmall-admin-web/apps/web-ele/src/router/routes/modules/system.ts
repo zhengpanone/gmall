@@ -12,24 +12,34 @@ const routes: RouteRecordRaw[] = [
     },
     name: 'System Management',
     path: '/system',
-    children: [
-      {
-        meta: {
-          title: $t('system.menu.menuManage'),
-        },
-        name: 'MenuManage',
-        path: '/system/menu-manage',
-        component: () => import('#/views/system/menu/index.vue'),
+  children: [
+    {
+      meta: {
+        title: '系统设置',
+        icon: 'lucide:settings',
       },
-      {
-        meta: {
-          title: $t('system.role.roleManage'),
+      name: 'SystemSettings',
+      path: '/system/settings',
+      children: [
+        {
+          meta: {
+            title: $t('system.menu.menuManage'),
+          },
+          name: 'MenuManage',
+          path: '/system/settings/menu-manage',
+          component: () => import('#/views/system/menu/index.vue'),
         },
-        name: 'RoleManage',
-        path: '/system/role-manage',
-        component: () => import('#/views/system/role/index.vue'),
-      },
-      {
+        {
+          meta: {
+            title: $t('system.role.roleManage'),
+          },
+          name: 'RoleManage',
+          path: '/system/settings/role-manage',
+          component: () => import('#/views/system/role/index.vue'),
+        },
+      ],
+    },
+    {
         meta: {
           title: $t('system.dept.deptManage'),
         },
