@@ -30,10 +30,8 @@ public class MenuVO {
     @Schema(title = "父菜单ID", description = "父菜单ID", example = "0")
     private String parentId;
 
-    private String menuCode;
-
     @Schema(title = "菜单名称", description = "菜单名称", example = "系统管理")
-    private String menuName;
+    private String name;
 
     @Schema(title = "菜单标题", description = "菜单标题", example = "系统管理")
     private String title;
@@ -46,6 +44,9 @@ public class MenuVO {
 
     @Schema(title = "菜单图标", description = "菜单图标", example = "system")
     private String icon;
+
+    @Schema(title = "菜单标识", description = "菜单标识", example = "System")
+    private String code;
 
     @Schema(title = "排序", description = "排序", example = "1")
     private Integer sort;

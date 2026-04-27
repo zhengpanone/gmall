@@ -1,6 +1,8 @@
 package com.zp.gmall.module.system.mapper.permission;
 
+import com.zp.gmall.framework.common.domain.dto.PageParam;
 import com.zp.gmall.framework.mybatis.core.mapper.BaseMapperX;
+import com.zp.gmall.module.system.controller.admin.permission.dto.RolePageDTO;
 import com.zp.gmall.module.system.entity.permission.RoleDO;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
@@ -22,5 +24,20 @@ public interface RoleMapper extends BaseMapperX<RoleDO> {
      */
     RoleDO selectByName(@Param("roleName") String roleName, @Param("tenantId") String tenantId);
 
-    RoleDO selectByCode(@Param("roleCode") String roleCode,@Param("tenantId") String tenantId);
+    /**
+     * 根据角色编码查询角色信息
+     *
+     * @param roleCode 角色编码
+     * @param tenantId 租户编号
+     * @return 角色信息
+     */
+    RoleDO selectByCode(@Param("roleCode") String roleCode, @Param("tenantId") String tenantId);
+
+    /**
+     * 根据角色ID查询角色信息
+     *
+     * @param id 角色ID
+     * @return 角色信息
+     */
+    RoleDO selectById(@Param("id") String id);
 }

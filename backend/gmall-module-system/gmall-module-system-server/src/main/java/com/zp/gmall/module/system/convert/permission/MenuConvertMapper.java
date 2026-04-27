@@ -18,13 +18,14 @@ import java.util.List;
 public interface MenuConvertMapper {
 
     @Mapping(source = "menuName", target = "name")
-    @Mapping(source = "menuType", target = "type")
     @Mapping(source = "menuCode", target = "code")
+    @Mapping(source = "menuType", target = "type")
     MenuDO convert(MenuDTO dto);
 
 
-    @Mapping(source = "name", target = "menuName")
-    @Mapping(source = "code", target = "menuCode")
+    @Mapping(source = "name", target = "name")
+    @Mapping(source = "code", target = "code")
+    @Mapping(source = "type", target = "type")
     MenuVO convert(MenuDO menuDO);
 
     // List 转换（自动处理）

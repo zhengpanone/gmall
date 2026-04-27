@@ -23,8 +23,6 @@ public class MenuDO extends BaseDO {
      * 祖级列表
      */
     private String ancestorIds = "";
-
-    private String code;
     /**
      * 菜单名称
      */
@@ -33,6 +31,11 @@ public class MenuDO extends BaseDO {
      * 菜单标题
      */
     private String title;
+
+    /**
+     * 菜单标识
+     */
+    private String code;
 
     /**
      * 路由地址
@@ -49,11 +52,36 @@ public class MenuDO extends BaseDO {
     /**
      * 显示顺序
      */
-    private Integer sort = 0;
+    private Integer sortOrder = 0;
     /**
      * 菜单类型（1目录 2菜单 3按钮 4外链）
      */
     private Integer type;
+
+    /**
+     * 是否为外链（0否 1是）
+     */
+    private Boolean isFrame = false;
+
+    /**
+     * 是否缓存（0否 1是）
+     */
+    private Boolean isCache = false;
+
+    /**
+     * 是否显示面包屑（0否 1是）
+     */
+    private Boolean isBreadcrumb = true;
+
+    /**
+     * 是否重定向（0否 1是）
+     */
+    private Boolean isRedirect = false;
+
+    /**
+     * 重定向路径
+     */
+    private String redirectPath;
 
     /**
      * 权限标识
@@ -62,14 +90,19 @@ public class MenuDO extends BaseDO {
     private String permission;
 
     /**
-     * 显示状态（0隐藏 1显示）
-     */
-    private Boolean visible;
-
-    /**
      * 菜单状态（0停用 1正常）
      */
     private Boolean status = true;
+
+    /**
+     * 备注
+     */
+    private String remark;
+
+    /**
+     * 显示状态（0隐藏 1显示）
+     */
+    private Boolean visible;
 
     /**
      * 是否缓存
@@ -80,39 +113,8 @@ public class MenuDO extends BaseDO {
      */
     private Boolean affix;
     /**
-     * 是否为外链（0否 1是）
-     */
-    private Boolean iframe = false;
-
-    /**
-     * 是否缓存（0否 1是）
-     */
-    private Boolean cached = false;
-
-    /**
-     * 是否重定向（0否 1是）
-     */
-    private Boolean redirect = false;
-
-    /**
-     * 是否显示面包屑（0否 1是）
-     */
-    private Boolean breadcrumb = true;
-    /**
      * 外链地址
      */
     private String frameSrc;
-
-    /**
-     * 重定向路径
-     */
-    private String redirectPath;
-
-    /**
-     * 备注
-     */
-    private String remark;
-
-
 
 }

@@ -45,10 +45,14 @@ public class MenuDTO {
 
     @NotBlank(message = "菜单编码不能为空")
     @Size(max = 50, message = "菜单编码长度不能超过50个字符")
-    @Schema(title = "菜单编码", description = "菜单编码", example = "System", requiredMode = RequiredMode.REQUIRED)
-    @Pattern(regexp = "^[A-Z][a-zA-Z0-9]*$", message = "菜单标识必须以大写字母开头，只能包含字母和数字")
+    @Schema(title = "菜单编码", description = "菜单编码", example = "system")
     private String menuCode;
 
+    @Schema(title = "菜单标识", description = "菜单标识", example = "System", requiredMode = RequiredMode.REQUIRED)
+    @NotBlank(message = "菜单标识不能为空")
+    @Size(min = 1, max = 50, message = "菜单标识长度必须在1-50个字符之间")
+    @Pattern(regexp = "^[A-Z][a-zA-Z0-9]*$", message = "菜单标识必须以大写字母开头，只能包含字母和数字")
+    private String menuKey;
 
     @Schema(description = "路由地址", example = "/system")
     @Size(max = 255, message = "路由地址长度不能超过255个字符")

@@ -36,7 +36,7 @@ import com.zp.gmall.framework.common.core.KeyValue;
  *
  * @author 芋道源码
  */
-@Component
+//@Component
 public class TokenAuthenticationFilter implements GlobalFilter, Ordered {
 
     /**

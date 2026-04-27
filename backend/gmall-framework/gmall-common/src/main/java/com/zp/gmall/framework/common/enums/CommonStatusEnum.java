@@ -43,4 +43,18 @@ public enum CommonStatusEnum implements IntArrayValuable {
         return ObjUtil.equal(DISABLE.status, status);
     }
 
+    /**
+     * 根据status获取消息
+     *
+     * @param status 状态值
+     * @return 消息
+     */
+    public static String getMessageByStatus(Integer status) {
+        return Arrays.stream(values())
+                .filter(e -> e.getStatus().equals(status))
+                .findFirst()
+                .map(CommonStatusEnum::getName)
+                .orElse("");
+    }
+
 }

@@ -20,6 +20,13 @@ export default defineConfig(async () => {
             target: 'http://localhost:5320/api',
             ws: true,
           },
+          '/backend': {
+            changeOrigin: true,
+            rewrite: (path) => path.replace(/^\/backend/, ''),
+            // 后端服务代理地址
+            target: 'http://localhost:48080',
+            ws: true,
+          },
         },
       },
     },

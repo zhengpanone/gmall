@@ -5,7 +5,6 @@ import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.zp.gmall.framework.common.domain.vo.TreeSelectVO;
 import com.zp.gmall.framework.common.exception.ServerException;
-import com.zp.gmall.framework.common.exception.ServiceException;
 import com.zp.gmall.module.system.controller.admin.permission.dto.MenuDTO;
 import com.zp.gmall.module.system.controller.admin.permission.vo.MenuTreeVO;
 import com.zp.gmall.module.system.controller.admin.permission.vo.MenuVO;
@@ -24,8 +23,6 @@ import org.springframework.stereotype.Service;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
-
-import static com.zp.gmall.framework.common.constant.Constant.DEFAULT_ROOT;
 
 @Slf4j
 @Service
@@ -95,20 +92,22 @@ public class MenuServiceImpl extends ServiceImpl<MenuMapper, MenuDO> implements 
         if (!checkMenuKeyUnique(dto)) {
             throw new ServerException("新增菜单'" + dto.getMenuName() + "'失败，菜单标识已存在");
         }
+
+
         MenuDO menuDO = menuConvertMapper.convert(dto);
         // 设置祖先ID
-        String parentId = menuDO.getParentId();
-        String ancestorIds = "0";
-        if (!DEFAULT_ROOT.equals(parentId)) {
-            MenuDO parentMenu = getById(parentId);
+        if (StrUtil.isNotEmpty(menuDO.getParentId())) {
+            MenuDO parentMenu = getById(menuDO.getParentId());
             if (parentMenu == null) {
-                throw new ServiceException("父菜单不存在");
+                throw new ServerException("父菜单不存在");
             }
-            ancestorIds = StrUtil.isNotEmpty(parentMenu.getAncestorIds())
+            String ancestorIds = StrUtil.isNotEmpty(parentMenu.getAncestorIds())
                     ? parentMenu.getAncestorIds() + "," + parentMenu.getId()
                     : parentMenu.getId().toString();
+            menuDO.setAncestorIds(ancestorIds);
+        } else {
+            menuDO.setAncestorIds("");
         }
-        menuDO.setAncestorIds(ancestorIds);
 
         // 保存菜单
         if (!save(menuDO)) {
@@ -135,8 +134,7 @@ public class MenuServiceImpl extends ServiceImpl<MenuMapper, MenuDO> implements 
 
     @Override
     public boolean checkMenuKeyUnique(MenuDTO dto) {
-        int count = baseMapper.checkMenuKeyUnique(dto.getMenuCode(), dto.getId());
-        return count == 0;
+        return false;
     }
 
     @Override
@@ -167,7 +165,7 @@ public class MenuServiceImpl extends ServiceImpl<MenuMapper, MenuDO> implements 
     private RouteVO convertToRoute(MenuVO menu) {
         RouteVO route = new RouteVO();
         route.setPath(menu.getPath());
-        route.setName(menu.getMenuName());
+        route.setName(menu.getName());
         route.setComponent(menu.getComponent());
         route.setMeta(RouteMetaVO.builder().build()
                 .setTitle(menu.getTitle())

@@ -2,9 +2,6 @@ package com.zp.gmall.module.system.mapper.permission;
 
 import com.zp.gmall.framework.mybatis.core.mapper.BaseMapperX;
 import com.zp.gmall.module.system.entity.permission.MenuDO;
-import jakarta.validation.constraints.NotBlank;
-import jakarta.validation.constraints.Pattern;
-import jakarta.validation.constraints.Size;
 import org.apache.ibatis.annotations.Mapper;
 
 import java.util.List;
@@ -21,6 +18,4 @@ public interface MenuMapper extends BaseMapperX<MenuDO> {
     List<MenuDO> selectMenuByUserId(String userId);
 
     List<String> selectPermsByUserId(String userId);
-
-    int checkMenuKeyUnique(String menuCode, String menuId);
 }

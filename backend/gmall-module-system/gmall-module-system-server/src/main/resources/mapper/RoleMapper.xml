@@ -15,4 +15,10 @@
         where code = #{roleCode}
           and tenant_id = #{tenantId}
     </select>
+
+    <select id="selectById" resultType="com.zp.gmall.module.system.entity.permission.RoleDO">
+        select *
+        from sys_role
+        where id = #{id}
+    </select>
 </mapper>

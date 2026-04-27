@@ -54,13 +54,13 @@ public class MenuController {
     @DeleteMapping("/delete")
     public Result<Void> remove(
             @RequestBody Ids ids) {
-        //if (menuService.hasChildByMenuId(menuId)) {
-        //    return Result.failed("存在子菜单，不允许删除");
-        //}
-        //if (menuService.checkMenuExistRole(menuId)) {
-        //    return Result.failed("菜单已分配给角色，不允许删除");
-        //}
-        //menuService.deleteMenu(menuId);
+//        if (menuService.hasChildByMenuId(menuId)) {
+//            return Result.failed("存在子菜单，不允许删除");
+//        }
+//        if (menuService.checkMenuExistRole(menuId)) {
+//            return Result.failed("菜单已分配给角色，不允许删除");
+//        }
+//        menuService.deleteMenu(menuId);
         return Result.ok();
     }
 
