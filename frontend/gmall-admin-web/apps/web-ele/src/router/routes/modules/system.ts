@@ -11,16 +11,31 @@ const routes: RouteRecordRaw[] = [
       title: $t('system.title'),
     },
     name: 'System Management',
-    path: '/system',
+    path: '/',
     children: [
       {
         meta: {
-          title: $t('system.menu.menuManage'),
+          icon: 'ic:baseline-view-in-ar',
+          keepAlive: true,
+          order: 1001,
+          title: $t('system.system.systemSetting'),
         },
-        name: 'MenuManage',
-        path: '/system/menu-manage',
-        component: () => import('#/views/system/menu/index.vue'),
+        name: 'System Setting',
+        path: '/',
+        children: [
+             {
+            meta: {
+              title: $t('system.menu.menuManage'),
+            },
+            name: 'MenuManage',
+            path: '/system/menu-manage',
+            component: () => import('#/views/system/menu/index.vue'),
+          }
+        ]
+      
       },
+    
+   
       {
         meta: {
           title: $t('system.role.roleManage'),
