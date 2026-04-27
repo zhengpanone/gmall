@@ -2,7 +2,7 @@
 spring:
   cloud:
     nacos:
-      server-addr: ${nacos.server.address:127.0.0.1:8848}
+      server-addr: ${nacos.server.address:127.0.0.1:30848}
       username: nacos
       password: nacos
       discovery:

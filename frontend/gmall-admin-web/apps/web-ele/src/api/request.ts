@@ -111,3 +111,10 @@ export const requestClient = createRequestClient(apiURL, {
 });
 
 export const baseRequestClient = new RequestClient({ baseURL: apiURL });
+
+/**
+ * 后端服务请求客户端，通过 Vite 代理访问 http://localhost:48080
+ */
+export const backendClient = createRequestClient('/backend', {
+  responseReturn: 'data',
+});

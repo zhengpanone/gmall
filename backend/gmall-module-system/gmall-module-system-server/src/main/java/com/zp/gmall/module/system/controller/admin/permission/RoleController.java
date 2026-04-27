@@ -1,20 +1,23 @@
 package com.zp.gmall.module.system.controller.admin.permission;
 
 import com.zp.gmall.framework.common.domain.dto.Ids;
+import com.zp.gmall.framework.common.domain.vo.PageResult;
 import com.zp.gmall.framework.common.domain.vo.Result;
+import com.zp.gmall.module.system.controller.admin.permission.dto.RolePageDTO;
 import com.zp.gmall.module.system.controller.admin.permission.dto.RoleSaveDTO;
 import com.zp.gmall.module.system.controller.admin.permission.dto.RoleUpdateDTO;
+import com.zp.gmall.module.system.controller.admin.permission.vo.RoleVO;
 import com.zp.gmall.module.system.service.permission.IRoleService;
 import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.Parameter;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.annotation.Resource;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.validation.annotation.Validated;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
 
 /**
  * @author : zhengpanone
@@ -39,17 +42,31 @@ public class RoleController {
         return Result.ok(roleId);
     }
 
-    @PostMapping("/update")
+    @PutMapping("/update")
     @Operation(summary = "更新角色")
     public Result<String> updateRole(@RequestBody @Valid RoleUpdateDTO roleUpdateDTO) {
         String roleId = roleService.updateRole(roleUpdateDTO);
         return Result.ok(roleId);
     }
 
-    @PostMapping("/delete")
+    @DeleteMapping("/delete")
     @Operation(summary = "删除角色")
     public Result<Void> deleteRole(@RequestBody @Valid Ids ids) {
         roleService.deleteRole(ids);
         return Result.ok();
+    }
+
+    @GetMapping("/page")
+    @Operation(summary = "获取角色分页")
+    public PageResult<RoleVO> getRolePage(@Valid RolePageDTO rolePageDTO) {
+        return roleService.getRolePage(rolePageDTO);
+    }
+
+    @GetMapping("/get")
+    @Operation(summary = "获取角色详情")
+    public Result<RoleVO> getRoleById(
+            @Parameter(description = "角色ID", required = true, example = "1")
+            @RequestParam("id") String id) {
+        return Result.ok(roleService.getRoleById(id));
     }
 }

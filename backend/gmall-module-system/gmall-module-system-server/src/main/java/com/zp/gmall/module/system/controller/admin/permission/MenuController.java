@@ -1,5 +1,6 @@
 package com.zp.gmall.module.system.controller.admin.permission;
 
+import com.zp.gmall.framework.common.domain.dto.Ids;
 import com.zp.gmall.framework.common.domain.vo.Result;
 import com.zp.gmall.module.system.controller.admin.permission.dto.MenuDTO;
 import com.zp.gmall.module.system.controller.admin.permission.vo.MenuVO;
@@ -27,7 +28,7 @@ public class MenuController {
     private final IMenuService menuService;
 
     @Operation(summary = "新增菜单")
-    @PostMapping
+    @PostMapping("/create")
     public Result<?> add(@Valid @RequestBody MenuDTO dto) {
         if (!menuService.checkMenuKeyUnique(dto)) {
             return Result.failed("新增菜单'" + dto.getMenuName() + "'失败，菜单标识已存在");
@@ -37,7 +38,7 @@ public class MenuController {
     }
 
     @Operation(summary = "修改菜单")
-    @PutMapping
+    @PutMapping("/update")
     public Result<Void> edit(@Valid @RequestBody MenuDTO dto) {
         if (!menuService.checkMenuKeyUnique(dto)) {
             return Result.failed("修改菜单'" + dto.getMenuName() + "'失败，菜单标识已存在");
@@ -50,16 +51,16 @@ public class MenuController {
     }
 
     @Operation(summary = "删除菜单")
-    @DeleteMapping("/{menuId}")
+    @DeleteMapping("/delete")
     public Result<Void> remove(
-            @Parameter(description = "菜单ID", required = true, example = "1") @PathVariable Long menuId) {
-        if (menuService.hasChildByMenuId(menuId)) {
-            return Result.failed("存在子菜单，不允许删除");
-        }
-        if (menuService.checkMenuExistRole(menuId)) {
-            return Result.failed("菜单已分配给角色，不允许删除");
-        }
-        menuService.deleteMenu(menuId);
+            @RequestBody Ids ids) {
+//        if (menuService.hasChildByMenuId(menuId)) {
+//            return Result.failed("存在子菜单，不允许删除");
+//        }
+//        if (menuService.checkMenuExistRole(menuId)) {
+//            return Result.failed("菜单已分配给角色，不允许删除");
+//        }
+//        menuService.deleteMenu(menuId);
         return Result.ok();
     }
 

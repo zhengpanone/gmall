@@ -11,5 +11,14 @@
     "title": "Dashboard",
     "analytics": "Analytics",
     "workspace": "Workspace"
+  },
+  "common": {
+    "operation": "Operation",
+    "createSuccess": "Created Successfully",
+    "editSuccess": "Updated Successfully",
+    "deleteSuccess": "Deleted Successfully",
+    "clearSuccess": "Cleared Successfully",
+    "editItem": "Edit {0}",
+    "createItem": "Create {0}"
   }
 }
