@@ -61,7 +61,7 @@ public class MenuVO {
     private Boolean visible;
 
     @Schema(title = "状态", description = "状态", example = "true")
-    private Boolean status;
+    private Integer status;
 
     @Schema(title = "是否缓存", description = "是否缓存", example = "true")
     private Boolean keepAlive;

@@ -1,6 +1,7 @@
 package com.zp.gmall.module.system.convert.permission;
 
 import com.zp.gmall.module.system.controller.admin.permission.dto.MenuDTO;
+import com.zp.gmall.module.system.controller.admin.permission.vo.MenuTreeVO;
 import com.zp.gmall.module.system.controller.admin.permission.vo.MenuVO;
 import com.zp.gmall.module.system.entity.permission.MenuDO;
 import org.mapstruct.Mapper;
@@ -17,9 +18,6 @@ import java.util.List;
 @Mapper(componentModel = "spring")
 public interface MenuConvertMapper {
 
-    @Mapping(source = "menuName", target = "name")
-    @Mapping(source = "menuCode", target = "code")
-    @Mapping(source = "menuType", target = "type")
     MenuDO convert(MenuDTO dto);
 
 
@@ -30,5 +28,10 @@ public interface MenuConvertMapper {
 
     // List 转换（自动处理）
     List<MenuVO> convertList(List<MenuDO> menuDOList);
+
+    // MenuTreeVO 转换
+    MenuTreeVO convertMenuTree(MenuDO menuDO);
+
+    List<MenuTreeVO> convertMenuTreeList(List<MenuDO> menuDOList);
 
 }

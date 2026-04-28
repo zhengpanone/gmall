@@ -41,18 +41,13 @@ public class MenuDTO {
     @NotBlank(message = "菜单名称不能为空")
     @Size(max = 50, message = "菜单名称长度不能超过50个字符")
     @Schema(title = "菜单名称", description = "菜单名称", example = "系统管理")
-    private String menuName;
+    private String name;
 
     @NotBlank(message = "菜单编码不能为空")
     @Size(max = 50, message = "菜单编码长度不能超过50个字符")
     @Schema(title = "菜单编码", description = "菜单编码", example = "system")
-    private String menuCode;
+    private String code;
 
-    @Schema(title = "菜单标识", description = "菜单标识", example = "System", requiredMode = RequiredMode.REQUIRED)
-    @NotBlank(message = "菜单标识不能为空")
-    @Size(min = 1, max = 50, message = "菜单标识长度必须在1-50个字符之间")
-    @Pattern(regexp = "^[A-Z][a-zA-Z0-9]*$", message = "菜单标识必须以大写字母开头，只能包含字母和数字")
-    private String menuKey;
 
     @Schema(description = "路由地址", example = "/system")
     @Size(max = 255, message = "路由地址长度不能超过255个字符")
@@ -61,7 +56,7 @@ public class MenuDTO {
     @Schema(description = "菜单类型（1目录 2菜单 3按钮 4外链）", requiredMode = RequiredMode.REQUIRED, example = "1")
     @NotNull(message = "菜单类型不能为空")
     @Range(min = 1, max = 4, message = "菜单类型必须在1-4之间")
-    private Integer menuType;
+    private Integer type;
 
     @Schema(description = "组件路径", example = "system/user/index")
     @Size(max = 500, message = "组件路径长度不能超过500个字符")
@@ -86,7 +81,7 @@ public class MenuDTO {
     private Boolean visible;
 
     @Schema(description = "菜单状态", example = "true")
-    private Boolean status = true;
+    private Integer status = 1;
 
     @Schema(description = "是否缓存", example = "true")
     private Boolean keepAlive;
@@ -95,18 +90,18 @@ public class MenuDTO {
     private Boolean affix;
 
     @Schema(description = "是否外链", example = "true")
-    private Boolean isFrame;
+    private Boolean iframe;
 
     @Schema(description = "外链地址", example = "https://www.baidu.com")
     private String frameSrc;
 
     @Schema(description = "是否重定向", example = "true")
-    private Boolean isRedirect;
+    private Boolean redirect;
 
     @Schema(description = "重定向路径", example = "/system/user/list")
     private String redirectPath;
 
     @Schema(description = "是否显示面包屑", example = "true")
-    private Boolean isBreadcrumb;
+    private Boolean breadcrumb;
 
 }

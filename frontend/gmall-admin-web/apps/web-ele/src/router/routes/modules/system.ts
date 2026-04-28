@@ -11,40 +11,35 @@ const routes: RouteRecordRaw[] = [
       title: $t('system.title'),
     },
     name: 'System Management',
-    path: '/',
-    children: [
-      {
-        meta: {
-          icon: 'ic:baseline-view-in-ar',
-          keepAlive: true,
-          order: 1001,
-          title: $t('system.system.systemSetting'),
-        },
-        name: 'System Setting',
-        path: '/',
-        children: [
-             {
-            meta: {
-              title: $t('system.menu.menuManage'),
-            },
-            name: 'MenuManage',
-            path: '/system/menu-manage',
-            component: () => import('#/views/system/menu/index.vue'),
-          }
-        ]
-      
+    path: '/system',
+  children: [
+    {
+      meta: {
+        title: '系统设置',
+        icon: 'lucide:settings',
       },
-    
-   
-      {
-        meta: {
-          title: $t('system.role.roleManage'),
+      name: 'SystemSettings',
+      path: '/system/settings',
+      children: [
+        {
+          meta: {
+            title: $t('system.menu.menuManage'),
+          },
+          name: 'MenuManage',
+          path: '/system/settings/menu-manage',
+          component: () => import('#/views/system/menu/index.vue'),
         },
-        name: 'RoleManage',
-        path: '/system/role-manage',
-        component: () => import('#/views/system/role/index.vue'),
-      },
-      {
+        {
+          meta: {
+            title: $t('system.role.roleManage'),
+          },
+          name: 'RoleManage',
+          path: '/system/settings/role-manage',
+          component: () => import('#/views/system/role/index.vue'),
+        },
+      ],
+    },
+    {
         meta: {
           title: $t('system.dept.deptManage'),
         },

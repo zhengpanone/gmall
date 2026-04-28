@@ -15,7 +15,7 @@ export namespace SystemMenuApi {
     permission: string;
     type: MenuTypeEnum | number;
     sort: number;
-    parentId: number;
+    parentId: string;
     path: string;
     icon: string;
     component: string;
@@ -81,7 +81,7 @@ export async function updateMenu(id: string, data: SystemMenuApi.UpdateMenuParam
 /**
  * 删除菜单
  */
-export async function deleteMenu(id: number) {
+export async function deleteMenu(id: string) {
   return backendClient.delete(`/system/admin-api/menu/delete/${id}`);
 }
 

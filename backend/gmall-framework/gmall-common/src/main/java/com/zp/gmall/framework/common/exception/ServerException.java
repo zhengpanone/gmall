@@ -25,7 +25,7 @@ public class ServerException extends RuntimeException {
      * 空构造方法，避免反序列化问题
      */
     public ServerException(String msg) {
-        super(msg);
+        this.msg = msg;
     }
 
     public ServerException(ErrorCode errorCode) {

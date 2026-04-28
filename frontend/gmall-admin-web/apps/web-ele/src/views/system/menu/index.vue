@@ -48,9 +48,8 @@ const [Grid, gridApi] = useVbenVxeGrid({
       zoom: true,
     },
     treeConfig: {
-      parentField: 'parentId',
-      rowField: 'id',
-      transform: true,
+      children: 'children',
+      expandAll: true,
     },
   } as VxeTableGridOptions,
 });
@@ -91,7 +90,9 @@ function onCreate() {
 }
 
 function onAppend(row: SystemMenuApi.Menu) {
-  formDrawerApi.setData({ parentId: row.id } as SystemMenuApi.Menu).open();
+  formDrawerApi
+    .setData({ parentId: row.id } as unknown as SystemMenuApi.Menu)
+    .open();
 }
 
 function onDelete(row: SystemMenuApi.Menu) {
