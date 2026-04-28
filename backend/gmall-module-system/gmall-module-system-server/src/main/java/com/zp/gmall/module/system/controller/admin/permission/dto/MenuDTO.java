@@ -12,8 +12,6 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 import org.hibernate.validator.constraints.Range;
 
-import java.time.LocalDateTime;
-
 /**
  * @author : zhengpanone
  * Date : 2026/4/25 22:13
@@ -81,6 +79,7 @@ public class MenuDTO {
     private Boolean visible;
 
     @Schema(description = "菜单状态", example = "true")
+    @Builder.Default
     private Integer status = 1;
 
     @Schema(description = "是否缓存", example = "true")

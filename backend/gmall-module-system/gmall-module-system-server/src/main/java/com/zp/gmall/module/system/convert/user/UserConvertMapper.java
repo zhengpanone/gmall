@@ -21,6 +21,7 @@ public interface UserConvertMapper {
 
     @Mapping(source = "id", target = "id")
     @Mapping(source = "username", target = "username")
+    @Mapping(target = "postIds", ignore = true)
     AdminUserVO convert(UserDO userDO);
 
     default List<AdminUserVO> convert(List<UserDO> userDOList) {

@@ -26,6 +26,10 @@ public interface RoleConvertMapper {
     @Mapping(source = "roleName", target = "name")
     @Mapping(source = "roleCode", target = "code")
     @Mapping(source = "roleType", target = "type")
+    @Mapping(target = "id", ignore = true)
+    @Mapping(target = "sort", ignore = true)
+    @Mapping(target = "status", ignore = true)
+    @Mapping(target = "remark", ignore = true)
     RoleDO convert(RoleSaveDTO roleSaveDTO);
 
     /**
@@ -37,6 +41,7 @@ public interface RoleConvertMapper {
     @Mapping(source = "roleName", target = "name")
     @Mapping(source = "roleCode", target = "code")
     @Mapping(source = "roleType", target = "type")
+    @Mapping(target = "remark", ignore = true)
     RoleDO convert(RoleUpdateDTO roleUpdateDTO);
 
     /**
@@ -48,6 +53,14 @@ public interface RoleConvertMapper {
     @Mapping(source = "roleName", target = "name")
     @Mapping(source = "roleCode", target = "code")
     @Mapping(source = "roleType", target = "type")
+    @Mapping(target = "createTime", ignore = true)
+    @Mapping(target = "updateTime", ignore = true)
+    @Mapping(target = "creator", ignore = true)
+    @Mapping(target = "updater", ignore = true)
+    @Mapping(target = "deleted", ignore = true)
+    @Mapping(target = "deletedTime", ignore = true)
+    @Mapping(target = "tenantId", ignore = true)
+    @Mapping(target = "remark", ignore = true)
     void update(RoleUpdateDTO roleUpdateDTO, @MappingTarget RoleDO roleDO);
 
     /**
@@ -60,5 +73,7 @@ public interface RoleConvertMapper {
     @Mapping(source = "name", target = "roleName")
     @Mapping(source = "code", target = "roleCode")
     @Mapping(source = "type", target = "roleType")
+    @Mapping(target = "statusName", ignore = true)
+    @Mapping(target = "roleTypeName", ignore = true)
     RoleVO convert(RoleDO roleDO);
 }

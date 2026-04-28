@@ -18,20 +18,27 @@ import java.util.List;
 @Mapper(componentModel = "spring")
 public interface MenuConvertMapper {
 
+    @Mapping(target = "ancestorIds", ignore = true)
+    @Mapping(target = "title", ignore = true)
+    @Mapping(target = "cached", ignore = true)
     MenuDO convert(MenuDTO dto);
 
 
     @Mapping(source = "name", target = "name")
     @Mapping(source = "code", target = "code")
     @Mapping(source = "type", target = "type")
+    @Mapping(target = "children", ignore = true)
     MenuVO convert(MenuDO menuDO);
 
     // List 转换（自动处理）
+    @Mapping(target = "children", ignore = true)
     List<MenuVO> convertList(List<MenuDO> menuDOList);
 
     // MenuTreeVO 转换
+    @Mapping(target = "children", ignore = true)
     MenuTreeVO convertMenuTree(MenuDO menuDO);
 
+    @Mapping(target = "children", ignore = true)
     List<MenuTreeVO> convertMenuTreeList(List<MenuDO> menuDOList);
 
 }

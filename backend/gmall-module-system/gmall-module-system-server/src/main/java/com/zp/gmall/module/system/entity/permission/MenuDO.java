@@ -18,10 +18,12 @@ public class MenuDO extends BaseDO {
     /**
      * 父菜单ID
      */
+    @Builder.Default
     private String parentId = "0";
     /**
      * 祖级列表
      */
+    @Builder.Default
     private String ancestorIds = "";
 
     /**
@@ -52,6 +54,7 @@ public class MenuDO extends BaseDO {
     /**
      * 显示顺序
      */
+    @Builder.Default
     private Integer sort = 0;
 
     /**
@@ -73,6 +76,7 @@ public class MenuDO extends BaseDO {
     /**
      * 菜单状态（0停用 1正常）
      */
+    @Builder.Default
     private Integer status = 0;
 
     /**
@@ -87,21 +91,25 @@ public class MenuDO extends BaseDO {
     /**
      * 是否为外链（0否 1是）
      */
+    @Builder.Default
     private Boolean iframe = false;
 
     /**
      * 是否缓存（0否 1是）
      */
+    @Builder.Default
     private Boolean cached = false;
 
     /**
      * 是否重定向（0否 1是）
      */
+    @Builder.Default
     private Boolean redirect = false;
 
     /**
      * 是否显示面包屑（0否 1是）
      */
+    @Builder.Default
     private Boolean breadcrumb = true;
 
     /**

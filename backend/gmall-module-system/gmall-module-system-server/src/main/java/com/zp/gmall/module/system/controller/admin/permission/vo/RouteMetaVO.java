@@ -26,30 +26,38 @@ public class RouteMetaVO {
     private String icon;
 
     @Schema(description = "是否固定标签", example = "false")
+    @Builder.Default
     private Boolean affix = false;
 
     @Schema(description = "是否隐藏菜单", example = "false")
+    @Builder.Default
     private Boolean hideMenu = false;
 
     @Schema(description = "是否隐藏子菜单", example = "false")
+    @Builder.Default
     private Boolean hideChildrenInMenu = false;
 
     @Schema(description = "当前激活的菜单")
     private String currentActiveMenu;
 
     @Schema(description = "是否忽略权限验证", example = "false")
+    @Builder.Default
     private Boolean ignoreAuth = false;
 
     @Schema(description = "是否忽略路由", example = "false")
+    @Builder.Default
     private Boolean ignoreRoute = false;
 
     @Schema(description = "是否缓存", example = "true")
+    @Builder.Default
     private Boolean ignoreKeepAlive = false;
 
     @Schema(description = "是否在面包屑中隐藏", example = "false")
+    @Builder.Default
     private Boolean hideBreadcrumb = false;
 
     @Schema(description = "是否在标签页中隐藏", example = "false")
+    @Builder.Default
     private Boolean hideTab = false;
 
     @Schema(description = "内嵌iframe地址")
@@ -62,6 +70,7 @@ public class RouteMetaVO {
     private List<String> roles;
 
     @Schema(description = "菜单类型: 0-目录, 1-菜单, 2-按钮")
+    @Builder.Default
     private Integer type = 1;
 
     @Schema(description = "菜单编码", example = "system:user")
@@ -71,6 +80,7 @@ public class RouteMetaVO {
     private String link;
 
     @Schema(description = "是否显示根菜单", example = "true")
+    @Builder.Default
     private Boolean show = true;
 
     @Schema(description = "承载组件名")
@@ -80,5 +90,6 @@ public class RouteMetaVO {
     private Long parentMenu;
 
     @Schema(description = "是否在左侧菜单显示", example = "true")
+    @Builder.Default
     private Boolean showInLeftMenu = true;
 }
