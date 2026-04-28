@@ -14,7 +14,7 @@ import {
 import { isFunction, isString } from '@vben/utils';
 
 import { objectOmit } from '@vueuse/core';
-import { ElButton, ElImage, ElPopconfirm, ElSwitch, ElTag } from 'element-plus';
+import { ElButton, ElImage, ElMessageBox, ElPopconfirm,ElSwitch,ElTag } from 'element-plus';
 
 import { useVbenForm } from './form';
 
@@ -198,47 +198,86 @@ setupVbenVxeTable({
           );
         }
 
-        function renderConfirm(opt: Recordable<any>) {
-          let viewportWrapper: HTMLElement | null = null;
+      function renderConfirm(opt: Recordable<any>) {
+        let viewportWrapper: HTMLElement | null = null;
+
+        // messagebox 模式：按钮点击后弹出 ElMessageBox
+        if (opt.confirmType === 'messagebox') {
           return h(
-            ElPopconfirm,
+            ElButton,
             {
-              getPopupContainer(el) {
-                viewportWrapper = el.closest('.vxe-table--viewport-wrapper');
-                return document.body;
-              },
-              placement: 'topLeft',
-              title: $t('ui.actionTitle.delete', [attrs?.nameTitle || '']),
-              ...props,
               ...opt,
               icon: undefined,
-              onOpenChange: (open: boolean) => {
-                if (open) {
-                  viewportWrapper?.style.setProperty('pointer-events', 'none');
-                } else {
-                  viewportWrapper?.style.removeProperty('pointer-events');
+              onClick: async () => {
+                try {
+                  await ElMessageBox.confirm(
+                    $t('ui.actionMessage.deleteConfirm', [row[attrs?.nameField || 'name']]),
+                    $t('ui.actionTitle.delete', [attrs?.nameTitle || '']),
+                    {
+                      type: 'warning',
+                      confirmButtonText: $t('common.confirm'),
+                      cancelButtonText: $t('common.cancel'),
+                      confirmButtonClass: 'el-button--danger',
+                    },
+                  );
+                  attrs?.onClick?.({
+                    code: opt.code,
+                    row,
+                  });
+                } catch {
+                  // 用户点击取消，不做任何操作
                 }
-              },
-              onConfirm: () => {
-                attrs?.onClick?.({
-                  code: opt.code,
-                  row,
-                });
               },
             },
             {
-              default: () => renderBtn({ ...opt }, false),
-              description: () =>
-                h(
-                  'div',
-                  { class: 'truncate' },
-                  $t('ui.actionMessage.deleteConfirm', [
-                    row[attrs?.nameField || 'name'],
-                  ]),
-                ),
+              default: () => {
+                const content = [];
+                if (opt.icon) {
+                  content.push(h(IconifyIcon, { class: 'size-5', icon: opt.icon }));
+                }
+                content.push(opt.text);
+                return content;
+              },
             },
           );
         }
+
+        // popconfirm 模式：气泡确认
+        return h(
+          ElPopconfirm,
+          {
+            appendTo: 'body',
+            placement: 'top',
+            title: $t('ui.actionTitle.delete', [attrs?.nameTitle || '']),
+            icon: undefined,
+            onShow: () => {
+              viewportWrapper = document.querySelector('.vxe-table--viewport-wrapper');
+              viewportWrapper?.style.setProperty('pointer-events', 'none');
+            },
+            onHide: () => {
+              viewportWrapper?.style.removeProperty('pointer-events');
+              viewportWrapper = null;
+            },
+            onConfirm: () => {
+              attrs?.onClick?.({
+                code: opt.code,
+                row,
+              });
+            },
+          },
+          {
+            reference: () => renderBtn({ ...opt }, false),
+            description: () =>
+              h(
+                'div',
+                { class: 'truncate' },
+                $t('ui.actionMessage.deleteConfirm', [
+                  row[attrs?.nameField || 'name'],
+                ]),
+              ),
+          },
+        );
+      }
 
         const btns = operations.map((opt) =>
           opt.code === 'delete' ? renderConfirm(opt) : renderBtn(opt),

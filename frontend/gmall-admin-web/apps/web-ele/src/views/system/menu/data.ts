@@ -4,6 +4,11 @@ import type { SystemMenuApi } from '#/api/system/menu';
 import { SystemMenuTypeOptions } from '#/constants';
 import { $t } from '#/locales';
 
+/**
+ * 生成系统菜单表格的列配置
+ * @param {OnActionClickFn<SystemMenuApi.Menu>} onActionClick - 操作按钮点击回调函数
+ * @returns {VxeTableGridColumns<SystemMenuApi.Menu>} vxe-table 表格列配置数组
+ */
 export function useColumns(
   onActionClick: OnActionClickFn<SystemMenuApi.Menu>,
 ): VxeTableGridColumns<SystemMenuApi.Menu> {
@@ -70,7 +75,7 @@ export function useColumns(
         options: [
           { code: 'append', text: $t('system.menu.appendChild') },
           { code: 'edit', text: $t('common.edit') },
-          { code: 'deleted', text: $t('common.delete'), type: 'danger', danger: true, show: true, renderConfirm: true },
+          { code: 'delete', text: $t('common.delete'), type: 'danger', danger: true, renderConfirm: true, confirmType:'messagebox' },
         ],
       },
       field: 'operation',

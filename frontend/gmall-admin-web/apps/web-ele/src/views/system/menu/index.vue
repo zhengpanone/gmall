@@ -63,8 +63,8 @@ function onActionClick({
       onAppend(row);
       break;
     }
-    case 'deleted': {
-      onDelete(row);
+    case 'delete': {
+      onDelete(row/* ,'popconfirm' */); // 'popconfirm' | 'messagebox'
       break;
     }
     case 'edit': {
@@ -95,11 +95,32 @@ function onAppend(row: SystemMenuApi.Menu) {
     .open();
 }
 
-function onDelete(row: SystemMenuApi.Menu) {
+async function onDelete(row: SystemMenuApi.Menu/* , confirmType: 'messagebox' | 'popconfirm' = 'popconfirm' */) {
+  // popconfirm 模式：renderConfirm: true，气泡已经确认过了，直接删除
+  // messagebox 模式：renderConfirm: false，这里弹窗确认
+  // if (confirmType === 'messagebox') {
+  //   try {
+  //     await ElMessageBox.confirm(
+  //       $t('ui.actionMessage.deleteConfirm', [row.name]),
+  //       $t('ui.actionTitle.delete', ['']),
+  //       {
+  //         type: 'warning',
+  //         confirmButtonText: $t('common.confirm'),
+  //         cancelButtonText: $t('common.cancel'),
+  //         confirmButtonClass: 'el-button--danger',
+  //       },
+  //     );
+  //   } catch {
+  //     // 用户点击取消，不做任何操作
+  //     return;
+  //   }
+  // }
+
   const loadingMsg = ElMessage({
     message: $t('ui.actionMessage.deleting', [row.name]),
     duration: 0,
   });
+
   deleteMenu(row.id!)
     .then(() => {
       ElMessage.success($t('ui.actionMessage.deleteSuccess', [row.name]));
