@@ -7,37 +7,75 @@ export namespace SystemRoleApi {
     ENABLED = 1,
   }
 
+  /** 角色类型枚举 */
+  export enum RoleTypeEnum {
+    SYSTEM = 1,
+    CUSTOM = 2,
+  }
+
   /** 角色信息 */
   export interface Role {
-    id?: number;
-    name: string;
-    code: string;
+    id?: string;
+    roleName: string;
+    roleCode: string;
+    roleType: number;
     sort: number;
-    dataScope?: number;
-    status: RoleStatusEnum | string;
-    createTime?: string;
+    status: RoleStatusEnum ;
+    statusName?: string;
+    roleTypeName?: string;
+    createTime?: number[] | string;
+    updateTime?: number[] | string;
     remark?: string;
   }
 
   /** 创建角色参数 */
   export interface CreateRoleParams {
-    name: string;
-    code: string;
+    roleName: string;
+    roleCode: string;
+    roleType?: number;
     sort?: number;
-    dataScope?: number;
     status?: number;
     remark?: string;
   }
 
   /** 更新角色参数 */
   export interface UpdateRoleParams extends CreateRoleParams {
-    id: number;
+    id: string;
+  }
+
+  /** 分页参数 */
+  export interface PageParam {
+    pageNo: number;
+    pageSize: number;
+  }
+
+  /** 角色分页查询参数 */
+  export interface RolePageParam extends PageParam {
+    roleName?: string;
+    roleCode?: string;
+    roleType?: number;
+  }
+
+  /** 分页结果 */
+  export interface PageResult<T> {
+    list: T[];
+    total: number;
+    pages: number;
+    pageSize: number;
+    pageNum: number;
+    hasNext: boolean;
+    hasPrevious: boolean;
+    code: number;
+    msg: string;
   }
 }
 
-/** 获取角色列表 */
-export async function getRoleList() {
-  return backendClient.get<SystemRoleApi.Role[]>('/system/admin-api/role/page');
+/** 分页获取角色列表 */
+export async function getRolePageList(params: SystemRoleApi.RolePageParam) {
+  return backendClient.get<SystemRoleApi.PageResult<SystemRoleApi.Role>>(
+    '/system/admin-api/role/page',
+    { params },
+  );
 }
 
 /** 获取角色详情 */
@@ -52,7 +90,7 @@ export async function createRole(data: SystemRoleApi.CreateRoleParams) {
 
 /** 更新角色 */
 export async function updateRole(data: SystemRoleApi.UpdateRoleParams) {
-  return backendClient.put('/system/role/update', data);
+  return backendClient.put('/system/admin-api/role/update', data);
 }
 
 /** 删除角色 */

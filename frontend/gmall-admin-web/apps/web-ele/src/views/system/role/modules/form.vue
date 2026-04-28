@@ -9,7 +9,7 @@ import { $t } from '@vben/locales';
 import { ElMessage } from 'element-plus';
 
 import { useVbenForm } from '#/adapter/form';
-import { SystemRoleApi, createRole, updateRole } from '#/api/system/role';
+import { createRole, SystemRoleApi, updateRole } from '#/api/system/role';
 
 const emit = defineEmits<{
   success: [];
@@ -21,15 +21,27 @@ const isEdit = computed(() => !!formData.value?.id);
 const schema: VbenFormSchema[] = [
   {
     component: 'Input',
-    fieldName: 'name',
-    label: $t('system.role.name'),
+    fieldName: 'roleCode',
+    label: $t('system.role.code'),
     rules: 'required',
   },
   {
     component: 'Input',
-    fieldName: 'code',
-    label: $t('system.role.code'),
+    fieldName: 'roleName',
+    label: $t('system.role.name'),
     rules: 'required',
+  },
+  {
+    component: 'RadioGroup',
+    fieldName: 'roleType',
+    label: $t('system.role.type'),
+    rules: 'required',
+    componentProps: {
+      options: [
+        { label: '系统内置', value: 1 },
+        { label: '自定义', value: 2 },
+      ],
+    },
   },
   {
     component: 'InputNumber',
@@ -45,11 +57,11 @@ const schema: VbenFormSchema[] = [
     component: 'RadioGroup',
     fieldName: 'status',
     label: $t('system.role.status'),
-    defaultValue: 1,
+    defaultValue: 0,
     componentProps: {
       options: [
-        { label: $t('common.enabled'), value: 1 },
-        { label: $t('common.disabled'), value: 0 },
+        { label: $t('common.enabled'), value: 0 },
+        { label: $t('common.disabled'), value: 1 },
       ],
     },
   },

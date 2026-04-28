@@ -30,6 +30,7 @@
     "roleManage": "角色管理",
     "name": "角色名称",
     "code": "角色编码",
+    "type": "角色类型",
     "sort": "显示排序",
     "createTime": "创建时间",
     "status": "状态",

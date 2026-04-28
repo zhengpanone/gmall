@@ -35,9 +35,12 @@ setupVbenVxeTable({
         proxyConfig: {
           autoLoad: true,
           response: {
-            result: 'items',
+            result: 'list',
             total: 'total',
-            list: 'items',
+            list: 'list',
+            pages: 'pages',
+            pageNum: 'pageNum',
+            pageSize: 'pageSize',
           },
           showActiveMsg: true,
           showResponseMsg: false,

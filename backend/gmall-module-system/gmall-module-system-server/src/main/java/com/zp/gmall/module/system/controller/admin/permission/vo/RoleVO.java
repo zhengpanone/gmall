@@ -1,5 +1,6 @@
 package com.zp.gmall.module.system.controller.admin.permission.vo;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.AllArgsConstructor;
@@ -51,8 +52,10 @@ public class RoleVO {
     private String remark;
 
     @Schema(description = "创建时间", example = "2026-04-25 10:00:00")
+    @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss")
     private LocalDateTime createTime;
 
     @Schema(description = "更新时间", example = "2026-04-25 10:00:00")
+    @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss")
     private LocalDateTime updateTime;
 }

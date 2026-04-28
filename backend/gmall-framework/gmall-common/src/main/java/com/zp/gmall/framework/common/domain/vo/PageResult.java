@@ -37,11 +37,44 @@ public final class PageResult<T> implements Serializable {
     @Schema(description = "总记录数", requiredMode = Schema.RequiredMode.REQUIRED)
     private Long total;
 
+    @Schema(description = "总页数")
+    private Long pages;
+
+    @Schema(description = "每页大小", example = "10")
+    private Integer pageSize;
+
+    @Schema(description = "当前页码", example = "1")
+    private Integer pageNum;
+
+    @Schema(description = "是否有下一页")
+    private Boolean hasNext;
+
+    @Schema(description = "是否有上一页")
+    private Boolean hasPrevious;
+
     @Schema(description = "数据", requiredMode = Schema.RequiredMode.REQUIRED)
     private List<T> list;
 
     /**
-     * 分页
+     * 完整分页构造器
+     *
+     * @param list     列表数据
+     * @param total    总记录数
+     * @param pageNum  当前页码
+     * @param pageSize 每页大小
+     */
+    public PageResult(List<T> list, Long total, Integer pageNum, Integer pageSize) {
+        this.list = list;
+        this.total = total;
+        this.pageNum = pageNum;
+        this.pageSize = pageSize;
+        this.pages = calculatePages(total, pageSize);
+        this.hasNext = hasNext(pageNum, this.pages);
+        this.hasPrevious = hasPrevious(pageNum);
+    }
+
+    /**
+     * 基础分页构造器
      *
      * @param list  列表数据
      * @param total 总记录数
@@ -56,12 +89,49 @@ public final class PageResult<T> implements Serializable {
         this.total = total;
     }
 
+    /**
+     * 计算总页数
+     */
+    private static Long calculatePages(Long total, Integer pageSize) {
+        if (total == null || pageSize == null || pageSize <= 0) {
+            return 0L;
+        }
+        return (total + pageSize - 1) / pageSize;
+    }
+
+    /**
+     * 是否有下一页
+     */
+    private static Boolean hasNext(Integer pageNum, Long pages) {
+        if (pageNum == null || pages == null) {
+            return false;
+        }
+        return pageNum < pages;
+    }
+
+    /**
+     * 是否有上一页
+     */
+    private static Boolean hasPrevious(Integer pageNum) {
+        if (pageNum == null) {
+            return false;
+        }
+        return pageNum > 1;
+    }
+
     public static <T> PageResult<T> empty() {
         return new PageResult<>(0L);
     }
 
     public static <T> PageResult<T> empty(Long total) {
         return new PageResult<>(total);
+    }
+
+    public static <T> PageResult<T> empty(Integer pageNum, Integer pageSize) {
+        PageResult<T> result = new PageResult<>(Collections.emptyList(), 0L, pageNum, pageSize);
+        result.setCode(ResultEnum.SUCCESS.getCode());
+        result.setMsg(ResultEnum.SUCCESS.getMessage());
+        return result;
     }
 
     public static PageResult<Void> ok() {
@@ -72,12 +142,23 @@ public final class PageResult<T> implements Serializable {
         return instance(ResultEnum.SUCCESS.getCode(), ResultEnum.SUCCESS.getMessage(), total, list);
     }
 
+    public static <T> PageResult<T> ok(Long total, Integer pageNum, Integer pageSize, List<T> list) {
+        return instance(ResultEnum.SUCCESS.getCode(), ResultEnum.SUCCESS.getMessage(), total, pageNum, pageSize, list);
+    }
+
     public static <T> PageResult<T> instance(Integer code, String message, Long total, List<T> list) {
         PageResult<T> result = new PageResult<>();
         result.setCode(code);
         result.setMsg(message);
         result.setTotal(total);
         result.setList(list);
+        return result;
+    }
+
+    public static <T> PageResult<T> instance(Integer code, String message, Long total, Integer pageNum, Integer pageSize, List<T> list) {
+        PageResult<T> result = new PageResult<>(list, total, pageNum, pageSize);
+        result.setCode(code);
+        result.setMsg(message);
         return result;
     }
 

@@ -9,13 +9,25 @@ export function useColumns(
   return [
     { type: 'seq', width: 60, title: '#' },
     {
-      field: 'name',
+      field: 'roleCode',
+      title: $t('system.role.code'),
+      width: 150,
+    },
+    {
+      field: 'roleName',
       title: $t('system.role.name'),
       width: 150,
     },
     {
-      field: 'code',
-      title: $t('system.role.code'),
+      cellRender: {
+        name: 'CellTag',
+        options: [
+          { label: '系统内置', value: 1 },
+          { label: '自定义', value: 2 },
+        ],
+      },
+      field: 'roleType',
+      title: $t('system.role.type'),
       width: 150,
     },
     {
@@ -24,7 +36,13 @@ export function useColumns(
       width: 100,
     },
     {
-      cellRender: { name: 'CellTag' },
+      cellRender: {
+        name: 'CellTag',
+        options: [
+          { label: $t('common.enabled'), value: 0 },
+          { label: $t('common.disabled'), value: 1 },
+        ],
+      },
       field: 'status',
       title: $t('system.role.status'),
       width: 100,
