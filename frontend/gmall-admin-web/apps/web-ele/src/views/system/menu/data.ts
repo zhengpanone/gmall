@@ -32,6 +32,7 @@ export function useColumns(
       width: 100,
     },
     {
+      align: 'left',
       field: 'path',
       title: $t('system.menu.path'),
       width: 180,
@@ -42,6 +43,7 @@ export function useColumns(
       width: 150,
     },
     {
+      align: 'left',
       field: 'component',
       title: $t('system.menu.component'),
       minWidth: 180,
@@ -58,7 +60,7 @@ export function useColumns(
       width: 100,
     },
     {
-      align: 'right',
+      align: 'center',
       cellRender: {
         attrs: {
           nameField: 'name',
@@ -67,8 +69,8 @@ export function useColumns(
         name: 'CellOperation',
         options: [
           { code: 'append', text: $t('system.menu.appendChild') },
-          'edit',
-          'delete',
+          { code: 'edit', text: $t('common.edit') },
+          { code: 'deleted', text: $t('common.delete'), type: 'danger', danger: true, show: true, renderConfirm: true },
         ],
       },
       field: 'operation',
@@ -76,7 +78,8 @@ export function useColumns(
       headerAlign: 'center',
       showOverflow: false,
       title: $t('page.common.operation'),
-      width: 200,
+      width: 360,
+      minWidth: 320,
     },
   ];
 }

@@ -63,7 +63,7 @@ function onActionClick({
       onAppend(row);
       break;
     }
-    case 'delete': {
+    case 'deleted': {
       onDelete(row);
       break;
     }
@@ -96,14 +96,21 @@ function onAppend(row: SystemMenuApi.Menu) {
 }
 
 function onDelete(row: SystemMenuApi.Menu) {
-  ElMessage({
+  const loadingMsg = ElMessage({
     message: $t('ui.actionMessage.deleting', [row.name]),
     duration: 0,
   });
-  deleteMenu(row.id!).then(() => {
-    ElMessage.success($t('ui.actionMessage.deleteSuccess', [row.name]));
-    onRefresh();
-  });
+  deleteMenu(row.id!)
+    .then(() => {
+      ElMessage.success($t('ui.actionMessage.deleteSuccess', [row.name]));
+      onRefresh();
+    })
+    .catch(() => {
+      // 接口错误信息已被全局拦截器统一处理，此处无需额外操作
+    })
+    .finally(() => {
+      loadingMsg.close();
+    });
 }
 </script>
 

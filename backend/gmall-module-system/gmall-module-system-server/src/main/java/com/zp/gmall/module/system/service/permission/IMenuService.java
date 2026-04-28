@@ -57,7 +57,7 @@ public interface IMenuService extends IService<MenuDO> {
     /**
      * 删除菜单
      */
-    void deleteMenu(Long menuId);
+    void deleteMenu(String menuId);
 
     /**
      * 校验菜单名称是否唯一

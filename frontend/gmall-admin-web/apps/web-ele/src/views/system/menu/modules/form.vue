@@ -47,11 +47,10 @@ const schema: VbenFormSchema[] = [
       api: getMenuOptions,
       class: 'w-full',
       childrenField: 'children',
-      labelField: 'name',
-      placeholder: $t('system.menu.parentPlaceholder'),
-      props: { label: 'name' },
-      showSearch: true,
+      labelField: 'label',
       valueField: 'id',
+      placeholder: $t('system.menu.parentPlaceholder'),
+      showSearch: true,
     },
     defaultValue: undefined,
     fieldName: 'parentId',
@@ -142,7 +141,10 @@ const [Drawer, drawerApi] = useVbenDrawer({
       if (data) {
         formData.value = data;
         // 如果 parentId 为 0，设置为 undefined 以显示 placeholder
-        const formValues = { ...data };
+        const formValues = {
+          ...data,
+          parentId:  data.parentId === '0' ? undefined : data.parentId,
+        };
         formApi.setValues(formValues);
       } else {
         formData.value = {} as SystemMenuApi.Menu;

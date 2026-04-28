@@ -8,6 +8,7 @@ import com.zp.gmall.module.system.controller.admin.permission.vo.MenuVO;
 import com.zp.gmall.module.system.controller.admin.permission.vo.RouteVO;
 import com.zp.gmall.module.system.service.permission.IMenuService;
 import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.Parameter;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
@@ -51,9 +52,9 @@ public class MenuController {
     }
 
     @Operation(summary = "删除菜单")
-    @DeleteMapping("/delete")
+    @DeleteMapping("/delete/{id}")
     public Result<Void> remove(
-            @RequestBody Ids ids) {
+            @PathVariable @Parameter(description = "菜单ID", required = true, example = "1") String id) {
 //        if (menuService.hasChildByMenuId(menuId)) {
 //            return Result.failed("存在子菜单，不允许删除");
 //        }

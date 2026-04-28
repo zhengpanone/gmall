@@ -103,7 +103,7 @@ public class MenuServiceImpl extends ServiceImpl<MenuMapper, MenuDO> implements 
             }
             String ancestorIds = StrUtil.isNotEmpty(parentMenu.getAncestorIds())
                     ? parentMenu.getAncestorIds() + "," + parentMenu.getId()
-                    : parentMenu.getId().toString();
+                    : parentMenu.getId();
             menuDO.setAncestorIds(ancestorIds);
         } else {
             menuDO.setAncestorIds("");
@@ -119,12 +119,12 @@ public class MenuServiceImpl extends ServiceImpl<MenuMapper, MenuDO> implements 
 
     @Override
     public void updateMenu(MenuDTO dto) {
-
+        baseMapper.updateById(menuConvertMapper.convert(dto));
     }
 
     @Override
-    public void deleteMenu(Long menuId) {
-
+    public void deleteMenu(String menuId) {
+        baseMapper.deleteById(menuId);
     }
 
     @Override

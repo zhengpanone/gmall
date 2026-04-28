@@ -15,6 +15,7 @@ CREATE TABLE IF NOT EXISTS sys_role
     updater     varchar(64)  DEFAULT ''                NULL COMMENT '更新者',
     update_time datetime     DEFAULT CURRENT_TIMESTAMP NOT NULL ON UPDATE CURRENT_TIMESTAMP COMMENT '更新时间',
     deleted     bit          DEFAULT b'0'              NOT NULL COMMENT '是否删除',
+    deleted_time datetime     DEFAULT NULL              NULL comment '删除时间',
     tenant_id   bigint       DEFAULT 0                 NOT NULL COMMENT '租户编号'
 ) COMMENT '角色信息表' COLLATE = utf8mb4_unicode_ci;
 
@@ -34,6 +35,7 @@ CREATE TABLE IF NOT EXISTS sys_dept
     updater        varchar(64) DEFAULT ''                NULL COMMENT '更新者',
     update_time    datetime    DEFAULT CURRENT_TIMESTAMP NOT NULL ON UPDATE CURRENT_TIMESTAMP COMMENT '更新时间',
     deleted        bit         DEFAULT b'0'              NOT NULL COMMENT '是否删除',
+    deleted_time datetime     DEFAULT NULL              NULL comment '删除时间',
     tenant_id      bigint      DEFAULT 0                 NOT NULL COMMENT '租户编号'
 )
     comment '部门表' collate = utf8mb4_unicode_ci;
@@ -55,6 +57,7 @@ CREATE TABLE IF NOT EXISTS sys_login_log
     updater     varchar(64) default ''                null comment '更新者',
     update_time datetime    default CURRENT_TIMESTAMP not null on update CURRENT_TIMESTAMP comment '更新时间',
     deleted     bit         default b'0'              not null comment '是否删除',
+    deleted_time datetime     DEFAULT NULL              NULL comment '删除时间',
     tenant_id   bigint      default 0                 not null comment '租户编号'
 )
     comment '系统访问记录' collate = utf8mb4_unicode_ci;
@@ -75,7 +78,8 @@ CREATE TABLE IF NOT EXISTS sys_tenant
     update_time     timestamp        null comment '更新时间',
     creator         varchar(32)      null comment '创建人',
     updater         varchar(32)      null comment '更新人',
-    deleted         bit default b'0' null comment '是否删除'
+    deleted         bit default b'0' null comment '是否删除',
+    deleted_time datetime     DEFAULT NULL              NULL comment '删除时间'
 );
 
 create table sys_user

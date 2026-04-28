@@ -14,7 +14,7 @@ export namespace SystemRoleApi {
     code: string;
     sort: number;
     dataScope?: number;
-    status: RoleStatusEnum | number;
+    status: RoleStatusEnum | string;
     createTime?: string;
     remark?: string;
   }
@@ -37,17 +37,17 @@ export namespace SystemRoleApi {
 
 /** 获取角色列表 */
 export async function getRoleList() {
-  return backendClient.get<SystemRoleApi.Role[]>('/system/role/list');
+  return backendClient.get<SystemRoleApi.Role[]>('/system/admin-api/role/page');
 }
 
 /** 获取角色详情 */
-export async function getRole(id: number) {
-  return backendClient.get<SystemRoleApi.Role>(`/system/role/${id}`);
+export async function getRole(id: string) {
+  return backendClient.get<SystemRoleApi.Role>(`/system/admin-api/role/${id}`);
 }
 
 /** 创建角色 */
 export async function createRole(data: SystemRoleApi.CreateRoleParams) {
-  return backendClient.post('/system/role/create', data);
+  return backendClient.post('/system/admin-api/role/create', data);
 }
 
 /** 更新角色 */
@@ -56,6 +56,6 @@ export async function updateRole(data: SystemRoleApi.UpdateRoleParams) {
 }
 
 /** 删除角色 */
-export async function deleteRole(id: number) {
-  return backendClient.delete(`/system/role/delete/${id}`);
+export async function deleteRole(id: string) {
+  return backendClient.delete(`/system/admin-api/role/delete/${id}`);
 }
