@@ -1,8 +1,7 @@
 package com.zp.gmall.module.system.controller.admin.user;
 
 import com.zp.gmall.framework.common.domain.vo.Result;
-import com.zp.gmall.module.system.controller.admin.user.dto.UserSaveDTO;
-import com.zp.gmall.module.system.controller.admin.user.dto.UserUpdateDTO;
+import com.zp.gmall.module.system.controller.admin.user.dto.UserDTO;
 import com.zp.gmall.module.system.controller.admin.user.vo.AdminUserVO;
 import com.zp.gmall.module.system.service.user.IUserService;
 import io.swagger.v3.oas.annotations.Operation;
@@ -39,15 +38,15 @@ public class UserController {
 
     @PostMapping("/create")
     @Operation(summary = "新增用户")
-    public Result<String> createUser(@RequestBody @Valid UserSaveDTO userSaveDTO) {
-        String userId = adminUserService.createUser(userSaveDTO);
+    public Result<String> createUser(@RequestBody @Valid UserDTO userDTO) {
+        String userId = adminUserService.createUser(userDTO);
         return Result.ok(userId);
     }
 
     @PutMapping("/update")
     @Operation(summary = "根据ID更新用户")
-    public Result<Void> updateUser(UserUpdateDTO userUpdateDTO) {
-        adminUserService.updateUser(userUpdateDTO);
+    public Result<Void> updateUser(UserDTO userDTO) {
+        adminUserService.updateUser(userDTO);
         return Result.ok();
     }
 

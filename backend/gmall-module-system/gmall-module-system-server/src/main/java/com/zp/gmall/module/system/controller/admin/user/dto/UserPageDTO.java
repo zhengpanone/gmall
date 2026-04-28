@@ -18,7 +18,7 @@ import static com.zp.gmall.framework.common.util.date.DateUtils.FORMAT_YEAR_MONT
 @NoArgsConstructor
 @AllArgsConstructor
 @EqualsAndHashCode(callSuper = true)
-public class UserPageReqDTO extends PageParam {
+public class UserPageDTO extends PageParam {
 
     @Schema(description = "用户账号，模糊匹配", example = "yudao")
     private String username;

@@ -1,7 +1,6 @@
 package com.zp.gmall.module.system.convert.dict;
 
-import com.zp.gmall.module.system.controller.admin.dict.dto.DictSaveDTO;
-import com.zp.gmall.module.system.controller.admin.dict.dto.DictUpdateDTO;
+import com.zp.gmall.module.system.controller.admin.dict.dto.DictDTO;
 import com.zp.gmall.module.system.controller.admin.dict.vo.DictVO;
 import com.zp.gmall.module.system.entity.dict.DictDO;
 import org.mapstruct.Mapper;
@@ -17,7 +16,6 @@ public interface DictConvertMapper {
     DictVO convert(DictDO dictDO);
 
     @Mapping(target = "id", ignore = true)
-    DictDO convert(DictSaveDTO dto);
+    DictDO convert(DictDTO dto);
 
-    DictDO convert(DictUpdateDTO dto);
 }

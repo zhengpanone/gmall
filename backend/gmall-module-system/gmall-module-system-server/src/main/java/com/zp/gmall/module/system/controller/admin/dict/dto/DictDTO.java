@@ -8,7 +8,7 @@ import lombok.Data;
 
 @Schema(description = "管理后台 - 字典创建DTO")
 @Data
-public class DictSaveDTO {
+public class DictDTO {
     @NotBlank(message = "字典编码不能为空")
     @Size(max = 50, message = "字典编码长度不能超过50")
     @Schema(description = "字典编码", requiredMode = Schema.RequiredMode.REQUIRED, example = "yudao")

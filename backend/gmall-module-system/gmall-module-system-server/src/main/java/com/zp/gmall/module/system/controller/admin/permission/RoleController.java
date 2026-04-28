@@ -1,11 +1,14 @@
 package com.zp.gmall.module.system.controller.admin.permission;
 
+import com.fasterxml.jackson.annotation.JsonView;
+import com.zp.gmall.framework.common.domain.ViewGroup;
 import com.zp.gmall.framework.common.domain.dto.Ids;
 import com.zp.gmall.framework.common.domain.vo.PageResult;
 import com.zp.gmall.framework.common.domain.vo.Result;
+import com.zp.gmall.framework.common.validation.ValidateGroup.Create;
+import com.zp.gmall.framework.common.validation.ValidateGroup.Update;
+import com.zp.gmall.module.system.controller.admin.permission.dto.RoleDTO;
 import com.zp.gmall.module.system.controller.admin.permission.dto.RolePageDTO;
-import com.zp.gmall.module.system.controller.admin.permission.dto.RoleSaveDTO;
-import com.zp.gmall.module.system.controller.admin.permission.dto.RoleUpdateDTO;
 import com.zp.gmall.module.system.controller.admin.permission.vo.RoleVO;
 import com.zp.gmall.module.system.service.permission.IRoleService;
 import io.swagger.v3.oas.annotations.Operation;
@@ -16,8 +19,6 @@ import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
-
-import java.util.List;
 
 /**
  * @author : zhengpanone
@@ -37,15 +38,17 @@ public class RoleController {
 
     @PostMapping("/create")
     @Operation(summary = "新增角色")
-    public Result<String> createRole(@RequestBody @Valid RoleSaveDTO roleSaveDTO) {
-        String roleId = roleService.createRole(roleSaveDTO);
+    @JsonView(ViewGroup.CreateView.class)
+    public Result<String> createRole(@RequestBody @Validated(Create.class) @Valid RoleDTO roleDTO) {
+        String roleId = roleService.createRole(roleDTO);
         return Result.ok(roleId);
     }
 
     @PutMapping("/update")
     @Operation(summary = "更新角色")
-    public Result<String> updateRole(@RequestBody @Valid RoleUpdateDTO roleUpdateDTO) {
-        String roleId = roleService.updateRole(roleUpdateDTO);
+    @JsonView(ViewGroup.UpdateView.class)
+    public Result<String> updateRole(@RequestBody @Validated(Update.class) @Valid RoleDTO roleDTO) {
+        String roleId = roleService.updateRole(roleDTO);
         return Result.ok(roleId);
     }
 

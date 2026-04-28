@@ -4,7 +4,7 @@ package com.zp.gmall.module.system.mapper.dict;
 import com.zp.gmall.framework.common.domain.vo.PageResult;
 import com.zp.gmall.framework.mybatis.core.mapper.BaseMapperX;
 import com.zp.gmall.framework.mybatis.core.util.LambdaQueryWrapperX;
-import com.zp.gmall.module.system.controller.admin.dict.dto.DictPageReqVO;
+import com.zp.gmall.module.system.controller.admin.dict.dto.DictPageDTO;
 import com.zp.gmall.module.system.entity.dict.DictItemDO;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
@@ -21,7 +21,7 @@ import java.time.LocalDateTime;
 @Mapper
 public interface DictItemMapper extends BaseMapperX<DictItemDO> {
 
-    default PageResult<DictItemDO> selectPage(DictPageReqVO reqVO) {
+    default PageResult<DictItemDO> selectPage(DictPageDTO reqVO) {
         return selectPage(reqVO, new LambdaQueryWrapperX<DictItemDO>()
                 .likeIfPresent(DictItemDO::getItemValue, reqVO.getName())
                 .eqIfPresent(DictItemDO::getStatus, reqVO.getStatus())

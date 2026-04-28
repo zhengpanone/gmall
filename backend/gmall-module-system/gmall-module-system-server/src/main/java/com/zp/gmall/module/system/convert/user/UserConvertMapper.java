@@ -1,7 +1,6 @@
 package com.zp.gmall.module.system.convert.user;
 
-import com.zp.gmall.module.system.controller.admin.user.dto.UserSaveDTO;
-import com.zp.gmall.module.system.controller.admin.user.dto.UserUpdateDTO;
+import com.zp.gmall.module.system.controller.admin.user.dto.UserDTO;
 import com.zp.gmall.module.system.controller.admin.user.vo.AdminUserVO;
 import com.zp.gmall.module.system.entity.user.UserDO;
 import org.mapstruct.Mapper;
@@ -33,11 +32,6 @@ public interface UserConvertMapper {
     @Mapping(target = "status", ignore = true)
     @Mapping(target = "loginIp", ignore = true)
     @Mapping(target = "loginDate", ignore = true)
-    UserDO convert(UserSaveDTO userSaveDTO);
-
-    @Mapping(target = "password", ignore = true)
-    @Mapping(target = "status", ignore = true)
-    @Mapping(target = "loginIp", ignore = true)
-    @Mapping(target = "loginDate", ignore = true)
-    UserDO convert(UserUpdateDTO userUpdateDTO);
+    UserDO convert(UserDTO userDTO);
+    
 }

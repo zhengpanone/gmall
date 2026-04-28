@@ -1,5 +1,9 @@
 package com.zp.gmall.module.system.controller.admin.permission.dto;
 
+import com.fasterxml.jackson.annotation.JsonView;
+import com.zp.gmall.framework.common.domain.ViewGroup.UpdateView;
+import com.zp.gmall.framework.common.validation.ValidateGroup.Create;
+import com.zp.gmall.framework.common.validation.ValidateGroup.Update;
 import io.swagger.v3.oas.annotations.media.Schema;
 import io.swagger.v3.oas.annotations.media.Schema.RequiredMode;
 import jakarta.validation.constraints.NotBlank;
@@ -25,12 +29,13 @@ import org.hibernate.validator.constraints.Range;
 @Schema(title = "菜单保存DTO", description = "菜单保存传输对象")
 public class MenuDTO {
 
+    @JsonView(UpdateView.class)
     @Schema(title = "菜单ID", description = "菜单ID", example = "1", requiredMode = RequiredMode.REQUIRED)
-    //@NotNull(message = "菜单ID不能为空")
+    @NotNull(message = "菜单ID不能为空", groups = Update.class)
     private String id;
 
-    @NotBlank(message = "父菜单ID不能为空")
-    @Size(max = 36, message = "父菜单ID长度不能超过36个字符")
+    @NotBlank(message = "父菜单ID不能为空", groups = {Create.class, Update.class})
+    @Size(max = 36, message = "父菜单ID长度不能超过36个字符", groups = {Create.class, Update.class})
     @Schema(title = "父菜单ID", description = "父菜单ID", example = "0")
     private String parentId;
     /**

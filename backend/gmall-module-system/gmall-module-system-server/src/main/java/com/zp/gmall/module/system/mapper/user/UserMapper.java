@@ -4,7 +4,7 @@ package com.zp.gmall.module.system.mapper.user;
 import com.zp.gmall.framework.common.domain.vo.PageResult;
 import com.zp.gmall.framework.mybatis.core.mapper.BaseMapperX;
 import com.zp.gmall.framework.mybatis.core.util.LambdaQueryWrapperX;
-import com.zp.gmall.module.system.controller.admin.user.dto.UserPageReqDTO;
+import com.zp.gmall.module.system.controller.admin.user.dto.UserPageDTO;
 import com.zp.gmall.module.system.entity.user.UserDO;
 import org.apache.ibatis.annotations.Mapper;
 
@@ -26,7 +26,7 @@ public interface UserMapper extends BaseMapperX<UserDO> {
         return selectOne(UserDO::getMobile, mobile);
     }
 
-    default PageResult<UserDO> selectPage(UserPageReqDTO reqDTO, Collection<Long> deptIds, Collection<Long> userIds) {
+    default PageResult<UserDO> selectPage(UserPageDTO reqDTO, Collection<Long> deptIds, Collection<Long> userIds) {
         return selectPage(reqDTO, new LambdaQueryWrapperX<UserDO>()
                 .likeIfPresent(UserDO::getUsername, reqDTO.getUsername())
                 .likeIfPresent(UserDO::getMobile, reqDTO.getMobile())

@@ -3,14 +3,11 @@ package com.zp.gmall.module.system.service.permission;
 import com.baomidou.mybatisplus.extension.service.IService;
 import com.zp.gmall.framework.common.domain.dto.Ids;
 import com.zp.gmall.framework.common.domain.vo.PageResult;
+import com.zp.gmall.module.system.controller.admin.permission.dto.RoleDTO;
 import com.zp.gmall.module.system.controller.admin.permission.dto.RolePageDTO;
-import com.zp.gmall.module.system.controller.admin.permission.dto.RoleSaveDTO;
-import com.zp.gmall.module.system.controller.admin.permission.dto.RoleUpdateDTO;
 import com.zp.gmall.module.system.controller.admin.permission.vo.RoleVO;
 import com.zp.gmall.module.system.entity.permission.RoleDO;
 import jakarta.validation.Valid;
-
-import java.util.List;
 
 /**
  * @author : zhengpanone
@@ -22,10 +19,10 @@ public interface IRoleService extends IService<RoleDO> {
     /**
      * 创建角色
      *
-     * @param roleSaveDTO 角色信息
+     * @param roleDTO 角色信息
      * @return 角色编号
      */
-    String createRole(@Valid RoleSaveDTO roleSaveDTO);
+    String createRole(@Valid RoleDTO roleDTO);
 
     /**
      * 获取角色分页
@@ -50,7 +47,7 @@ public interface IRoleService extends IService<RoleDO> {
      * @param roleUpdateDTO 角色信息
      * @return 角色编号
      */
-    String updateRole(RoleUpdateDTO roleUpdateDTO);
+    String updateRole(RoleDTO roleUpdateDTO);
 
     /**
      * 删除角色

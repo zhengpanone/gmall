@@ -11,14 +11,12 @@ import com.zp.gmall.framework.common.domain.dto.Ids;
 import com.zp.gmall.framework.common.domain.vo.PageResult;
 import com.zp.gmall.framework.common.enums.CommonStatusEnum;
 import com.zp.gmall.framework.tenant.core.context.TenantContextHolder;
+import com.zp.gmall.module.system.controller.admin.permission.dto.RoleDTO;
 import com.zp.gmall.module.system.controller.admin.permission.dto.RolePageDTO;
-import com.zp.gmall.module.system.controller.admin.permission.dto.RoleSaveDTO;
-import com.zp.gmall.module.system.controller.admin.permission.dto.RoleUpdateDTO;
 import com.zp.gmall.module.system.controller.admin.permission.vo.RoleVO;
 import com.zp.gmall.module.system.convert.permission.RoleConvertMapper;
 import com.zp.gmall.module.system.entity.permission.RoleDO;
 import com.zp.gmall.module.system.enums.permission.RoleCodeEnum;
-import com.zp.gmall.module.system.enums.permission.RoleTypeEnum;
 import com.zp.gmall.module.system.mapper.permission.RoleMapper;
 import com.zp.gmall.module.system.service.permission.IRoleService;
 import lombok.extern.slf4j.Slf4j;
@@ -27,7 +25,6 @@ import org.mapstruct.factory.Mappers;
 import org.springframework.stereotype.Service;
 
 import java.io.Serializable;
-import java.util.Collections;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -47,14 +44,14 @@ public class RoleServiceImpl extends ServiceImpl<RoleMapper, RoleDO> implements 
     private final RoleConvertMapper roleConvertMapper = Mappers.getMapper(RoleConvertMapper.class);
 
     @Override
-    public String createRole(RoleSaveDTO roleSaveDTO) {
+    public String createRole(RoleDTO roleDTO) {
         String tenantId = TenantContextHolder.getTenantId();
         if (StringUtils.isBlank(tenantId)) {
             tenantId = "0";
         }
         // 校验角色
-        validateRoleDuplicate(roleSaveDTO.getRoleName(), roleSaveDTO.getRoleCode(), null, tenantId);
-        RoleDO roleDO = roleConvertMapper.convert(roleSaveDTO);
+        validateRoleDuplicate(roleDTO.getRoleName(), roleDTO.getRoleCode(), null, tenantId);
+        RoleDO roleDO = roleConvertMapper.convert(roleDTO);
         // 设置默认状态为启用
         roleDO.setStatus(CommonStatusEnum.ENABLE.getStatus());
         // 设置默认排序
@@ -66,26 +63,26 @@ public class RoleServiceImpl extends ServiceImpl<RoleMapper, RoleDO> implements 
     }
 
     @Override
-    public PageResult<RoleVO> getRolePage(RolePageDTO reqVO){
+    public PageResult<RoleVO> getRolePage(RolePageDTO rolePageDTO) {
         String tenantId = TenantContextHolder.getTenantId();
         if (StringUtils.isBlank(tenantId)) {
             tenantId = "0";
         }
         // 构建分页查询条件
-        Page<RoleDO> page = new Page<>(reqVO.getPageNo(), reqVO.getPageSize());
+        Page<RoleDO> page = new Page<>(rolePageDTO.getPageNo(), rolePageDTO.getPageSize());
         LambdaQueryWrapper<RoleDO> queryWrapper = new LambdaQueryWrapper<>();
         queryWrapper.eq(RoleDO::getTenantId, tenantId);
         // 按角色名称模糊查询
-        if (StringUtils.isNotBlank(reqVO.getRoleName())) {
-            queryWrapper.like(RoleDO::getName, reqVO.getRoleName());
+        if (StringUtils.isNotBlank(rolePageDTO.getRoleName())) {
+            queryWrapper.like(RoleDO::getName, rolePageDTO.getRoleName());
         }
         // 按角色编码模糊查询
-        if (StringUtils.isNotBlank(reqVO.getRoleCode())) {
-            queryWrapper.like(RoleDO::getCode, reqVO.getRoleCode());
+        if (StringUtils.isNotBlank(rolePageDTO.getRoleCode())) {
+            queryWrapper.like(RoleDO::getCode, rolePageDTO.getRoleCode());
         }
         // 按角色类型精确查询
-        if (reqVO.getRoleType() != null) {
-            queryWrapper.eq(RoleDO::getType, reqVO.getRoleType());
+        if (rolePageDTO.getRoleType() != null) {
+            queryWrapper.eq(RoleDO::getType, rolePageDTO.getRoleType());
         }
         // 按创建时间倒序排序
         queryWrapper.orderByDesc(RoleDO::getCreateTime);
@@ -95,7 +92,7 @@ public class RoleServiceImpl extends ServiceImpl<RoleMapper, RoleDO> implements 
 
         // 转换为VO
         List<RoleVO> voList = rolePage.getRecords().stream()
-                .map(this::convertToRoleVO)
+                .map(roleConvertMapper::convert)
                 .collect(Collectors.toList());
 
         return PageResult.ok(rolePage.getTotal(), voList);
@@ -107,27 +104,27 @@ public class RoleServiceImpl extends ServiceImpl<RoleMapper, RoleDO> implements 
         if (roleDO == null) {
             throw exception(ROLE_NOT_EXISTS);
         }
-        return convertToRoleVO(roleDO);
+        return roleConvertMapper.convert(roleDO);
     }
 
     @Override
-    public String updateRole(RoleUpdateDTO roleUpdateDTO) {
+    public String updateRole(RoleDTO roleDTO) {
         String tenantId = TenantContextHolder.getTenantId();
         if (StringUtils.isBlank(tenantId)) {
             tenantId = "0";
         }
         // 校验角色是否存在
-        RoleDO existRole = baseMapper.selectById(roleUpdateDTO.getId());
+        RoleDO existRole = baseMapper.selectById(roleDTO.getId());
         if (existRole == null) {
             throw exception(ROLE_NOT_EXISTS);
         }
         // 校验角色唯一性
-        validateRoleDuplicate(roleUpdateDTO.getRoleName(), roleUpdateDTO.getRoleCode(), roleUpdateDTO.getId(), tenantId);
+        validateRoleDuplicate(roleDTO.getRoleName(), roleDTO.getRoleCode(), roleDTO.getId(), tenantId);
         // 更新角色
-        RoleDO roleDO = roleConvertMapper.convert(roleUpdateDTO);
-        roleDO.setId(roleUpdateDTO.getId());
+        RoleDO roleDO = roleConvertMapper.convert(roleDTO);
+        roleDO.setId(roleDTO.getId());
         baseMapper.updateById(roleDO);
-        return roleUpdateDTO.getId();
+        return roleDO.getId();
     }
 
     @Override
@@ -142,25 +139,9 @@ public class RoleServiceImpl extends ServiceImpl<RoleMapper, RoleDO> implements 
                 throw exception(ROLE_NOT_EXISTS);
             }
         }
-        baseMapper.deleteBatchIds(ids.getIds());
+        baseMapper.deleteByIds(ids.getIds());
     }
 
-    /**
-     * 将RoleDO转换为RoleVO
-     */
-    private RoleVO convertToRoleVO(RoleDO roleDO) {
-        RoleVO roleVO = roleConvertMapper.convert(roleDO);
-        // 设置状态名称
-        if (roleVO.getStatus() != null) {
-            roleVO.setStatusName(CommonStatusEnum.getMessageByStatus(roleVO.getStatus()));
-        }
-        // 设置角色类型名称
-        if (roleVO.getRoleType() != null) {
-            RoleTypeEnum roleTypeEnum = RoleTypeEnum.getByType(roleVO.getRoleType());
-            roleVO.setRoleTypeName(roleTypeEnum != null ? roleTypeEnum.getLabel() : "");
-        }
-        return roleVO;
-    }
 
     /**
      * 校验角色的唯一字段是否重复

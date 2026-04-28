@@ -1,8 +1,7 @@
 package com.zp.gmall.module.system.service.user;
 
 import com.baomidou.mybatisplus.extension.service.IService;
-import com.zp.gmall.module.system.controller.admin.user.dto.UserSaveDTO;
-import com.zp.gmall.module.system.controller.admin.user.dto.UserUpdateDTO;
+import com.zp.gmall.module.system.controller.admin.user.dto.UserDTO;
 import com.zp.gmall.module.system.controller.admin.user.vo.AdminUserVO;
 import com.zp.gmall.module.system.entity.user.UserDO;
 import jakarta.validation.Valid;
@@ -22,19 +21,19 @@ public interface IUserService extends IService<UserDO> {
     /**
      * 创建用户
      *
-     * @param userSaveDTO 用户信息
+     * @param userDTO 用户信息
      * @return 用户编号
      */
-    String createUser(@Valid UserSaveDTO userSaveDTO);
+    String createUser(@Valid UserDTO userDTO);
 
 
     /**
      * 修改用户
      *
-     * @param userUpdateDTO 用户信息
+     * @param userDTO 用户信息
      * @return 用户编号
      */
-    String updateUser(@Valid UserUpdateDTO userUpdateDTO);
+    String updateUser(@Valid UserDTO userDTO);
 
     /**
      * 获得用户列表

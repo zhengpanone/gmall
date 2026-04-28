@@ -1,9 +1,11 @@
 package com.zp.gmall.module.system.convert.permission;
 
-import com.zp.gmall.module.system.controller.admin.permission.dto.RoleSaveDTO;
-import com.zp.gmall.module.system.controller.admin.permission.dto.RoleUpdateDTO;
+import com.zp.gmall.framework.common.enums.CommonStatusEnum;
+import com.zp.gmall.module.system.controller.admin.permission.dto.RoleDTO;
 import com.zp.gmall.module.system.controller.admin.permission.vo.RoleVO;
 import com.zp.gmall.module.system.entity.permission.RoleDO;
+import com.zp.gmall.module.system.enums.permission.RoleTypeEnum;
+import org.mapstruct.AfterMapping;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
 import org.mapstruct.MappingTarget;
@@ -20,7 +22,7 @@ public interface RoleConvertMapper {
     /**
      * 转换角色保存DTO为角色DO
      *
-     * @param roleSaveDTO 角色保存DTO
+     * @param roleDTO 角色保存DTO
      * @return 角色DO
      */
     @Mapping(source = "roleName", target = "name")
@@ -30,38 +32,9 @@ public interface RoleConvertMapper {
     @Mapping(target = "sort", ignore = true)
     @Mapping(target = "status", ignore = true)
     @Mapping(target = "remark", ignore = true)
-    RoleDO convert(RoleSaveDTO roleSaveDTO);
+    RoleDO convert(RoleDTO roleDTO);
 
-    /**
-     * 转换角色更新DTO为角色DO
-     *
-     * @param roleUpdateDTO 角色更新DTO
-     * @return 角色DO
-     */
-    @Mapping(source = "roleName", target = "name")
-    @Mapping(source = "roleCode", target = "code")
-    @Mapping(source = "roleType", target = "type")
-    @Mapping(target = "remark", ignore = true)
-    RoleDO convert(RoleUpdateDTO roleUpdateDTO);
 
-    /**
-     * 更新角色DO
-     *
-     * @param roleUpdateDTO 角色更新DTO
-     * @param roleDO        角色DO
-     */
-    @Mapping(source = "roleName", target = "name")
-    @Mapping(source = "roleCode", target = "code")
-    @Mapping(source = "roleType", target = "type")
-    @Mapping(target = "createTime", ignore = true)
-    @Mapping(target = "updateTime", ignore = true)
-    @Mapping(target = "creator", ignore = true)
-    @Mapping(target = "updater", ignore = true)
-    @Mapping(target = "deleted", ignore = true)
-    @Mapping(target = "deletedTime", ignore = true)
-    @Mapping(target = "tenantId", ignore = true)
-    @Mapping(target = "remark", ignore = true)
-    void update(RoleUpdateDTO roleUpdateDTO, @MappingTarget RoleDO roleDO);
 
     /**
      * 转换角色DO为角色VO
@@ -76,4 +49,18 @@ public interface RoleConvertMapper {
     @Mapping(target = "statusName", ignore = true)
     @Mapping(target = "roleTypeName", ignore = true)
     RoleVO convert(RoleDO roleDO);
+
+
+    @AfterMapping
+    default void fillComputedFields(@MappingTarget RoleVO roleVO) {
+        // 设置状态名称
+        if (roleVO.getStatus() != null) {
+            roleVO.setStatusName(CommonStatusEnum.getMessageByStatus(roleVO.getStatus()));
+        }
+        // 设置角色类型名称
+        if (roleVO.getRoleType() != null) {
+            RoleTypeEnum roleTypeEnum = RoleTypeEnum.getByType(roleVO.getRoleType());
+            roleVO.setRoleTypeName(roleTypeEnum != null ? roleTypeEnum.getLabel() : "");
+        }
+    }
 }

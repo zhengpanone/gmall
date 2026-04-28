@@ -2,8 +2,7 @@ package com.zp.gmall.module.system.service.user.impl;
 
 import cn.hutool.core.convert.Convert;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
-import com.zp.gmall.module.system.controller.admin.user.dto.UserSaveDTO;
-import com.zp.gmall.module.system.controller.admin.user.dto.UserUpdateDTO;
+import com.zp.gmall.module.system.controller.admin.user.dto.UserDTO;
 import com.zp.gmall.module.system.controller.admin.user.vo.AdminUserVO;
 import com.zp.gmall.module.system.convert.user.UserConvertMapper;
 import com.zp.gmall.module.system.entity.user.UserDO;
@@ -31,14 +30,14 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, UserDO> implements 
     private final UserConvertMapper convertMapper = Mappers.getMapper(UserConvertMapper.class);
 
     @Override
-    public String createUser(UserSaveDTO userSaveDTO) {
-        UserDO userDO = convertMapper.convert(userSaveDTO);
+    public String createUser(UserDTO userDTO) {
+        UserDO userDO = convertMapper.convert(userDTO);
         baseMapper.insert(userDO);
         return Convert.toStr(userDO.getId());
     }
 
     @Override
-    public String updateUser(UserUpdateDTO userUpdateDTO) {
+    public String updateUser(UserDTO userUpdateDTO) {
         UserDO userDO = convertMapper.convert(userUpdateDTO);
         baseMapper.updateById(userDO);
         return Convert.toStr(userDO.getId());

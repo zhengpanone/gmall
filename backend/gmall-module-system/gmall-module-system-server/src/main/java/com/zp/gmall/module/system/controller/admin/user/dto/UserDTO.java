@@ -1,29 +1,33 @@
 package com.zp.gmall.module.system.controller.admin.user.dto;
 
+import com.fasterxml.jackson.annotation.JsonView;
+import com.zp.gmall.framework.common.domain.ViewGroup.UpdateView;
+import com.zp.gmall.framework.common.validation.ValidateGroup.Create;
+import com.zp.gmall.framework.common.validation.ValidateGroup.Update;
 import io.swagger.v3.oas.annotations.media.Schema;
-import jakarta.validation.constraints.Email;
-import jakarta.validation.constraints.NotBlank;
-import jakarta.validation.constraints.Pattern;
-import jakarta.validation.constraints.Size;
+import jakarta.validation.constraints.*;
 import lombok.Data;
 
 import java.util.Set;
 
 @Schema(description = "管理后台 - 用户保存DTO")
 @Data
-public class UserSaveDTO {
+public class UserDTO {
 
+    @JsonView(UpdateView.class)
     @Schema(description = "用户编号", example = "f47ac10b-58cc-4372-a567-0e02b2c3d479")
+    @NotNull(message = "用户ID不能为空", groups = Update.class)
     private String id;
 
+
     @Schema(description = "用户账号", requiredMode = Schema.RequiredMode.REQUIRED, type = "string", example = "admin")
-    @NotBlank(message = "用户账号不能为空")
+    @NotBlank(message = "用户账号不能为空", groups = {Create.class})
     @Pattern(regexp = "^[a-zA-Z0-9]+$", message = "用户账号由 数字、字母 组成")
     @Size(min = 4, max = 30, message = "用户账号长度为 4-30 个字符")
     private String username;
 
     @Schema(description = "用户昵称", requiredMode = Schema.RequiredMode.REQUIRED, type = "string", example = "管理员")
-    @Size(max = 30, message = "用户昵称长度不能超过30个字符")
+    @Size(max = 30, message = "用户昵称长度不能超过30个字符", groups = {Create.class, Update.class})
     private String nickname;
 
     @Schema(description = "备注", type = "string", example = "我是管理员")
