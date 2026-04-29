@@ -560,6 +560,19 @@
                 <version>${revision}</version>
             </dependency>
 
+            <dependency>
+                <groupId>com.zp.gmall</groupId>
+                <artifactId>gmall-module-promotion-api</artifactId>
+                <version>${revision}</version>
+            </dependency>
+
+            <dependency>
+                <groupId>com.zp.gmall</groupId>
+                <artifactId>gmall-module-promotion-server</artifactId>
+                <version>${revision}</version>
+            </dependency>
+
+
 
             <dependency>
                 <groupId>org.projectlombok</groupId>

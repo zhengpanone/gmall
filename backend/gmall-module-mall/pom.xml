@@ -17,8 +17,8 @@
         商城大模块，由 product 商品、promotion 营销、trade 交易、statistics 统计等组成
     </description>
     <modules>
-        <!-- <module>gmall-module-promotion-api</module> -->
-        <!-- <module>gmall-module-promotion-biz</module> -->
+        <module>gmall-module-promotion-api</module>
+        <module>gmall-module-promotion-server</module>
         <module>gmall-module-product-api</module>
         <module>gmall-module-product-server</module>
         <!-- <module>gmall-module-trade-api</module> -->
