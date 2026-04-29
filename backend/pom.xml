@@ -21,7 +21,7 @@
         <module>gmall-module-bpm</module>
         <module>gmall-module-pay</module>
         <!--        <module>gmall-module-report</module>-->
-        <!--        <module>gmall-module-mall</module>-->
+        <module>gmall-module-mall</module>
         <!-- 会员服务 -->
         <module>gmall-module-member</module>
         <module>gmall-module-mp</module>

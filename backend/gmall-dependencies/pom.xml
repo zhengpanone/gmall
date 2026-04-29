@@ -549,6 +549,19 @@
             </dependency>
 
             <dependency>
+                <groupId>com.zp.gmall</groupId>
+                <artifactId>gmall-module-product-api</artifactId>
+                <version>${revision}</version>
+            </dependency>
+
+            <dependency>
+                <groupId>com.zp.gmall</groupId>
+                <artifactId>gmall-module-product-server</artifactId>
+                <version>${revision}</version>
+            </dependency>
+
+
+            <dependency>
                 <groupId>org.projectlombok</groupId>
                 <artifactId>lombok</artifactId>
                 <version>${lombok.version}</version>

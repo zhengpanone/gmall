@@ -5,10 +5,10 @@
     <parent>
         <groupId>com.zp.gmall</groupId>
         <artifactId>gmall-module-mall</artifactId>
-        <version>1.0-SNAPSHOT</version>
+        <version>${revision}</version>
     </parent>
     <modelVersion>4.0.0</modelVersion>
-    <artifactId>gmall-module-product-biz</artifactId>
+    <artifactId>gmall-module-product-server</artifactId>
     <packaging>jar</packaging>
 
     <name>${project.artifactId}</name>
@@ -24,11 +24,18 @@
             <artifactId>spring-cloud-starter-bootstrap</artifactId>
         </dependency>
 
+        <!-- Registry 注册中心相关 -->
         <dependency>
-            <groupId>com.zp.gmall</groupId>
-            <artifactId>gmall-spring-boot-starter-env</artifactId>
-            <version>1.0-SNAPSHOT</version>
+            <groupId>com.alibaba.cloud</groupId>
+            <artifactId>spring-cloud-starter-alibaba-nacos-discovery</artifactId>
         </dependency>
+
+        <!-- Config 配置中心相关 -->
+        <dependency>
+            <groupId>com.alibaba.cloud</groupId>
+            <artifactId>spring-cloud-starter-alibaba-nacos-config</artifactId>
+        </dependency>
+
 
         <!-- 依赖服务 -->
         <dependency>
@@ -52,14 +59,13 @@
 
         <!-- Web 相关 -->
         <dependency>
-            <groupId>com.zp.gmall</groupId>
-            <artifactId>gmall-spring-boot-starter-web</artifactId>
-            <version>1.0-SNAPSHOT</version>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-web</artifactId>
         </dependency>
+
         <dependency>
-            <groupId>com.zp.gmall</groupId>
-            <artifactId>gmall-spring-boot-starter-security</artifactId>
-            <version>1.0-SNAPSHOT</version>
+            <groupId>org.springdoc</groupId>
+            <artifactId>springdoc-openapi-starter-webmvc-ui</artifactId>
         </dependency>
 
         <!-- DB 相关 -->
@@ -83,40 +89,12 @@
             <artifactId>feign-okhttp</artifactId>
         </dependency>
 
-
-
-        <!-- Registry 注册中心相关 -->
         <dependency>
-            <groupId>com.alibaba.cloud</groupId>
-            <artifactId>spring-cloud-starter-alibaba-nacos-discovery</artifactId>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-actuator</artifactId>
         </dependency>
 
-        <!-- Config 配置中心相关 -->
-        <dependency>
-            <groupId>com.alibaba.cloud</groupId>
-            <artifactId>spring-cloud-starter-alibaba-nacos-config</artifactId>
-        </dependency>
 
-        <!-- Test 测试相关 -->
-        <dependency>
-            <groupId>com.zp.gmall</groupId>
-            <artifactId>gmall-spring-boot-starter-test</artifactId>
-            <version>1.0-SNAPSHOT</version>
-        </dependency>
-
-        <!-- 工具类相关 -->
-        <dependency>
-            <groupId>com.zp.gmall</groupId>
-            <artifactId>gmall-spring-boot-starter-excel</artifactId>
-            <version>1.0-SNAPSHOT</version>
-        </dependency>
-
-        <!-- 监控相关 -->
-        <dependency>
-            <groupId>com.zp.gmall</groupId>
-            <artifactId>gmall-spring-boot-starter-monitor</artifactId>
-            <version>1.0-SNAPSHOT</version>
-        </dependency>
     </dependencies>
 
 </project>

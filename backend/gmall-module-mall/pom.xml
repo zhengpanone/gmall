@@ -5,10 +5,9 @@
     <parent>
         <artifactId>gmall</artifactId>
         <groupId>com.zp.gmall</groupId>
-        <version>1.0-SNAPSHOT</version>
+        <version>${revision}</version>
     </parent>
     <modelVersion>4.0.0</modelVersion>
-    <version>1.0-SNAPSHOT</version>
     <artifactId>gmall-module-mall</artifactId>
     <packaging>pom</packaging>
 
@@ -18,14 +17,14 @@
         商城大模块，由 product 商品、promotion 营销、trade 交易、statistics 统计等组成
     </description>
     <modules>
-        <module>gmall-module-promotion-api</module>
-        <module>gmall-module-promotion-biz</module>
+        <!-- <module>gmall-module-promotion-api</module> -->
+        <!-- <module>gmall-module-promotion-biz</module> -->
         <module>gmall-module-product-api</module>
-        <module>gmall-module-product-biz</module>
-        <module>gmall-module-trade-api</module>
-        <module>gmall-module-trade-biz</module>
-        <module>gmall-module-statistics-api</module>
-        <module>gmall-module-statistics-biz</module>
+        <module>gmall-module-product-server</module>
+        <!-- <module>gmall-module-trade-api</module> -->
+        <!-- <module>gmall-module-trade-biz</module> -->
+        <!-- <module>gmall-module-statistics-api</module> -->
+        <!-- <module>gmall-module-statistics-biz</module> -->
     </modules>
 
 </project>
