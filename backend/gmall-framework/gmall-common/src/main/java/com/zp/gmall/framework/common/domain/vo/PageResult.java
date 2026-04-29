@@ -17,7 +17,7 @@ import java.util.List;
  * @author zhengpanone
  */
 @Data
-@Schema(description = "分页数据")
+@Schema(name = "PageResult", description = "分页数据")
 @NoArgsConstructor
 public final class PageResult<T> implements Serializable {
     @Serial

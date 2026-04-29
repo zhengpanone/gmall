@@ -21,7 +21,7 @@ import java.util.Objects;
  * @author zhengpanon
  * @since 1.0.0
  */
-@Schema(description = "返回结果集")
+@Schema(name = "Result", description = "返回结果集")
 @Data
 @AllArgsConstructor
 @NoArgsConstructor

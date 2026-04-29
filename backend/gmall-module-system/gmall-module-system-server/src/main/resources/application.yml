@@ -7,16 +7,6 @@ spring:
       write-durations-as-timestamps: true # 设置Duration的格式，使用时间戳
       fail-on-empty-beans: false # 允许序列化无属性的Bean
 
---- #################### 接口文档配置 ####################
-springdoc:
-  api-docs:
-    enabled: true # 1. 是否开启 Swagger 接文档的元数据
-    path: /v3/api-docs
-  swagger-ui:
-    enabled: true # 2.1 是否开启 Swagger 文档的官方 UI 界面
-    path: /swagger-ui.html
-  default-flat-param-object: true # 参见 https://doc.xiaominfo.com/docs/faq/v4/knife4j-parameterobject-flat-param 文档
-
 --- #################### 验证码相关配置 ####################
 
 aj:
