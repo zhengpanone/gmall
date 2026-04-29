@@ -486,6 +486,18 @@
 
             <dependency>
                 <groupId>com.zp.gmall</groupId>
+                <artifactId>gmall-module-pay-api</artifactId>
+                <version>${revision}</version>
+            </dependency>
+
+            <dependency>
+                <groupId>com.zp.gmall</groupId>
+                <artifactId>gmall-module-pay-server</artifactId>
+                <version>${revision}</version>
+            </dependency>
+
+            <dependency>
+                <groupId>com.zp.gmall</groupId>
                 <artifactId>gmall-module-bpm-server</artifactId>
                 <version>${revision}</version>
             </dependency>

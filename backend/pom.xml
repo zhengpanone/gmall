@@ -19,7 +19,7 @@
 
         <module>gmall-module-infra</module>
         <module>gmall-module-bpm</module>
-        <!--        <module>gmall-module-pay</module>-->
+        <module>gmall-module-pay</module>
         <!--        <module>gmall-module-report</module>-->
         <!--        <module>gmall-module-mall</module>-->
         <!--        <module>gmall-module-member</module> &lt;!&ndash; 会员服务 &ndash;&gt;-->
