@@ -474,13 +474,19 @@
             </dependency>
             <dependency>
                 <groupId>com.zp.gmall</groupId>
+                <artifactId>gmall-module-infra-server</artifactId>
+                <version>${revision}</version>
+            </dependency>
+
+            <dependency>
+                <groupId>com.zp.gmall</groupId>
                 <artifactId>gmall-module-system-api</artifactId>
                 <version>${revision}</version>
             </dependency>
 
             <dependency>
                 <groupId>com.zp.gmall</groupId>
-                <artifactId>gmall-module-bpm-api</artifactId>
+                <artifactId>gmall-module-system-server</artifactId>
                 <version>${revision}</version>
             </dependency>
 
@@ -498,6 +504,12 @@
 
             <dependency>
                 <groupId>com.zp.gmall</groupId>
+                <artifactId>gmall-module-bpm-api</artifactId>
+                <version>${revision}</version>
+            </dependency>
+
+            <dependency>
+                <groupId>com.zp.gmall</groupId>
                 <artifactId>gmall-module-bpm-server</artifactId>
                 <version>${revision}</version>
             </dependency>
@@ -505,6 +517,11 @@
             <dependency>
                 <groupId>com.zp.gmall</groupId>
                 <artifactId>gmall-module-member-api</artifactId>
+                <version>${revision}</version>
+            </dependency>
+            <dependency>
+                <groupId>com.zp.gmall</groupId>
+                <artifactId>gmall-module-member-server</artifactId>
                 <version>${revision}</version>
             </dependency>
 

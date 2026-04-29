@@ -22,7 +22,8 @@
         <module>gmall-module-pay</module>
         <!--        <module>gmall-module-report</module>-->
         <!--        <module>gmall-module-mall</module>-->
-        <!--        <module>gmall-module-member</module> &lt;!&ndash; 会员服务 &ndash;&gt;-->
+        <!-- 会员服务 -->
+               <module>gmall-module-member</module>
         <!--        <module>gmall-module-mp</module>-->
 
         <!--      <module>gmall-product</module> &lt;!&ndash;商品服务&ndash;&gt;

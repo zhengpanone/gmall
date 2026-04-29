@@ -1,0 +1,5 @@
+
+
+mybatis-plus:
+  base-package: com.zp.module.member.mapper
+
