@@ -4,7 +4,9 @@ spring:
   profiles:
     active: local
 server:
-  port: 48082
+  port: 48081
+  servlet:
+    context-path: /infra
 
 #mybatis-plus:
 #  base-package: com.zp.gmall.module.infra.mapper

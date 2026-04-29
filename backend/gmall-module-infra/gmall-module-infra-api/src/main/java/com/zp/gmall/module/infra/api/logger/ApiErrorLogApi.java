@@ -2,7 +2,7 @@ package com.zp.gmall.module.infra.api.logger;
 
 import com.zp.gmall.framework.common.domain.vo.Result;
 import com.zp.gmall.module.infra.api.logger.dto.ApiErrorLogCreateReqDTO;
-import com.zp.gmall.module.infra.enums.ApiConstants;
+import com.zp.gmall.module.infra.constant.ApiConstants;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;

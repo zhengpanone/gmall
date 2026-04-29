@@ -5,7 +5,7 @@ spring:
     active: local
 
 server:
-  port: 48081
+  port: 48082
   servlet:
     context-path: /system
 

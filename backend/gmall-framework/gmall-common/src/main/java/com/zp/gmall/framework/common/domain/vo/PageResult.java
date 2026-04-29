@@ -135,7 +135,7 @@ public final class PageResult<T> implements Serializable {
         return result;
     }
 
-    public static PageResult<Void> ok() {
+    public static PageResult<?> ok() {
         return instance(ResultEnum.SUCCESS.getCode(), ResultEnum.SUCCESS.getMessage(), 0L, Collections.emptyList());
     }
 

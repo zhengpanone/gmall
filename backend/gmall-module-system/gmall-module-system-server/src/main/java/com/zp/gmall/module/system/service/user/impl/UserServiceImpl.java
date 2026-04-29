@@ -26,7 +26,6 @@ import java.util.List;
 @Service
 public class UserServiceImpl extends ServiceImpl<UserMapper, UserDO> implements IUserService {
 
-
     private final UserConvertMapper convertMapper = Mappers.getMapper(UserConvertMapper.class);
 
     @Override

@@ -21,3 +21,18 @@ spring:
     redis:
       repositories:
         enabled: false # 项目未使用到 Spring Data Redis 的 Repository，所以直接禁用，保证启动速度
+
+
+
+--- #################### 芋道相关配置 ####################
+gmall:
+  info:
+    version: 0.0.1
+  web:
+    admin-ui:
+      url: http://127.0.0.1:8080
+  swagger:
+    author: zhengpanone
+    title: 管理后台
+    description: 提供管理员管理的所有功能
+    version: 1.0.0

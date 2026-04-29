@@ -28,8 +28,8 @@ public interface RoleConvertMapper {
     @Mapping(source = "roleName", target = "name")
     @Mapping(source = "roleCode", target = "code")
     @Mapping(source = "roleType", target = "type")
+    @Mapping(target = "status", ignore = true)
     RoleDO convert(RoleDTO roleDTO);
-
 
 
     /**

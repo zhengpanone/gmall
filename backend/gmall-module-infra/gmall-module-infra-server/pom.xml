@@ -25,10 +25,19 @@
             <artifactId>spring-cloud-starter-bootstrap</artifactId>
         </dependency>
 
+        <!-- Registry 注册中心相关 -->
         <dependency>
-            <groupId>org.redisson</groupId>
-            <artifactId>redisson-spring-boot-starter</artifactId>
+            <groupId>com.alibaba.cloud</groupId>
+            <artifactId>spring-cloud-starter-alibaba-nacos-discovery</artifactId>
         </dependency>
+
+        <!-- Config 配置中心相关 -->
+        <dependency>
+            <groupId>com.alibaba.cloud</groupId>
+            <artifactId>spring-cloud-starter-alibaba-nacos-config</artifactId>
+        </dependency>
+
+        <!-- 依赖服务 -->
         <dependency>
             <groupId>com.zp.gmall</groupId>
             <artifactId>gmall-module-infra-api</artifactId>
@@ -59,6 +68,18 @@
             <groupId>com.zp.gmall</groupId>
             <artifactId>gmall-spring-boot-starter-mybatis</artifactId>
         </dependency>
+
+
+        <dependency>
+            <groupId>com.zp.gmall</groupId>
+            <artifactId>gmall-spring-boot-starter-web</artifactId>
+        </dependency>
+
+        <dependency>
+            <groupId>org.springdoc</groupId>
+            <artifactId>springdoc-openapi-starter-webmvc-ui</artifactId>
+        </dependency>
+
         <dependency>
             <groupId>com.baomidou</groupId>
             <artifactId>mybatis-plus-generator</artifactId> <!-- 代码生成器，使用它解析表结构 -->
@@ -82,18 +103,6 @@
         <dependency>
             <groupId>io.github.openfeign</groupId>
             <artifactId>feign-okhttp</artifactId>
-        </dependency>
-
-        <!-- Registry 注册中心相关 -->
-        <dependency>
-            <groupId>com.alibaba.cloud</groupId>
-            <artifactId>spring-cloud-starter-alibaba-nacos-discovery</artifactId>
-        </dependency>
-
-        <!-- Config 配置中心相关 -->
-        <dependency>
-            <groupId>com.alibaba.cloud</groupId>
-            <artifactId>spring-cloud-starter-alibaba-nacos-config</artifactId>
         </dependency>
 
         <!-- Job 定时任务相关 -->
@@ -123,6 +132,11 @@
              <artifactId>gmall-spring-boot-starter-excel</artifactId>
              <version>1.0-SNAPSHOT</version>
          </dependency> -->
+
+        <dependency>
+            <groupId>org.redisson</groupId>
+            <artifactId>redisson-spring-boot-starter</artifactId>
+        </dependency>
 
         <!-- 实现代码生成 -->
         <dependency>
@@ -160,6 +174,22 @@
              <artifactId>gmall-spring-boot-starter-file</artifactId>
              <version>1.0-SNAPSHOT</version>
          </dependency> -->
+
+        <!-- flyway-->
+        <dependency>
+            <groupId>org.flywaydb</groupId>
+            <artifactId>flyway-core</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.flywaydb</groupId>
+            <artifactId>flyway-mysql</artifactId>
+        </dependency>
+
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-configuration-processor</artifactId>
+            <optional>true</optional>
+        </dependency>
 
     </dependencies>
     <build>

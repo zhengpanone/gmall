@@ -10,7 +10,6 @@
     </parent>
     <artifactId>gmall-spring-boot-starter-web</artifactId>
     <packaging>jar</packaging>
-    <version>${revision}</version>
     <name>${project.artifactId}</name>
     <description>Web 框架，全局异常、API 日志、脱敏、错误码等</description>
 

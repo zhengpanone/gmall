@@ -1,4 +1,4 @@
-package com.zp.gmall.module.infra.enums;
+package com.zp.gmall.module.infra.constant;
 
 import com.zp.gmall.framework.common.enums.RpcConstants;
 
