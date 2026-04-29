@@ -44,6 +44,11 @@ export namespace SystemMenuApi {
     alwaysShow?: boolean;
   }
 
+    export interface MenuListParam {
+    menuName?: string;
+    menuCode?: string;
+  }
+
   /** 更新菜单参数 */
   export interface UpdateMenuParams extends CreateMenuParams {
     id: number | string;
@@ -53,8 +58,8 @@ export namespace SystemMenuApi {
 /**
  * 获取菜单列表
  */
-export async function getMenuList() {
-  return backendClient.get<SystemMenuApi.Menu[]>('/system/admin-api/menu/list');
+export async function getMenuList(params: SystemMenuApi.MenuListParam = {}) {
+  return backendClient.get<SystemMenuApi.Menu[]>('/system/admin-api/menu/list', { params });
 }
 
 /**

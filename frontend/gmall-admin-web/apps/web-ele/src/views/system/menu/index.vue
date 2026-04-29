@@ -1,4 +1,5 @@
 <script lang="ts" setup>
+import type { VbenFormSchema } from '#/adapter/form';
 import type {
   OnActionClickParams,
   VxeTableGridOptions,
@@ -23,7 +24,33 @@ const [FormDrawer, formDrawerApi] = useVbenDrawer({
   destroyOnClose: true,
 });
 
+
+const menuQuerySchema: VbenFormSchema[] = [
+  {
+    component: 'Input',
+    fieldName: 'menuName',
+    label: $t('system.menu.menuName'),
+    componentProps: {
+      clearable: true,
+      placeholder: $t('system.menu.menuName'),
+    },
+  },
+  {
+    component: 'Input',
+    fieldName: 'menuCode',
+    label: $t('system.menu.menuCode'),
+    componentProps: {
+      clearable: true,
+      placeholder: $t('system.menu.menuCode'),
+    },
+  }
+];
+
 const [Grid, gridApi] = useVbenVxeGrid({
+  formOptions: {
+    schema: menuQuerySchema,
+    showCollapseButton: false,
+  },
   gridOptions: {
     columns: useColumns(onActionClick),
     height: 'auto',
@@ -33,8 +60,12 @@ const [Grid, gridApi] = useVbenVxeGrid({
     },
     proxyConfig: {
       ajax: {
-        query: async () => {
-          return await getMenuList();
+        query: async ({ }, formValues = {}) => {
+          const params = {
+            menuName: formValues.menuName,
+            menuCode: formValues.menuCode,
+          };
+          return await getMenuList(params);
         },
       },
     },
@@ -109,26 +140,6 @@ function getParentDisplayName(row: Record<string, any> & SystemMenuApi.Menu) {
 
 async function onDelete(row: SystemMenuApi.Menu/* , confirmType: 'messagebox' | 'popconfirm' = 'popconfirm' */) {
   if (!row.id) return;
-
-  // popconfirm 模式：renderConfirm: true，气泡已经确认过了，直接删除
-  // messagebox 模式：renderConfirm: false，这里弹窗确认
-  // if (confirmType === 'messagebox') {
-  //   try {
-  //     await ElMessageBox.confirm(
-  //       $t('ui.actionMessage.deleteConfirm', [row.name]),
-  //       $t('ui.actionTitle.delete', ['']),
-  //       {
-  //         type: 'warning',
-  //         confirmButtonText: $t('common.confirm'),
-  //         cancelButtonText: $t('common.cancel'),
-  //         confirmButtonClass: 'el-button--danger',
-  //       },
-  //     );
-  //   } catch {
-  //     // 用户点击取消，不做任何操作
-  //     return;
-  //   }
-  // }
 
   const loadingMsg = ElMessage({
     message: $t('ui.actionMessage.deleting', [row.name]),

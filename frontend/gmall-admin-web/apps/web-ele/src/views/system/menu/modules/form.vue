@@ -27,6 +27,12 @@ function normalizeParentId(parentId?: number | string) {
   return parentId === 0 || parentId === '0' ? undefined : parentId;
 }
 
+function hasParentId(data?: SystemMenuApi.Menu) {
+  return (
+    typeof data?.parentId === 'number' || typeof data?.parentId === 'string'
+  );
+}
+
 const schema: VbenFormSchema[] = [
   {
     component: 'RadioGroup',
@@ -151,7 +157,7 @@ const [Drawer, drawerApi] = useVbenDrawer({
           parentId: normalizeParentId(data.parentId),
         };
         formApi.setValues(formValues);
-      } else if (data?.parentId !== undefined) {
+      } else if (hasParentId(data)) {
         formData.value = {} as SystemMenuApi.Menu;
         formApi.setValues({ parentId: normalizeParentId(data.parentId) });
       } else {

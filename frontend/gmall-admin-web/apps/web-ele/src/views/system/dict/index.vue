@@ -11,7 +11,7 @@ import { $t } from '@vben/locales';
 import { ElButton, ElMessage } from 'element-plus';
 
 import { useVbenVxeGrid } from '#/adapter/vxe-table';
-import { deleteDict, getDictList } from '#/api/system/dict';
+import { deleteDict, getDictPageList } from '#/api/system/dict';
 
 import { useColumns } from './data';
 import Form from './modules/form.vue';
@@ -29,8 +29,19 @@ const [Grid, gridApi] = useVbenVxeGrid({
     pagerConfig: { enabled: true },
     proxyConfig: {
       ajax: {
-        query: async () => {
-          return await getDictList();
+        query: async ({ form, page }, formValues = {}) => {
+          const currentPage = page?.currentPage ?? 1;
+          const currentPageSize = page?.pageSize ?? 20;
+          const params: SystemDictApi.DictPageParam = {
+            pageNo: currentPage,
+            pageSize: currentPageSize,
+          };
+          // formOptions 模式下筛选值来自 query 的第2个参数；这里兼容两种来源
+          const queryForm = {
+            ...form,
+            ...formValues,
+          } as Record<string, any>;
+          return await getDictPageList({ ...params, ...queryForm });
         },
       },
     },
@@ -77,7 +88,7 @@ function onDelete(row: SystemDictApi.Dict) {
     message: $t('ui.actionMessage.deleting', [row.name]),
     duration: 0,
   });
-  deleteDict(row.id!).then(() => {
+  deleteDict([row.id!]).then(() => {
     ElMessage.success($t('ui.actionMessage.deleteSuccess', [row.name]));
     onRefresh();
   });

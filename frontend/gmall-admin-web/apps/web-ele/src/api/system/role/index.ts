@@ -1,3 +1,5 @@
+import type { PageParam } from '#/api/core/common';
+
 import { backendClient } from '#/api/request';
 
 export namespace SystemRoleApi {
@@ -43,31 +45,16 @@ export namespace SystemRoleApi {
     id: number | string;
   }
 
-  /** 分页参数 */
-  export interface PageParam {
-    pageNo: number;
-    pageSize: number;
-  }
+
 
   /** 角色分页查询参数 */
-  export interface RolePageParam extends PageParam {
+  export interface RolePageParam extends PageParam{
     roleName?: string;
     roleCode?: string;
     roleType?: number;
   }
 
-  /** 分页结果 */
-  export interface PageResult<T> {
-    list: T[];
-    total: number;
-    pages: number;
-    pageSize: number;
-    pageNum: number;
-    hasNext: boolean;
-    hasPrevious: boolean;
-    code: number;
-    msg: string;
-  }
+
 }
 
 /** 分页获取角色列表 */

@@ -1,3 +1,5 @@
+import type { PageParam } from '#/api/core/common';
+
 import { backendClient } from '#/api/request';
 
 export namespace SystemUserApi {
@@ -9,14 +11,14 @@ export namespace SystemUserApi {
 
   /** 用户信息 */
   export interface User {
-    id?: number;
+    id?: string;
     username: string;
     nickname: string;
     email?: string;
     mobile?: string;
     avatar?: string;
     deptId?: number;
-    status: UserStatusEnum | number;
+    status: number | UserStatusEnum;
     createTime?: string;
     remark?: string;
   }
@@ -36,29 +38,39 @@ export namespace SystemUserApi {
   export interface UpdateUserParams extends CreateUserParams {
     id: number;
   }
+
+    export interface UserPageParam extends PageParam{
+      roleName?: string;
+      roleCode?: string;
+      roleType?: number;
+    }
 }
 
 /** 获取用户列表 */
-export async function getUserList() {
-  return backendClient.get<SystemUserApi.User[]>('/system/user/list');
+export async function getUserPageList(
+params: Record<string, any> & SystemUserApi.UserPageParam,
+
+) {
+  return backendClient.get<SystemUserApi.User[]>('/system/admin-api/user/page',
+    { params, responseReturn: 'body' });
 }
 
 /** 获取用户详情 */
-export async function getUser(id: number) {
-  return backendClient.get<SystemUserApi.User>(`/system/user/${id}`);
+export async function getUser(id: string) {
+  return backendClient.get<SystemUserApi.User>(`/system/admin-api/user/${id}`);
 }
 
 /** 创建用户 */
 export async function createUser(data: SystemUserApi.CreateUserParams) {
-  return backendClient.post('/system/user/create', data);
+  return backendClient.post('/system/admin-api/user/create', data);
 }
 
 /** 更新用户 */
 export async function updateUser(data: SystemUserApi.UpdateUserParams) {
-  return backendClient.put('/system/user/update', data);
+  return backendClient.put('/system/admin-api/user/update', data);
 }
 
 /** 删除用户 */
-export async function deleteUser(id: number) {
-  return backendClient.delete(`/system/user/delete/${id}`);
+export async function deleteUser(id: string) {
+  return backendClient.delete(`/system/admin-api/user/delete/${id}`);
 }

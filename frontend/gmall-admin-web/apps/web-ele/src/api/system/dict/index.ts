@@ -1,3 +1,5 @@
+import type { PageParam } from '#/api/core/common';
+
 import { backendClient } from '#/api/request';
 
 export namespace SystemDictApi {
@@ -9,7 +11,7 @@ export namespace SystemDictApi {
 
   /** 字典信息 */
   export interface Dict {
-    id?: number;
+    id?: string;
     name: string;
     code: string;
     type: number;
@@ -20,7 +22,7 @@ export namespace SystemDictApi {
 
   /** 字典项信息 */
   export interface DictData {
-    id?: number;
+    id?: string;
     dictId: number;
     label: string;
     value: string;
@@ -40,36 +42,48 @@ export namespace SystemDictApi {
 
   /** 更新字典参数 */
   export interface UpdateDictParams extends CreateDictParams {
-    id: number;
+    id: string;
+  }
+
+    /** 字典分页查询参数 */
+  export interface DictPageParam extends PageParam {
+    name?: string;
+    code?: string;
+    type?: number;
   }
 }
 
+
+
 /** 获取字典列表 */
-export async function getDictList() {
-  return backendClient.get<SystemDictApi.Dict[]>('/system/dict/list');
+export async function getDictPageList( params: Record<string, any> & SystemDictApi.DictPageParam,) {
+  return backendClient.get<SystemDictApi.Dict[]>('/system/admin-api/dict/page', { params, responseReturn: 'body', });
 }
 
 /** 获取字典详情 */
-export async function getDict(id: number) {
-  return backendClient.get<SystemDictApi.Dict>(`/system/dict/${id}`);
+export async function getDict(id: string) {
+  return backendClient.get<SystemDictApi.Dict>(`/system/admin-api/dict/${id}`);
 }
 
 /** 创建字典 */
 export async function createDict(data: SystemDictApi.CreateDictParams) {
-  return backendClient.post('/system/dict/create', data);
+  return backendClient.post('/system/admin-api/dict/create', data);
 }
 
 /** 更新字典 */
 export async function updateDict(data: SystemDictApi.UpdateDictParams) {
-  return backendClient.put('/system/dict/update', data);
+  return backendClient.put('/system/admin-api/dict/update', data);
 }
 
 /** 删除字典 */
-export async function deleteDict(id: number) {
-  return backendClient.delete(`/system/dict/delete/${id}`);
+export async function deleteDict(ids: Array<number | string>) {
+  return backendClient.delete('/system/admin-api/dict/delete', {
+    data: { ids },
+    responseReturn: 'body',
+  });
 }
 
 /** 获取字典数据项列表 */
-export async function getDictDataList(dictId: number) {
-  return backendClient.get<SystemDictApi.DictData[]>(`/system/dict/data/${dictId}`);
+export async function getDictDataList(dictId: string) {
+  return backendClient.get<SystemDictApi.DictData[]>(`/system/admin-api/dict/data/${dictId}`);
 }
