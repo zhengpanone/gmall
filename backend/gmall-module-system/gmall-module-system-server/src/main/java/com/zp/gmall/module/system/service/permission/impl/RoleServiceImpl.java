@@ -85,7 +85,8 @@ public class RoleServiceImpl extends ServiceImpl<RoleMapper, RoleDO> implements 
             queryWrapper.eq(RoleDO::getType, rolePageDTO.getRoleType());
         }
         // 按创建时间倒序排序
-        queryWrapper.orderByDesc(RoleDO::getCreateTime);
+        queryWrapper.orderByAsc(RoleDO::getSort);
+        queryWrapper.orderByDesc(RoleDO::getCreateTime, RoleDO::getUpdateTime);
 
         // 执行分页查询
         IPage<RoleDO> rolePage = baseMapper.selectPage(page, queryWrapper);
@@ -108,7 +109,7 @@ public class RoleServiceImpl extends ServiceImpl<RoleMapper, RoleDO> implements 
     }
 
     @Override
-    public String updateRole(RoleDTO roleDTO) {
+    public void updateRole(RoleDTO roleDTO) {
         String tenantId = TenantContextHolder.getTenantId();
         if (StringUtils.isBlank(tenantId)) {
             tenantId = "0";
@@ -124,7 +125,6 @@ public class RoleServiceImpl extends ServiceImpl<RoleMapper, RoleDO> implements 
         RoleDO roleDO = roleConvertMapper.convert(roleDTO);
         roleDO.setId(roleDTO.getId());
         baseMapper.updateById(roleDO);
-        return roleDO.getId();
     }
 
     @Override

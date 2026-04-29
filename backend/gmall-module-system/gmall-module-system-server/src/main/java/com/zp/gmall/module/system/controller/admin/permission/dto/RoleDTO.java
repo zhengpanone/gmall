@@ -42,6 +42,10 @@ public class RoleDTO {
     @Schema(description = "角色描述", title = "角色描述", requiredMode = Schema.RequiredMode.NOT_REQUIRED, type = "string", example = "管理员")
     @Size(max = 255, message = "角色描述长度不能超过255个字符", groups = {Create.class, Update.class})
     private String remark;
+    
+    @JsonView({ViewGroup.CreateView.class, ViewGroup.UpdateView.class})
+    @Schema(description = "角色排序", title = "角色排序", requiredMode = Schema.RequiredMode.NOT_REQUIRED, type = "integer", example = "1")
+    private Integer sort;
 
     @JsonView({ViewGroup.CreateView.class, ViewGroup.UpdateView.class})
     @Schema(description = "角色类型", title = "角色类型", requiredMode = Schema.RequiredMode.REQUIRED, type = "string", example = "1")

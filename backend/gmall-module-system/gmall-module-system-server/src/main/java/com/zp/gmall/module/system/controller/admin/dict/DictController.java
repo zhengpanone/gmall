@@ -25,21 +25,21 @@ public class DictController {
     // 字典相关接口
     @PostMapping("/create")
     @Operation(summary = "创建字典")
-    public Result<DictVO> createDict(@Valid @RequestBody DictDTO dictDTO) {
-        DictVO dictVO = dictService.createDict(dictDTO);
-        return Result.ok(dictVO);
+    public Result<?> createDict(@Valid @RequestBody DictDTO dictDTO) {
+       dictService.createDict(dictDTO);
+        return Result.ok();
     }
 
     @PostMapping("/update")
     @Operation(summary = "更新字典")
-    public Result<DictVO> updateDict(@Valid @RequestBody DictDTO dictDTO) {
-        DictVO dictVO =  dictService.updateDict(dictDTO);
-        return Result.ok(dictVO);
+    public Result<?> updateDict(@Valid @RequestBody DictDTO dictDTO) {
+        dictService.updateDict(dictDTO);
+        return Result.ok();
     }
 
     @PostMapping("/delete")
     @Operation(summary = "删除字典")
-    public Result<Void> deleteDict(@Valid @RequestBody Ids ids) {
+    public Result<?> deleteDict(@Valid @RequestBody Ids ids) {
         dictService.deleteDict(ids);
         return Result.ok();
     }

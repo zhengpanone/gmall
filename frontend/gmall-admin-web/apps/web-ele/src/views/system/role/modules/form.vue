@@ -23,6 +23,20 @@ const roleTypeOptions = [
   { label: $t('system.role.type2'), value: SystemRoleApi.RoleTypeEnum.CUSTOM },
 ];
 
+function getBizErrorMessage(response: any) {
+  if (!response || typeof response !== 'object') return '';
+  return response.msg || response.message || response.error || '';
+}
+
+function isBizSuccess(response: any) {
+  // 兼容后端只返回 {} 的场景：无 code 字段时按成功处理
+  if (!response || typeof response !== 'object' || !('code' in response)) {
+    return true;
+  }
+  const code = Number((response as any).code);
+  return code === 0 || code === 200;
+}
+
 const schema: VbenFormSchema[] = [
   {
     component: 'Input',
@@ -120,10 +134,25 @@ async function onSubmit() {
     const values = await formApi.getValues();
     try {
       if (formData.value?.id) {
-        await updateRole(values as SystemRoleApi.UpdateRoleParams);
+        const resp = await updateRole({
+          ...(values as SystemRoleApi.UpdateRoleParams),
+          id: formData.value.id,
+        });
+        if (!isBizSuccess(resp)) {
+          ElMessage.error(
+            getBizErrorMessage(resp) || $t('ui.actionMessage.operationFailed'),
+          );
+          return;
+        }
         ElMessage.success($t('page.common.editSuccess'));
       } else {
-        await createRole(values as SystemRoleApi.CreateRoleParams);
+        const resp = await createRole(values as SystemRoleApi.CreateRoleParams);
+        if (!isBizSuccess(resp)) {
+          ElMessage.error(
+            getBizErrorMessage(resp) || $t('ui.actionMessage.operationFailed'),
+          );
+          return;
+        }
         ElMessage.success($t('page.common.createSuccess'));
       }
       drawerApi.close();
