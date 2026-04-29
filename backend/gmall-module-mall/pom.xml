@@ -23,8 +23,8 @@
         <module>gmall-module-product-server</module>
         <module>gmall-module-trade-api</module>
         <module>gmall-module-trade-server</module>
-        <!-- <module>gmall-module-statistics-api</module> -->
-        <!-- <module>gmall-module-statistics-biz</module> -->
+        <module>gmall-module-statistics-api</module>
+        <module>gmall-module-statistics-server</module>
     </modules>
 
 </project>
