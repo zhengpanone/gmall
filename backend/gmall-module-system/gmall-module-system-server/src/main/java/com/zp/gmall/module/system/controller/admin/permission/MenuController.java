@@ -1,6 +1,5 @@
 package com.zp.gmall.module.system.controller.admin.permission;
 
-import com.zp.gmall.framework.common.domain.dto.Ids;
 import com.zp.gmall.framework.common.domain.vo.Result;
 import com.zp.gmall.framework.common.domain.vo.TreeSelectVO;
 import com.zp.gmall.module.system.controller.admin.permission.dto.MenuDTO;
@@ -40,7 +39,7 @@ public class MenuController {
 
     @Operation(summary = "修改菜单")
     @PutMapping("/update")
-    public Result<Void> edit(@Valid @RequestBody MenuDTO dto) {
+    public Result<?> edit(@Valid @RequestBody MenuDTO dto) {
         if (!menuService.checkMenuKeyUnique(dto)) {
             return Result.failed("修改菜单'" + dto.getName() + "'失败，菜单标识已存在");
         }

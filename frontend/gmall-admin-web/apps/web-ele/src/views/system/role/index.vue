@@ -8,7 +8,7 @@ import type {
 import { Page, useVbenDrawer } from '@vben/common-ui';
 import { $t } from '@vben/locales';
 
-import { ElButton, ElMessage } from 'element-plus';
+import { ElButton, ElMessage, ElMessageBox } from 'element-plus';
 
 import { useVbenVxeGrid } from '#/adapter/vxe-table';
 import { deleteRole, getRolePageList, SystemRoleApi } from '#/api/system/role';
@@ -169,9 +169,59 @@ function onDelete(row: SystemRoleApi.Role) {
     message: $t('ui.actionMessage.deleting', [row.roleName]),
     duration: 0,
   });
-  deleteRole(row.id)
+  deleteRole([row.id])
     .then(() => {
       ElMessage.success($t('ui.actionMessage.deleteSuccess', [row.roleName]));
+      onRefresh();
+    })
+    .catch(() => {
+      // 接口错误信息已被全局拦截器统一处理，此处无需额外操作
+    })
+    .finally(() => {
+      loadingMsg.close();
+    });
+}
+
+function getSelectedRoleRows() {
+  const selectedRows = (gridApi.grid as any)?.getCheckboxRecords?.();
+  return Array.isArray(selectedRows) ? selectedRows : [];
+}
+
+async function onBatchDelete() {
+  const selectedRows = getSelectedRoleRows();
+  const ids = selectedRows
+    .map((item) => item?.id)
+    .filter((id): id is number | string => id !== undefined && id !== null);
+
+  if (ids.length === 0) {
+    ElMessage.warning($t('system.role.selectToDelete'));
+    return;
+  }
+
+  try {
+    await ElMessageBox.confirm(
+      $t('ui.actionMessage.deleteConfirm', [`${ids.length} ${$t('system.role.name')}`]),
+      $t('ui.actionTitle.delete', ['']),
+      {
+        type: 'warning',
+        confirmButtonText: $t('common.confirm'),
+        cancelButtonText: $t('common.cancel'),
+        confirmButtonClass: 'el-button--danger',
+      },
+    );
+  } catch {
+    return;
+  }
+
+  const loadingMsg = ElMessage({
+    message: $t('ui.actionMessage.deleting', [`${ids.length} ${$t('system.role.name')}`]),
+    duration: 0,
+  });
+
+  deleteRole(ids)
+    .then(() => {
+      ElMessage.success($t('system.role.batchDeleteSuccess', [ids.length]));
+      (gridApi.grid as any)?.clearCheckboxRow?.();
       onRefresh();
     })
     .catch(() => {
@@ -190,6 +240,9 @@ function onDelete(row: SystemRoleApi.Role) {
       <template #toolbar-tools>
         <ElButton type="primary" @click="onCreate">
           {{ $t('ui.actionTitle.create', [$t('system.role.roleManage')]) }}
+        </ElButton>
+        <ElButton type="danger" @click="onBatchDelete">
+          {{ $t('system.role.batchDelete') }}
         </ElButton>
       </template>
     </Grid>

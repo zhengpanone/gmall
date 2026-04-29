@@ -12,6 +12,7 @@ export function useColumns(
   onActionClick: OnActionClickFn<SystemRoleApi.Role>,
 ): VxeTableGridColumns<SystemRoleApi.Role> {
   return [
+    { type: 'checkbox', width: 56, fixed: 'left' },
     { type: 'seq', width: 60, title: '#' },
     {
       field: 'roleCode',
@@ -41,8 +42,8 @@ export function useColumns(
       cellRender: {
         name: 'CellTag',
         options: [
-          { label: $t('common.enabled'), value: 1 },
-          { label: $t('common.disabled'), value: 0 },
+          { label: $t('common.enabled'), value: 0 },
+          { label: $t('common.disabled'), value: 1 },
         ],
       },
       field: 'status',

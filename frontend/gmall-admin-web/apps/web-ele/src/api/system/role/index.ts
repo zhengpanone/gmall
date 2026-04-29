@@ -91,15 +91,22 @@ export async function getRole(id: number | string) {
 
 /** 创建角色 */
 export async function createRole(data: SystemRoleApi.CreateRoleParams) {
-  return backendClient.post('/system/admin-api/role/create', data);
+  return backendClient.post('/system/admin-api/role/create', data, {
+    responseReturn: 'body',
+  });
 }
 
 /** 更新角色 */
 export async function updateRole(data: SystemRoleApi.UpdateRoleParams) {
-  return backendClient.put('/system/admin-api/role/update', data);
+  return backendClient.put('/system/admin-api/role/update', data, {
+    responseReturn: 'body',
+  });
 }
 
-/** 删除角色 */
-export async function deleteRole(id: number | string) {
-  return backendClient.delete(`/system/admin-api/role/delete/${id}`);
+/** 删除角色（支持批量） */
+export async function deleteRole(ids: Array<number | string>) {
+  return backendClient.delete('/system/admin-api/role/delete', {
+    data: {ids},
+    responseReturn: 'body',
+  });
 }

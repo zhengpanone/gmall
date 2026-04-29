@@ -39,22 +39,22 @@ public class RoleController {
     @PostMapping("/create")
     @Operation(summary = "新增角色")
     @JsonView(ViewGroup.CreateView.class)
-    public Result<String> createRole(@RequestBody @Validated(Create.class) @Valid RoleDTO roleDTO) {
-        String roleId = roleService.createRole(roleDTO);
-        return Result.ok(roleId);
+    public Result<?> createRole(@RequestBody @Validated(Create.class) @Valid RoleDTO roleDTO) {
+        roleService.createRole(roleDTO);
+        return Result.ok();
     }
 
     @PutMapping("/update")
     @Operation(summary = "更新角色")
     @JsonView(ViewGroup.UpdateView.class)
-    public Result<String> updateRole(@RequestBody @Validated(Update.class) @Valid RoleDTO roleDTO) {
-        String roleId = roleService.updateRole(roleDTO);
-        return Result.ok(roleId);
+    public Result<?> updateRole(@RequestBody @Validated(Update.class) @Valid RoleDTO roleDTO) {
+        roleService.updateRole(roleDTO);
+        return Result.ok();
     }
 
     @DeleteMapping("/delete")
     @Operation(summary = "删除角色")
-    public Result<Void> deleteRole(@RequestBody @Valid Ids ids) {
+    public Result<?> deleteRole(@RequestBody @Valid Ids ids) {
         roleService.deleteRole(ids);
         return Result.ok();
     }
