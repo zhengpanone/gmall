@@ -7,4 +7,9 @@ package com.zp.gmall.module.promotion.controller.admin.banner.dto;
  * Description:
  */
 public class BannerDTO {
+
+    /**
+     * 标题
+     */
+    private String title;
 }
