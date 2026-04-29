@@ -21,8 +21,8 @@
         <module>gmall-module-promotion-server</module>
         <module>gmall-module-product-api</module>
         <module>gmall-module-product-server</module>
-        <!-- <module>gmall-module-trade-api</module> -->
-        <!-- <module>gmall-module-trade-biz</module> -->
+        <module>gmall-module-trade-api</module>
+        <module>gmall-module-trade-server</module>
         <!-- <module>gmall-module-statistics-api</module> -->
         <!-- <module>gmall-module-statistics-biz</module> -->
     </modules>

@@ -572,6 +572,20 @@
                 <version>${revision}</version>
             </dependency>
 
+            <dependency>
+                <groupId>com.zp.gmall</groupId>
+                <artifactId>gmall-module-trade-api</artifactId>
+                <version>${revision}</version>
+            </dependency>
+
+            <dependency>
+                <groupId>com.zp.gmall</groupId>
+                <artifactId>gmall-module-trade-server</artifactId>
+                <version>${revision}</version>
+            </dependency>
+
+
+
 
 
             <dependency>
