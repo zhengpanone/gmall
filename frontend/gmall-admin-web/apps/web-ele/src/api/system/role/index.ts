@@ -15,12 +15,12 @@ export namespace SystemRoleApi {
 
   /** 角色信息 */
   export interface Role {
-    id?: string;
+    id?: number | string;
     roleName: string;
     roleCode: string;
     roleType: number;
     sort: number;
-    status: RoleStatusEnum ;
+    status: RoleStatusEnum;
     statusName?: string;
     roleTypeName?: string;
     createTime?: number[] | string;
@@ -40,7 +40,7 @@ export namespace SystemRoleApi {
 
   /** 更新角色参数 */
   export interface UpdateRoleParams extends CreateRoleParams {
-    id: string;
+    id: number | string;
   }
 
   /** 分页参数 */
@@ -71,15 +71,21 @@ export namespace SystemRoleApi {
 }
 
 /** 分页获取角色列表 */
-export async function getRolePageList(params: SystemRoleApi.RolePageParam) {
-  return backendClient.get<SystemRoleApi.PageResult<SystemRoleApi.Role>>(
+export async function getRolePageList(
+  params: Record<string, any> & SystemRoleApi.RolePageParam,
+) {
+  return backendClient.get<Record<string, any>>(
     '/system/admin-api/role/page',
-    { params },
+    {
+      params,
+      // 角色分页接口返回结构不一定是 { code, data }，拿完整 body 交给页面兼容解析
+      responseReturn: 'body',
+    },
   );
 }
 
 /** 获取角色详情 */
-export async function getRole(id: string) {
+export async function getRole(id: number | string) {
   return backendClient.get<SystemRoleApi.Role>(`/system/admin-api/role/${id}`);
 }
 
@@ -94,6 +100,6 @@ export async function updateRole(data: SystemRoleApi.UpdateRoleParams) {
 }
 
 /** 删除角色 */
-export async function deleteRole(id: string) {
+export async function deleteRole(id: number | string) {
   return backendClient.delete(`/system/admin-api/role/delete/${id}`);
 }

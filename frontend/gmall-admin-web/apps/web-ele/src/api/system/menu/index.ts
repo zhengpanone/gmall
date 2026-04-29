@@ -10,12 +10,12 @@ export namespace SystemMenuApi {
 
   /** 菜单信息 */
   export interface Menu {
-    id?: string;
+    id?: number | string;
     name: string;
     permission: string;
     type: MenuTypeEnum | number;
     sort: number;
-    parentId: string;
+    parentId: number | string;
     path: string;
     icon: string;
     component: string;
@@ -33,7 +33,7 @@ export namespace SystemMenuApi {
     permission?: string;
     type: number;
     sort?: number;
-    parentId?: number;
+    parentId?: number | string;
     path?: string;
     icon?: string;
     component?: string;
@@ -46,7 +46,7 @@ export namespace SystemMenuApi {
 
   /** 更新菜单参数 */
   export interface UpdateMenuParams extends CreateMenuParams {
-    id: string;
+    id: number | string;
   }
 }
 
@@ -60,7 +60,7 @@ export async function getMenuList() {
 /**
  * 获取菜单详情
  */
-export async function getMenu(id: string) {
+export async function getMenu(id: number | string) {
   return backendClient.get<SystemMenuApi.Menu>(`/system/admin-api/menu/${id}`);
 }
 
@@ -74,14 +74,17 @@ export async function createMenu(data: SystemMenuApi.CreateMenuParams) {
 /**
  * 更新菜单
  */
-export async function updateMenu(id: string, data: SystemMenuApi.UpdateMenuParams) {
+export async function updateMenu(
+  id: number | string,
+  data: SystemMenuApi.UpdateMenuParams,
+) {
   return backendClient.put(`/system/admin-api/menu/update`, { ...data, id });
 }
 
 /**
  * 删除菜单
  */
-export async function deleteMenu(id: string) {
+export async function deleteMenu(id: number | string) {
   return backendClient.delete(`/system/admin-api/menu/delete/${id}`);
 }
 
@@ -89,5 +92,12 @@ export async function deleteMenu(id: string) {
  * 获取菜单选项列表（用于下拉选择）
  */
 export async function getMenuOptions() {
-  return backendClient.get<Array<{ children?: any[]; id: number; name: string; parentId: number; }>>('/system/admin-api/menu/options');
+  return backendClient.get<
+    Array<{
+      children?: any[];
+      id: number | string;
+      name: string;
+      parentId: number | string;
+    }>
+  >('/system/admin-api/menu/options');
 }

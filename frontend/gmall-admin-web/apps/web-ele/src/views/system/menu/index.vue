@@ -95,7 +95,21 @@ function onAppend(row: SystemMenuApi.Menu) {
     .open();
 }
 
+function getMenuDisplayName(name: string) {
+  return $t(name) || name;
+}
+
+function getParentDisplayName(row: SystemMenuApi.Menu & Record<string, any>) {
+  if (row.parentName) return row.parentName;
+  if (row.parentId === 0 || row.parentId === '0' || row.parentId === undefined) {
+    return '-';
+  }
+  return row.parentId;
+}
+
 async function onDelete(row: SystemMenuApi.Menu/* , confirmType: 'messagebox' | 'popconfirm' = 'popconfirm' */) {
+  if (!row.id) return;
+
   // popconfirm 模式：renderConfirm: true，气泡已经确认过了，直接删除
   // messagebox 模式：renderConfirm: false，这里弹窗确认
   // if (confirmType === 'messagebox') {
@@ -121,7 +135,7 @@ async function onDelete(row: SystemMenuApi.Menu/* , confirmType: 'messagebox' | 
     duration: 0,
   });
 
-  deleteMenu(row.id!)
+  deleteMenu(row.id)
     .then(() => {
       ElMessage.success($t('ui.actionMessage.deleteSuccess', [row.name]));
       onRefresh();
@@ -163,8 +177,11 @@ async function onDelete(row: SystemMenuApi.Menu/* , confirmType: 'messagebox' | 
               class="size-full"
             />
           </div>
-          <span class="flex-auto">{{ $t(row.name) }}</span>
+          <span class="flex-auto">{{ getMenuDisplayName(row.name) }}</span>
         </div>
+      </template>
+      <template #parentId="{ row }">
+        <span>{{ getParentDisplayName(row as any) }}</span>
       </template>
     </Grid>
   </Page>

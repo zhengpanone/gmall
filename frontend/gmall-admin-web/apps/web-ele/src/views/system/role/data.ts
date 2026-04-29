@@ -3,6 +3,11 @@ import type { SystemRoleApi } from '#/api/system/role';
 
 import { $t } from '#/locales';
 
+const roleTypeOptions = [
+  { label: $t('system.role.type1'), value: 1 },
+  { label: $t('system.role.type2'), value: 2 },
+];
+
 export function useColumns(
   onActionClick: OnActionClickFn<SystemRoleApi.Role>,
 ): VxeTableGridColumns<SystemRoleApi.Role> {
@@ -21,10 +26,7 @@ export function useColumns(
     {
       cellRender: {
         name: 'CellTag',
-        options: [
-          { label: '系统内置', value: 1 },
-          { label: '自定义', value: 2 },
-        ],
+        options: roleTypeOptions,
       },
       field: 'roleType',
       title: $t('system.role.type'),
@@ -39,8 +41,8 @@ export function useColumns(
       cellRender: {
         name: 'CellTag',
         options: [
-          { label: $t('common.enabled'), value: 0 },
-          { label: $t('common.disabled'), value: 1 },
+          { label: $t('common.enabled'), value: 1 },
+          { label: $t('common.disabled'), value: 0 },
         ],
       },
       field: 'status',

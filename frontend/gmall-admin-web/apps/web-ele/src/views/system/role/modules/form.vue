@@ -18,12 +18,20 @@ const emit = defineEmits<{
 const formData = ref<SystemRoleApi.Role>();
 const isEdit = computed(() => !!formData.value?.id);
 
+const roleTypeOptions = [
+  { label: $t('system.role.type1'), value: SystemRoleApi.RoleTypeEnum.SYSTEM },
+  { label: $t('system.role.type2'), value: SystemRoleApi.RoleTypeEnum.CUSTOM },
+];
+
 const schema: VbenFormSchema[] = [
   {
     component: 'Input',
     fieldName: 'roleCode',
     label: $t('system.role.code'),
     rules: 'required',
+    componentProps: () => ({
+      disabled: isEdit.value,
+    }),
   },
   {
     component: 'Input',
@@ -37,10 +45,7 @@ const schema: VbenFormSchema[] = [
     label: $t('system.role.type'),
     rules: 'required',
     componentProps: {
-      options: [
-        { label: '系统内置', value: 1 },
-        { label: '自定义', value: 2 },
-      ],
+      options: roleTypeOptions,
     },
   },
   {
@@ -57,11 +62,17 @@ const schema: VbenFormSchema[] = [
     component: 'RadioGroup',
     fieldName: 'status',
     label: $t('system.role.status'),
-    defaultValue: 0,
+    defaultValue: SystemRoleApi.RoleStatusEnum.ENABLED,
     componentProps: {
       options: [
-        { label: $t('common.enabled'), value: 0 },
-        { label: $t('common.disabled'), value: 1 },
+        {
+          label: $t('common.enabled'),
+          value: SystemRoleApi.RoleStatusEnum.ENABLED,
+        },
+        {
+          label: $t('common.disabled'),
+          value: SystemRoleApi.RoleStatusEnum.DISABLED,
+        },
       ],
     },
   },

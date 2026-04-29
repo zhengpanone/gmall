@@ -41,10 +41,10 @@ public final class PageResult<T> implements Serializable {
     private Long pages;
 
     @Schema(description = "每页大小", example = "10")
-    private Integer pageSize;
+    private Long pageSize;
 
     @Schema(description = "当前页码", example = "1")
-    private Integer pageNum;
+    private Long pageNum;
 
     @Schema(description = "是否有下一页")
     private Boolean hasNext;
@@ -63,7 +63,7 @@ public final class PageResult<T> implements Serializable {
      * @param pageNum  当前页码
      * @param pageSize 每页大小
      */
-    public PageResult(List<T> list, Long total, Integer pageNum, Integer pageSize) {
+    public PageResult(List<T> list, Long total, Long pageNum, Long pageSize) {
         this.list = list;
         this.total = total;
         this.pageNum = pageNum;
@@ -92,7 +92,7 @@ public final class PageResult<T> implements Serializable {
     /**
      * 计算总页数
      */
-    private static Long calculatePages(Long total, Integer pageSize) {
+    private static Long calculatePages(Long total, Long pageSize) {
         if (total == null || pageSize == null || pageSize <= 0) {
             return 0L;
         }
@@ -102,7 +102,7 @@ public final class PageResult<T> implements Serializable {
     /**
      * 是否有下一页
      */
-    private static Boolean hasNext(Integer pageNum, Long pages) {
+    private static Boolean hasNext(Long pageNum, Long pages) {
         if (pageNum == null || pages == null) {
             return false;
         }
@@ -112,7 +112,7 @@ public final class PageResult<T> implements Serializable {
     /**
      * 是否有上一页
      */
-    private static Boolean hasPrevious(Integer pageNum) {
+    private static Boolean hasPrevious(Long pageNum) {
         if (pageNum == null) {
             return false;
         }
@@ -127,7 +127,7 @@ public final class PageResult<T> implements Serializable {
         return new PageResult<>(total);
     }
 
-    public static <T> PageResult<T> empty(Integer pageNum, Integer pageSize) {
+    public static <T> PageResult<T> empty(Long pageNum, Long pageSize) {
         PageResult<T> result = new PageResult<>(Collections.emptyList(), 0L, pageNum, pageSize);
         result.setCode(ResultEnum.SUCCESS.getCode());
         result.setMsg(ResultEnum.SUCCESS.getMessage());
@@ -142,7 +142,7 @@ public final class PageResult<T> implements Serializable {
         return instance(ResultEnum.SUCCESS.getCode(), ResultEnum.SUCCESS.getMessage(), total, list);
     }
 
-    public static <T> PageResult<T> ok(Long total, Integer pageNum, Integer pageSize, List<T> list) {
+    public static <T> PageResult<T> ok(Long total, Long pageNum, Long pageSize, List<T> list) {
         return instance(ResultEnum.SUCCESS.getCode(), ResultEnum.SUCCESS.getMessage(), total, pageNum, pageSize, list);
     }
 
@@ -155,7 +155,7 @@ public final class PageResult<T> implements Serializable {
         return result;
     }
 
-    public static <T> PageResult<T> instance(Integer code, String message, Long total, Integer pageNum, Integer pageSize, List<T> list) {
+    public static <T> PageResult<T> instance(Integer code, String message, Long total, Long pageNum, Long pageSize, List<T> list) {
         PageResult<T> result = new PageResult<>(list, total, pageNum, pageSize);
         result.setCode(code);
         result.setMsg(message);

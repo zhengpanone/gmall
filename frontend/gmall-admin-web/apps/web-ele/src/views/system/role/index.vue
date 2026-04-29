@@ -3,7 +3,6 @@ import type {
   OnActionClickParams,
   VxeTableGridOptions,
 } from '#/adapter/vxe-table';
-import type { SystemRoleApi } from '#/api/system/role';
 
 import { Page, useVbenDrawer } from '@vben/common-ui';
 import { $t } from '@vben/locales';
@@ -11,7 +10,7 @@ import { $t } from '@vben/locales';
 import { ElButton, ElMessage } from 'element-plus';
 
 import { useVbenVxeGrid } from '#/adapter/vxe-table';
-import { deleteRole, getRolePageList } from '#/api/system/role';
+import { deleteRole, getRolePageList, SystemRoleApi } from '#/api/system/role';
 
 import { useColumns } from './data';
 import Form from './modules/form.vue';
@@ -20,6 +19,43 @@ const [FormDrawer, formDrawerApi] = useVbenDrawer({
   connectedComponent: Form,
   destroyOnClose: true,
 });
+
+const roleTypeOptions = [
+  { label: $t('system.role.type1'), value: SystemRoleApi.RoleTypeEnum.SYSTEM },
+  { label: $t('system.role.type2'), value: SystemRoleApi.RoleTypeEnum.CUSTOM },
+];
+
+function normalizeRolePageResult(
+  response: any,
+  currentPage: number,
+  currentPageSize: number,
+) {
+  const data = response ?? {};
+  console.log('接口返回的原始数据：', data);
+  const list = Array.isArray(data)
+    ? data
+    : (data.list ??
+      data.records ??
+      data.rows ??
+      data.items ??
+      data?.data?.list ??
+      data?.data?.records ??
+      []);
+  const total = Number(
+    data.total ?? data.totalCount ?? data?.data?.total ?? list.length ?? 0,
+  );
+  const pageSize = Number(data.pageSize ?? data.size ?? currentPageSize);
+  const pageNum = Number(data.pageNum ?? data.pageNo ?? data.current ?? currentPage);
+
+  return {
+    ...data,
+    list,
+    pageNum,
+    pageSize,
+    pages: Number(data.pages ?? Math.ceil(total / (pageSize || 1))),
+    total,
+  };
+}
 
 const [Grid, gridApi] = useVbenVxeGrid({
   gridOptions: {
@@ -60,10 +96,7 @@ const [Grid, gridApi] = useVbenVxeGrid({
             props: {
               placeholder: $t('system.role.type'),
               clearable: true,
-              options: [
-                { label: '系统内置', value: 1 },
-                { label: '自定义', value: 2 },
-              ],
+              options: roleTypeOptions,
             },
           },
         },
@@ -85,14 +118,31 @@ const [Grid, gridApi] = useVbenVxeGrid({
     proxyConfig: {
       ajax: {
         query: async ({ form, page }) => {
+          const currentPage = page?.currentPage ?? 1;
+          const currentPageSize = page?.pageSize ?? 20;
           const params: SystemRoleApi.RolePageParam = {
-            pageNo: page.currentPage,
-            pageSize: page.pageSize,
+            pageNo: currentPage,
+            pageSize: currentPageSize,
           };
-          if (form?.roleName) params.roleName = form.roleName;
-          if (form?.roleCode) params.roleCode = form.roleCode;
+          // 兼容不同后端分页参数命名，避免接口有数据但表格拿不到
+          const compatibleParams = {
+            ...params,
+            current: currentPage,
+            page: currentPage,
+            pageNum: currentPage,
+            size: currentPageSize,
+          };
+          if (form?.roleName?.trim()) params.roleName = form.roleName.trim();
+          if (form?.roleCode?.trim()) params.roleCode = form.roleCode.trim();
           if (form?.roleType !== undefined) params.roleType = form.roleType;
-          return await getRolePageList(params);
+          const result = await getRolePageList({
+            ...compatibleParams,
+            roleCode: params.roleCode,
+            roleName: params.roleName,
+            roleType: params.roleType,
+          });
+
+          return normalizeRolePageResult(result, currentPage, currentPageSize);
         },
       },
     },
@@ -135,11 +185,13 @@ function onCreate() {
 }
 
 function onDelete(row: SystemRoleApi.Role) {
+  if (!row.id) return;
+
   const loadingMsg = ElMessage({
     message: $t('ui.actionMessage.deleting', [row.roleName]),
     duration: 0,
   });
-  deleteRole(row.id!)
+  deleteRole(row.id)
     .then(() => {
       ElMessage.success($t('ui.actionMessage.deleteSuccess', [row.roleName]));
       onRefresh();

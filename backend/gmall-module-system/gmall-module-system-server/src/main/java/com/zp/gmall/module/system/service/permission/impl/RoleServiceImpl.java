@@ -95,7 +95,7 @@ public class RoleServiceImpl extends ServiceImpl<RoleMapper, RoleDO> implements 
                 .map(roleConvertMapper::convert)
                 .collect(Collectors.toList());
 
-        return PageResult.ok(rolePage.getTotal(), voList);
+        return PageResult.ok(rolePage.getTotal(), rolePage.getCurrent(), rolePage.getSize(), voList);
     }
 
     @Override

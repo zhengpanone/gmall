@@ -46,14 +46,14 @@ public interface BaseMapperX<T> extends BaseMapper<T> {
         // 特殊：不分页，直接查询全部
         if (PageParam.PAGE_SIZE_NONE.equals(pageParam.getPageSize())) {
             List<T> list = selectList(queryWrapper);
-            return new PageResult<>(list, (long) list.size(), 1, list.size());
+            return new PageResult<>(list, (long) list.size(), 1L, (long) list.size());
         }
 
         // MyBatis Plus 查询
         IPage<T> mpPage = MyBatisUtils.buildPage(pageParam, sortingFields);
         selectPage(mpPage, queryWrapper);
         // 转换返回
-        return new PageResult<>(mpPage.getRecords(), mpPage.getTotal(), (int) mpPage.getCurrent(), (int) mpPage.getSize());
+        return new PageResult<>(mpPage.getRecords(), mpPage.getTotal(), mpPage.getCurrent(), mpPage.getSize());
     }
 
 

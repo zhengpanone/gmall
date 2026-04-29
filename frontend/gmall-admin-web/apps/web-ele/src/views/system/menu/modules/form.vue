@@ -23,6 +23,10 @@ const emit = defineEmits<{
 const formData = ref<SystemMenuApi.Menu>();
 const isEdit = computed(() => !!formData.value?.id);
 
+function normalizeParentId(parentId?: number | string) {
+  return parentId === 0 || parentId === '0' ? undefined : parentId;
+}
+
 const schema: VbenFormSchema[] = [
   {
     component: 'RadioGroup',
@@ -47,7 +51,7 @@ const schema: VbenFormSchema[] = [
       api: getMenuOptions,
       class: 'w-full',
       childrenField: 'children',
-      labelField: 'label',
+      labelField: 'name',
       valueField: 'id',
       placeholder: $t('system.menu.parentPlaceholder'),
       showSearch: true,
@@ -138,17 +142,20 @@ const [Drawer, drawerApi] = useVbenDrawer({
   onOpenChange(isOpen) {
     if (isOpen) {
       const data = drawerApi.getData<SystemMenuApi.Menu>();
-      if (data) {
+      formApi.resetForm();
+
+      if (data?.id) {
         formData.value = data;
-        // 如果 parentId 为 0，设置为 undefined 以显示 placeholder
         const formValues = {
           ...data,
-          parentId:  data.parentId === '0' ? undefined : data.parentId,
+          parentId: normalizeParentId(data.parentId),
         };
         formApi.setValues(formValues);
+      } else if (data?.parentId !== undefined) {
+        formData.value = {} as SystemMenuApi.Menu;
+        formApi.setValues({ parentId: normalizeParentId(data.parentId) });
       } else {
         formData.value = {} as SystemMenuApi.Menu;
-        formApi.resetForm();
       }
     }
   },
