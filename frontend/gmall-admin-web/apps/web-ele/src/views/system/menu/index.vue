@@ -48,7 +48,7 @@ const [Grid, gridApi] = useVbenVxeGrid({
       zoom: true,
     },
     treeConfig: {
-      children: 'children',
+      childrenField: 'children',
       expandAll: true,
     },
   } as VxeTableGridOptions,
@@ -99,7 +99,7 @@ function getMenuDisplayName(name: string) {
   return $t(name) || name;
 }
 
-function getParentDisplayName(row: SystemMenuApi.Menu & Record<string, any>) {
+function getParentDisplayName(row: Record<string, any> & SystemMenuApi.Menu) {
   if (row.parentName) return row.parentName;
   if (row.parentId === 0 || row.parentId === '0' || row.parentId === undefined) {
     return '-';

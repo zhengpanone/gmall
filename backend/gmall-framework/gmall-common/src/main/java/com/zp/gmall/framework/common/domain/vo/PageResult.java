@@ -40,11 +40,12 @@ public final class PageResult<T> implements Serializable {
     @Schema(description = "总页数")
     private Long pages;
 
+    @Schema(description = "当前页码", example = "1")
+    private Long pageNum;
+
     @Schema(description = "每页大小", example = "10")
     private Long pageSize;
 
-    @Schema(description = "当前页码", example = "1")
-    private Long pageNum;
 
     @Schema(description = "是否有下一页")
     private Boolean hasNext;

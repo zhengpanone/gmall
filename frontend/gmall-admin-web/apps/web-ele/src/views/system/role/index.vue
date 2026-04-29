@@ -1,4 +1,5 @@
 <script lang="ts" setup>
+import type { VbenFormSchema } from '#/adapter/form';
 import type {
   OnActionClickParams,
   VxeTableGridOptions,
@@ -25,13 +26,43 @@ const roleTypeOptions = [
   { label: $t('system.role.type2'), value: SystemRoleApi.RoleTypeEnum.CUSTOM },
 ];
 
+const roleQuerySchema: VbenFormSchema[] = [
+  {
+    component: 'Input',
+    fieldName: 'roleName',
+    label: $t('system.role.name'),
+    componentProps: {
+      clearable: true,
+      placeholder: $t('system.role.name'),
+    },
+  },
+  {
+    component: 'Input',
+    fieldName: 'roleCode',
+    label: $t('system.role.code'),
+    componentProps: {
+      clearable: true,
+      placeholder: $t('system.role.code'),
+    },
+  },
+  {
+    component: 'Select',
+    fieldName: 'roleType',
+    label: $t('system.role.type'),
+    componentProps: {
+      clearable: true,
+      options: roleTypeOptions,
+      placeholder: $t('system.role.type'),
+    },
+  },
+];
+
 function normalizeRolePageResult(
   response: any,
   currentPage: number,
   currentPageSize: number,
 ) {
   const data = response ?? {};
-  console.log('接口返回的原始数据：', data);
   const list = Array.isArray(data)
     ? data
     : (data.list ??
@@ -58,89 +89,36 @@ function normalizeRolePageResult(
 }
 
 const [Grid, gridApi] = useVbenVxeGrid({
+  formOptions: {
+    schema: roleQuerySchema,
+    showCollapseButton: false,
+  },
   gridOptions: {
     columns: useColumns(onActionClick),
-    formConfig: {
-      enabled: true,
-      items: [
-        {
-          field: 'roleName',
-          title: $t('system.role.name'),
-          span: 6,
-          itemRender: {
-            name: 'ElInput',
-            props: {
-              placeholder: $t('system.role.name'),
-              clearable: true,
-            },
-          },
-        },
-        {
-          field: 'roleCode',
-          title: $t('system.role.code'),
-          span: 6,
-          itemRender: {
-            name: 'ElInput',
-            props: {
-              placeholder: $t('system.role.code'),
-              clearable: true,
-            },
-          },
-        },
-        {
-          field: 'roleType',
-          title: $t('system.role.type'),
-          span: 6,
-          itemRender: {
-            name: 'ElSelect',
-            props: {
-              placeholder: $t('system.role.type'),
-              clearable: true,
-              options: roleTypeOptions,
-            },
-          },
-        },
-        {
-          span: 6,
-          itemRender: {
-            name: 'VxeFormItemButton',
-            children: [
-              { type: 'submit', content: $t('common.search') },
-              { type: 'reset', content: $t('common.reset') },
-            ],
-          },
-        },
-      ],
-    },
     height: 'auto',
     keepSource: true,
     pagerConfig: { enabled: true },
     proxyConfig: {
       ajax: {
-        query: async ({ form, page }) => {
+        query: async ({ form, page }, formValues = {}) => {
           const currentPage = page?.currentPage ?? 1;
           const currentPageSize = page?.pageSize ?? 20;
           const params: SystemRoleApi.RolePageParam = {
             pageNo: currentPage,
             pageSize: currentPageSize,
           };
-          // 兼容不同后端分页参数命名，避免接口有数据但表格拿不到
-          const compatibleParams = {
-            ...params,
-            current: currentPage,
-            page: currentPage,
-            pageNum: currentPage,
-            size: currentPageSize,
-          };
-          if (form?.roleName?.trim()) params.roleName = form.roleName.trim();
-          if (form?.roleCode?.trim()) params.roleCode = form.roleCode.trim();
-          if (form?.roleType !== undefined) params.roleType = form.roleType;
-          const result = await getRolePageList({
-            ...compatibleParams,
-            roleCode: params.roleCode,
-            roleName: params.roleName,
-            roleType: params.roleType,
-          });
+          // formOptions 模式下筛选值来自 query 的第2个参数；这里兼容两种来源
+          const queryForm = {
+            ...form,
+            ...formValues,
+          } as Record<string, any>;
+
+          if (queryForm.roleName?.trim()) params.roleName = queryForm.roleName.trim();
+          if (queryForm.roleCode?.trim()) params.roleCode = queryForm.roleCode.trim();
+          if (queryForm.roleType !== undefined && queryForm.roleType !== null) {
+            params.roleType = queryForm.roleType;
+          }
+          const result = await getRolePageList(params);
 
           return normalizeRolePageResult(result, currentPage, currentPageSize);
         },
