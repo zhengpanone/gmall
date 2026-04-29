@@ -23,8 +23,8 @@
         <!--        <module>gmall-module-report</module>-->
         <!--        <module>gmall-module-mall</module>-->
         <!-- 会员服务 -->
-               <module>gmall-module-member</module>
-        <!--        <module>gmall-module-mp</module>-->
+        <module>gmall-module-member</module>
+        <module>gmall-module-mp</module>
 
         <!--      <module>gmall-product</module> &lt;!&ndash;商品服务&ndash;&gt;
              <module>gmall-order</module> &lt;!&ndash;订单服务&ndash;&gt;

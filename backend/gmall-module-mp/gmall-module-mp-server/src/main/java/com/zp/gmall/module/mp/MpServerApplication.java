@@ -1,4 +1,4 @@
-package com.zp.module.mp;
+package com.zp.gmall.module.mp;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
