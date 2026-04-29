@@ -1,11 +1,11 @@
-package com.zp.coupon.entity;
+package com.zp.gmall.module.promotion.entity.seckill;
 
 import com.baomidou.mybatisplus.annotation.TableName;
-import com.zp.common.entity.BaseEntity;
+import com.zp.gmall.framework.mybatis.core.dataobject.BaseDO;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 
-import java.util.Date;
+import java.time.LocalDateTime;
 
 /**
  * 秒杀活动场次
@@ -13,10 +13,11 @@ import java.util.Date;
  * @author zhengpanone zhengpanone@hotmail.com
  * @since 1.0.0 2022-07-30
  */
+
 @Data
 @EqualsAndHashCode(callSuper=false)
 @TableName("sms_seckill_session")
-public class SeckillSessionEntity extends BaseEntity {
+public class SeckillSessionEntity extends BaseDO {
 	private static final long serialVersionUID = 1L;
 
     /**
@@ -26,11 +27,11 @@ public class SeckillSessionEntity extends BaseEntity {
     /**
      * 每日开始时间
      */
-	private Date startTime;
+	private LocalDateTime startTime;
     /**
      * 每日结束时间
      */
-	private Date endTime;
+	private LocalDateTime endTime;
     /**
      * 启用状态
      */
@@ -38,5 +39,5 @@ public class SeckillSessionEntity extends BaseEntity {
     /**
      * 创建时间
      */
-	private Date createTime;
+	private LocalDateTime createTime;
 }

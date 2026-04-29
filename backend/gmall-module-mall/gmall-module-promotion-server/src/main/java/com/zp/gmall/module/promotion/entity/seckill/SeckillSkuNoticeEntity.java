@@ -1,7 +1,7 @@
-package com.zp.coupon.entity;
+package com.zp.gmall.module.promotion.entity.seckill;
 
 import com.baomidou.mybatisplus.annotation.TableName;
-import com.zp.common.entity.BaseEntity;
+import com.zp.gmall.framework.mybatis.core.dataobject.BaseDO;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 
@@ -14,33 +14,33 @@ import java.util.Date;
  * @since 1.0.0 2022-07-30
  */
 @Data
-@EqualsAndHashCode(callSuper=false)
+@EqualsAndHashCode(callSuper = false)
 @TableName("sms_seckill_sku_notice")
-public class SeckillSkuNoticeEntity extends BaseEntity {
-	private static final long serialVersionUID = 1L;
+public class SeckillSkuNoticeEntity extends BaseDO {
+    private static final long serialVersionUID = 1L;
 
     /**
      * member_id
      */
-	private Long memberId;
+    private Long memberId;
     /**
      * sku_id
      */
-	private Long skuId;
+    private Long skuId;
     /**
      * 活动场次id
      */
-	private Long sessionId;
+    private Long sessionId;
     /**
      * 订阅时间
      */
-	private Date subcribeTime;
+    private Date subcribeTime;
     /**
      * 发送时间
      */
-	private Date sendTime;
+    private Date sendTime;
     /**
      * 通知方式[0-短信，1-邮件]
      */
-	private Integer noticeType;
+    private Integer noticeType;
 }

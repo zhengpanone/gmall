@@ -1,22 +1,20 @@
-package com.zp.coupon.entity;
+package com.zp.gmall.module.promotion.entity.coupon;
 
 import com.baomidou.mybatisplus.annotation.TableName;
-import com.zp.common.entity.BaseEntity;
+import com.zp.gmall.framework.mybatis.core.dataobject.BaseDO;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 
-import java.util.Date;
-
 /**
- * 优惠券分类关联
+ * 优惠券与产品关联
  *
  * @author zhengpanone zhengpanone@hotmail.com
  * @since 1.0.0 2022-07-30
  */
 @Data
 @EqualsAndHashCode(callSuper=false)
-@TableName("sms_coupon_spu_category_relation")
-public class CouponSpuCategoryRelationEntity extends BaseEntity {
+@TableName("promotion_coupon_spu_relation")
+public class CouponSpuRelationDO extends BaseDO {
 	private static final long serialVersionUID = 1L;
 
     /**
@@ -24,11 +22,11 @@ public class CouponSpuCategoryRelationEntity extends BaseEntity {
      */
 	private Long couponId;
     /**
-     * 产品分类id
+     * spu_id
      */
-	private Long categoryId;
+	private Long spuId;
     /**
-     * 产品分类名称
+     * spu_name
      */
-	private String categoryName;
+	private String spuName;
 }
