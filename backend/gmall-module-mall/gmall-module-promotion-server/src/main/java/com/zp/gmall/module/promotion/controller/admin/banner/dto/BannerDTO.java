@@ -9,6 +9,11 @@ package com.zp.gmall.module.promotion.controller.admin.banner.dto;
 public class BannerDTO {
 
     /**
+     * 编号
+     */
+    private String id;
+
+    /**
      * 标题
      */
     private String title;

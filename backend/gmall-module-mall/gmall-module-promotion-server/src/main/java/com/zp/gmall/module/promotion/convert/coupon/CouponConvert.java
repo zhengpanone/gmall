@@ -1,10 +1,7 @@
 package com.zp.gmall.module.promotion.convert.coupon;
 
-import com.zp.gmall.module.promotion.controller.admin.banner.dto.BannerDTO;
-import com.zp.gmall.module.promotion.controller.admin.banner.vo.BannerVO;
 import com.zp.gmall.module.promotion.controller.admin.coupon.dto.CouponDTO;
 import com.zp.gmall.module.promotion.controller.admin.coupon.vo.CouponVO;
-import com.zp.gmall.module.promotion.entity.banner.BannerDO;
 import com.zp.gmall.module.promotion.entity.coupon.CouponDO;
 import org.mapstruct.Mapper;
 
@@ -16,6 +13,7 @@ import org.mapstruct.Mapper;
  */
 @Mapper
 public interface CouponConvert {
+
     CouponDO convert(CouponDTO dto);
 
     CouponVO convert(CouponDO couponDO);
