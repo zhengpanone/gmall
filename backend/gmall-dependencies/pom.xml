@@ -632,6 +632,12 @@
                 <version>${revision}</version>
             </dependency>
 
+            <dependency>
+                <groupId>com.zp.gmall</groupId>
+                <artifactId>gmall-module-iot</artifactId>
+                <version>${revision}</version>
+            </dependency>
+
 
             <dependency>
                 <groupId>org.projectlombok</groupId>
