@@ -45,7 +45,7 @@ public class UserController {
 
     @PutMapping("/update")
     @Operation(summary = "根据ID更新用户")
-    public Result<Void> updateUser(UserDTO userDTO) {
+    public Result<?> updateUser(UserDTO userDTO) {
         adminUserService.updateUser(userDTO);
         return Result.ok();
     }

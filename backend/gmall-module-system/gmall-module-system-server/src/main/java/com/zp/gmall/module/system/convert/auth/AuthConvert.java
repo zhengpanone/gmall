@@ -11,7 +11,7 @@ import org.mapstruct.factory.Mappers;
  * Version : v1.0.0
  * Description:
  */
-@Mapper
+@Mapper(componentModel = "spring")
 public interface AuthConvert {
     AuthConvert INSTANCE = Mappers.getMapper(AuthConvert.class);
 

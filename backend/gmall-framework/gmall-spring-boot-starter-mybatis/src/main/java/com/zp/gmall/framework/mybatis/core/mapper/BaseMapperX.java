@@ -9,9 +9,9 @@ import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.core.toolkit.support.SFunction;
 import com.baomidou.mybatisplus.extension.toolkit.Db;
 import com.zp.gmall.framework.common.domain.dto.PageParam;
-import com.zp.gmall.framework.common.domain.vo.PageResult;
 import com.zp.gmall.framework.common.domain.dto.SortablePageParam;
 import com.zp.gmall.framework.common.domain.dto.SortingField;
+import com.zp.gmall.framework.common.domain.vo.PageResult;
 import com.zp.gmall.framework.mybatis.core.util.MyBatisUtils;
 import org.apache.ibatis.annotations.Param;
 import org.apache.ibatis.logging.Log;
@@ -33,15 +33,36 @@ public interface BaseMapperX<T> extends BaseMapper<T> {
 
     Log log = LogFactory.getLog(BaseMapperX.class);
 
-
+    /**
+     * 分页查询（支持排序）
+     *
+     * @param pageParam    分页参数
+     * @param queryWrapper 查询条件
+     * @return 分页结果
+     */
     default PageResult<T> selectPage(SortablePageParam pageParam, @Param("ew") Wrapper<T> queryWrapper) {
         return selectPage(pageParam, pageParam.getSortingFields(), queryWrapper);
     }
 
+    /**
+     * 分页查询
+     *
+     * @param pageParam    分页参数
+     * @param queryWrapper 查询条件
+     * @return 分页结果
+     */
     default PageResult<T> selectPage(PageParam pageParam, @Param("ew") Wrapper<T> queryWrapper) {
         return selectPage(pageParam, null, queryWrapper);
     }
 
+    /**
+     * 分页查询（支持自定义排序）
+     *
+     * @param pageParam     分页参数
+     * @param sortingFields 排序字段
+     * @param queryWrapper  查询条件
+     * @return 分页结果
+     */
     default PageResult<T> selectPage(PageParam pageParam, Collection<SortingField> sortingFields, @Param("ew") Wrapper<T> queryWrapper) {
         // 特殊：不分页，直接查询全部
         if (PageParam.PAGE_SIZE_NONE.equals(pageParam.getPageSize())) {
@@ -56,23 +77,65 @@ public interface BaseMapperX<T> extends BaseMapper<T> {
         return new PageResult<>(mpPage.getRecords(), mpPage.getTotal(), mpPage.getCurrent(), mpPage.getSize());
     }
 
-
+    /**
+     * 根据字段查询单条记录
+     *
+     * @param field 字段名
+     * @param value 字段值
+     * @return 实体
+     */
     default T selectOne(String field, Object value) {
         return selectOne(new QueryWrapper<T>().eq(field, value));
     }
 
+    /**
+     * 根据字段查询单条记录
+     *
+     * @param field 字段Lambda表达式
+     * @param value 字段值
+     * @return 实体
+     */
     default T selectOne(SFunction<T, ?> field, Object value) {
         return selectOne(new LambdaQueryWrapper<T>().eq(field, value));
     }
 
+    /**
+     * 根据两个字段查询单条记录
+     *
+     * @param field1 字段1
+     * @param value1 值1
+     * @param field2 字段2
+     * @param value2 值2
+     * @return 实体
+     */
     default T selectOne(String field1, Object value1, String field2, Object value2) {
         return selectOne(new QueryWrapper<T>().eq(field1, value1).eq(field2, value2));
     }
 
+    /**
+     * 根据两个字段查询单条记录
+     *
+     * @param field1 字段1 Lambda表达式
+     * @param value1 值1
+     * @param field2 字段2 Lambda表达式
+     * @param value2 值2
+     * @return 实体
+     */
     default T selectOne(SFunction<T, ?> field1, Object value1, SFunction<T, ?> field2, Object value2) {
         return selectOne(new LambdaQueryWrapper<T>().eq(field1, value1).eq(field2, value2));
     }
 
+    /**
+     * 根据三个字段查询单条记录
+     *
+     * @param field1 字段1 Lambda表达式
+     * @param value1 值1
+     * @param field2 字段2 Lambda表达式
+     * @param value2 值2
+     * @param field3 字段3 Lambda表达式
+     * @param value3 值3
+     * @return 实体
+     */
     default T selectOne(SFunction<T, ?> field1, Object value1, SFunction<T, ?> field2, Object value2,
                         SFunction<T, ?> field3, Object value3) {
         return selectOne(new LambdaQueryWrapper<T>().eq(field1, value1).eq(field2, value2).eq(field3, value3));
@@ -93,30 +156,59 @@ public interface BaseMapperX<T> extends BaseMapper<T> {
         return CollUtil.getFirst(list);
     }
 
+    /**
+     * 获取满足条件的第 1 条记录
+     */
     default T selectFirstOne(SFunction<T, ?> field1, Object value1, SFunction<T, ?> field2, Object value2) {
         List<T> list = selectList(new LambdaQueryWrapper<T>().eq(field1, value1).eq(field2, value2));
         return CollUtil.getFirst(list);
     }
 
+    /**
+     * 获取满足条件的第 1 条记录
+     */
     default T selectFirstOne(SFunction<T, ?> field1, Object value1, SFunction<T, ?> field2, Object value2,
                              SFunction<T, ?> field3, Object value3) {
         List<T> list = selectList(new LambdaQueryWrapper<T>().eq(field1, value1).eq(field2, value2).eq(field3, value3));
         return CollUtil.getFirst(list);
     }
 
-
+    /**
+     * 查询总记录数
+     *
+     * @return 总记录数
+     */
     default Long selectCount() {
         return selectCount(new QueryWrapper<>());
     }
 
+    /**
+     * 根据条件查询记录数
+     *
+     * @param field 字段名
+     * @param value 字段值
+     * @return 记录数
+     */
     default Long selectCount(String field, Object value) {
         return selectCount(new QueryWrapper<T>().eq(field, value));
     }
 
+    /**
+     * 根据条件查询记录数
+     *
+     * @param field 字段Lambda表达式
+     * @param value 字段值
+     * @return 记录数
+     */
     default Long selectCount(SFunction<T, ?> field, Object value) {
         return selectCount(new LambdaQueryWrapper<T>().eq(field, value));
     }
 
+    /**
+     * 查询所有记录
+     *
+     * @return 记录列表
+     */
     default List<T> selectList() {
         return selectList(new QueryWrapper<>());
     }
@@ -129,14 +221,35 @@ public interface BaseMapperX<T> extends BaseMapper<T> {
         return MapstructUtils.convertList(list, clazz);
     }*/
 
+    /**
+     * 根据条件查询记录列表
+     *
+     * @param field 字段名
+     * @param value 字段值
+     * @return 记录列表
+     */
     default List<T> selectList(String field, Object value) {
         return selectList(new QueryWrapper<T>().eq(field, value));
     }
 
+    /**
+     * 根据条件查询记录列表
+     *
+     * @param field 字段Lambda表达式
+     * @param value 字段值
+     * @return 记录列表
+     */
     default List<T> selectList(SFunction<T, ?> field, Object value) {
         return selectList(new LambdaQueryWrapper<T>().eq(field, value));
     }
 
+    /**
+     * 根据条件查询记录列表（IN查询）
+     *
+     * @param field  字段名
+     * @param values 值列表
+     * @return 记录列表
+     */
     default List<T> selectList(String field, Collection<?> values) {
         if (CollUtil.isEmpty(values)) {
             return CollUtil.newArrayList();
@@ -144,6 +257,13 @@ public interface BaseMapperX<T> extends BaseMapper<T> {
         return selectList(new QueryWrapper<T>().in(field, values));
     }
 
+    /**
+     * 根据条件查询记录列表（IN查询）
+     *
+     * @param field  字段Lambda表达式
+     * @param values 值列表
+     * @return 记录列表
+     */
     default List<T> selectList(SFunction<T, ?> field, Collection<?> values) {
         if (CollUtil.isEmpty(values)) {
             return CollUtil.newArrayList();
@@ -151,27 +271,68 @@ public interface BaseMapperX<T> extends BaseMapper<T> {
         return selectList(new LambdaQueryWrapper<T>().in(field, values));
     }
 
+    /**
+     * 根据两个条件查询记录列表
+     *
+     * @param field1 字段1 Lambda表达式
+     * @param value1 值1
+     * @param field2 字段2 Lambda表达式
+     * @param value2 值2
+     * @return 记录列表
+     */
     default List<T> selectList(SFunction<T, ?> field1, Object value1, SFunction<T, ?> field2, Object value2) {
         return selectList(new LambdaQueryWrapper<T>().eq(field1, value1).eq(field2, value2));
     }
 
-
+    /**
+     * 批量更新
+     *
+     * @param update 更新实体
+     * @return 更新记录数
+     */
     default int updateBatch(T update) {
         return update(update, new QueryWrapper<>());
     }
 
+    /**
+     * 批量更新
+     *
+     * @param entities 实体列表
+     * @return 是否成功
+     */
     default Boolean updateBatch(Collection<T> entities) {
         return Db.updateBatchById(entities);
     }
 
+    /**
+     * 批量更新
+     *
+     * @param entities 实体列表
+     * @param size     批次大小
+     * @return 是否成功
+     */
     default Boolean updateBatch(Collection<T> entities, int size) {
         return Db.updateBatchById(entities, size);
     }
 
+    /**
+     * 根据条件删除
+     *
+     * @param field 字段名
+     * @param value 字段值
+     * @return 删除记录数
+     */
     default int delete(String field, String value) {
         return delete(new QueryWrapper<T>().eq(field, value));
     }
 
+    /**
+     * 根据条件删除
+     *
+     * @param field 字段Lambda表达式
+     * @param value 字段值
+     * @return 删除记录数
+     */
     default int delete(SFunction<T, ?> field, Object value) {
         return delete(new LambdaQueryWrapper<T>().eq(field, value));
     }

@@ -52,7 +52,7 @@ public class MenuController {
 
     @Operation(summary = "删除菜单")
     @DeleteMapping("/delete/{id}")
-    public Result<Void> remove(
+    public Result<?> remove(
             @PathVariable @Parameter(description = "菜单ID", required = true, example = "1") String id) {
 //        if (menuService.hasChildByMenuId(menuId)) {
 //            return Result.failed("存在子菜单，不允许删除");

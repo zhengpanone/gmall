@@ -1,7 +1,5 @@
 package com.zp.gmall.module.system.controller.admin.permission;
 
-import com.fasterxml.jackson.annotation.JsonView;
-import com.zp.gmall.framework.common.domain.ViewGroup;
 import com.zp.gmall.framework.common.domain.dto.Ids;
 import com.zp.gmall.framework.common.domain.vo.PageResult;
 import com.zp.gmall.framework.common.domain.vo.Result;
@@ -38,7 +36,6 @@ public class RoleController {
 
     @PostMapping("/create")
     @Operation(summary = "新增角色")
-    @JsonView(ViewGroup.CreateView.class)
     public Result<?> createRole(@RequestBody @Validated(Create.class) @Valid RoleDTO roleDTO) {
         roleService.createRole(roleDTO);
         return Result.ok();
@@ -46,7 +43,6 @@ public class RoleController {
 
     @PutMapping("/update")
     @Operation(summary = "更新角色")
-    @JsonView(ViewGroup.UpdateView.class)
     public Result<?> updateRole(@RequestBody @Validated(Update.class) @Valid RoleDTO roleDTO) {
         roleService.updateRole(roleDTO);
         return Result.ok();
