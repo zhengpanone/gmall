@@ -608,6 +608,18 @@
                 <version>${revision}</version>
             </dependency>
 
+            <dependency>
+                <groupId>com.zp.gmall</groupId>
+                <artifactId>gmall-module-mes-api</artifactId>
+                <version>${revision}</version>
+            </dependency>
+
+            <dependency>
+                <groupId>com.zp.gmall</groupId>
+                <artifactId>gmall-module-mes-server</artifactId>
+                <version>${revision}</version>
+            </dependency>
+
 
             <dependency>
                 <groupId>org.projectlombok</groupId>
