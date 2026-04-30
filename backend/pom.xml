@@ -27,6 +27,7 @@
         <module>gmall-module-mp</module>
         <module>gmall-module-mes</module>
         <module>gmall-module-erp</module>
+        <module>gmall-module-crm</module>
 
         <!--      <module>gmall-product</module> &lt;!&ndash;商品服务&ndash;&gt;
              <module>gmall-order</module> &lt;!&ndash;订单服务&ndash;&gt;
