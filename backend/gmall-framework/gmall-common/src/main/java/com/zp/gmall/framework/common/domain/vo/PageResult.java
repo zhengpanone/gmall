@@ -34,26 +34,46 @@ public final class PageResult<T> implements Serializable {
     @Schema(description = "消息内容")
     private String msg;
 
+    /**
+     * 总记录数
+     */
     @Schema(description = "总记录数", requiredMode = Schema.RequiredMode.REQUIRED)
     private Long total;
 
+    /**
+     * 总页数
+     */
     @Schema(description = "总页数")
     private Long pages;
 
+    /**
+     * 当前页码
+     */
     @Schema(description = "当前页码", example = "1")
-    private Long pageNum;
+    private Long pageNum = 1L;
 
+    /**
+     * 每页大小
+     */
     @Schema(description = "每页大小", example = "10")
-    private Long pageSize;
+    private Long pageSize = 10L;
 
-
+    /**
+     * 是否有下一页
+     */
     @Schema(description = "是否有下一页")
-    private Boolean hasNext;
+    private Boolean hasNext = false;
 
+    /**
+     * 是否有上一页
+     */
     @Schema(description = "是否有上一页")
-    private Boolean hasPrevious;
+    private Boolean hasPrevious = false;
 
-    @Schema(description = "数据", requiredMode = Schema.RequiredMode.REQUIRED)
+    /**
+     * 数据列表
+     */
+    @Schema(description = "数据")
     private List<T> list;
 
     /**
@@ -65,13 +85,13 @@ public final class PageResult<T> implements Serializable {
      * @param pageSize 每页大小
      */
     public PageResult(List<T> list, Long total, Long pageNum, Long pageSize) {
-        this.list = list;
-        this.total = total;
-        this.pageNum = pageNum;
-        this.pageSize = pageSize;
-        this.pages = calculatePages(total, pageSize);
-        this.hasNext = hasNext(pageNum, this.pages);
-        this.hasPrevious = hasPrevious(pageNum);
+        this.list = list != null ? list : Collections.emptyList();
+        this.total = total != null ? total : 0L;
+        this.pageNum = pageNum != null ? pageNum : 1L;
+        this.pageSize = pageSize != null ? pageSize : 10L;
+        this.pages = calculatePages(this.total, this.pageSize);
+        this.hasNext = hasNext(this.pageNum, this.pages);
+        this.hasPrevious = hasPrevious(this.pageNum);
     }
 
     /**
@@ -81,13 +101,13 @@ public final class PageResult<T> implements Serializable {
      * @param total 总记录数
      */
     public PageResult(List<T> list, Long total) {
-        this.list = list;
-        this.total = total;
+        this.list = list != null ? new ArrayList<>(list) : new ArrayList<>();
+        this.total = total != null ? total : 0L;
     }
 
     public PageResult(Long total) {
         this.list = new ArrayList<>();
-        this.total = total;
+        this.total = total != null ? total : 0L;
     }
 
     /**
@@ -120,14 +140,23 @@ public final class PageResult<T> implements Serializable {
         return pageNum > 1;
     }
 
+    /**
+     * 创建空分页结果
+     */
     public static <T> PageResult<T> empty() {
         return new PageResult<>(0L);
     }
 
+    /**
+     * 创建指定总数的空分页结果
+     */
     public static <T> PageResult<T> empty(Long total) {
         return new PageResult<>(total);
     }
 
+    /**
+     * 创建指定分页参数的空分页结果
+     */
     public static <T> PageResult<T> empty(Long pageNum, Long pageSize) {
         PageResult<T> result = new PageResult<>(Collections.emptyList(), 0L, pageNum, pageSize);
         result.setCode(ResultEnum.SUCCESS.getCode());
@@ -135,6 +164,9 @@ public final class PageResult<T> implements Serializable {
         return result;
     }
 
+    /**
+     * 创建成功的空分页结果
+     */
     public static PageResult<?> ok() {
         return instance(ResultEnum.SUCCESS.getCode(), ResultEnum.SUCCESS.getMessage(), 0L, Collections.emptyList());
     }

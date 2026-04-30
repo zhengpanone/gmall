@@ -26,5 +26,6 @@ logging:
     name: /data/gmall/log/gmall-infra/${spring.application.name}.log
   level:
     web: debug
-    #    root: debug
     com.zp.gmall: debug
+    org.springframework.web.client: DEBUG
+    com.alibaba.cloud.ai: DEBUG

@@ -2,6 +2,7 @@ package com.zp.gmall.framework.common.domain.vo;
 
 import cn.hutool.core.lang.Assert;
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonInclude;
 import com.zp.gmall.framework.common.enums.ResultEnum;
 import com.zp.gmall.framework.common.exception.ErrorCode;
 import com.zp.gmall.framework.common.exception.ServiceException;
@@ -36,20 +37,23 @@ public class Result<T> implements Serializable {
     /**
      * 消息内容
      */
-    @Schema(description = "消息内容")
+    @Schema(description = "消息内容", example = "success")
     private String msg;
     /**
      * 响应数据
+     * 使用 @JsonInclude(Include.ALWAYS) 确保总是序列化
      */
     @Schema(description = "响应数据")
+    @JsonInclude(JsonInclude.Include.ALWAYS)
     private T data;
 
     public Result(int code, String message) {
         this.code = code;
         this.msg = message;
+        this.data = null;
     }
 
-    public static Result<Void> ok() {
+    public static Result<?> ok() {
         return instance(ResultEnum.SUCCESS.getCode(), ResultEnum.SUCCESS.getMessage(), null);
     }
 
@@ -74,7 +78,7 @@ public class Result<T> implements Serializable {
         return new Result<>(code, MessageUtils.getMessage(code));
     }
 
-    public static Result<Void> failed(String msg) {
+    public static Result<?> failed(String msg) {
         return instance(ResultEnum.COMMON_FAILED.getCode(), msg, null);
     }
 

@@ -1,4 +1,4 @@
-package com.zp.gmall.module.ai.config;
+package com.zp.gmall.module.ai.framework.ai.config;
 
 import com.alibaba.cloud.ai.dashscope.api.DashScopeApi;
 import com.alibaba.cloud.ai.dashscope.chat.DashScopeChatModel;

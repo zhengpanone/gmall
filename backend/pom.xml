@@ -147,8 +147,18 @@
                     <artifactId>maven-compiler-plugin</artifactId>
                     <version>${maven-compiler-plugin.version}</version>
                     <configuration>
+                        <source>${java.version}</source>
+                        <target>${java.version}</target>
                         <release>${java.version}</release>
                         <parameters>true</parameters>
+                        <encoding>UTF-8</encoding>
+                        <compilerArgs>
+                            <arg>-parameters</arg>
+                            <arg>-Xlint:all</arg>
+                            <arg>-Xlint:-processing</arg>
+                            <!-- 修复隐式编译警告 -->
+                            <arg>-implicit:class</arg>
+                        </compilerArgs>
                         <annotationProcessorPaths>
                             <path>
                                 <groupId>org.springframework.boot</groupId>

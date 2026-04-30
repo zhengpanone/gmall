@@ -1,20 +1,20 @@
 spring:
-  ai:
-    dashscope:
-      api-key: ${DASHSCOPE_API_KEY}
-#      base-url: @ai.dashscope.base-url@
-      chat:
-        options:
-          model: qwen3.5-plus
-          temperature: 0.7
+  # Jackson配置项
+  jackson:
+    # 自定义序列化器
+    serialization:
+      write-dates-as-timestamps: true # 设置LocalDateTime格式，使用时间戳
+      write-date-timestamps-as-nanoseconds: false # 设置不使用nanoseconds。例如说 1611460870.401，而是直接 1611460870401
+      write-durations-as-timestamps: true # 设置Duration的格式，使用时间戳
+      fail-on-empty-beans: false # 允许序列化无属性的Bean
 
-logging:
-  level:
-    org.springframework.web.client: DEBUG
-    com.alibaba.cloud.ai: DEBUG
 
---- #################### gmall相关配置 ####################
-gmall:
-  web:
-    admin-ui:
-      url: http://dashboard.gmall.cn
+--- #################### 接口文档配置 ####################
+springdoc:
+  api-docs:
+    enabled: true # 1. 是否开启 Swagger 接文档的元数据
+    path: /v3/api-docs
+  swagger-ui:
+    enabled: true # 2.1 是否开启 Swagger 文档的官方 UI 界面
+    path: /swagger-ui/index.html
+  default-flat-param-object: true # 参见 https://doc.xiaominfo.com/docs/faq/v4/knife4j-parameterobject-flat-param 文档
