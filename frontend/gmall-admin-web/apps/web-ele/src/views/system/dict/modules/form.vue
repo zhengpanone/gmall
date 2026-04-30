@@ -27,14 +27,14 @@ const schema: VbenFormSchema[] = [
   },
   {
     component: 'Input',
-    fieldName: 'code',
-    label: $t('system.dict.code'),
+    fieldName: 'type',
+    label: $t('system.dict.type'),
     rules: 'required',
   },
   {
     component: 'InputNumber',
-    fieldName: 'type',
-    label: $t('system.dict.type'),
+    fieldName: 'sort',
+    label: $t('system.dict.sort'),
     defaultValue: 0,
     componentProps: {
       min: 0,
@@ -81,7 +81,10 @@ const [Drawer, drawerApi] = useVbenDrawer({
       const data = drawerApi.getData<SystemDictApi.Dict>();
       if (data?.id) {
         formData.value = data;
-        formApi.setValues(data);
+        formApi.setValues({
+          ...data,
+          type: data.type ?? data.code ?? data.dictType,
+        });
       } else {
         formData.value = {} as SystemDictApi.Dict;
         formApi.resetForm();
@@ -95,12 +98,17 @@ async function onSubmit() {
   if (valid) {
     drawerApi.lock();
     const values = await formApi.getValues();
+    const payload = {
+      ...formData.value,
+      ...values,
+      code: values.type,
+    };
     try {
       if (formData.value?.id) {
-        await updateDict(values as SystemDictApi.UpdateDictParams);
+        await updateDict(payload as SystemDictApi.UpdateDictParams);
         ElMessage.success($t('page.common.editSuccess'));
       } else {
-        await createDict(values as SystemDictApi.CreateDictParams);
+        await createDict(payload as SystemDictApi.CreateDictParams);
         ElMessage.success($t('page.common.createSuccess'));
       }
       drawerApi.close();

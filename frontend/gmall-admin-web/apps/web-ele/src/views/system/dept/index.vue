@@ -102,7 +102,7 @@ function onDelete(row: SystemDeptApi.Dept) {
     message: $t('ui.actionMessage.deleting', [row.name]),
     duration: 0,
   });
-  deleteDept(row.id!).then(() => {
+  deleteDept([row.id!]).then(() => {
     ElMessage.success($t('ui.actionMessage.deleteSuccess', [row.name]));
     onRefresh();
   });

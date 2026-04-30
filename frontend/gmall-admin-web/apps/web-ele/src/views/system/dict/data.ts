@@ -3,48 +3,41 @@ import type { SystemDictApi } from '#/api/system/dict';
 
 import { $t } from '#/locales';
 
-export function useColumns(
+export function useDictTypeColumns(
   onActionClick: OnActionClickFn<SystemDictApi.Dict>,
 ): VxeTableGridColumns<SystemDictApi.Dict> {
   return [
-    { type: 'seq', width: 60, title: '#' },
+    { type: 'checkbox', width: 46 },
     {
       field: 'name',
       title: $t('system.dict.name'),
-      width: 150,
-    },
-    {
-      field: 'code',
-      title: $t('system.dict.code'),
-      width: 150,
+      minWidth: 120,
     },
     {
       field: 'type',
       title: $t('system.dict.type'),
-      width: 100,
-    },
-    {
-      cellRender: { name: 'CellTag' },
-      field: 'status',
-      title: $t('system.dict.status'),
-      width: 100,
-    },
-    {
-      field: 'createTime',
-      title: $t('system.dict.createTime'),
-      width: 180,
+      minWidth: 150,
     },
     {
       field: 'remark',
-      title: $t('system.dict.remark'),
       minWidth: 150,
+      title: $t('system.dict.remark'),
+    },
+    {
+      field: 'createTime',
+      minWidth: 160,
+      title: $t('system.dict.createTime'),
+      formatter: ({ row }) => String(row.createTime ?? ''),
     },
     {
       align: 'right',
       cellRender: {
         attrs: { onClick: onActionClick },
         name: 'CellOperation',
-        options: ['edit', 'delete'],
+        options: [
+          'edit',
+          { code: 'delete', danger: true, text: $t('common.delete') },
+        ],
       },
       field: 'operation',
       fixed: 'right',
@@ -55,3 +48,56 @@ export function useColumns(
     },
   ];
 }
+
+export function useDictDataColumns(
+  onActionClick: OnActionClickFn<SystemDictApi.DictData>,
+): VxeTableGridColumns<SystemDictApi.DictData> {
+  return [
+    { type: 'checkbox', width: 46 },
+    {
+      field: 'label',
+      minWidth: 120,
+      slots: { default: 'dictDataLabel' },
+      title: $t('system.dict.dataLabel'),
+    },
+    {
+      field: 'value',
+      minWidth: 120,
+      title: $t('system.dict.dataValue'),
+    },
+    {
+      field: 'sort',
+      title: $t('system.dict.dataSort'),
+      width: 100,
+    },
+    {
+      field: 'remark',
+      minWidth: 150,
+      title: $t('system.dict.remark'),
+    },
+    {
+      field: 'createTime',
+      minWidth: 160,
+      title: $t('system.dict.createTime'),
+    },
+    {
+      align: 'right',
+      cellRender: {
+        attrs: { nameField: 'label', onClick: onActionClick },
+        name: 'CellOperation',
+        options: [
+          'edit',
+          { code: 'delete', danger: true, text: $t('common.delete') },
+        ],
+      },
+      field: 'operation',
+      fixed: 'right',
+      headerAlign: 'center',
+      showOverflow: false,
+      title: $t('page.common.operation'),
+      width: 150,
+    },
+  ];
+}
+
+export const useColumns = useDictTypeColumns;

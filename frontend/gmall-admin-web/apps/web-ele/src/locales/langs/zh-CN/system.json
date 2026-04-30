@@ -67,11 +67,20 @@
   },
   "dict": {
     "dictManage": "字典管理",
+    "dataLabel": "字典标签",
+    "dataList": "字典数据列表",
+    "dataManage": "字典数据",
+    "dataSort": "字典排序",
+    "dataValue": "字典键值",
+    "export": "导出",
     "name": "字典名称",
     "code": "字典编码",
     "type": "字典类型",
     "createTime": "创建时间",
+    "selectTypeFirst": "请先选择字典类型",
+    "sort": "字典排序",
     "status": "状态",
+    "typeList": "字典类型列表",
     "remark": "备注"
   },
   "config": {

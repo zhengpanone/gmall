@@ -67,11 +67,20 @@
   },
   "dict": {
     "dictManage": "Dictionary Management",
+    "dataLabel": "Dictionary Label",
+    "dataList": "Dictionary Data List",
+    "dataManage": "Dictionary Data",
+    "dataSort": "Dictionary Sort",
+    "dataValue": "Dictionary Value",
+    "export": "Export",
     "name": "Dictionary Name",
     "code": "Dictionary Code",
     "type": "Dictionary Type",
     "createTime": "Create Time",
+    "selectTypeFirst": "Please select a dictionary type first",
+    "sort": "Dictionary Sort",
     "status": "Status",
+    "typeList": "Dictionary Type List",
     "remark": "Remark"
   },
   "config": {
