@@ -16,3 +16,8 @@ export interface PageResult<T> {
   code: number;
   msg: string;
 }
+
+export interface Result<T> {
+  code: number;
+  data: T;
+}

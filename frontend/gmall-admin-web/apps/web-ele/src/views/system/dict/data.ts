@@ -3,20 +3,37 @@ import type { SystemDictApi } from '#/api/system/dict';
 
 import { $t } from '#/locales';
 
+/**
+ * 生成字典类型表格的列配置
+ * @param onActionClick - 操作按钮点击回调函数
+ * @returns VxeTable 表格列配置数组
+ */
 export function useDictTypeColumns(
-  onActionClick: OnActionClickFn<SystemDictApi.Dict>,
-): VxeTableGridColumns<SystemDictApi.Dict> {
+  onActionClick: OnActionClickFn<SystemDictApi.DictType>,
+): VxeTableGridColumns<SystemDictApi.DictType> {
   return [
     { type: 'checkbox', width: 46 },
     {
-      field: 'name',
-      title: $t('system.dict.name'),
+      field: 'typeName',
+      title: $t('system.dict.typeName'),
+      minWidth: 120,
+    },
+    {
+      field: 'typeCode',
+      title: $t('system.dict.typeCode'),
       minWidth: 120,
     },
     {
       field: 'type',
       title: $t('system.dict.type'),
       minWidth: 150,
+      formatter: ({ row }) =>
+        Number(row.type) === 2 ? $t('system.dict.businessType') : $t('system.dict.systemType'),
+    },
+    {
+      field: 'sort',
+      title: $t('system.dict.dataSort'),
+      width: 100,
     },
     {
       field: 'remark',
@@ -34,10 +51,7 @@ export function useDictTypeColumns(
       cellRender: {
         attrs: { onClick: onActionClick },
         name: 'CellOperation',
-        options: [
-          'edit',
-          { code: 'delete', danger: true, text: $t('common.delete') },
-        ],
+        options: ['edit', { code: 'delete', danger: true, text: $t('common.delete') }],
       },
       field: 'operation',
       fixed: 'right',
@@ -55,13 +69,14 @@ export function useDictDataColumns(
   return [
     { type: 'checkbox', width: 46 },
     {
-      field: 'label',
+      field: 'dataName',
       minWidth: 120,
       slots: { default: 'dictDataLabel' },
+      treeNode: true,
       title: $t('system.dict.dataLabel'),
     },
     {
-      field: 'value',
+      field: 'dataCode',
       minWidth: 120,
       title: $t('system.dict.dataValue'),
     },
@@ -86,6 +101,7 @@ export function useDictDataColumns(
         attrs: { nameField: 'label', onClick: onActionClick },
         name: 'CellOperation',
         options: [
+          { code: 'append', text: '新增下级' },
           'edit',
           { code: 'delete', danger: true, text: $t('common.delete') },
         ],

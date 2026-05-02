@@ -6,13 +6,13 @@ import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.zp.gmall.framework.common.domain.dto.Ids;
 import com.zp.gmall.framework.common.domain.vo.PageResult;
-import com.zp.gmall.module.system.controller.admin.dict.dto.DictDTO;
-import com.zp.gmall.module.system.controller.admin.dict.dto.DictPageDTO;
-import com.zp.gmall.module.system.controller.admin.dict.vo.DictVO;
-import com.zp.gmall.module.system.convert.dict.DictConvertMapper;
-import com.zp.gmall.module.system.entity.dict.DictDO;
-import com.zp.gmall.module.system.mapper.dict.DictMapper;
-import com.zp.gmall.module.system.service.dict.IDictService;
+import com.zp.gmall.module.system.controller.admin.dict.dto.DictTypeDTO;
+import com.zp.gmall.module.system.controller.admin.dict.dto.DictTypePageDTO;
+import com.zp.gmall.module.system.controller.admin.dict.vo.DictTypeVO;
+import com.zp.gmall.module.system.convert.dict.DictTypeConvertMapper;
+import com.zp.gmall.module.system.entity.dict.DictTypeDO;
+import com.zp.gmall.module.system.mapper.dict.DictTypeMapper;
+import com.zp.gmall.module.system.service.dict.IDictTypeService;
 import org.apache.commons.lang3.StringUtils;
 import org.mapstruct.factory.Mappers;
 import org.springframework.stereotype.Service;
@@ -25,42 +25,38 @@ import static com.zp.gmall.framework.common.exception.util.ServiceExceptionUtils
 import static com.zp.gmall.module.system.enums.ErrorCodeConstants.ROLE_NOT_EXISTS;
 
 @Service
-public class DictServiceImpl extends ServiceImpl<DictMapper, DictDO> implements IDictService {
-    private final DictConvertMapper convertMapper = Mappers.getMapper(DictConvertMapper.class);
+public class DictTypeServiceImpl extends ServiceImpl<DictTypeMapper, DictTypeDO> implements IDictTypeService {
+    private final DictTypeConvertMapper convertMapper = Mappers.getMapper(DictTypeConvertMapper.class);
 
     @Transactional(rollbackFor = Exception.class)
     @Override
-    public DictVO createDict(DictDTO dictDTO) {
+    public DictTypeVO createDictType(DictTypeDTO dictDTO) {
         // 检查字典编码是否已存在
-        if (checkDictCodeExists(dictDTO.getDictCode(), null)) {
+        if (checkDictCodeExists(dictDTO.getTypeCode(), null)) {
             throw new RuntimeException("字典编码已存在");
         }
-        DictDO dict = convertMapper.convert(dictDTO);
+        DictTypeDO dict = convertMapper.convert(dictDTO);
         baseMapper.insert(dict);
         return convertMapper.convert(dict);
     }
 
     @Override
     public Boolean checkDictCodeExists(String dictCode, String excludeId) {
-        LambdaQueryWrapper<DictDO> wrapper = new LambdaQueryWrapper<DictDO>()
-                .eq(DictDO::getDictCode, dictCode)
-                .eq(DictDO::getDeleted, 0);
-
-        if (excludeId != null) {
-            wrapper.ne(DictDO::getId, excludeId);
-        }
-
+        LambdaQueryWrapper<DictTypeDO> wrapper = new LambdaQueryWrapper<DictTypeDO>()
+                .eq(DictTypeDO::getCode, dictCode)
+                .eq(DictTypeDO::getDeleted, 0)
+                .ne(StringUtils.isNotBlank(excludeId), DictTypeDO::getId, excludeId);
         return count(wrapper) > 0;
     }
 
     @Transactional(rollbackFor = Exception.class)
     @Override
-    public DictVO updateDict(DictDTO dictDTO) {
+    public DictTypeVO updateDict(DictTypeDTO dictDTO) {
         // 检查字典编码是否已存在
-        if (checkDictCodeExists(dictDTO.getDictCode(), null)) {
+        if (checkDictCodeExists(dictDTO.getTypeCode(), dictDTO.getId())) {
             throw new RuntimeException("字典编码已存在");
         }
-        DictDO dict = convertMapper.convert(dictDTO);
+        DictTypeDO dict = convertMapper.convert(dictDTO);
         return convertMapper.convert(dict);
     }
 
@@ -70,15 +66,15 @@ public class DictServiceImpl extends ServiceImpl<DictMapper, DictDO> implements 
     }
 
     @Override
-    public PageResult<DictVO> getDictPage(DictPageDTO dictPageDTO) {
-        Page<DictDO> page = new Page<>(dictPageDTO.getPageNo(), dictPageDTO.getPageSize());
-        LambdaQueryWrapper<DictDO> queryWrapper = new LambdaQueryWrapper<>();
-        queryWrapper.eq(StringUtils.isNotBlank(dictPageDTO.getName()), DictDO::getDictName, dictPageDTO.getName());
+    public PageResult<DictTypeVO> getDictPage(DictTypePageDTO dictPageDTO) {
+        Page<DictTypeDO> page = new Page<>(dictPageDTO.getPageNo(), dictPageDTO.getPageSize());
+        LambdaQueryWrapper<DictTypeDO> queryWrapper = new LambdaQueryWrapper<>();
+        queryWrapper.eq(StringUtils.isNotBlank(dictPageDTO.getTypeName()), DictTypeDO::getName, dictPageDTO.getTypeName());
         // 执行分页查询
-        IPage<DictDO> dictPage = baseMapper.selectPage(page, queryWrapper);
+        IPage<DictTypeDO> dictPage = baseMapper.selectPage(page, queryWrapper);
 
         // 转换为VO
-        List<DictVO> voList = dictPage.getRecords().stream()
+        List<DictTypeVO> voList = dictPage.getRecords().stream()
                 .map(convertMapper::convert)
                 .collect(Collectors.toList());
 
@@ -86,8 +82,8 @@ public class DictServiceImpl extends ServiceImpl<DictMapper, DictDO> implements 
     }
 
     @Override
-    public DictVO getDictById(String id) {
-        DictDO dictDO = baseMapper.selectById(id);
+    public DictTypeVO getDictById(String id) {
+        DictTypeDO dictDO = baseMapper.selectById(id);
         if (dictDO == null) {
             throw exception(ROLE_NOT_EXISTS);
         }

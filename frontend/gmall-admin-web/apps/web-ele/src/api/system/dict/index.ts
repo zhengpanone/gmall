@@ -1,9 +1,9 @@
-import type { PageParam } from '#/api/core/common';
+import type { PageParam, PageResult, Result } from '#/api/core/common';
 
 import { backendClient } from '#/api/request';
 
 export namespace SystemDictApi {
-  export type DictId = number | string;
+  export type Id = number | string;
 
   /** 字典状态枚举 */
   export enum DictStatusEnum {
@@ -11,15 +11,12 @@ export namespace SystemDictApi {
     ENABLED = 1,
   }
 
-  /** 字典信息 */
-  export interface Dict {
-    id?: DictId;
-    name: string;
-    code: string;
+  /** 字典类型信息 */
+  export interface DictType {
+    id?: Id;
     type?: number | string;
-    dictName?: string;
-    dictCode?: string;
-    dictType?: number | string;
+    typeName?: string;
+    typeCode?: string;
     sort?: number;
     status: DictStatusEnum | number;
     createTime?: number | number[] | string;
@@ -28,15 +25,14 @@ export namespace SystemDictApi {
 
   /** 字典项信息 */
   export interface DictData {
-    id?: DictId;
-    dictId?: DictId;
-    dictType?: string;
-    label: string;
-    value: string;
-    dictLabel?: string;
-    dictValue?: string;
-    itemCode?: string;
-    itemValue?: string;
+    id?: Id;
+    typeId?: Id;
+    typeCode?: string;
+    typeName?: string;
+    dataCode?: string;
+    dataName?: string;
+    parentId?: Id;
+    children?: DictData[];
     sort: number;
     status: number;
     colorType?: string;
@@ -46,21 +42,18 @@ export namespace SystemDictApi {
   }
 
   /** 创建字典参数 */
-  export interface CreateDictParams {
-    code?: string;
-    dictCode?: string;
-    dictName?: string;
-    dictType?: number | string;
-    name: string;
+  export interface CreateDictTypeParams {
+    typeCode: string;
+    typeName: string;
+    type: number | string;
     sort?: number;
-    type?: number | string;
     status?: number;
     remark?: string;
   }
 
   /** 更新字典参数 */
-  export interface UpdateDictParams extends CreateDictParams {
-    id: DictId;
+  export interface UpdateDictTypeParams extends CreateDictTypeParams {
+    id: Id;
   }
 
   /** 字典分页查询参数 */
@@ -76,21 +69,40 @@ export namespace SystemDictApi {
 
   /** 字典数据分页查询参数 */
   export interface DictDataPageParam extends PageParam {
-    dictId?: DictId;
+    dictId?: Id;
     dictType?: string;
+    typeId?: Id;
+    typeCode?: string;
     label?: string;
-    status?: number;
     value?: string;
+    dataCode?: string;
+    status?: number;
+    dataName?: string;
+  }
+
+  /** 字典数据列表查询参数 */
+  export interface DictDataListParam {
+    typeId?: Id;
+    typeCode?: string;
+    dataCode?: string;
+    status?: number;
+    dataName?: string;
   }
 
   /** 创建字典数据参数 */
   export interface CreateDictDataParams {
     colorType?: string;
     cssClass?: string;
-    dictId?: DictId;
+    dictId?: Id;
     dictType?: string;
+    typeId?: Id;
+    typeCode?: string;
+    typeName?: string;
     itemCode?: string;
     itemValue?: string;
+    dataCode?: string;
+    dataName?: string;
+    parentId?: Id;
     label: string;
     remark?: string;
     sort?: number;
@@ -100,12 +112,12 @@ export namespace SystemDictApi {
 
   /** 更新字典数据参数 */
   export interface UpdateDictDataParams extends CreateDictDataParams {
-    id: DictId;
+    id: Id;
   }
 }
 
 function normalizeDictPayload<
-  T extends Partial<SystemDictApi.CreateDictParams> & Record<string, any>,
+  T extends Partial<SystemDictApi.CreateDictTypeParams> & Record<string, any>,
 >(data: T) {
   const name = data.name ?? data.dictName;
   const code = data.code ?? data.type ?? data.dictCode ?? data.dictType;
@@ -123,53 +135,64 @@ function normalizeDictPayload<
 function normalizeDictDataPayload<
   T extends Partial<SystemDictApi.CreateDictDataParams> & Record<string, any>,
 >(data: T) {
-  const value = data.value ?? data.dictValue ?? data.itemValue ?? data.itemCode;
+  const label = data.label ?? data.dataName ?? data.dictLabel ?? data.name;
+  const value =
+    data.value ?? data.dataCode ?? data.dictValue ?? data.itemValue ?? data.itemCode ?? '';
+  const dictId = data.dictId ?? data.typeId;
+  const dictType = data.dictType ?? data.typeCode;
 
   return {
     ...data,
+    dataCode: data.dataCode ?? value,
+    dataName: data.dataName ?? label,
+    dictId,
+    dictType,
+    label,
     itemCode: data.itemCode ?? value,
     itemValue: data.itemValue ?? value,
+    typeCode: data.typeCode ?? dictType,
+    typeId: data.typeId ?? dictId,
     value,
   };
 }
 
-/** 获取字典列表 */
-export async function getDictPageList(
+/**
+ * 获取字典类型分页列表
+ * @param params - 查询参数，包含分页信息和字典类型筛选条件
+ * @returns 返回字典类型分页数据
+ */
+export async function getDictTypePageList(
   params: Record<string, any> & SystemDictApi.DictPageParam,
 ) {
-  return backendClient.get<Record<string, any>>('/system/admin-api/dict/page', {
+  return backendClient.get<PageResult<SystemDictApi.DictType>>('/system/admin-api/dict/type/page', {
     params,
     responseReturn: 'body',
   });
 }
 
 /** 获取字典详情 */
-export async function getDict(id: SystemDictApi.DictId) {
-  return backendClient.get<SystemDictApi.Dict>('/system/admin-api/dict/get', {
+export async function getDictType(id: SystemDictApi.Id) {
+  return backendClient.get<SystemDictApi.DictType>('/system/admin-api/dict/type/get', {
     params: { id },
   });
 }
 
 /** 创建字典 */
-export async function createDict(data: SystemDictApi.CreateDictParams) {
-  return backendClient.post(
-    '/system/admin-api/dict/create',
-    normalizeDictPayload(data),
-    { responseReturn: 'body' },
-  );
+export async function createDictType(data: SystemDictApi.CreateDictTypeParams) {
+  return backendClient.post('/system/admin-api/dict/type/create', normalizeDictPayload(data), {
+    responseReturn: 'body',
+  });
 }
 
 /** 更新字典 */
-export async function updateDict(data: SystemDictApi.UpdateDictParams) {
-  return backendClient.post(
-    '/system/admin-api/dict/update',
-    normalizeDictPayload(data),
-    { responseReturn: 'body' },
-  );
+export async function updateDictType(data: SystemDictApi.UpdateDictTypeParams) {
+  return backendClient.post('/system/admin-api/dict/type/update', normalizeDictPayload(data), {
+    responseReturn: 'body',
+  });
 }
 
 /** 删除字典 */
-export async function deleteDict(ids: SystemDictApi.DictId[]) {
+export async function deleteDictType(ids: SystemDictApi.Id[]) {
   return backendClient.post(
     '/system/admin-api/dict/delete',
     { ids },
@@ -179,46 +202,32 @@ export async function deleteDict(ids: SystemDictApi.DictId[]) {
   );
 }
 
-/** 获取字典数据项分页 */
-export async function getDictDataPageList(
-  params: Record<string, any> & SystemDictApi.DictDataPageParam,
+/** 获取字典数据项列表（兼容旧调用） */
+export async function getDictDataList(
+  params: Record<string, any> & (SystemDictApi.DictDataListParam | SystemDictApi.DictDataPageParam),
 ) {
-  return backendClient.get<Record<string, any>>(
-    '/system/admin-api/dict/data/page',
-    {
-      params,
-      responseReturn: 'body',
-    },
-  );
-}
-
-/** 获取字典数据项列表 */
-export async function getDictDataList(dictId: SystemDictApi.DictId) {
-  return backendClient.get<SystemDictApi.DictData[]>(
-    `/system/admin-api/dict/data/${dictId}`,
-  );
+  return backendClient.get<Result<SystemDictApi.DictData[]>>('/system/admin-api/dict/data/list', {
+    params,
+    responseReturn: 'body',
+  });
 }
 
 /** 创建字典数据项 */
 export async function createDictData(data: SystemDictApi.CreateDictDataParams) {
-  return backendClient.post(
-    '/system/admin-api/dict/data/create',
-    normalizeDictDataPayload(data),
-    { responseReturn: 'body' },
-  );
+  return backendClient.post('/system/admin-api/dict/data/create', normalizeDictDataPayload(data), {
+    responseReturn: 'body',
+  });
 }
 
 /** 更新字典数据项 */
 export async function updateDictData(data: SystemDictApi.UpdateDictDataParams) {
-  return backendClient.post(
-    '/system/admin-api/dict/data/update',
-    normalizeDictDataPayload(data),
-    { responseReturn: 'body' },
-  );
+  return backendClient.post('/system/admin-api/dict/data/update', normalizeDictDataPayload(data), {
+    responseReturn: 'body',
+  });
 }
 
 /** 删除字典数据项 */
-export async function deleteDictData(ids: SystemDictApi.DictId[]) {
+export async function deleteDictData(ids: SystemDictApi.Id[]) {
   return backendClient.post(
     '/system/admin-api/dict/data/delete',
     { ids },

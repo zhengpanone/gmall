@@ -2,8 +2,7 @@ package com.zp.gmall.module.system.mapper.dict;
 
 import com.baomidou.mybatisplus.test.autoconfigure.MybatisPlusTest;
 import com.zp.gmall.framework.mybatis.config.MybatisPlusConfiguration;
-import com.zp.gmall.module.system.entity.dict.DictDO;
-import com.zp.gmall.module.system.mapper.dict.DictMapper;
+import com.zp.gmall.module.system.entity.dict.DictTypeDO;
 import lombok.extern.slf4j.Slf4j;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -28,11 +27,11 @@ import org.springframework.test.context.ActiveProfiles;
 @Slf4j
 public class DictMapperTest {
     @Autowired
-    DictMapper dictMapper;
+    DictTypeMapper dictMapper;
 
     @Test
     public void testInsert() {
-        DictDO role = DictDO.builder().id("1").dictType("管理员").build();
+        DictTypeDO role = DictTypeDO.builder().id("1").type("管理员").build();
         int insert = dictMapper.insert(role);
         log.info("是否插入成功={}", insert == 1);
 

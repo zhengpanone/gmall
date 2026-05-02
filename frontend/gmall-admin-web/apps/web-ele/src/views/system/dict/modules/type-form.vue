@@ -9,20 +9,26 @@ import { $t } from '@vben/locales';
 import { ElMessage } from 'element-plus';
 
 import { useVbenForm } from '#/adapter/form';
-import { SystemDictApi, createDict, updateDict } from '#/api/system/dict';
+import { createDictType, SystemDictApi, updateDictType } from '#/api/system/dict';
 
 const emit = defineEmits<{
   success: [];
 }>();
 
-const formData = ref<SystemDictApi.Dict>();
+const formData = ref<SystemDictApi.DictType>();
 const isEdit = computed(() => !!formData.value?.id);
 
 const schema: VbenFormSchema[] = [
   {
     component: 'Input',
-    fieldName: 'name',
-    label: $t('system.dict.name'),
+    fieldName: 'typeCode',
+    label: $t('system.dict.typeCode'),
+    rules: 'required',
+  },
+  {
+    component: 'Input',
+    fieldName: 'typeName',
+    label: $t('system.dict.typeName'),
     rules: 'required',
   },
   {
@@ -78,15 +84,15 @@ const [Drawer, drawerApi] = useVbenDrawer({
   onConfirm: onSubmit,
   onOpenChange(isOpen) {
     if (isOpen) {
-      const data = drawerApi.getData<SystemDictApi.Dict>();
+      const data = drawerApi.getData<SystemDictApi.DictType>();
       if (data?.id) {
         formData.value = data;
         formApi.setValues({
           ...data,
-          type: data.type ?? data.code ?? data.dictType,
+          type: data.type,
         });
       } else {
-        formData.value = {} as SystemDictApi.Dict;
+        formData.value = {} as SystemDictApi.DictType;
         formApi.resetForm();
       }
     }
@@ -97,18 +103,18 @@ async function onSubmit() {
   const { valid } = await formApi.validate();
   if (valid) {
     drawerApi.lock();
-    const values = await formApi.getValues();
+    const values = (await formApi.getValues()) as Record<string, any>;
     const payload = {
       ...formData.value,
       ...values,
-      code: values.type,
+      typeCode: values.typeCode,
     };
     try {
       if (formData.value?.id) {
-        await updateDict(payload as SystemDictApi.UpdateDictParams);
+        await updateDictType(payload as SystemDictApi.UpdateDictTypeParams);
         ElMessage.success($t('page.common.editSuccess'));
       } else {
-        await createDict(payload as SystemDictApi.CreateDictParams);
+        await createDictType(payload as SystemDictApi.CreateDictTypeParams);
         ElMessage.success($t('page.common.createSuccess'));
       }
       drawerApi.close();

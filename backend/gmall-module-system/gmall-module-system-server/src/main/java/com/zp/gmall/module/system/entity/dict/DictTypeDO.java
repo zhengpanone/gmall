@@ -11,14 +11,14 @@ import lombok.*;
  *
  * @author ruoyi
  */
-@TableName("sys_dict")
+@TableName("sys_dict_type")
 @Data
 @EqualsAndHashCode(callSuper = true)
 @ToString(callSuper = true)
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
-public class DictDO extends BaseDO {
+public class DictTypeDO extends BaseDO {
 
     /**
      * 字典主键
@@ -29,16 +29,16 @@ public class DictDO extends BaseDO {
     /**
      * 字典code
      */
-    private String dictCode;
+    private String code;
 
     /**
      * 字典名称
      */
-    private String dictName;
+    private String name;
     /**
      * 字典类型
      */
-    private String dictType;
+    private String type;
     /**
      * 状态
      * <p>

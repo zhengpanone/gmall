@@ -1,6 +1,7 @@
 package com.zp.gmall.module.system.entity.dict;
 
-import com.baomidou.mybatisplus.annotation.*;
+import com.baomidou.mybatisplus.annotation.TableId;
+import com.baomidou.mybatisplus.annotation.TableName;
 import com.zp.gmall.framework.common.enums.CommonStatusEnum;
 import com.zp.gmall.framework.mybatis.core.dataobject.BaseDO;
 import lombok.Data;
@@ -15,7 +16,7 @@ import lombok.EqualsAndHashCode;
 @TableName("sys_dict_data")
 @Data
 @EqualsAndHashCode(callSuper = true)
-public class DictItemDO extends BaseDO {
+public class DictDataDO extends BaseDO {
 
     /**
      * 字典数据编号
@@ -23,22 +24,19 @@ public class DictItemDO extends BaseDO {
     @TableId
     private String id;
 
-    private String dictId;
+    private String typeId;
 
-    /**
-     * 字典标签
-     */
-    private String label;
+    private String typeCode;
 
     /**
      * 字典项编码
      */
-    private String itemCode;
+    private String dataCode;
 
     /**
      * 字典项名称
      */
-    private String itemValue;
+    private String dataName;
 
     /**
      * 状态
@@ -46,18 +44,6 @@ public class DictItemDO extends BaseDO {
      * 枚举 {@link CommonStatusEnum}
      */
     private Integer status;
-    /**
-     * 颜色类型
-     * <p>
-     * 对应到 element-ui 为 default、primary、success、info、warning、danger
-     */
-    private String colorType;
-
-    /**
-     * css 样式
-     */
-    @TableField(updateStrategy = FieldStrategy.ALWAYS)
-    private String cssClass;
 
     /**
      * 备注
