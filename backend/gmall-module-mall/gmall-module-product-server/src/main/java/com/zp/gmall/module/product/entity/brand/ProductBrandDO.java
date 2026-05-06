@@ -5,6 +5,9 @@ import com.baomidou.mybatisplus.annotation.TableName;
 import com.zp.gmall.framework.mybatis.core.dataobject.BaseDO;
 import lombok.*;
 
+import java.io.Serial;
+import java.io.Serializable;
+
 /**
  * @author : zhengpanone
  * Date : 2026/4/29 22:52
@@ -17,7 +20,9 @@ import lombok.*;
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
-public class ProductBrandDO extends BaseDO {
+public class ProductBrandDO extends BaseDO implements Serializable {
+    @Serial
+    private static final long serialVersionUID = 1L;
     @TableId
     private String id;
 }

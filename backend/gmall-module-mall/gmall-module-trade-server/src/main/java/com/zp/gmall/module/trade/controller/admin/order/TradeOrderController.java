@@ -27,7 +27,6 @@ public class TradeOrderController {
     @GetMapping("/page")
     @Operation(summary = "获得交易订单分页")
     public PageResult<TradeOrderPageItemVO> getOrderPage(TradeOrderPageDTO reqVO) {
-
         return PageResult.empty();
     }
 

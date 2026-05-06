@@ -1,17 +1,17 @@
-package com.zp.gmall.module.member;
+package com.zp.gmall.module.promotion;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
 /**
- * Author : zhengpanone
- * Date : 2024/1/10 14:55
+ * @author : zhengpanone
+ * Date : 2026/4/29 23:14
  * Version : v1.0.0
  * Description:
  */
 @SpringBootApplication
-public class MemberApplication {
+public class PromotionServerApplication {
     public static void main(String[] args) {
-        SpringApplication.run(MemberApplication.class, args);
+        SpringApplication.run(PromotionServerApplication.class, args);
     }
 }

@@ -5,11 +5,10 @@
     <parent>
         <groupId>com.zp.gmall</groupId>
         <artifactId>gmall-framework</artifactId>
-        <version>1.0-SNAPSHOT</version>
+        <version>${revision}</version>
     </parent>
     <packaging>jar</packaging>
     <modelVersion>4.0.0</modelVersion>
-    <version>1.0-SNAPSHOT</version>
     <artifactId>gmall-spring-boot-starter-biz-social</artifactId>
     <name>${project.artifactId}</name>
 

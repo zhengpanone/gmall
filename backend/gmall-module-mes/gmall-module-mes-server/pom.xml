@@ -12,10 +12,9 @@
     <packaging>jar</packaging>
 
     <name>${project.artifactId}</name>
-    <version>1.0-SNAPSHOT</version>
     <description>
-        member 模块，我们放会员业务。
-        例如说：会员中心等等
+        mes 包下，制造执行系统（Manufacturing Execution System）。
+        例如说：基础数据、排班日历、设备管理、工具管理、生产管理、质量管理、仓库管理等等
     </description>
 
     <dependencies>

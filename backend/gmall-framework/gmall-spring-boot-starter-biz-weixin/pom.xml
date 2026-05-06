@@ -5,12 +5,11 @@
     <parent>
         <groupId>com.zp.gmall</groupId>
         <artifactId>gmall-framework</artifactId>
-        <version>1.0-SNAPSHOT</version>
+        <version>${revision}</version>
     </parent>
     <modelVersion>4.0.0</modelVersion>
     <artifactId>gmall-spring-boot-starter-biz-weixin</artifactId>
     <packaging>jar</packaging>
-    <version>1.0-SNAPSHOT</version>
     <name>${project.artifactId}</name>
     <description>微信拓展
         1. 基于 weixin-java-mp 库，对接微信公众号平台。目前主要解决微信公众号的支付场景。
