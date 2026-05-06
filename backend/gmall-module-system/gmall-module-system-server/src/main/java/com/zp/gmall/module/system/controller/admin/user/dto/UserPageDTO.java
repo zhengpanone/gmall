@@ -8,6 +8,7 @@ import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
 import org.springframework.format.annotation.DateTimeFormat;
 
+import java.io.Serial;
 import java.time.LocalDateTime;
 
 import static com.zp.gmall.framework.common.util.date.DateUtils.FORMAT_YEAR_MONTH_DAY_HOUR_MINUTE_SECOND;
@@ -19,6 +20,8 @@ import static com.zp.gmall.framework.common.util.date.DateUtils.FORMAT_YEAR_MONT
 @AllArgsConstructor
 @EqualsAndHashCode(callSuper = true)
 public class UserPageDTO extends PageParam {
+    @Serial
+    private static final long serialVersionUID = 1L;
 
     @Schema(description = "用户账号，模糊匹配", example = "yudao")
     private String username;

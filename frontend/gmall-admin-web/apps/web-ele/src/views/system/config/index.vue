@@ -1,8 +1,5 @@
 <script lang="ts" setup>
-import type {
-  OnActionClickParams,
-  VxeTableGridOptions,
-} from '#/adapter/vxe-table';
+import type { OnActionClickParams, VxeTableGridOptions } from '#/adapter/vxe-table';
 import type { SystemConfigApi } from '#/api/system/config';
 
 import { Page, useVbenDrawer } from '@vben/common-ui';
@@ -11,7 +8,7 @@ import { $t } from '@vben/locales';
 import { ElButton, ElMessage } from 'element-plus';
 
 import { useVbenVxeGrid } from '#/adapter/vxe-table';
-import { deleteConfig, getConfigList } from '#/api/system/config';
+import { deleteConfig, getConfigPageList } from '#/api/system/config';
 
 import { useColumns } from './data';
 import Form from './modules/form.vue';
@@ -29,8 +26,25 @@ const [Grid, gridApi] = useVbenVxeGrid({
     pagerConfig: { enabled: true },
     proxyConfig: {
       ajax: {
-        query: async () => {
-          return await getConfigList();
+        query: async ({ form, page }, formValues = {}) => {
+          const currentPage = page?.currentPage ?? 1;
+          const currentPageSize = page?.pageSize ?? 10;
+          const queryForm = {
+            ...form,
+            ...formValues,
+          } as Record<string, any>;
+          const params: SystemConfigApi.SysConfigPageParam = {
+            pageNo: currentPage,
+            pageSize: currentPageSize,
+            ...queryForm,
+          };
+          return await getConfigPageList(params).catch(() => {
+            ElMessage.error($t('common.actionMessage.queryFailed'));
+            return {
+              list: [],
+              total: 0,
+            };
+          });
         },
       },
     },
@@ -44,10 +58,7 @@ const [Grid, gridApi] = useVbenVxeGrid({
   } as VxeTableGridOptions,
 });
 
-function onActionClick({
-  code,
-  row,
-}: OnActionClickParams<SystemConfigApi.Config>) {
+function onActionClick({ code, row }: OnActionClickParams<SystemConfigApi.Config>) {
   switch (code) {
     case 'delete': {
       onDelete(row);

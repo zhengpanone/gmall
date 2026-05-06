@@ -1,9 +1,12 @@
 package com.zp.gmall.module.system.entity.permission;
 
+import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.annotation.TableName;
 import com.zp.gmall.framework.mybatis.core.dataobject.BaseDO;
 import lombok.*;
 import lombok.experimental.Accessors;
+
+import java.io.Serial;
 
 @Data
 @TableName("sys_menu")
@@ -14,6 +17,10 @@ import lombok.experimental.Accessors;
 @EqualsAndHashCode(callSuper = true)
 public class MenuDO extends BaseDO {
 
+    @Serial
+    private static final long serialVersionUID = 1L;
+
+    @TableId
     private String id;
     /**
      * 父菜单ID

@@ -6,6 +6,8 @@ import com.zp.gmall.framework.common.enums.CommonStatusEnum;
 import com.zp.gmall.framework.mybatis.core.dataobject.BaseDO;
 import lombok.*;
 
+import java.io.Serial;
+
 /**
  * 字典类型表
  *
@@ -19,6 +21,9 @@ import lombok.*;
 @NoArgsConstructor
 @AllArgsConstructor
 public class DictTypeDO extends BaseDO {
+
+    @Serial
+    private static final long serialVersionUID = 1L;
 
     /**
      * 字典主键

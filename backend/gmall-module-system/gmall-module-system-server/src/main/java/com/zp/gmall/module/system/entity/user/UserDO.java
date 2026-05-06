@@ -9,6 +9,7 @@ import lombok.*;
 import lombok.experimental.Accessors;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 
+import java.io.Serial;
 import java.time.LocalDateTime;
 
 /**
@@ -25,6 +26,9 @@ import java.time.LocalDateTime;
 @NoArgsConstructor
 @AllArgsConstructor
 public class UserDO extends TenantBaseDO {
+
+    @Serial
+    private static final long serialVersionUID = 1L;
     /**
      * 用户ID
      */

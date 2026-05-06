@@ -1,12 +1,9 @@
 package com.zp.gmall.module.system.entity.permission;
 
-import com.baomidou.mybatisplus.annotation.TableField;
 import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.annotation.TableName;
-import com.baomidou.mybatisplus.extension.handlers.JacksonTypeHandler;
 import com.zp.gmall.framework.common.enums.CommonStatusEnum;
 import com.zp.gmall.framework.tenant.core.db.TenantBaseDO;
-import com.zp.gmall.module.system.enums.permission.DataScopeEnum;
 import com.zp.gmall.module.system.enums.permission.RoleTypeEnum;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -14,7 +11,7 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 import lombok.experimental.Accessors;
 
-import java.util.Set;
+import java.io.Serial;
 
 /**
  * @author : zhengpanone
@@ -29,6 +26,9 @@ import java.util.Set;
 @NoArgsConstructor
 @AllArgsConstructor
 public class RoleDO extends TenantBaseDO {
+
+    @Serial
+    private static final long serialVersionUID = 1L;
 
     /**
      * 角色ID

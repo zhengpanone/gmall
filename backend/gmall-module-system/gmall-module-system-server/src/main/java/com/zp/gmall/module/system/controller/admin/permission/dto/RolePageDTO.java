@@ -4,6 +4,8 @@ import com.zp.gmall.framework.common.domain.dto.PageParam;
 import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.Data;
 
+import java.io.Serial;
+
 /**
  * @author : zhengpanone
  * Date : 2026/4/25 00:55
@@ -13,6 +15,9 @@ import lombok.Data;
 @Schema(name = "角色分页查询DTO", description = "管理后台 - 角色分页查询DTO")
 @Data
 public class RolePageDTO extends PageParam {
+
+    @Serial
+    private static final long serialVersionUID = 1L;
 
     @Schema(description = "角色名称")
     private String roleName;

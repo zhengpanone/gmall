@@ -1,3 +1,5 @@
+import type { PageParam, PageResult } from '#/api/core/common';
+
 import { backendClient } from '#/api/request';
 
 export namespace SystemConfigApi {
@@ -33,11 +35,23 @@ export namespace SystemConfigApi {
   export interface UpdateConfigParams extends CreateConfigParams {
     id: number;
   }
+
+  export interface SysConfigPageParam extends PageParam {
+    name?: string;
+    key?: string;
+    type?: number;
+    status?: number;
+  }
 }
 
 /** 获取配置列表 */
-export async function getConfigList() {
-  return backendClient.get<SystemConfigApi.Config[]>('/system/config/list');
+export async function getConfigPageList(
+  params: Record<string, any> & SystemConfigApi.SysConfigPageParam,
+) {
+  return backendClient.get<PageResult<SystemConfigApi.Config>>('/system/config/page', {
+    params,
+    responseReturn: 'body',
+  });
 }
 
 /** 获取配置详情 */

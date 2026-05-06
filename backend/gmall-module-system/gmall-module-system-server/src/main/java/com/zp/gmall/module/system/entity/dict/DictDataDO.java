@@ -7,6 +7,8 @@ import com.zp.gmall.framework.mybatis.core.dataobject.BaseDO;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 
+import java.io.Serial;
+
 /**
  * @author : zhengpanone
  * Date : 2026/4/15 20:51
@@ -17,6 +19,9 @@ import lombok.EqualsAndHashCode;
 @Data
 @EqualsAndHashCode(callSuper = true)
 public class DictDataDO extends BaseDO {
+
+    @Serial
+    private static final long serialVersionUID = 1L;
 
     /**
      * 字典数据编号
