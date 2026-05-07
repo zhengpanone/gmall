@@ -4,7 +4,9 @@ import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.baomidou.mybatisplus.core.toolkit.Wrappers;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
+import com.zp.gmall.framework.common.domain.dto.Ids;
 import com.zp.gmall.framework.common.domain.vo.PageResult;
+import com.zp.gmall.module.system.controller.admin.config.dto.ConfigDTO;
 import com.zp.gmall.module.system.controller.admin.config.dto.ConfigPageDTO;
 import com.zp.gmall.module.system.controller.admin.config.vo.ConfigVO;
 import com.zp.gmall.module.system.convert.config.ConfigConvertMapper;
@@ -51,4 +53,45 @@ public class ConfigServiceImpl extends ServiceImpl<ConfigMapper, ConfigDO> imple
 
         return PageResult.ok(configDOPage.getTotal(), voList);
     }
+
+    @Override
+    public ConfigVO createConfig(ConfigDTO configDTO) {
+        if (checkConfigKeyExists(configDTO.getConfigKey(), configDTO.getId())) {
+            throw new RuntimeException("参数键已存在");
+        }
+        ConfigDO config = convertMapper.convert(configDTO);
+        baseMapper.insert(config);
+        return convertMapper.convert(config);
+    }
+
+    @Override
+    public ConfigVO updateConfig(ConfigDTO configDTO) {
+        if (checkConfigKeyExists(configDTO.getConfigKey(), configDTO.getId())) {
+            throw new RuntimeException("参数键已存在");
+        }
+        ConfigDO config = convertMapper.convert(configDTO);
+        baseMapper.updateById(config);
+        return convertMapper.convert(config);
+    }
+
+    @Override
+    public void deleteConfig(Ids ids) {
+        baseMapper.deleteByIds(ids.getIds());
+    }
+
+    @Override
+    public ConfigVO getConfig(String id) {
+        ConfigDO config = baseMapper.selectById(id);
+        return convertMapper.convert(config);
+    }
+
+    public Boolean checkConfigKeyExists(String configKey, String excludeId) {
+        LambdaQueryWrapper<ConfigDO> queryWrapper = Wrappers.<ConfigDO>lambdaQuery()
+                .eq(ConfigDO::getConfigKey, configKey)
+                .eq(ConfigDO::getDeleted, 0)
+                .ne(StringUtils.isNotBlank(excludeId), ConfigDO::getId, excludeId);
+
+        return count(queryWrapper) > 0;
+    }
+
 }

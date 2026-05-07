@@ -1,7 +1,9 @@
 package com.zp.gmall.module.system.service.config;
 
 import com.baomidou.mybatisplus.extension.service.IService;
+import com.zp.gmall.framework.common.domain.dto.Ids;
 import com.zp.gmall.framework.common.domain.vo.PageResult;
+import com.zp.gmall.module.system.controller.admin.config.dto.ConfigDTO;
 import com.zp.gmall.module.system.controller.admin.config.dto.ConfigPageDTO;
 import com.zp.gmall.module.system.controller.admin.config.vo.ConfigVO;
 import com.zp.gmall.module.system.entity.config.ConfigDO;
@@ -21,4 +23,12 @@ import com.zp.gmall.module.system.entity.config.ConfigDO;
 public interface IConfigService extends IService<ConfigDO> {
 
     PageResult<ConfigVO> getConfigPage(ConfigPageDTO configPageDTO);
+
+    ConfigVO createConfig(ConfigDTO configDTO);
+
+    ConfigVO updateConfig(ConfigDTO configDTO);
+
+    void deleteConfig(Ids ids);
+
+    ConfigVO getConfig(String id);
 }

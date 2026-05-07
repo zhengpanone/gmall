@@ -1,15 +1,17 @@
 package com.zp.gmall.module.system.controller.admin.config;
 
+import com.zp.gmall.framework.common.domain.dto.Ids;
 import com.zp.gmall.framework.common.domain.vo.PageResult;
+import com.zp.gmall.framework.common.domain.vo.Result;
+import com.zp.gmall.module.system.controller.admin.config.dto.ConfigDTO;
 import com.zp.gmall.module.system.controller.admin.config.dto.ConfigPageDTO;
 import com.zp.gmall.module.system.controller.admin.config.vo.ConfigVO;
 import com.zp.gmall.module.system.service.config.IConfigService;
 import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.Parameter;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 /**
  *
@@ -31,9 +33,36 @@ public class ConfigController {
 
     private final IConfigService configService;
 
-    @PostMapping("/page")
+    @GetMapping("/page")
     @Operation(summary = "获取参数分页")
     public PageResult<ConfigVO> getConfigPage(ConfigPageDTO configPageDTO) {
         return configService.getConfigPage(configPageDTO);
     }
+
+    @PostMapping("/create")
+    @Operation(summary = "创建参数")
+    public Result<?> createConfig(@RequestBody ConfigDTO configDTO) {
+        return Result.ok(configService.createConfig(configDTO));
+    }
+
+    @PutMapping("/update")
+    @Operation(summary = "更新参数")
+    public Result<?> updateConfig(@RequestBody ConfigDTO configDTO) {
+        return Result.ok(configService.updateConfig(configDTO));
+    }
+
+    @DeleteMapping("/delete")
+    @Operation(summary = "删除参数")
+    public Result<?> deleteConfig(@RequestBody Ids ids) {
+        configService.deleteConfig(ids);
+        return Result.ok();
+    }
+
+    @GetMapping("/get")
+    @Operation(summary = "获取参数详情")
+    public Result<ConfigVO> getConfig(@Parameter(description = "角色ID", required = true, example = "1")
+                                      @RequestParam("id") String id) {
+        return Result.ok(configService.getConfig(id));
+    }
+
 }

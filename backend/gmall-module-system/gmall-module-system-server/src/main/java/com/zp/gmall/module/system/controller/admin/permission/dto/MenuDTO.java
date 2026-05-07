@@ -2,6 +2,7 @@ package com.zp.gmall.module.system.controller.admin.permission.dto;
 
 import com.fasterxml.jackson.annotation.JsonView;
 import com.zp.gmall.framework.common.domain.ViewGroup.UpdateView;
+import com.zp.gmall.framework.common.enums.CommonStatusEnum;
 import com.zp.gmall.framework.common.validation.ValidateGroup.Create;
 import com.zp.gmall.framework.common.validation.ValidateGroup.Update;
 import io.swagger.v3.oas.annotations.media.Schema;
@@ -16,6 +17,9 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 import org.hibernate.validator.constraints.Range;
 
+import java.io.Serial;
+import java.io.Serializable;
+
 /**
  * @author : zhengpanone
  * Date : 2026/4/25 22:13
@@ -27,7 +31,10 @@ import org.hibernate.validator.constraints.Range;
 @NoArgsConstructor
 @AllArgsConstructor
 @Schema(title = "菜单保存DTO", description = "菜单保存传输对象")
-public class MenuDTO {
+public class MenuDTO implements Serializable {
+
+    @Serial
+    private static final long serialVersionUID = 1L;
 
     @JsonView(UpdateView.class)
     @Schema(title = "菜单ID", description = "菜单ID", example = "1", requiredMode = RequiredMode.REQUIRED)
@@ -83,6 +90,11 @@ public class MenuDTO {
     @Schema(description = "菜单可见性", example = "true")
     private Boolean visible;
 
+    /**
+     * {@link CommonStatusEnum}
+     */
+    @NotNull(message = "菜单状态不能为空")
+    @Range(min = 0, max = 1, message = "菜单状态必须在0-1之间")
     @Schema(description = "菜单状态", example = "true")
     @Builder.Default
     private Integer status = 1;

@@ -48,7 +48,7 @@ export namespace SystemConfigApi {
 export async function getConfigPageList(
   params: Record<string, any> & SystemConfigApi.SysConfigPageParam,
 ) {
-  return backendClient.get<PageResult<SystemConfigApi.Config>>('/system/config/page', {
+  return backendClient.get<PageResult<SystemConfigApi.Config>>('/system/admin-api/config/page', {
     params,
     responseReturn: 'body',
   });
@@ -56,20 +56,20 @@ export async function getConfigPageList(
 
 /** 获取配置详情 */
 export async function getConfig(id: number) {
-  return backendClient.get<SystemConfigApi.Config>(`/system/config/${id}`);
+  return backendClient.get<SystemConfigApi.Config>(`/system/admin-api/config/${id}`);
 }
 
 /** 创建配置 */
 export async function createConfig(data: SystemConfigApi.CreateConfigParams) {
-  return backendClient.post('/system/config/create', data);
+  return backendClient.post('/system/admin-api/config/create', data);
 }
 
 /** 更新配置 */
 export async function updateConfig(data: SystemConfigApi.UpdateConfigParams) {
-  return backendClient.put('/system/config/update', data);
+  return backendClient.put('/system/admin-api/config/update', data);
 }
 
 /** 删除配置 */
 export async function deleteConfig(id: number) {
-  return backendClient.delete(`/system/config/delete/${id}`);
+  return backendClient.delete(`/system/admin-api/config/delete/${id}`);
 }
