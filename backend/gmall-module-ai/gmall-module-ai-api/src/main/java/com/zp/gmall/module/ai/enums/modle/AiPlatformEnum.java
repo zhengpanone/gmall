@@ -1,10 +1,8 @@
 package com.zp.gmall.module.ai.enums.modle;
 
-import com.zp.gmall.framework.common.core.ArrayValuable;
+import com.zp.gmall.framework.common.core.Valuable;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
-
-import java.util.Arrays;
 
 /**
  *
@@ -20,7 +18,7 @@ import java.util.Arrays;
  */
 @Getter
 @AllArgsConstructor
-public enum AiPlatformEnum implements ArrayValuable<String> {
+public enum AiPlatformEnum implements Valuable<String> {
 
     // ========== 国内平台 ==========
     TONG_YI("TongYi", "通义千问"), // 阿里
@@ -60,8 +58,6 @@ public enum AiPlatformEnum implements ArrayValuable<String> {
     private final String name;
 
 
-    public static final String[] ARRAYS = Arrays.stream(values()).map(AiPlatformEnum::getPlatform).toArray(String[]::new);
-
     public static AiPlatformEnum validatePlatform(String platform) {
         for (AiPlatformEnum platformEnum : AiPlatformEnum.values()) {
             if (platformEnum.getPlatform().equals(platform)) {
@@ -71,8 +67,9 @@ public enum AiPlatformEnum implements ArrayValuable<String> {
         throw new IllegalArgumentException("非法平台: " + platform);
     }
 
+
     @Override
-    public String[] array() {
-        return ARRAYS;
+    public String getValue() {
+        return platform;
     }
 }

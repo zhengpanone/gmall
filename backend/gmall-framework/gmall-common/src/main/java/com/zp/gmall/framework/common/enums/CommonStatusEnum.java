@@ -1,7 +1,6 @@
 package com.zp.gmall.framework.common.enums;
 
-import cn.hutool.core.util.ObjUtil;
-import com.zp.gmall.framework.common.core.IntArrayValuable;
+import com.zp.gmall.framework.common.core.Valuable;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 
@@ -14,46 +13,39 @@ import java.util.Arrays;
  */
 @Getter
 @AllArgsConstructor
-public enum CommonStatusEnum implements IntArrayValuable {
+public enum CommonStatusEnum implements Valuable<String> {
 
-    ENABLE(1, "开启"),
-    DISABLE(0, "关闭");
-
-    public static final int[] ARRAYS = Arrays.stream(values()).mapToInt(CommonStatusEnum::getStatus).toArray();
+    ENABLE("1", "开启"),
+    DISABLE("0", "关闭");
 
     /**
-     * 状态值
+     * 枚举值
      */
-    private final Integer status;
+    private final String value;
     /**
-     * 状态名
+     * 枚举描述
      */
-    private final String name;
+    private final String label;
 
     @Override
-    public int[] array() {
-        return ARRAYS;
+    public String getValue() {
+        return value;
     }
 
-    public static boolean isEnable(Integer status) {
-        return ObjUtil.equal(ENABLE.status, status);
+    public static boolean isEnable(String value) {
+        return ENABLE.value.equals(value);
     }
 
-    public static boolean isDisable(Integer status) {
-        return ObjUtil.equal(DISABLE.status, status);
+    public static boolean isDisable(String value) {
+        return DISABLE.value.equals(value);
     }
 
-    /**
-     * 根据status获取消息
-     *
-     * @param status 状态值
-     * @return 消息
-     */
-    public static String getMessageByStatus(Integer status) {
+    public static String getLabelByValue(String value) {
+
         return Arrays.stream(values())
-                .filter(e -> e.getStatus().equals(status))
+                .filter(item -> item.value.equals(value))
                 .findFirst()
-                .map(CommonStatusEnum::getName)
+                .map(CommonStatusEnum::getLabel)
                 .orElse("");
     }
 

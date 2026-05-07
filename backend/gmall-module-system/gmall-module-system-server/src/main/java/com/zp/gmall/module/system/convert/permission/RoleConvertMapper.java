@@ -51,7 +51,7 @@ public interface RoleConvertMapper {
     default void fillComputedFields(@MappingTarget RoleVO roleVO) {
         // 设置状态名称
         if (roleVO.getStatus() != null) {
-            roleVO.setStatusName(CommonStatusEnum.getMessageByStatus(roleVO.getStatus()));
+            roleVO.setStatusName(CommonStatusEnum.getLabelByValue(roleVO.getStatus()));
         }
         // 设置角色类型名称
         if (roleVO.getRoleType() != null) {

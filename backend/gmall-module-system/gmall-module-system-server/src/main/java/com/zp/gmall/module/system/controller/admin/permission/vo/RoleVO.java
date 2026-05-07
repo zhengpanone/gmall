@@ -35,7 +35,7 @@ public class RoleVO {
     private Integer sort;
 
     @Schema(description = "角色状态", example = "0")
-    private Integer status;
+    private String status;
 
     @Schema(description = "角色状态名称", example = "正常")
     private String statusName;

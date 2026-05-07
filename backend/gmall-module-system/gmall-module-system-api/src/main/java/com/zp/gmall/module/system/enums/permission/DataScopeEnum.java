@@ -1,10 +1,8 @@
 package com.zp.gmall.module.system.enums.permission;
 
-import com.zp.gmall.framework.common.core.IntArrayValuable;
+import com.zp.gmall.framework.common.core.Valuable;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
-
-import java.util.Arrays;
 
 /**
  * Author : zhengpanone
@@ -15,26 +13,24 @@ import java.util.Arrays;
  */
 @Getter
 @AllArgsConstructor
-public enum DataScopeEnum implements IntArrayValuable {
+public enum DataScopeEnum implements Valuable<String> {
     // 全部数据权限
-    ALL(1),
+    ALL("1"),
     // 指定部门数据权限
-    DEPT_CUSTOM(2),
+    DEPT_CUSTOM("2"),
     // 部门数据权限
-    DEPT_ONLY(3),
+    DEPT_ONLY("3"),
     // 部门及以下数据权限
-    DEPT_AND_CHILD(4),
+    DEPT_AND_CHILD("4"),
     // 仅本人数据权限
-    SELF(5);
+    SELF("5");
     /**
      * 范围
      */
-    private final Integer scope;
-
-    public static final int[] ARRAYS = Arrays.stream(values()).mapToInt(DataScopeEnum::getScope).toArray();
+    private final String scope;
 
     @Override
-    public int[] array() {
-        return ARRAYS;
+    public String getValue() {
+        return scope;
     }
 }

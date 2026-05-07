@@ -1,10 +1,8 @@
 package com.zp.gmall.module.promotion.enums.banner;
 
-import com.zp.gmall.framework.common.core.ArrayValuable;
+import com.zp.gmall.framework.common.core.Valuable;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
-
-import java.util.Arrays;
 
 /**
  * @author : zhengpanone
@@ -14,27 +12,27 @@ import java.util.Arrays;
  */
 @AllArgsConstructor
 @Getter
-public enum BannerPositionEnum implements ArrayValuable<Integer> {
-    HOME_POSITION(1, "首页"),
-    SECKILL_POSITION(2, "秒杀活动页"),
-    COMBINATION_POSITION(3, "砍价活动页"),
-    DISCOUNT_POSITION(4, "限时折扣页"),
-    REWARD_POSITION(5, "满减送页");
+public enum BannerPositionEnum implements Valuable<String> {
+    HOME_POSITION("1", "首页"),
+    SECKILL_POSITION("2", "秒杀活动页"),
+    COMBINATION_POSITION("3", "砍价活动页"),
+    DISCOUNT_POSITION("4", "限时折扣页"),
+    REWARD_POSITION("5", "满减送页");
 
-    public static final Integer[] ARRAYS = Arrays.stream(values()).map(BannerPositionEnum::getPosition).toArray(Integer[]::new);
 
     /**
      * 值
      */
-    private final Integer position;
+    private final String position;
 
     /**
      * 名称
      */
     private final String name;
 
+
     @Override
-    public Integer[] array() {
-        return ARRAYS;
+    public String getValue() {
+        return position;
     }
 }

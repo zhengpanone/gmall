@@ -1,7 +1,6 @@
 package com.zp.gmall.framework.common.enums;
 
-import cn.hutool.core.util.ArrayUtil;
-import com.zp.gmall.framework.common.core.IntArrayValuable;
+import com.zp.gmall.framework.common.core.Valuable;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 
@@ -14,33 +13,28 @@ import java.util.Arrays;
  */
 @Getter
 @AllArgsConstructor
-public enum DateIntervalEnum implements IntArrayValuable {
+public enum DateIntervalEnum implements Valuable<String> {
 
-    DAY(1, "天"),
-    WEEK(2, "周"),
-    MONTH(3, "月"),
-    QUARTER(4, "季度"),
-    YEAR(5, "年")
-    ;
+    DAY("1", "天"),
+    WEEK("2", "周"),
+    MONTH("3", "月"),
+    QUARTER("4", "季度"),
+    YEAR("5", "年");
 
-    public static final int[] ARRAYS = Arrays.stream(values()).mapToInt(DateIntervalEnum::getInterval).toArray();
+    public static final String[] ARRAYS = Arrays.stream(values()).map(DateIntervalEnum::getInterval).toArray(String[]::new);
 
     /**
      * 类型
      */
-    private final Integer interval;
+    private final String interval;
     /**
      * 名称
      */
     private final String name;
 
     @Override
-    public int[] array() {
-        return ARRAYS;
-    }
-
-    public static DateIntervalEnum valueOf(Integer interval) {
-        return ArrayUtil.firstMatch(item -> item.getInterval().equals(interval), DateIntervalEnum.values());
+    public String getValue() {
+        return interval;
     }
 
 }

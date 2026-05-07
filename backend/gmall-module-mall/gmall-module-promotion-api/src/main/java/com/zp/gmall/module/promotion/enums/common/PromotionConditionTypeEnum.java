@@ -1,10 +1,8 @@
 package com.zp.gmall.module.promotion.enums.common;
 
-import com.zp.gmall.framework.common.core.ArrayValuable;
+import com.zp.gmall.framework.common.core.Valuable;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
-
-import java.util.Arrays;
 
 /**
  * @author : zhengpanone
@@ -14,25 +12,23 @@ import java.util.Arrays;
  */
 @AllArgsConstructor
 @Getter
-public enum PromotionConditionTypeEnum implements ArrayValuable<Integer> {
-    PRICE(10, "满 N 元"),
-    COUNT(20, "满 N 件");
+public enum PromotionConditionTypeEnum implements Valuable<String> {
+    PRICE("10", "满 N 元"),
+    COUNT("20", "满 N 件");
 
-    public static final Integer[] ARRAYS = Arrays.stream(values()).map(PromotionConditionTypeEnum::getType).toArray(Integer[]::new);
     /**
      * 类型值
      */
-    private final Integer type;
+    private final String type;
 
     /**
      * 类型名
      */
     private final String name;
 
-    @Override
-    public Integer[]
 
-    array() {
-        return ARRAYS;
+    @Override
+    public String getValue() {
+        return type;
     }
 }

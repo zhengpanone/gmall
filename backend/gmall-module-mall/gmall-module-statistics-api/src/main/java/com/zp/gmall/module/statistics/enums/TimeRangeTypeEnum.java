@@ -1,10 +1,8 @@
 package com.zp.gmall.module.statistics.enums;
 
-import com.zp.gmall.framework.common.core.ArrayValuable;
+import com.zp.gmall.framework.common.core.Valuable;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
-
-import java.util.Arrays;
 
 /**
  * @author : zhengpanone
@@ -14,36 +12,36 @@ import java.util.Arrays;
  */
 @AllArgsConstructor
 @Getter
-public enum TimeRangeTypeEnum implements ArrayValuable<Integer> {
+public enum TimeRangeTypeEnum implements Valuable<String> {
 
     /**
      * 天
      */
-    DAY(1),
+    DAY("1"),
     /**
      * 周
      */
-    WEEK(7),
+    WEEK("7"),
     /**
      * 月
      */
-    MONTH(30),
+    MONTH("30"),
     /**
      * 年
      */
-    YEAR(365),
+    YEAR("365"),
     ;
 
-    public static final Integer[] ARRAYS = Arrays.stream(values()).map(TimeRangeTypeEnum::getType).toArray(Integer[]::new);
 
     /**
      * 类型
      */
-    private final Integer type;
+    private final String type;
+
 
     @Override
-    public Integer[] array() {
-        return ARRAYS;
+    public String getValue() {
+        return type;
     }
 
 }

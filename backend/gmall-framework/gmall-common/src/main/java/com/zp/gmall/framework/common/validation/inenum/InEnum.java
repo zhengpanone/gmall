@@ -1,11 +1,8 @@
 package com.zp.gmall.framework.common.validation.inenum;
 
-import com.zp.gmall.framework.common.core.IntArrayValuable;
-
-import java.lang.annotation.Documented;
-
 import jakarta.validation.Constraint;
 import jakarta.validation.Payload;
+
 import java.lang.annotation.*;
 
 @Target({
@@ -24,11 +21,29 @@ import java.lang.annotation.*;
 public @interface InEnum {
 
     /**
-     * @return 实现 EnumValuable 接口的
+     * 枚举类型
      */
-    Class<? extends IntArrayValuable> value();
+    Class<? extends Enum<?>> enumClass();
 
-    String message() default "必须在指定范围 {value}";
+    /**
+     * 是否允许 null
+     */
+    boolean allowNull() default false;
+
+    /**
+     * 集合是否允许 empty
+     */
+    boolean allowEmpty() default true;
+
+    /**
+     * 是否忽略大小写
+     */
+    boolean ignoreCase() default false;
+
+    /**
+     * 错误消息
+     */
+    String message() default "参数值[{value}]不正确，可选值:[{allowed}]";
 
     Class<?>[] groups() default {};
 
