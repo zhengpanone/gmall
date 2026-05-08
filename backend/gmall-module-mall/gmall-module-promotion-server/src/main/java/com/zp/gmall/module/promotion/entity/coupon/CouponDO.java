@@ -2,6 +2,7 @@ package com.zp.gmall.module.promotion.entity.coupon;
 
 import com.zp.gmall.framework.mybatis.core.dataobject.BaseDO;
 
+import java.io.Serial;
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
 
@@ -12,6 +13,8 @@ import java.time.LocalDateTime;
  * Description: 优惠劵
  */
 public class CouponDO extends BaseDO {
+
+    @Serial
     private static final long serialVersionUID = 1L;
 
     /**

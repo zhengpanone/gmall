@@ -2,6 +2,8 @@ package com.zp.gmall.module.promotion.entity.coupon;
 
 import com.zp.gmall.framework.mybatis.core.dataobject.BaseDO;
 
+import java.io.Serial;
+
 /**
  * @author : zhengpanone
  * Date : 2026/4/30 00:53
@@ -10,4 +12,6 @@ import com.zp.gmall.framework.mybatis.core.dataobject.BaseDO;
  * 当用户领取时，会生成 {@link CouponDO} 优惠劵
  */
 public class CouponTemplateDO extends BaseDO {
+    @Serial
+    private static final long serialVersionUID = 1L;
 }

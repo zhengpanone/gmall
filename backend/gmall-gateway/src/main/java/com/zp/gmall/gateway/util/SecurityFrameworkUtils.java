@@ -25,10 +25,10 @@ public class SecurityFrameworkUtils {
 
     private static final String AUTHORIZATION_BEARER = "Bearer";
 
-    private static final String LOGIN_USER_HEADER = "login-user";
+    private static final String LOGIN_USER_HEADER = "login_user";
 
-    private static final String LOGIN_USER_ID_ATTR = "login-user-id";
-    private static final String LOGIN_USER_TYPE_ATTR = "login-user-type";
+    private static final String LOGIN_USER_ID_ATTR = "login_user_id";
+    private static final String LOGIN_USER_TYPE_ATTR = "login_user_type";
 
     private SecurityFrameworkUtils() {
     }

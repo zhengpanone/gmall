@@ -7,6 +7,7 @@ import com.zp.gmall.framework.mybatis.core.dataobject.BaseDO;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 
+import java.io.Serial;
 import java.time.LocalDateTime;
 import java.util.List;
 
@@ -21,6 +22,7 @@ import java.util.List;
 @TableName("promotion_seckill_activity")
 public class SeckillActivityDO extends BaseDO {
 
+    @Serial
     private static final long serialVersionUID = 1L;
 
     /**

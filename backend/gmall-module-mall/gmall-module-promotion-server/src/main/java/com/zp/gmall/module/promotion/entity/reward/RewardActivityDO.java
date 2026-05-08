@@ -9,6 +9,7 @@ import com.zp.gmall.framework.mybatis.core.dataobject.BaseDO;
 import com.zp.gmall.module.promotion.enums.common.PromotionConditionTypeEnum;
 import lombok.Data;
 
+import java.io.Serial;
 import java.io.Serializable;
 import java.time.LocalDateTime;
 import java.util.List;
@@ -22,6 +23,8 @@ import java.util.Map;
  */
 @TableName(value = "promotion_reward_activity")
 public class RewardActivityDO extends BaseDO {
+    @Serial
+    private static final long serialVersionUID = 1L;
     /**
      * 活动编号，主键自增
      */
@@ -33,7 +36,7 @@ public class RewardActivityDO extends BaseDO {
     private String name;
     /**
      * 状态
-     *
+     * <p>
      * 枚举 {@link CommonStatusEnum}
      */
     private Integer status;
@@ -51,13 +54,13 @@ public class RewardActivityDO extends BaseDO {
     private String remark;
     /**
      * 条件类型
-     *
+     * <p>
      * 枚举 {@link PromotionConditionTypeEnum}
      */
     private Integer conditionType;
     /**
      * 商品范围
-     *
+     * <p>
      * 枚举 {@link PromotionProductScopeEnum}
      */
     private Integer productScope;
@@ -78,9 +81,12 @@ public class RewardActivityDO extends BaseDO {
     @Data
     public static class Rule implements Serializable {
 
+        @Serial
+        private static final long serialVersionUID = 1L;
+
         /**
          * 优惠门槛
-         *
+         * <p>
          * 1. 满 N 元，单位：分
          * 2. 满 N 件
          */
@@ -99,10 +105,10 @@ public class RewardActivityDO extends BaseDO {
         private Integer point;
         /**
          * 赠送的优惠劵
-         *
+         * <p>
          * key: 优惠劵模版编号
          * value：对应的优惠券数量
-         *
+         * <p>
          * 目的：用于订单支付后赠送优惠券
          */
         private Map<Long, Integer> giveCouponTemplateCounts;

@@ -5,6 +5,8 @@ import com.zp.gmall.framework.mybatis.core.dataobject.BaseDO;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 
+import java.io.Serial;
+
 /**
  * 优惠券分类关联
  *
@@ -15,7 +17,9 @@ import lombok.EqualsAndHashCode;
 @EqualsAndHashCode(callSuper=false)
 @TableName("promotion_coupon_spu_category_relation")
 public class CouponSpuCategoryRelationDO extends BaseDO {
-	private static final long serialVersionUID = 1L;
+
+	@Serial
+    private static final long serialVersionUID = 1L;
 
     /**
      * 优惠券id

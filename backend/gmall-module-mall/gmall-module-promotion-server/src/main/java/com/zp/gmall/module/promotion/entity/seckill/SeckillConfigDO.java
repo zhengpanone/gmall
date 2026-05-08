@@ -7,6 +7,7 @@ import com.zp.gmall.framework.common.enums.CommonStatusEnum;
 import com.zp.gmall.framework.mybatis.core.dataobject.BaseDO;
 import lombok.Data;
 
+import java.io.Serial;
 import java.util.List;
 
 /**
@@ -17,6 +18,10 @@ import java.util.List;
  */
 @Data
 public class SeckillConfigDO extends BaseDO {
+
+    @Serial
+    private static final long serialVersionUID = 1L;
+
     /**
      * 编号
      */
