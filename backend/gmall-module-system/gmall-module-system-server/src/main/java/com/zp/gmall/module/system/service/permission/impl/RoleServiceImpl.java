@@ -53,7 +53,7 @@ public class RoleServiceImpl extends ServiceImpl<RoleMapper, RoleDO> implements 
         validateRoleDuplicate(roleDTO.getRoleName(), roleDTO.getRoleCode(), null, tenantId);
         RoleDO roleDO = roleConvertMapper.convert(roleDTO);
         // 设置默认状态为启用
-        roleDO.setStatus(CommonStatusEnum.ENABLE.getStatus());
+        roleDO.setStatus(CommonStatusEnum.ENABLE.getValue());
         // 设置默认排序
         if (roleDO.getSort() == null) {
             roleDO.setSort(0);

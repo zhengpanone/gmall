@@ -4,12 +4,17 @@ import com.zp.gmall.framework.common.exception.enums.GlobalErrorCodeConstants;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 
+import java.io.Serial;
+
 /**
  * 服务器异常 Exception
  */
 @Data
 @EqualsAndHashCode(callSuper = true)
 public class ServerException extends RuntimeException {
+    
+    @Serial
+    private static final long serialVersionUID = 1L;
     /**
      * 全局错误码
      *

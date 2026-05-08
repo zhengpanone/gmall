@@ -24,9 +24,10 @@
 
     <modules>
         <module>gmall-common</module>
-       <module>gmall-spring-boot-starter-web</module>
+        <module>gmall-spring-boot-starter-web</module>
         <module>gmall-spring-boot-starter-mybatis</module>
         <module>gmall-spring-boot-starter-biz-tenant</module>
+        <module>gmall-spring-boot-starter-validation</module>
         <!--        <module>gmall-spring-boot-starter-banner</module>-->
         <!--        <module>gmall-spring-boot-starter-env</module>-->
         <!--        <module>gmall-spring-boot-starter-biz-sms</module>-->
@@ -47,7 +48,7 @@
         <!--        <module>gmall-spring-boot-starter-biz-weixin</module>-->
         <!--        <module>gmall-spring-boot-starter-excel</module>-->
         <!--        <module>gmall-spring-boot-starter-job</module>-->
-        <!--        <module>gmall-spring-boot-starter-protection</module>-->
+        <module>gmall-spring-boot-starter-protection</module>
         <!--        <module>gmall-spring-boot-starter-biz-data-permission</module>-->
 
         <!--        <module>gmall-spring-boot-starter-biz-sms</module>-->

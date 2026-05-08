@@ -54,7 +54,7 @@ public class RoleDO extends TenantBaseDO {
      * <p>
      * 枚举 {@link CommonStatusEnum}
      */
-    private Integer status;
+    private String status;
     /**
      * 角色类型
      * <p>

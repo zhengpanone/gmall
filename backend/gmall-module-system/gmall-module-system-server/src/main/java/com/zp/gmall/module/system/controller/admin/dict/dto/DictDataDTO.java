@@ -1,5 +1,7 @@
 package com.zp.gmall.module.system.controller.admin.dict.dto;
 
+import com.zp.gmall.framework.common.enums.CommonStatusEnum;
+import com.zp.gmall.framework.validation.annotation.enumvalidation.InEnum;
 import io.swagger.v3.oas.annotations.media.Schema;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
@@ -41,6 +43,8 @@ public class DictDataDTO implements Serializable {
     @Schema(description = "排序不能为空", requiredMode = Schema.RequiredMode.REQUIRED, example = "yudao")
     private Integer sort;
 
+
+    @InEnum(enumClass = CommonStatusEnum.class, allowNull = false, allowEmpty = false)
     @NotNull(message = "状态不能为空")
     @Schema(description = "状态：0-禁用 1-启用", requiredMode = Schema.RequiredMode.REQUIRED, example = "yudao")
     private Integer status;

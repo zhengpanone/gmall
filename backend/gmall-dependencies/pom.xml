@@ -118,6 +118,11 @@
             <!-- 业务组件 -->
             <dependency>
                 <groupId>com.zp.gmall</groupId>
+                <artifactId>gmall-spring-boot-starter-validation</artifactId>
+                <version>${revision}</version>
+            </dependency>
+            <dependency>
+                <groupId>com.zp.gmall</groupId>
                 <artifactId>gmall-spring-boot-starter-banner</artifactId>
                 <version>${revision}</version>
             </dependency>
@@ -902,7 +907,6 @@
                 <type>pom</type>
                 <scope>import</scope>
             </dependency>
-
 
 
         </dependencies>

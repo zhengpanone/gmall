@@ -5,6 +5,8 @@ import com.zp.gmall.framework.mybatis.core.dataobject.BaseDO;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 
+import java.io.Serial;
+
 /**
  * Author : zhengpanone
  * Date : 2025/4/7 18:57
@@ -16,4 +18,9 @@ import lombok.EqualsAndHashCode;
 @Data
 @EqualsAndHashCode(callSuper = true)
 public class OAuth2ApproveDO extends BaseDO {
+
+    @Serial
+    private static final long serialVersionUID = 1L;
+
+
 }

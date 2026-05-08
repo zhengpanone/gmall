@@ -9,6 +9,7 @@ import com.zp.gmall.framework.tenant.core.db.TenantBaseDO;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 
+import java.io.Serial;
 import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Map;
@@ -23,6 +24,9 @@ import java.util.Map;
 @Data
 @EqualsAndHashCode(callSuper = true)
 public class OAuth2AccessTokenDO extends TenantBaseDO {
+
+    @Serial
+    private static final long serialVersionUID = 1L;
     /**
      * 编号，数据库递增
      */

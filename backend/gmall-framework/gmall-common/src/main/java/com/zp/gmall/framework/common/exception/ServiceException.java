@@ -5,12 +5,17 @@ import com.zp.gmall.framework.common.exception.enums.ServiceErrorCodeRange;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 
+import java.io.Serial;
+
 /**
  * 业务逻辑异常Exception
  */
 @Data
 @EqualsAndHashCode(callSuper = true)
 public final class ServiceException extends RuntimeException {
+
+    @Serial
+    private static final long serialVersionUID = 1L;
     /**
      * 业务错误码
      *

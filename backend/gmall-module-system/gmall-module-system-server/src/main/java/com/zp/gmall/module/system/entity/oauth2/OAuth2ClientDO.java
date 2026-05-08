@@ -10,6 +10,7 @@ import com.zp.gmall.module.system.enums.oauth2.OAuth2GrantTypeEnum;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 
+import java.io.Serial;
 import java.util.List;
 
 /**
@@ -22,6 +23,10 @@ import java.util.List;
 @Data
 @EqualsAndHashCode(callSuper = true)
 public class OAuth2ClientDO extends BaseDO {
+
+    @Serial
+    private static final long serialVersionUID = 1L;
+
     /**
      * 编号，数据库自增
      * <p>
