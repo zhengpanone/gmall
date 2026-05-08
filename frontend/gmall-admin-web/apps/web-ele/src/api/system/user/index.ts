@@ -4,12 +4,6 @@ import { CommonStatusEnum } from '#/api/core/common';
 import { backendClient } from '#/api/request';
 
 export namespace SystemUserApi {
-  /** 用户状态枚举 */
-  export enum UserStatusEnum {
-    DISABLED = CommonStatusEnum.DISABLED,
-    ENABLED = CommonStatusEnum.ENABLED,
-  }
-
   /** 用户信息 */
   export interface User {
     id?: number | string;
@@ -19,7 +13,7 @@ export namespace SystemUserApi {
     mobile?: string;
     avatar?: string;
     deptId?: number;
-    status: CommonStatusEnum | number | UserStatusEnum;
+    status: CommonStatusEnum | number;
     createTime?: string;
     remark?: string;
   }
@@ -50,9 +44,7 @@ export namespace SystemUserApi {
 }
 
 /** 获取用户列表 */
-export async function getUserPageList(
-  params: Record<string, any> & SystemUserApi.UserPageParam,
-) {
+export async function getUserPageList(params: Record<string, any> & SystemUserApi.UserPageParam) {
   return backendClient.get<PageResult<SystemUserApi.User>>('/system/admin-api/user/page', {
     params,
     responseReturn: 'body',

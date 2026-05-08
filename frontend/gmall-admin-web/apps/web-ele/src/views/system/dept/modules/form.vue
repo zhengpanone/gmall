@@ -9,7 +9,8 @@ import { $t } from '@vben/locales';
 import { ElMessage } from 'element-plus';
 
 import { useVbenForm } from '#/adapter/form';
-import { SystemDeptApi, createDept, getDeptOptions, updateDept } from '#/api/system/dept';
+import { CommonStatusEnum } from '#/api/core/common';
+import { createDept, getDeptOptions, type SystemDeptApi, updateDept } from '#/api/system/dept';
 
 const emit = defineEmits<{
   success: [];
@@ -69,11 +70,11 @@ const schema: VbenFormSchema[] = [
     component: 'RadioGroup',
     fieldName: 'status',
     label: $t('system.dept.status'),
-    defaultValue: SystemDeptApi.DeptStatusEnum.ENABLED,
+    defaultValue: CommonStatusEnum.ENABLED,
     componentProps: {
       options: [
-        { label: $t('common.enabled'), value: SystemDeptApi.DeptStatusEnum.ENABLED },
-        { label: $t('common.disabled'), value: SystemDeptApi.DeptStatusEnum.DISABLED },
+        { label: $t('common.enabled'), value: CommonStatusEnum.ENABLED },
+        { label: $t('common.disabled'), value: CommonStatusEnum.DISABLED },
       ],
     },
   },

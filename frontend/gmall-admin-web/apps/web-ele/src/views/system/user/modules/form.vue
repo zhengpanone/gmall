@@ -1,5 +1,6 @@
 <script lang="ts" setup>
 import type { VbenFormSchema } from '#/adapter/form';
+import type { SystemUserApi } from '#/api/system/user';
 
 import { computed, ref } from 'vue';
 
@@ -9,7 +10,8 @@ import { $t } from '@vben/locales';
 import { ElMessage } from 'element-plus';
 
 import { useVbenForm } from '#/adapter/form';
-import { SystemUserApi, createUser, updateUser } from '#/api/system/user';
+import { CommonStatusEnum } from '#/api/core/common';
+import { createUser, updateUser } from '#/api/system/user';
 
 const emit = defineEmits<{
   success: [];
@@ -48,11 +50,11 @@ const schema: VbenFormSchema[] = [
     component: 'RadioGroup',
     fieldName: 'status',
     label: $t('system.user.status'),
-    defaultValue: SystemUserApi.UserStatusEnum.ENABLED,
+    defaultValue: CommonStatusEnum.ENABLED,
     componentProps: {
       options: [
-        { label: $t('common.enabled'), value: SystemUserApi.UserStatusEnum.ENABLED },
-        { label: $t('common.disabled'), value: SystemUserApi.UserStatusEnum.DISABLED },
+        { label: $t('common.enabled'), value: CommonStatusEnum.ENABLED },
+        { label: $t('common.disabled'), value: CommonStatusEnum.DISABLED },
       ],
     },
   },

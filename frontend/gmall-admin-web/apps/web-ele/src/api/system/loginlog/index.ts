@@ -33,9 +33,7 @@ export async function getLoginLogList() {
 
 /** 获取登录日志详情 */
 export async function getLoginLog(id: number) {
-  return backendClient.get<SystemLoginLogApi.LoginLog>(
-    `/system/loginlog/${id}`,
-  );
+  return backendClient.get<SystemLoginLogApi.LoginLog>(`/system/loginlog/${id}`);
 }
 
 /** 删除登录日志 */

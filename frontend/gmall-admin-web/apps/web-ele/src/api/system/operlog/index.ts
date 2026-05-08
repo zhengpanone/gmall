@@ -35,9 +35,7 @@ export namespace SystemOperLogApi {
 
 /** 获取操作日志列表 */
 export async function getOperLogList() {
-  return backendClient.get<SystemOperLogApi.OperLog[]>(
-    '/system/operlog/list',
-  );
+  return backendClient.get<SystemOperLogApi.OperLog[]>('/system/operlog/list');
 }
 
 /** 获取操作日志详情 */

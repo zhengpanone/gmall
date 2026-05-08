@@ -4,12 +4,6 @@ import { CommonStatusEnum } from '#/api/core/common';
 import { backendClient } from '#/api/request';
 
 export namespace SystemRoleApi {
-  /** 角色状态枚举 */
-  export enum RoleStatusEnum {
-    DISABLED = CommonStatusEnum.DISABLED,
-    ENABLED = CommonStatusEnum.ENABLED,
-  }
-
   /** 角色类型枚举 */
   export enum RoleTypeEnum {
     SYSTEM = 1,
@@ -23,7 +17,7 @@ export namespace SystemRoleApi {
     roleCode: string;
     roleType: number;
     sort: number;
-    status: CommonStatusEnum | RoleStatusEnum | number;
+    status: CommonStatusEnum | number;
     statusName?: string;
     roleTypeName?: string;
     createTime?: number[] | string;

@@ -9,7 +9,13 @@ import { $t } from '@vben/locales';
 import { ElMessage } from 'element-plus';
 
 import { useVbenForm } from '#/adapter/form';
-import { createDictData, getDictDataList, SystemDictApi, updateDictData } from '#/api/system/dict';
+import { CommonStatusEnum } from '#/api/core/common';
+import {
+  createDictData,
+  getDictDataList,
+  type SystemDictApi,
+  updateDictData,
+} from '#/api/system/dict';
 
 const emit = defineEmits<{
   success: [];
@@ -83,11 +89,11 @@ const schema: VbenFormSchema[] = [
     component: 'RadioGroup',
     fieldName: 'status',
     label: $t('system.dict.status'),
-    defaultValue: SystemDictApi.DictStatusEnum.ENABLED,
+    defaultValue: CommonStatusEnum.ENABLED,
     componentProps: {
       options: [
-        { label: $t('common.enabled'), value: SystemDictApi.DictStatusEnum.ENABLED },
-        { label: $t('common.disabled'), value: SystemDictApi.DictStatusEnum.DISABLED },
+        { label: $t('common.enabled'), value: CommonStatusEnum.ENABLED },
+        { label: $t('common.disabled'), value: CommonStatusEnum.DISABLED },
       ],
     },
   },
@@ -128,7 +134,7 @@ const [Drawer, drawerApi] = useVbenDrawer({
       typeCode: dict?.typeCode,
       typeName: dict?.typeName,
       sort: 0,
-      status: SystemDictApi.DictStatusEnum.ENABLED,
+      status: CommonStatusEnum.ENABLED,
       ...record,
     });
   },

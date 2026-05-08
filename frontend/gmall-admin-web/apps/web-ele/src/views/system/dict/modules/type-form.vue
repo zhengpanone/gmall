@@ -1,5 +1,6 @@
 <script lang="ts" setup>
 import type { VbenFormSchema } from '#/adapter/form';
+import type { SystemDictApi } from '#/api/system/dict';
 
 import { computed, ref } from 'vue';
 
@@ -9,7 +10,8 @@ import { $t } from '@vben/locales';
 import { ElMessage } from 'element-plus';
 
 import { useVbenForm } from '#/adapter/form';
-import { createDictType, SystemDictApi, updateDictType } from '#/api/system/dict';
+import { CommonStatusEnum } from '#/api/core/common';
+import { createDictType, updateDictType } from '#/api/system/dict';
 
 const emit = defineEmits<{
   success: [];
@@ -51,11 +53,11 @@ const schema: VbenFormSchema[] = [
     component: 'RadioGroup',
     fieldName: 'status',
     label: $t('system.dict.status'),
-    defaultValue: SystemDictApi.DictStatusEnum.ENABLED,
+    defaultValue: CommonStatusEnum.ENABLED,
     componentProps: {
       options: [
-        { label: $t('common.enabled'), value: SystemDictApi.DictStatusEnum.ENABLED },
-        { label: $t('common.disabled'), value: SystemDictApi.DictStatusEnum.DISABLED },
+        { label: $t('common.enabled'), value: CommonStatusEnum.ENABLED },
+        { label: $t('common.disabled'), value: CommonStatusEnum.DISABLED },
       ],
     },
   },

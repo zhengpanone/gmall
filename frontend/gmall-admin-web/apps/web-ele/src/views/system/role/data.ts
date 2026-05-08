@@ -1,5 +1,6 @@
 import type { OnActionClickFn, VxeTableGridColumns } from '#/adapter/vxe-table';
 
+import { CommonStatusEnum } from '#/api/core/common';
 import { SystemRoleApi } from '#/api/system/role';
 import { $t } from '#/locales';
 
@@ -45,12 +46,12 @@ export function useColumns(
           {
             color: 'success',
             label: $t('common.enabled'),
-            value: SystemRoleApi.RoleStatusEnum.ENABLED,
+            value: CommonStatusEnum.ENABLED,
           },
           {
             color: 'danger',
             label: $t('common.disabled'),
-            value: SystemRoleApi.RoleStatusEnum.DISABLED,
+            value: CommonStatusEnum.DISABLED,
           },
         ],
       },

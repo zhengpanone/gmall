@@ -6,12 +6,6 @@ import { backendClient } from '#/api/request';
 export namespace SystemDictApi {
   export type Id = number | string;
 
-  /** 字典状态枚举 */
-  export enum DictStatusEnum {
-    DISABLED = CommonStatusEnum.DISABLED,
-    ENABLED = CommonStatusEnum.ENABLED,
-  }
-
   /** 字典类型信息 */
   export interface DictType {
     id?: Id;
@@ -19,7 +13,7 @@ export namespace SystemDictApi {
     typeName?: string;
     typeCode?: string;
     sort?: number;
-    status: CommonStatusEnum | DictStatusEnum | number;
+    status: CommonStatusEnum | number;
     createTime?: number | number[] | string;
     remark?: string;
   }

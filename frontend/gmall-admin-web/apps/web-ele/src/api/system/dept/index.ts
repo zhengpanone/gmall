@@ -4,12 +4,6 @@ import { CommonStatusEnum } from '#/api/core/common';
 import { backendClient } from '#/api/request';
 
 export namespace SystemDeptApi {
-  /** 部门状态枚举 */
-  export enum DeptStatusEnum {
-    DISABLED = CommonStatusEnum.DISABLED,
-    ENABLED = CommonStatusEnum.ENABLED,
-  }
-
   /** 部门信息 */
   export interface Dept {
     id?: number;
@@ -19,7 +13,7 @@ export namespace SystemDeptApi {
     leader?: string;
     phone?: string;
     email?: string;
-    status: CommonStatusEnum | DeptStatusEnum | number;
+    status: CommonStatusEnum | number;
     createTime?: string;
     remark?: string;
     children?: Dept[];
@@ -51,7 +45,7 @@ export namespace SystemDeptApi {
 
 /** 获取部门列表 */
 export async function getDeptPageList(params: Record<string, any> & SystemDeptApi.DeptPageParam) {
-  return backendClient.get<SystemDeptApi.Dept[]>('/system/admin-api/dept/list', {
+  return backendClient.get<SystemDeptApi.Dept[]>('/system/admin-api/dept/page', {
     params,
     // 列表接口返回结构不稳定，拿完整 body 交给页面兼容解析
     responseReturn: 'body',

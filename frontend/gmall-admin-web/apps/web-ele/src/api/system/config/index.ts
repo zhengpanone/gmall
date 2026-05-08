@@ -4,12 +4,6 @@ import { CommonStatusEnum } from '#/api/core/common';
 import { backendClient } from '#/api/request';
 
 export namespace SystemConfigApi {
-  /** 配置状态枚举 */
-  export enum ConfigStatusEnum {
-    DISABLED = CommonStatusEnum.DISABLED,
-    ENABLED = CommonStatusEnum.ENABLED,
-  }
-
   /** 配置信息 */
   export interface Config {
     id?: number;
@@ -17,7 +11,7 @@ export namespace SystemConfigApi {
     key: string;
     value: string;
     type: number;
-    status: CommonStatusEnum | ConfigStatusEnum | number;
+    status: CommonStatusEnum | number;
     createTime?: string;
     remark?: string;
   }

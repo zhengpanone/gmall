@@ -9,6 +9,7 @@ import { $t } from '@vben/locales';
 import { ElMessage } from 'element-plus';
 
 import { useVbenForm } from '#/adapter/form';
+import { CommonStatusEnum } from '#/api/core/common';
 import { SystemNoticeApi, createNotice, updateNotice } from '#/api/system/notice';
 
 const emit = defineEmits<{
@@ -41,11 +42,11 @@ const schema: VbenFormSchema[] = [
     component: 'RadioGroup',
     fieldName: 'status',
     label: $t('system.notice.status'),
-    defaultValue: SystemNoticeApi.NoticeStatusEnum.ENABLED,
+    defaultValue: CommonStatusEnum.ENABLED,
     componentProps: {
       options: [
-        { label: $t('common.enabled'), value: SystemNoticeApi.NoticeStatusEnum.ENABLED },
-        { label: $t('common.disabled'), value: SystemNoticeApi.NoticeStatusEnum.DISABLED },
+        { label: $t('common.enabled'), value: CommonStatusEnum.ENABLED },
+        { label: $t('common.disabled'), value: CommonStatusEnum.DISABLED },
       ],
     },
   },

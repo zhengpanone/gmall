@@ -9,12 +9,6 @@ export namespace SystemMenuApi {
     BUTTON = 3, // 按钮
   }
 
-  /** 菜单状态枚举 */
-  export enum MenuStatusEnum {
-    DISABLED = CommonStatusEnum.DISABLED,
-    ENABLED = CommonStatusEnum.ENABLED,
-  }
-
   /** 菜单信息 */
   export interface Menu {
     id?: number | string;
@@ -27,7 +21,7 @@ export namespace SystemMenuApi {
     icon: string;
     component: string;
     componentName?: string;
-    status: CommonStatusEnum | MenuStatusEnum | number;
+    status: CommonStatusEnum | number;
     visible: boolean;
     keepAlive: boolean;
     alwaysShow?: boolean;
@@ -86,10 +80,7 @@ export async function createMenu(data: SystemMenuApi.CreateMenuParams) {
 /**
  * 更新菜单
  */
-export async function updateMenu(
-  id: number | string,
-  data: SystemMenuApi.UpdateMenuParams,
-) {
+export async function updateMenu(id: number | string, data: SystemMenuApi.UpdateMenuParams) {
   return backendClient.put(`/system/admin-api/menu/update`, { ...data, id });
 }
 

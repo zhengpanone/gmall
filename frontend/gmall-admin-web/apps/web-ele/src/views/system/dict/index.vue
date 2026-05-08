@@ -3,6 +3,7 @@ import type { FormInstance, FormRules } from 'element-plus';
 
 import type { VbenFormSchema } from '#/adapter/form';
 import type { OnActionClickParams, VxeTableGridOptions } from '#/adapter/vxe-table';
+import type { SystemDictApi } from '#/api/system/dict';
 
 import { computed, nextTick, ref } from 'vue';
 
@@ -25,8 +26,8 @@ import {
 } from 'element-plus';
 
 import { useVbenVxeGrid } from '#/adapter/vxe-table';
+import { CommonStatusEnum } from '#/api/core/common';
 import {
-  SystemDictApi,
   createDictType,
   deleteDictData,
   deleteDictType,
@@ -57,7 +58,7 @@ const defaultDictTypeForm = (): DictTypeFormModel => ({
   typeName: '',
   type: 1,
   sort: 1,
-  status: SystemDictApi.DictStatusEnum.ENABLED,
+  status: CommonStatusEnum.ENABLED,
   remark: '',
 });
 
@@ -380,7 +381,7 @@ function openDictTypeDialog(row?: SystemDictApi.DictType) {
       typeCode: String(row.typeCode ?? ''),
       type: getDictCategory(row),
       sort: Number(row.sort ?? 0),
-      status: Number(row.status ?? SystemDictApi.DictStatusEnum.ENABLED),
+      status: Number(row.status ?? CommonStatusEnum.ENABLED),
       remark: String(row.remark ?? ''),
     };
     dictTypeFormRef.value?.clearValidate();
@@ -558,10 +559,10 @@ function onDictDataDelete(row: SystemDictApi.DictData) {
         </ElFormItem>
         <ElFormItem :label="$t('system.dict.status')" prop="status">
           <ElRadioGroup v-model="dictTypeForm.status">
-            <ElRadio :value="SystemDictApi.DictStatusEnum.ENABLED">
+            <ElRadio :value="CommonStatusEnum.ENABLED">
               {{ $t('common.enabled') }}
             </ElRadio>
-            <ElRadio :value="SystemDictApi.DictStatusEnum.DISABLED">
+            <ElRadio :value="CommonStatusEnum.DISABLED">
               {{ $t('common.disabled') }}
             </ElRadio>
           </ElRadioGroup>

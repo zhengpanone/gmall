@@ -9,6 +9,7 @@ import { $t } from '@vben/locales';
 import { ElMessage } from 'element-plus';
 
 import { useVbenForm } from '#/adapter/form';
+import { CommonStatusEnum } from '#/api/core/common';
 import { createRole, SystemRoleApi, updateRole } from '#/api/system/role';
 
 const emit = defineEmits<{
@@ -62,16 +63,16 @@ const schema: VbenFormSchema[] = [
     component: 'RadioGroup',
     fieldName: 'status',
     label: $t('system.role.status'),
-    defaultValue: SystemRoleApi.RoleStatusEnum.ENABLED,
+    defaultValue: CommonStatusEnum.ENABLED,
     componentProps: {
       options: [
         {
           label: $t('common.enabled'),
-          value: SystemRoleApi.RoleStatusEnum.ENABLED,
+          value: CommonStatusEnum.ENABLED,
         },
         {
           label: $t('common.disabled'),
-          value: SystemRoleApi.RoleStatusEnum.DISABLED,
+          value: CommonStatusEnum.DISABLED,
         },
       ],
     },
