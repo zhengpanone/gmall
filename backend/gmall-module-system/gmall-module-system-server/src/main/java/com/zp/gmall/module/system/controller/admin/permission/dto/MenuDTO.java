@@ -3,8 +3,8 @@ package com.zp.gmall.module.system.controller.admin.permission.dto;
 import com.fasterxml.jackson.annotation.JsonView;
 import com.zp.gmall.framework.common.domain.ViewGroup.UpdateView;
 import com.zp.gmall.framework.common.enums.CommonStatusEnum;
-import com.zp.gmall.framework.common.validation.ValidateGroup.Create;
-import com.zp.gmall.framework.common.validation.ValidateGroup.Update;
+import com.zp.gmall.framework.validation.group.CreateGroup;
+import com.zp.gmall.framework.validation.group.UpdateGroup;
 import io.swagger.v3.oas.annotations.media.Schema;
 import io.swagger.v3.oas.annotations.media.Schema.RequiredMode;
 import jakarta.validation.constraints.NotBlank;
@@ -38,11 +38,11 @@ public class MenuDTO implements Serializable {
 
     @JsonView(UpdateView.class)
     @Schema(title = "菜单ID", description = "菜单ID", example = "1", requiredMode = RequiredMode.REQUIRED)
-    @NotNull(message = "菜单ID不能为空", groups = Update.class)
+    @NotNull(message = "菜单ID不能为空", groups = UpdateGroup.class)
     private String id;
 
-    @NotBlank(message = "父菜单ID不能为空", groups = {Create.class, Update.class})
-    @Size(max = 36, message = "父菜单ID长度不能超过36个字符", groups = {Create.class, Update.class})
+    @NotBlank(message = "父菜单ID不能为空", groups = {CreateGroup.class, UpdateGroup.class})
+    @Size(max = 36, message = "父菜单ID长度不能超过36个字符", groups = {CreateGroup.class, UpdateGroup.class})
     @Schema(title = "父菜单ID", description = "父菜单ID", example = "0")
     private String parentId;
     /**

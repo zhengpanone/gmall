@@ -2,22 +2,37 @@
 <project xmlns="http://maven.apache.org/POM/4.0.0"
          xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
-    <modelVersion>4.0.0</modelVersion>
     <parent>
         <groupId>com.zp.gmall</groupId>
         <artifactId>gmall-framework</artifactId>
         <version>${revision}</version>
     </parent>
-    <artifactId>gmall-spring-boot-starter-web</artifactId>
+    <modelVersion>4.0.0</modelVersion>
+    <artifactId>gmall-spring-boot-starter-validation</artifactId>
     <packaging>jar</packaging>
+
     <name>${project.artifactId}</name>
-    <description>Web 框架，全局异常、API 日志、脱敏、错误码等</description>
+    <description>
+
+    </description>
+    <url>https://github.com/YunaiV/ruoyi-vue-pro</url>
 
     <dependencies>
         <dependency>
             <groupId>com.zp.gmall</groupId>
             <artifactId>gmall-common</artifactId>
         </dependency>
+
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-validation</artifactId>
+        </dependency>
+
+        <dependency>
+            <groupId>org.springframework</groupId>
+            <artifactId>spring-web</artifactId>
+        </dependency>
+
         <!-- Spring Boot 配置所需依赖 -->
         <dependency>
             <groupId>org.springframework.boot</groupId>
@@ -25,21 +40,10 @@
             <optional>true</optional>
         </dependency>
 
-        <!-- Web 相关 -->
         <dependency>
             <groupId>org.springframework.boot</groupId>
-            <artifactId>spring-boot-starter-web</artifactId>
-        </dependency>
-
-        <dependency>
-            <groupId>com.zp.gmall</groupId>
-            <artifactId>gmall-spring-boot-starter-validation</artifactId>
-        </dependency>
-
-        <dependency>
-            <groupId>org.springframework.cloud</groupId>
-            <artifactId>spring-cloud-commons</artifactId>
-            <scope>provided</scope>
+            <artifactId>spring-boot-starter-test</artifactId>
+            <scope>test</scope>
         </dependency>
 
     </dependencies>

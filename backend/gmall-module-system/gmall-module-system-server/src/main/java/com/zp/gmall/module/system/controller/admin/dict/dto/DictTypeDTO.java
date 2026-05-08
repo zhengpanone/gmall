@@ -3,7 +3,8 @@ package com.zp.gmall.module.system.controller.admin.dict.dto;
 import com.fasterxml.jackson.annotation.JsonView;
 import com.zp.gmall.framework.common.domain.ViewGroup;
 import com.zp.gmall.framework.common.enums.CommonStatusEnum;
-import com.zp.gmall.framework.common.validation.ValidateGroup;
+import com.zp.gmall.framework.validation.group.CreateGroup;
+import com.zp.gmall.framework.validation.group.UpdateGroup;
 import io.swagger.v3.oas.annotations.media.Schema;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
@@ -28,7 +29,7 @@ public class DictTypeDTO implements Serializable {
 
     @JsonView(ViewGroup.UpdateView.class)
     @Schema(description = "字典ID", example = "1")
-    @NotNull(message = "字典ID不能为空", groups = ValidateGroup.Update.class)
+    @NotNull(message = "字典ID不能为空", groups = UpdateGroup.class)
     private String id;
 
     @NotBlank(message = "字典类型编码不能为空")

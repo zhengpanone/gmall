@@ -3,8 +3,8 @@ package com.zp.gmall.module.ai.controller.admin.model.dto;
 import com.fasterxml.jackson.annotation.JsonView;
 import com.zp.gmall.framework.common.domain.ViewGroup.CreateView;
 import com.zp.gmall.framework.common.domain.ViewGroup.UpdateView;
-import com.zp.gmall.framework.common.validation.ValidateGroup.Create;
-import com.zp.gmall.framework.common.validation.ValidateGroup.Update;
+import com.zp.gmall.framework.validation.group.CreateGroup;
+import com.zp.gmall.framework.validation.group.UpdateGroup;
 import io.swagger.v3.oas.annotations.media.Schema;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
@@ -35,36 +35,36 @@ public class AiApiKeyDTO {
 
     @JsonView(UpdateView.class)
     @Schema(title = "API密钥ID", description = "API密钥ID", example = "1", requiredMode = Schema.RequiredMode.REQUIRED)
-    @NotNull(message = "API密钥ID不能为空", groups = Update.class)
+    @NotNull(message = "API密钥ID不能为空", groups = UpdateGroup.class)
     private String id;
 
     @JsonView({CreateView.class, UpdateView.class})
     @Schema(title = "API密钥名称", description = "API密钥名称", example = "测试密钥", requiredMode = Schema.RequiredMode.REQUIRED)
-    @NotBlank(message = "API密钥名称不能为空", groups = {Create.class, Update.class})
-    @Size(max = 32, message = "API密钥名称长度不能超过32个字符", groups = {Create.class, Update.class})
+    @NotBlank(message = "API密钥名称不能为空", groups = {CreateGroup.class, UpdateGroup.class})
+    @Size(max = 32, message = "API密钥名称长度不能超过32个字符", groups = {CreateGroup.class, UpdateGroup.class})
     private String apiKeyName;
 
     @Schema(title = "API密钥", description = "API密钥", example = "<KEY>", requiredMode = Schema.RequiredMode.REQUIRED)
-    @NotBlank(message = "API密钥不能为空", groups = {Create.class, Update.class})
-    @Size(max = 32, message = "API密钥长度不能超过32个字符", groups = {Create.class, Update.class})
+    @NotBlank(message = "API密钥不能为空", groups = {CreateGroup.class, UpdateGroup.class})
+    @Size(max = 32, message = "API密钥长度不能超过32个字符", groups = {CreateGroup.class, UpdateGroup.class})
     private String apiKey;
 
     @Schema(title = "平台", description = "平台", example = "1", requiredMode = Schema.RequiredMode.REQUIRED)
-    @NotBlank(message = "平台不能为空", groups = {Create.class, Update.class})
-    @Size(max = 32, message = "平台长度不能超过32个字符", groups = {Create.class, Update.class})
+    @NotBlank(message = "平台不能为空", groups = {CreateGroup.class, UpdateGroup.class})
+    @Size(max = 32, message = "平台长度不能超过32个字符", groups = {CreateGroup.class, UpdateGroup.class})
     private String platform;
 
     @Schema(title = "URL", description = "URL", example = "https://www.baidu.com", requiredMode = Schema.RequiredMode.REQUIRED)
-    @NotBlank(message = "URL不能为空", groups = {Create.class, Update.class})
-    @Size(max = 255, message = "URL长度不能超过255个字符", groups = {Create.class, Update.class})
+    @NotBlank(message = "URL不能为空", groups = {CreateGroup.class, UpdateGroup.class})
+    @Size(max = 255, message = "URL长度不能超过255个字符", groups = {CreateGroup.class, UpdateGroup.class})
     private String url;
 
     @Schema(title = "状态", description = "状态", example = "1", requiredMode = Schema.RequiredMode.REQUIRED)
-    @NotBlank(message = "状态不能为空", groups = {Create.class, Update.class})
-    @Size(max = 32, message = "状态长度不能超过32个字符", groups = {Create.class, Update.class})
+    @NotBlank(message = "状态不能为空", groups = {CreateGroup.class, UpdateGroup.class})
+    @Size(max = 32, message = "状态长度不能超过32个字符", groups = {CreateGroup.class, UpdateGroup.class})
     private String status;
 
     @Schema(title = "备注", description = "备注", example = "测试备注")
-    @Size(max = 255, message = "备注长度不能超过255个字符", groups = {Create.class, Update.class})
+    @Size(max = 255, message = "备注长度不能超过255个字符", groups = {CreateGroup.class, UpdateGroup.class})
     private String remark;
 }

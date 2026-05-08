@@ -3,8 +3,8 @@ package com.zp.gmall.module.system.controller.admin.permission;
 import com.zp.gmall.framework.common.domain.dto.Ids;
 import com.zp.gmall.framework.common.domain.vo.PageResult;
 import com.zp.gmall.framework.common.domain.vo.Result;
-import com.zp.gmall.framework.common.validation.ValidateGroup.Create;
-import com.zp.gmall.framework.common.validation.ValidateGroup.Update;
+import com.zp.gmall.framework.validation.group.CreateGroup;
+import com.zp.gmall.framework.validation.group.UpdateGroup;
 import com.zp.gmall.module.system.controller.admin.permission.dto.RoleDTO;
 import com.zp.gmall.module.system.controller.admin.permission.dto.RolePageDTO;
 import com.zp.gmall.module.system.controller.admin.permission.vo.RoleVO;
@@ -36,14 +36,14 @@ public class RoleController {
 
     @PostMapping("/create")
     @Operation(summary = "新增角色")
-    public Result<?> createRole(@RequestBody @Validated(Create.class) @Valid RoleDTO roleDTO) {
+    public Result<?> createRole(@RequestBody @Validated(CreateGroup.class) @Valid RoleDTO roleDTO) {
         roleService.createRole(roleDTO);
         return Result.ok();
     }
 
     @PutMapping("/update")
     @Operation(summary = "更新角色")
-    public Result<?> updateRole(@RequestBody @Validated(Update.class) @Valid RoleDTO roleDTO) {
+    public Result<?> updateRole(@RequestBody @Validated(UpdateGroup.class) @Valid RoleDTO roleDTO) {
         roleService.updateRole(roleDTO);
         return Result.ok();
     }
