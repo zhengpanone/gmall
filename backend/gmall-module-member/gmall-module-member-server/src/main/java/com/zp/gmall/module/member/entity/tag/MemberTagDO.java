@@ -28,4 +28,15 @@ public class MemberTagDO extends BaseDO {
      * 标签名称
      */
     private String name;
+
+    /**
+     * 标签类型
+     * 0未知 1用户标签 2商品标签
+     */
+    private String type;
+
+    /**
+     * 状态
+     */
+    private String status;
 }

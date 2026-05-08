@@ -2,10 +2,12 @@ package com.zp.gmall.module.member.controller.admin.tag;
 
 import com.zp.gmall.framework.common.domain.vo.Result;
 import com.zp.gmall.module.member.controller.admin.tag.dto.MemberTagDTO;
+import com.zp.gmall.module.member.service.tag.IMemberTagService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.Parameter;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
+import lombok.RequiredArgsConstructor;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
@@ -20,7 +22,10 @@ import org.springframework.web.bind.annotation.*;
 @RestController
 @RequestMapping("/tag")
 @Validated
+@RequiredArgsConstructor
 public class MemberTagController {
+
+    private final IMemberTagService memberTagService;
 
     @PostMapping("/create")
     @Operation(summary = "创建会员标签")
