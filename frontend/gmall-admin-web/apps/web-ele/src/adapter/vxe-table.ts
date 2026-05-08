@@ -14,7 +14,16 @@ import {
 import { isFunction, isString } from '@vben/utils';
 
 import { objectOmit } from '@vueuse/core';
-import { ElButton, ElImage, ElMessageBox, ElPopconfirm,ElSwitch,ElTag } from 'element-plus';
+import {
+  ElButton,
+  ElImage,
+  ElMessageBox,
+  ElPopconfirm,
+  ElSwitch,
+  ElTag,
+} from 'element-plus';
+
+import { CommonStatusEnum } from '#/api/core/common';
 
 import { useVbenForm } from './form';
 
@@ -78,8 +87,16 @@ setupVbenVxeTable({
       renderTableDefault({ options, props }, { column, row }) {
         const value = row[column.field];
         const tagOptions = options ?? [
-          { color: 'success', label: $t('common.enabled'), value: 1 },
-          { color: 'danger', label: $t('common.disabled'), value: 0 },
+          {
+            color: 'success',
+            label: $t('common.enabled'),
+            value: CommonStatusEnum.ENABLED,
+          },
+          {
+            color: 'danger',
+            label: $t('common.disabled'),
+            value: CommonStatusEnum.DISABLED,
+          },
         ];
         const tagItem = tagOptions.find((item) => item.value === value);
         return h(

@@ -69,11 +69,11 @@ const schema: VbenFormSchema[] = [
     component: 'RadioGroup',
     fieldName: 'status',
     label: $t('system.dept.status'),
-    defaultValue: 1,
+    defaultValue: SystemDeptApi.DeptStatusEnum.ENABLED,
     componentProps: {
       options: [
-        { label: $t('common.enabled'), value: 1 },
-        { label: $t('common.disabled'), value: 0 },
+        { label: $t('common.enabled'), value: SystemDeptApi.DeptStatusEnum.ENABLED },
+        { label: $t('common.disabled'), value: SystemDeptApi.DeptStatusEnum.DISABLED },
       ],
     },
   },
@@ -112,11 +112,14 @@ async function onSubmit() {
     const values = await formApi.getValues();
     try {
       if (formData.value?.id) {
-        await updateDept(values as SystemDeptApi.UpdateDeptParams);
-        ElMessage.success($t('page.common.editSuccess'));
+        await updateDept({
+          ...(values as SystemDeptApi.UpdateDeptParams),
+          id: formData.value.id,
+        });
+        ElMessage.success($t('common.actionMessage.editSuccess'));
       } else {
         await createDept(values as SystemDeptApi.CreateDeptParams);
-        ElMessage.success($t('page.common.createSuccess'));
+        ElMessage.success($t('common.actionMessage.createSuccess'));
       }
       drawerApi.close();
       emit('success');
@@ -128,8 +131,8 @@ async function onSubmit() {
 
 const getDrawerTitle = computed(() =>
   isEdit.value
-    ? $t('page.common.editItem', [$t('system.dept.deptManage')])
-    : $t('page.common.createItem', [$t('system.dept.deptManage')]),
+    ? $t('common.actionMessage.editItem', [$t('system.dept.deptManage')])
+    : $t('common.actionMessage.createItem', [$t('system.dept.deptManage')]),
 );
 </script>
 

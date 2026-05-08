@@ -1,3 +1,5 @@
+import { CommonStatusEnum } from '#/api/core/common';
+
 // ========== SYSTEM 模块 ==========
 /**
  * 菜单的类型枚举
@@ -21,6 +23,6 @@ export const SystemMenuTypeOptions = [
  * 菜单状态选项
  */
 export const SystemMenuStatusOptions = [
-  { label: '启用', value: 1, color: 'success' },
-  { label: '禁用', value: 0, color: 'default' },
+  { label: '启用', value: CommonStatusEnum.ENABLED, color: 'success' },
+  { label: '禁用', value: CommonStatusEnum.DISABLED, color: 'default' },
 ];

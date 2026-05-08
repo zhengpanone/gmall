@@ -23,20 +23,6 @@ const roleTypeOptions = [
   { label: $t('system.role.type2'), value: SystemRoleApi.RoleTypeEnum.CUSTOM },
 ];
 
-function getBizErrorMessage(response: any) {
-  if (!response || typeof response !== 'object') return '';
-  return response.msg || response.message || response.error || '';
-}
-
-function isBizSuccess(response: any) {
-  // 兼容后端只返回 {} 的场景：无 code 字段时按成功处理
-  if (!response || typeof response !== 'object' || !('code' in response)) {
-    return true;
-  }
-  const code = Number((response as any).code);
-  return code === 0 || code === 200;
-}
-
 const schema: VbenFormSchema[] = [
   {
     component: 'Input',
@@ -134,29 +120,19 @@ async function onSubmit() {
     const values = await formApi.getValues();
     try {
       if (formData.value?.id) {
-        const resp = await updateRole({
+        await updateRole({
           ...(values as SystemRoleApi.UpdateRoleParams),
           id: formData.value.id,
         });
-        if (!isBizSuccess(resp)) {
-          ElMessage.error(
-            getBizErrorMessage(resp) || $t('ui.actionMessage.operationFailed'),
-          );
-          return;
-        }
-        ElMessage.success($t('page.common.editSuccess'));
+        ElMessage.success($t('common.actionMessage.editSuccess'));
       } else {
-        const resp = await createRole(values as SystemRoleApi.CreateRoleParams);
-        if (!isBizSuccess(resp)) {
-          ElMessage.error(
-            getBizErrorMessage(resp) || $t('ui.actionMessage.operationFailed'),
-          );
-          return;
-        }
-        ElMessage.success($t('page.common.createSuccess'));
+        await createRole(values as SystemRoleApi.CreateRoleParams);
+        ElMessage.success($t('common.actionMessage.createSuccess'));
       }
       drawerApi.close();
       emit('success');
+    } catch (error) {
+      // 全局错误拦截器会展示接口返回的消息，无需再次提示
     } finally {
       drawerApi.unlock();
     }
@@ -165,8 +141,8 @@ async function onSubmit() {
 
 const getDrawerTitle = computed(() =>
   isEdit.value
-    ? $t('page.common.editItem', [$t('system.role.roleManage')])
-    : $t('page.common.createItem', [$t('system.role.roleManage')]),
+    ? $t('common.actionMessage.editItem', [$t('system.role.roleManage')])
+    : $t('common.actionMessage.createItem', [$t('system.role.roleManage')]),
 );
 </script>
 

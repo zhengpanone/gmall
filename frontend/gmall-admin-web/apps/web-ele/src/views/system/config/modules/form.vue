@@ -55,11 +55,11 @@ const schema: VbenFormSchema[] = [
     component: 'RadioGroup',
     fieldName: 'status',
     label: $t('system.config.status'),
-    defaultValue: 1,
+    defaultValue: SystemConfigApi.ConfigStatusEnum.ENABLED,
     componentProps: {
       options: [
-        { label: $t('common.enabled'), value: 1 },
-        { label: $t('common.disabled'), value: 0 },
+        { label: $t('common.enabled'), value: SystemConfigApi.ConfigStatusEnum.ENABLED },
+        { label: $t('common.disabled'), value: SystemConfigApi.ConfigStatusEnum.DISABLED },
       ],
     },
   },
@@ -98,11 +98,14 @@ async function onSubmit() {
     const values = await formApi.getValues();
     try {
       if (formData.value?.id) {
-        await updateConfig(values as SystemConfigApi.UpdateConfigParams);
-        ElMessage.success($t('page.common.editSuccess'));
+        await updateConfig({
+          ...(values as SystemConfigApi.UpdateConfigParams),
+          id: formData.value.id,
+        });
+        ElMessage.success($t('common.actionMessage.editSuccess'));
       } else {
         await createConfig(values as SystemConfigApi.CreateConfigParams);
-        ElMessage.success($t('page.common.createSuccess'));
+        ElMessage.success($t('common.actionMessage.createSuccess'));
       }
       drawerApi.close();
       emit('success');
@@ -114,8 +117,8 @@ async function onSubmit() {
 
 const getDrawerTitle = computed(() =>
   isEdit.value
-    ? $t('page.common.editItem', [$t('system.config.configManage')])
-    : $t('page.common.createItem', [$t('system.config.configManage')]),
+    ? $t('common.actionMessage.editItem', [$t('system.config.configManage')])
+    : $t('common.actionMessage.createItem', [$t('system.config.configManage')]),
 );
 </script>
 

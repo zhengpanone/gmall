@@ -9,11 +9,7 @@ import { $t } from '@vben/locales';
 import { ElMessage } from 'element-plus';
 
 import { useVbenForm } from '#/adapter/form';
-import {
-  SystemNoticeApi,
-  createNotice,
-  updateNotice,
-} from '#/api/system/notice';
+import { SystemNoticeApi, createNotice, updateNotice } from '#/api/system/notice';
 
 const emit = defineEmits<{
   success: [];
@@ -33,11 +29,11 @@ const schema: VbenFormSchema[] = [
     component: 'RadioGroup',
     fieldName: 'type',
     label: $t('system.notice.type'),
-    defaultValue: 1,
+    defaultValue: SystemNoticeApi.NoticeTypeEnum.NOTICE,
     componentProps: {
       options: [
-        { label: $t('system.notice.type1'), value: 1 },
-        { label: $t('system.notice.type2'), value: 2 },
+        { label: $t('system.notice.type1'), value: SystemNoticeApi.NoticeTypeEnum.NOTICE },
+        { label: $t('system.notice.type2'), value: SystemNoticeApi.NoticeTypeEnum.ANNOUNCEMENT },
       ],
     },
   },
@@ -45,11 +41,11 @@ const schema: VbenFormSchema[] = [
     component: 'RadioGroup',
     fieldName: 'status',
     label: $t('system.notice.status'),
-    defaultValue: 1,
+    defaultValue: SystemNoticeApi.NoticeStatusEnum.ENABLED,
     componentProps: {
       options: [
-        { label: $t('common.enabled'), value: 1 },
-        { label: $t('common.disabled'), value: 0 },
+        { label: $t('common.enabled'), value: SystemNoticeApi.NoticeStatusEnum.ENABLED },
+        { label: $t('common.disabled'), value: SystemNoticeApi.NoticeStatusEnum.DISABLED },
       ],
     },
   },
@@ -99,11 +95,14 @@ async function onSubmit() {
     const values = await formApi.getValues();
     try {
       if (formData.value?.id) {
-        await updateNotice(values as SystemNoticeApi.UpdateNoticeParams);
-        ElMessage.success($t('page.common.editSuccess'));
+        await updateNotice({
+          ...(values as SystemNoticeApi.UpdateNoticeParams),
+          id: formData.value.id,
+        });
+        ElMessage.success($t('common.actionMessage.editSuccess'));
       } else {
         await createNotice(values as SystemNoticeApi.CreateNoticeParams);
-        ElMessage.success($t('page.common.createSuccess'));
+        ElMessage.success($t('common.actionMessage.createSuccess'));
       }
       drawerApi.close();
       emit('success');
@@ -115,8 +114,8 @@ async function onSubmit() {
 
 const getDrawerTitle = computed(() =>
   isEdit.value
-    ? $t('page.common.editItem', [$t('system.notice.noticeManage')])
-    : $t('page.common.createItem', [$t('system.notice.noticeManage')]),
+    ? $t('common.actionMessage.editItem', [$t('system.notice.noticeManage')])
+    : $t('common.actionMessage.createItem', [$t('system.notice.noticeManage')]),
 );
 </script>
 

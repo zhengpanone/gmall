@@ -57,7 +57,7 @@ export function useDictTypeColumns(
       fixed: 'right',
       headerAlign: 'center',
       showOverflow: false,
-      title: $t('page.common.operation'),
+      title: $t('common.actionMessage.operation'),
       width: 150,
     },
   ];
@@ -110,7 +110,7 @@ export function useDictDataColumns(
       fixed: 'right',
       headerAlign: 'center',
       showOverflow: false,
-      title: $t('page.common.operation'),
+      title: $t('common.actionMessage.operation'),
       width: 150,
     },
   ];

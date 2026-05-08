@@ -87,14 +87,24 @@ function onCreate() {
 }
 
 function onDelete(row: SystemConfigApi.Config) {
-  ElMessage({
+  if (!row.id) return;
+
+  const loadingMsg = ElMessage({
     message: $t('ui.actionMessage.deleting', [row.name]),
     duration: 0,
   });
-  deleteConfig(row.id!).then(() => {
-    ElMessage.success($t('ui.actionMessage.deleteSuccess', [row.name]));
-    onRefresh();
-  });
+
+  deleteConfig(row.id)
+    .then(() => {
+      ElMessage.success($t('ui.actionMessage.deleteSuccess', [row.name]));
+      onRefresh();
+    })
+    .catch(() => {
+      // 接口错误信息已被全局拦截器统一处理，此处无需额外操作
+    })
+    .finally(() => {
+      loadingMsg.close();
+    });
 }
 </script>
 

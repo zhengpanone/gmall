@@ -98,14 +98,24 @@ function onAppend(row: SystemDeptApi.Dept) {
 }
 
 function onDelete(row: SystemDeptApi.Dept) {
-  ElMessage({
+  if (!row.id) return;
+
+  const loadingMsg = ElMessage({
     message: $t('ui.actionMessage.deleting', [row.name]),
     duration: 0,
   });
-  deleteDept([row.id!]).then(() => {
-    ElMessage.success($t('ui.actionMessage.deleteSuccess', [row.name]));
-    onRefresh();
-  });
+
+  deleteDept([row.id])
+    .then(() => {
+      ElMessage.success($t('ui.actionMessage.deleteSuccess', [row.name]));
+      onRefresh();
+    })
+    .catch(() => {
+      // 接口错误信息已被全局拦截器统一处理，此处无需额外操作
+    })
+    .finally(() => {
+      loadingMsg.close();
+    });
 }
 </script>
 

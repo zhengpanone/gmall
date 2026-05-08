@@ -1,5 +1,15 @@
 {
   "actionMessage": {
-    "queryFailed": "Query failed"
+    "queryFailed": "Query failed",
+    "operationUpdateFailed": "Operation update failed",
+    "operationCreateFailed": "Operation create failed",
+    "operationFailed": "Operation failed",
+    "operation": "Operation",
+    "createSuccess": "Created Successfully",
+    "editSuccess": "Updated Successfully",
+    "deleteSuccess": "Deleted Successfully",
+    "clearSuccess": "Cleared Successfully",
+    "editItem": "Edit {0}",
+    "createItem": "Create {0}"
   }
 }

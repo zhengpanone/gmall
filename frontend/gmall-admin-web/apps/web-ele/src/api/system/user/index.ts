@@ -1,24 +1,25 @@
-import type { PageParam } from '#/api/core/common';
+import type { PageParam, PageResult } from '#/api/core/common';
 
+import { CommonStatusEnum } from '#/api/core/common';
 import { backendClient } from '#/api/request';
 
 export namespace SystemUserApi {
   /** 用户状态枚举 */
   export enum UserStatusEnum {
-    DISABLED = 0,
-    ENABLED = 1,
+    DISABLED = CommonStatusEnum.DISABLED,
+    ENABLED = CommonStatusEnum.ENABLED,
   }
 
   /** 用户信息 */
   export interface User {
-    id?: string;
+    id?: number | string;
     username: string;
     nickname: string;
     email?: string;
     mobile?: string;
     avatar?: string;
     deptId?: number;
-    status: number | UserStatusEnum;
+    status: CommonStatusEnum | number | UserStatusEnum;
     createTime?: string;
     remark?: string;
   }
@@ -30,33 +31,36 @@ export namespace SystemUserApi {
     email?: string;
     mobile?: string;
     deptId?: number;
-    status?: number;
+    status?: CommonStatusEnum | number;
     remark?: string;
   }
 
   /** 更新用户参数 */
   export interface UpdateUserParams extends CreateUserParams {
-    id: number;
+    id: number | string;
   }
 
-    export interface UserPageParam extends PageParam{
-      roleName?: string;
-      roleCode?: string;
-      roleType?: number;
-    }
+  export interface UserPageParam extends PageParam {
+    deptId?: number | string;
+    mobile?: string;
+    nickname?: string;
+    status?: CommonStatusEnum | number;
+    username?: string;
+  }
 }
 
 /** 获取用户列表 */
 export async function getUserPageList(
-params: Record<string, any> & SystemUserApi.UserPageParam,
-
+  params: Record<string, any> & SystemUserApi.UserPageParam,
 ) {
-  return backendClient.get<SystemUserApi.User[]>('/system/admin-api/user/page',
-    { params, responseReturn: 'body' });
+  return backendClient.get<PageResult<SystemUserApi.User>>('/system/admin-api/user/page', {
+    params,
+    responseReturn: 'body',
+  });
 }
 
 /** 获取用户详情 */
-export async function getUser(id: string) {
+export async function getUser(id: number | string) {
   return backendClient.get<SystemUserApi.User>(`/system/admin-api/user/${id}`);
 }
 
@@ -71,6 +75,6 @@ export async function updateUser(data: SystemUserApi.UpdateUserParams) {
 }
 
 /** 删除用户 */
-export async function deleteUser(id: string) {
+export async function deleteUser(id: number | string) {
   return backendClient.delete(`/system/admin-api/user/delete/${id}`);
 }

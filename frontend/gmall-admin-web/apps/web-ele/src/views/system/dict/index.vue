@@ -3,7 +3,6 @@ import type { FormInstance, FormRules } from 'element-plus';
 
 import type { VbenFormSchema } from '#/adapter/form';
 import type { OnActionClickParams, VxeTableGridOptions } from '#/adapter/vxe-table';
-import type { SystemDictApi } from '#/api/system/dict';
 
 import { computed, nextTick, ref } from 'vue';
 
@@ -27,6 +26,7 @@ import {
 
 import { useVbenVxeGrid } from '#/adapter/vxe-table';
 import {
+  SystemDictApi,
   createDictType,
   deleteDictData,
   deleteDictType,
@@ -57,7 +57,7 @@ const defaultDictTypeForm = (): DictTypeFormModel => ({
   typeName: '',
   type: 1,
   sort: 1,
-  status: 1,
+  status: SystemDictApi.DictStatusEnum.ENABLED,
   remark: '',
 });
 
@@ -68,8 +68,8 @@ const dictTypeFormRef = ref<FormInstance>();
 const dictTypeForm = ref<DictTypeFormModel>(defaultDictTypeForm());
 const dictTypeDialogTitle = computed(() =>
   editingDictType.value?.id
-    ? $t('page.common.editItem', [$t('system.dict.dictManage')])
-    : $t('page.common.createItem', [$t('system.dict.dictManage')]),
+    ? $t('common.actionMessage.editItem', [$t('system.dict.dictManage')])
+    : $t('common.actionMessage.createItem', [$t('system.dict.dictManage')]),
 );
 
 const dictTypeFormRules: FormRules<DictTypeFormModel> = {
@@ -380,7 +380,7 @@ function openDictTypeDialog(row?: SystemDictApi.DictType) {
       typeCode: String(row.typeCode ?? ''),
       type: getDictCategory(row),
       sort: Number(row.sort ?? 0),
-      status: Number(row.status ?? 1),
+      status: Number(row.status ?? SystemDictApi.DictStatusEnum.ENABLED),
       remark: String(row.remark ?? ''),
     };
     dictTypeFormRef.value?.clearValidate();
@@ -412,10 +412,10 @@ async function onDictTypeSubmit() {
   try {
     if (editingDictType.value?.id) {
       await updateDictType(payload as SystemDictApi.UpdateDictTypeParams);
-      ElMessage.success($t('page.common.editSuccess'));
+      ElMessage.success($t('common.actionMessage.editSuccess'));
     } else {
       await createDictType(payload as SystemDictApi.CreateDictTypeParams);
-      ElMessage.success($t('page.common.createSuccess'));
+      ElMessage.success($t('common.actionMessage.createSuccess'));
     }
     dictTypeDialogVisible.value = false;
     resetDictTypeForm();
@@ -558,12 +558,21 @@ function onDictDataDelete(row: SystemDictApi.DictData) {
         </ElFormItem>
         <ElFormItem :label="$t('system.dict.status')" prop="status">
           <ElRadioGroup v-model="dictTypeForm.status">
-            <ElRadio :value="1">{{ $t('common.enabled') }}</ElRadio>
-            <ElRadio :value="0">{{ $t('common.disabled') }}</ElRadio>
+            <ElRadio :value="SystemDictApi.DictStatusEnum.ENABLED">
+              {{ $t('common.enabled') }}
+            </ElRadio>
+            <ElRadio :value="SystemDictApi.DictStatusEnum.DISABLED">
+              {{ $t('common.disabled') }}
+            </ElRadio>
           </ElRadioGroup>
         </ElFormItem>
         <ElFormItem :label="$t('system.dict.remark')" prop="remark">
-          <ElInput v-model="dictTypeForm.remark" :rows="3" placeholder="请输入" type="textarea" />
+          <ElInput
+            v-model="dictTypeForm.remark"
+            :rows="3"
+            placeholder="请输入"
+            type="textarea"
+          />
         </ElFormItem>
       </ElForm>
       <template #footer>

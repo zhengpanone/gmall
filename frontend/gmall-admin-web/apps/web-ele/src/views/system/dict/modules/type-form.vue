@@ -51,11 +51,11 @@ const schema: VbenFormSchema[] = [
     component: 'RadioGroup',
     fieldName: 'status',
     label: $t('system.dict.status'),
-    defaultValue: 1,
+    defaultValue: SystemDictApi.DictStatusEnum.ENABLED,
     componentProps: {
       options: [
-        { label: $t('common.enabled'), value: 1 },
-        { label: $t('common.disabled'), value: 0 },
+        { label: $t('common.enabled'), value: SystemDictApi.DictStatusEnum.ENABLED },
+        { label: $t('common.disabled'), value: SystemDictApi.DictStatusEnum.DISABLED },
       ],
     },
   },
@@ -112,10 +112,10 @@ async function onSubmit() {
     try {
       if (formData.value?.id) {
         await updateDictType(payload as SystemDictApi.UpdateDictTypeParams);
-        ElMessage.success($t('page.common.editSuccess'));
+        ElMessage.success($t('common.actionMessage.editSuccess'));
       } else {
         await createDictType(payload as SystemDictApi.CreateDictTypeParams);
-        ElMessage.success($t('page.common.createSuccess'));
+        ElMessage.success($t('common.actionMessage.createSuccess'));
       }
       drawerApi.close();
       emit('success');
@@ -127,8 +127,8 @@ async function onSubmit() {
 
 const getDrawerTitle = computed(() =>
   isEdit.value
-    ? $t('page.common.editItem', [$t('system.dict.dictManage')])
-    : $t('page.common.createItem', [$t('system.dict.dictManage')]),
+    ? $t('common.actionMessage.editItem', [$t('system.dict.dictManage')])
+    : $t('common.actionMessage.createItem', [$t('system.dict.dictManage')]),
 );
 </script>
 

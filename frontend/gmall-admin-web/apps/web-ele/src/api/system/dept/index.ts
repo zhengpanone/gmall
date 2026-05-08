@@ -1,12 +1,13 @@
 import type { PageParam } from '#/api/core/common';
 
+import { CommonStatusEnum } from '#/api/core/common';
 import { backendClient } from '#/api/request';
 
 export namespace SystemDeptApi {
   /** 部门状态枚举 */
   export enum DeptStatusEnum {
-    DISABLED = 0,
-    ENABLED = 1,
+    DISABLED = CommonStatusEnum.DISABLED,
+    ENABLED = CommonStatusEnum.ENABLED,
   }
 
   /** 部门信息 */
@@ -18,7 +19,7 @@ export namespace SystemDeptApi {
     leader?: string;
     phone?: string;
     email?: string;
-    status: DeptStatusEnum | number;
+    status: CommonStatusEnum | DeptStatusEnum | number;
     createTime?: string;
     remark?: string;
     children?: Dept[];
@@ -32,7 +33,7 @@ export namespace SystemDeptApi {
     leader?: string;
     phone?: string;
     email?: string;
-    status?: number;
+    status?: CommonStatusEnum | number;
     remark?: string;
   }
 
@@ -52,7 +53,7 @@ export namespace SystemDeptApi {
 export async function getDeptPageList(params: Record<string, any> & SystemDeptApi.DeptPageParam) {
   return backendClient.get<SystemDeptApi.Dept[]>('/system/admin-api/dept/list', {
     params,
-    // 角色分页接口返回结构不一定是 { code, data }，拿完整 body 交给页面兼容解析
+    // 列表接口返回结构不稳定，拿完整 body 交给页面兼容解析
     responseReturn: 'body',
   });
 }
@@ -76,11 +77,10 @@ export async function updateDept(data: SystemDeptApi.UpdateDeptParams) {
 export async function deleteDept(ids: Array<number | string>) {
   return backendClient.delete(`/system/admin-api/dept/delete/`, {
     data: { ids },
-    responseReturn: 'body',
   });
 }
 
 /** 获取部门选项列表 */
 export async function getDeptOptions() {
-  return backendClient.get<SystemDeptApi.Dept[]>('/system/admin-apim/dept/options');
+  return backendClient.get<SystemDeptApi.Dept[]>('/system/admin-api/dept/options');
 }

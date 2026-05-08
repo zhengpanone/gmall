@@ -50,7 +50,7 @@ export function useColumns(
       fixed: 'right',
       headerAlign: 'center',
       showOverflow: false,
-      title: $t('page.common.operation'),
+      title: $t('common.actionMessage.operation'),
       width: 150,
     },
   ];

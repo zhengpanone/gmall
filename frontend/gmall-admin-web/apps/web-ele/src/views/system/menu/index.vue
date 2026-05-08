@@ -138,7 +138,7 @@ function getParentDisplayName(row: Record<string, any> & SystemMenuApi.Menu) {
   return row.parentId;
 }
 
-async function onDelete(row: SystemMenuApi.Menu/* , confirmType: 'messagebox' | 'popconfirm' = 'popconfirm' */) {
+async function onDelete(row: SystemMenuApi.Menu) {
   if (!row.id) return;
 
   const loadingMsg = ElMessage({

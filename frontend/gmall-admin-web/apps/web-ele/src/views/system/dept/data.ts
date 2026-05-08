@@ -46,17 +46,13 @@ export function useColumns(
       cellRender: {
         attrs: { onClick: onActionClick },
         name: 'CellOperation',
-        options: [
-          { code: 'append', text: $t('system.dept.appendChild') },
-          'edit',
-          'delete',
-        ],
+        options: [{ code: 'append', text: $t('system.dept.appendChild') }, 'edit', 'delete'],
       },
       field: 'operation',
       fixed: 'right',
       headerAlign: 'center',
       showOverflow: false,
-      title: $t('page.common.operation'),
+      title: $t('common.actionMessage.operation'),
       width: 200,
     },
   ];

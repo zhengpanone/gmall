@@ -1,10 +1,11 @@
+import { CommonStatusEnum } from '#/api/core/common';
 import { backendClient } from '#/api/request';
 
 export namespace SystemNoticeApi {
   /** 公告状态枚举 */
   export enum NoticeStatusEnum {
-    DISABLED = 0,
-    ENABLED = 1,
+    DISABLED = CommonStatusEnum.DISABLED,
+    ENABLED = CommonStatusEnum.ENABLED,
   }
 
   /** 公告类型枚举 */
@@ -19,7 +20,7 @@ export namespace SystemNoticeApi {
     title: string;
     content: string;
     type: NoticeTypeEnum | number;
-    status: NoticeStatusEnum | number;
+    status: CommonStatusEnum | NoticeStatusEnum | number;
     createTime?: string;
     creator?: string;
     remark?: string;
@@ -30,7 +31,7 @@ export namespace SystemNoticeApi {
     title: string;
     content: string;
     type?: number;
-    status?: number;
+    status?: CommonStatusEnum | number;
     remark?: string;
   }
 

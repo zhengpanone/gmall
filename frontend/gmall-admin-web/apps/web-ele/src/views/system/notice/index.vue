@@ -76,14 +76,24 @@ function onCreate() {
 }
 
 function onDelete(row: SystemNoticeApi.Notice) {
-  ElMessage({
+  if (!row.id) return;
+
+  const loadingMsg = ElMessage({
     message: $t('ui.actionMessage.deleting', [row.title]),
     duration: 0,
   });
-  deleteNotice(row.id!).then(() => {
-    ElMessage.success($t('ui.actionMessage.deleteSuccess', [row.title]));
-    onRefresh();
-  });
+
+  deleteNotice(row.id)
+    .then(() => {
+      ElMessage.success($t('ui.actionMessage.deleteSuccess', [row.title]));
+      onRefresh();
+    })
+    .catch(() => {
+      // 接口错误信息已被全局拦截器统一处理，此处无需额外操作
+    })
+    .finally(() => {
+      loadingMsg.close();
+    });
 }
 </script>
 

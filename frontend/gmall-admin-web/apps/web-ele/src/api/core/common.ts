@@ -4,6 +4,12 @@ export interface PageParam {
   pageSize: number;
 }
 
+/** 通用状态，需与后端 CommonStatusEnum 保持一致 */
+export enum CommonStatusEnum {
+  DISABLED = 0,
+  ENABLED = 1,
+}
+
 /** 分页结果 */
 export interface PageResult<T> {
   list: T[];

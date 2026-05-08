@@ -1,5 +1,15 @@
 {
   "actionMessage": {
-    "queryFailed": "查询失败"
+    "queryFailed": "查询失败",
+    "operationUpdateFailed": "更新失败",
+    "operationCreateFailed": "新增失败",
+    "operationFailed": "操作失败",
+    "operation": "操作",
+    "createSuccess": "创建成功",
+    "editSuccess": "编辑成功",
+    "deleteSuccess": "删除成功",
+    "clearSuccess": "清空成功",
+    "editItem": "编辑{0}",
+    "createItem": "创建{0}"
   }
 }

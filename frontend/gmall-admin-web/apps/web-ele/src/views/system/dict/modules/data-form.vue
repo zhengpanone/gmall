@@ -1,6 +1,5 @@
 <script lang="ts" setup>
 import type { VbenFormSchema } from '#/adapter/form';
-import type { SystemDictApi } from '#/api/system/dict';
 
 import { computed, ref } from 'vue';
 
@@ -10,7 +9,7 @@ import { $t } from '@vben/locales';
 import { ElMessage } from 'element-plus';
 
 import { useVbenForm } from '#/adapter/form';
-import { createDictData, getDictDataList, updateDictData } from '#/api/system/dict';
+import { createDictData, getDictDataList, SystemDictApi, updateDictData } from '#/api/system/dict';
 
 const emit = defineEmits<{
   success: [];
@@ -84,11 +83,11 @@ const schema: VbenFormSchema[] = [
     component: 'RadioGroup',
     fieldName: 'status',
     label: $t('system.dict.status'),
-    defaultValue: 1,
+    defaultValue: SystemDictApi.DictStatusEnum.ENABLED,
     componentProps: {
       options: [
-        { label: $t('common.enabled'), value: 1 },
-        { label: $t('common.disabled'), value: 0 },
+        { label: $t('common.enabled'), value: SystemDictApi.DictStatusEnum.ENABLED },
+        { label: $t('common.disabled'), value: SystemDictApi.DictStatusEnum.DISABLED },
       ],
     },
   },
@@ -129,7 +128,7 @@ const [Drawer, drawerApi] = useVbenDrawer({
       typeCode: dict?.typeCode,
       typeName: dict?.typeName,
       sort: 0,
-      status: 1,
+      status: SystemDictApi.DictStatusEnum.ENABLED,
       ...record,
     });
   },
@@ -141,8 +140,8 @@ async function getParentOptions() {
     return [];
   }
 
-  const list = await getDictDataList({ typeCode }).catch(() => []);
-  const tree = toTreeList(Array.isArray(list) ? list : []);
+  const result = await getDictDataList({ typeCode }).catch(() => ({ data: [] }));
+  const tree = toTreeList(Array.isArray(result.data) ? result.data : []);
   const editingId = drawerData.value.record?.id;
   if (!editingId) {
     return tree;
@@ -230,13 +229,15 @@ async function onSubmit() {
   try {
     if (drawerData.value.record?.id) {
       await updateDictData(payload as SystemDictApi.UpdateDictDataParams);
-      ElMessage.success($t('page.common.editSuccess'));
+      ElMessage.success($t('common.actionMessage.editSuccess'));
     } else {
       await createDictData(payload as SystemDictApi.CreateDictDataParams);
-      ElMessage.success($t('page.common.createSuccess'));
+      ElMessage.success($t('common.actionMessage.createSuccess'));
     }
     drawerApi.close();
     emit('success');
+  } catch (error: any) {
+    console.error('Dict data operation failed:', error);
   } finally {
     drawerApi.unlock();
   }
@@ -244,8 +245,8 @@ async function onSubmit() {
 
 const getDrawerTitle = computed(() =>
   isEdit.value
-    ? $t('page.common.editItem', [$t('system.dict.dataManage')])
-    : $t('page.common.createItem', [$t('system.dict.dataManage')]),
+    ? $t('common.actionMessage.editItem', [$t('system.dict.dataManage')])
+    : $t('common.actionMessage.createItem', [$t('system.dict.dataManage')]),
 );
 </script>
 

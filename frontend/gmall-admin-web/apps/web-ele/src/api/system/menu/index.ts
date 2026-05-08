@@ -1,3 +1,4 @@
+import { CommonStatusEnum } from '#/api/core/common';
 import { backendClient } from '#/api/request';
 
 export namespace SystemMenuApi {
@@ -6,6 +7,12 @@ export namespace SystemMenuApi {
     DIR = 1, // 目录
     MENU = 2, // 菜单
     BUTTON = 3, // 按钮
+  }
+
+  /** 菜单状态枚举 */
+  export enum MenuStatusEnum {
+    DISABLED = CommonStatusEnum.DISABLED,
+    ENABLED = CommonStatusEnum.ENABLED,
   }
 
   /** 菜单信息 */
@@ -20,7 +27,7 @@ export namespace SystemMenuApi {
     icon: string;
     component: string;
     componentName?: string;
-    status: number;
+    status: CommonStatusEnum | MenuStatusEnum | number;
     visible: boolean;
     keepAlive: boolean;
     alwaysShow?: boolean;
@@ -38,13 +45,13 @@ export namespace SystemMenuApi {
     icon?: string;
     component?: string;
     componentName?: string;
-    status?: number;
+    status?: CommonStatusEnum | number;
     visible?: boolean;
     keepAlive?: boolean;
     alwaysShow?: boolean;
   }
 
-    export interface MenuListParam {
+  export interface MenuListParam {
     menuName?: string;
     menuCode?: string;
   }

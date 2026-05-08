@@ -48,11 +48,11 @@ const schema: VbenFormSchema[] = [
     component: 'RadioGroup',
     fieldName: 'status',
     label: $t('system.user.status'),
-    defaultValue: 1,
+    defaultValue: SystemUserApi.UserStatusEnum.ENABLED,
     componentProps: {
       options: [
-        { label: $t('common.enabled'), value: 1 },
-        { label: $t('common.disabled'), value: 0 },
+        { label: $t('common.enabled'), value: SystemUserApi.UserStatusEnum.ENABLED },
+        { label: $t('common.disabled'), value: SystemUserApi.UserStatusEnum.DISABLED },
       ],
     },
   },
@@ -100,11 +100,14 @@ async function onSubmit() {
     const values = await formApi.getValues();
     try {
       if (formData.value?.id) {
-        await updateUser(values as SystemUserApi.UpdateUserParams);
-        ElMessage.success($t('page.common.editSuccess'));
+        await updateUser({
+          ...(values as SystemUserApi.UpdateUserParams),
+          id: formData.value.id,
+        });
+        ElMessage.success($t('common.actionMessage.editSuccess'));
       } else {
         await createUser(values as SystemUserApi.CreateUserParams);
-        ElMessage.success($t('page.common.createSuccess'));
+        ElMessage.success($t('common.actionMessage.createSuccess'));
       }
       drawerApi.close();
       emit('success');
@@ -116,8 +119,8 @@ async function onSubmit() {
 
 const getDrawerTitle = computed(() =>
   isEdit.value
-    ? $t('page.common.editItem', [$t('system.user.userManage')])
-    : $t('page.common.createItem', [$t('system.user.userManage')]),
+    ? $t('common.actionMessage.editItem', [$t('system.user.userManage')])
+    : $t('common.actionMessage.createItem', [$t('system.user.userManage')]),
 );
 </script>
 

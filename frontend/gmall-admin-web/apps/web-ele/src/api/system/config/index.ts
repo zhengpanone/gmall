@@ -1,12 +1,13 @@
 import type { PageParam, PageResult } from '#/api/core/common';
 
+import { CommonStatusEnum } from '#/api/core/common';
 import { backendClient } from '#/api/request';
 
 export namespace SystemConfigApi {
   /** 配置状态枚举 */
   export enum ConfigStatusEnum {
-    DISABLED = 0,
-    ENABLED = 1,
+    DISABLED = CommonStatusEnum.DISABLED,
+    ENABLED = CommonStatusEnum.ENABLED,
   }
 
   /** 配置信息 */
@@ -16,7 +17,7 @@ export namespace SystemConfigApi {
     key: string;
     value: string;
     type: number;
-    status: ConfigStatusEnum | number;
+    status: CommonStatusEnum | ConfigStatusEnum | number;
     createTime?: string;
     remark?: string;
   }
@@ -27,7 +28,7 @@ export namespace SystemConfigApi {
     key: string;
     value: string;
     type?: number;
-    status?: number;
+    status?: CommonStatusEnum | number;
     remark?: string;
   }
 

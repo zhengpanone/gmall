@@ -9,12 +9,7 @@ import { $t } from '@vben/locales';
 import { ElMessage } from 'element-plus';
 
 import { useVbenForm } from '#/adapter/form';
-import {
-  createMenu,
-  getMenuOptions,
-  SystemMenuApi,
-  updateMenu,
-} from '#/api/system/menu';
+import { createMenu, getMenuOptions, SystemMenuApi, updateMenu } from '#/api/system/menu';
 
 const emit = defineEmits<{
   success: [];
@@ -28,9 +23,7 @@ function normalizeParentId(parentId?: number | string) {
 }
 
 function hasParentId(data?: SystemMenuApi.Menu) {
-  return (
-    typeof data?.parentId === 'number' || typeof data?.parentId === 'string'
-  );
+  return typeof data?.parentId === 'number' || typeof data?.parentId === 'string';
 }
 
 const schema: VbenFormSchema[] = [
@@ -113,11 +106,11 @@ const schema: VbenFormSchema[] = [
     component: 'RadioGroup',
     componentProps: {
       options: [
-        { label: $t('common.enabled'), value: 1 },
-        { label: $t('common.disabled'), value: 0 },
+        { label: $t('common.enabled'), value: SystemMenuApi.MenuStatusEnum.ENABLED },
+        { label: $t('common.disabled'), value: SystemMenuApi.MenuStatusEnum.DISABLED },
       ],
     },
-    defaultValue: 1,
+    defaultValue: SystemMenuApi.MenuStatusEnum.ENABLED,
     fieldName: 'status',
     label: $t('system.menu.status'),
   },
@@ -175,10 +168,10 @@ async function onSubmit() {
     try {
       if (formData.value?.id) {
         await updateMenu(formData.value.id, values as SystemMenuApi.UpdateMenuParams);
-        ElMessage.success($t('page.common.editSuccess'));
+        ElMessage.success($t('common.actionMessage.editSuccess'));
       } else {
         await createMenu(values as SystemMenuApi.CreateMenuParams);
-        ElMessage.success($t('page.common.createSuccess'));
+        ElMessage.success($t('common.actionMessage.createSuccess'));
       }
       drawerApi.close();
       emit('success');
@@ -190,8 +183,8 @@ async function onSubmit() {
 
 const getDrawerTitle = computed(() =>
   isEdit.value
-    ? $t('page.common.editItem', [$t('system.menu.menuManage')])
-    : $t('page.common.createItem', [$t('system.menu.menuManage')]),
+    ? $t('common.actionMessage.editItem', [$t('system.menu.menuManage')])
+    : $t('common.actionMessage.createItem', [$t('system.menu.menuManage')]),
 );
 </script>
 

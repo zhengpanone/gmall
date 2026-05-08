@@ -1,6 +1,6 @@
 import type { OnActionClickFn, VxeTableGridColumns } from '#/adapter/vxe-table';
-import type { SystemNoticeApi } from '#/api/system/notice';
 
+import { SystemNoticeApi } from '#/api/system/notice';
 import { $t } from '#/locales';
 
 export function useColumns(
@@ -14,10 +14,21 @@ export function useColumns(
       width: 200,
     },
     {
-      cellRender: { name: 'CellTag', options: [
-        { label: $t('system.notice.type1'), value: 1, color: 'primary' },
-        { label: $t('system.notice.type2'), value: 2, color: 'success' },
-      ]},
+      cellRender: {
+        name: 'CellTag',
+        options: [
+          {
+            label: $t('system.notice.type1'),
+            value: SystemNoticeApi.NoticeTypeEnum.NOTICE,
+            color: 'primary',
+          },
+          {
+            label: $t('system.notice.type2'),
+            value: SystemNoticeApi.NoticeTypeEnum.ANNOUNCEMENT,
+            color: 'success',
+          },
+        ],
+      },
       field: 'type',
       title: $t('system.notice.type'),
       width: 120,
@@ -49,7 +60,7 @@ export function useColumns(
       fixed: 'right',
       headerAlign: 'center',
       showOverflow: false,
-      title: $t('page.common.operation'),
+      title: $t('common.actionMessage.operation'),
       width: 150,
     },
   ];

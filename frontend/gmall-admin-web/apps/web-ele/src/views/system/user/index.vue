@@ -84,14 +84,24 @@ function onCreate() {
 }
 
 function onDelete(row: SystemUserApi.User) {
-  ElMessage({
+  if (!row.id) return;
+
+  const loadingMsg = ElMessage({
     message: $t('ui.actionMessage.deleting', [row.username]),
     duration: 0,
   });
-  deleteUser(row.id!).then(() => {
-    ElMessage.success($t('ui.actionMessage.deleteSuccess', [row.username]));
-    onRefresh();
-  });
+
+  deleteUser(row.id)
+    .then(() => {
+      ElMessage.success($t('ui.actionMessage.deleteSuccess', [row.username]));
+      onRefresh();
+    })
+    .catch(() => {
+      // 接口错误信息已被全局拦截器统一处理，此处无需额外操作
+    })
+    .finally(() => {
+      loadingMsg.close();
+    });
 }
 </script>
 

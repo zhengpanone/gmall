@@ -1,11 +1,11 @@
 import type { OnActionClickFn, VxeTableGridColumns } from '#/adapter/vxe-table';
-import type { SystemRoleApi } from '#/api/system/role';
 
+import { SystemRoleApi } from '#/api/system/role';
 import { $t } from '#/locales';
 
 const roleTypeOptions = [
-  { label: $t('system.role.type1'), value: 1 },
-  { label: $t('system.role.type2'), value: 2 },
+  { label: $t('system.role.type1'), value: SystemRoleApi.RoleTypeEnum.SYSTEM },
+  { label: $t('system.role.type2'), value: SystemRoleApi.RoleTypeEnum.CUSTOM },
 ];
 
 export function useColumns(
@@ -42,8 +42,16 @@ export function useColumns(
       cellRender: {
         name: 'CellTag',
         options: [
-          { label: $t('common.enabled'), value: 0 },
-          { label: $t('common.disabled'), value: 1 },
+          {
+            color: 'success',
+            label: $t('common.enabled'),
+            value: SystemRoleApi.RoleStatusEnum.ENABLED,
+          },
+          {
+            color: 'danger',
+            label: $t('common.disabled'),
+            value: SystemRoleApi.RoleStatusEnum.DISABLED,
+          },
         ],
       },
       field: 'status',
@@ -71,7 +79,7 @@ export function useColumns(
       fixed: 'right',
       headerAlign: 'center',
       showOverflow: false,
-      title: $t('page.common.operation'),
+      title: $t('common.actionMessage.operation'),
       width: 150,
     },
   ];

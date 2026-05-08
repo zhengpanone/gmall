@@ -1,5 +1,6 @@
 import type { PageParam, PageResult, Result } from '#/api/core/common';
 
+import { CommonStatusEnum } from '#/api/core/common';
 import { backendClient } from '#/api/request';
 
 export namespace SystemDictApi {
@@ -7,8 +8,8 @@ export namespace SystemDictApi {
 
   /** 字典状态枚举 */
   export enum DictStatusEnum {
-    DISABLED = 0,
-    ENABLED = 1,
+    DISABLED = CommonStatusEnum.DISABLED,
+    ENABLED = CommonStatusEnum.ENABLED,
   }
 
   /** 字典类型信息 */
@@ -18,7 +19,7 @@ export namespace SystemDictApi {
     typeName?: string;
     typeCode?: string;
     sort?: number;
-    status: DictStatusEnum | number;
+    status: CommonStatusEnum | DictStatusEnum | number;
     createTime?: number | number[] | string;
     remark?: string;
   }
@@ -34,7 +35,7 @@ export namespace SystemDictApi {
     parentId?: Id;
     children?: DictData[];
     sort: number;
-    status: number;
+    status: CommonStatusEnum | number;
     colorType?: string;
     cssClass?: string;
     createTime?: number | number[] | string;
@@ -47,7 +48,7 @@ export namespace SystemDictApi {
     typeName: string;
     type: number | string;
     sort?: number;
-    status?: number;
+    status?: CommonStatusEnum | number;
     remark?: string;
   }
 
@@ -63,7 +64,7 @@ export namespace SystemDictApi {
     dictName?: string;
     dictType?: number | string;
     name?: string;
-    status?: number;
+    status?: CommonStatusEnum | number;
     type?: number | string;
   }
 
@@ -76,7 +77,7 @@ export namespace SystemDictApi {
     label?: string;
     value?: string;
     dataCode?: string;
-    status?: number;
+    status?: CommonStatusEnum | number;
     dataName?: string;
   }
 
@@ -85,7 +86,7 @@ export namespace SystemDictApi {
     typeId?: Id;
     typeCode?: string;
     dataCode?: string;
-    status?: number;
+    status?: CommonStatusEnum | number;
     dataName?: string;
   }
 
@@ -179,27 +180,17 @@ export async function getDictType(id: SystemDictApi.Id) {
 
 /** 创建字典 */
 export async function createDictType(data: SystemDictApi.CreateDictTypeParams) {
-  return backendClient.post('/system/admin-api/dict/type/create', normalizeDictPayload(data), {
-    responseReturn: 'body',
-  });
+  return backendClient.post('/system/admin-api/dict/type/create', normalizeDictPayload(data));
 }
 
 /** 更新字典 */
 export async function updateDictType(data: SystemDictApi.UpdateDictTypeParams) {
-  return backendClient.post('/system/admin-api/dict/type/update', normalizeDictPayload(data), {
-    responseReturn: 'body',
-  });
+  return backendClient.post('/system/admin-api/dict/type/update', normalizeDictPayload(data));
 }
 
 /** 删除字典 */
 export async function deleteDictType(ids: SystemDictApi.Id[]) {
-  return backendClient.post(
-    '/system/admin-api/dict/delete',
-    { ids },
-    {
-      responseReturn: 'body',
-    },
-  );
+  return backendClient.post('/system/admin-api/dict/delete', { ids });
 }
 
 /** 获取字典数据项列表（兼容旧调用） */
@@ -214,25 +205,15 @@ export async function getDictDataList(
 
 /** 创建字典数据项 */
 export async function createDictData(data: SystemDictApi.CreateDictDataParams) {
-  return backendClient.post('/system/admin-api/dict/data/create', normalizeDictDataPayload(data), {
-    responseReturn: 'body',
-  });
+  return backendClient.post('/system/admin-api/dict/data/create', normalizeDictDataPayload(data));
 }
 
 /** 更新字典数据项 */
 export async function updateDictData(data: SystemDictApi.UpdateDictDataParams) {
-  return backendClient.post('/system/admin-api/dict/data/update', normalizeDictDataPayload(data), {
-    responseReturn: 'body',
-  });
+  return backendClient.post('/system/admin-api/dict/data/update', normalizeDictDataPayload(data));
 }
 
 /** 删除字典数据项 */
 export async function deleteDictData(ids: SystemDictApi.Id[]) {
-  return backendClient.post(
-    '/system/admin-api/dict/data/delete',
-    { ids },
-    {
-      responseReturn: 'body',
-    },
-  );
+  return backendClient.post('/system/admin-api/dict/data/delete', { ids });
 }
