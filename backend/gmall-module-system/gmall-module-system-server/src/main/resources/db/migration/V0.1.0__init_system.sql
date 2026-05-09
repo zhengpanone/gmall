@@ -38,7 +38,7 @@ CREATE TABLE IF NOT EXISTS sys_dept
     deleted_time   datetime    DEFAULT NULL              NULL COMMENT '删除时间',
     tenant_id      bigint      DEFAULT 0                 NOT NULL COMMENT '租户编号'
 )
-    COMMENT '部门表' collate = utf8mb4_unicode_ci;
+    COMMENT '部门表';
 
 CREATE TABLE IF NOT EXISTS sys_login_log
 (
@@ -60,11 +60,29 @@ CREATE TABLE IF NOT EXISTS sys_login_log
     deleted_time datetime    DEFAULT NULL              NULL COMMENT '删除时间',
     tenant_id    bigint      default 0                 NOT NULL COMMENT '租户编号'
 )
-    COMMENT '系统访问记录' collate = utf8mb4_unicode_ci;
+    COMMENT '系统访问记录';
+
+CREATE TABLE IF NOT EXISTS sys_tenant_package
+(
+    id           varchar(36)           NOT NULL COMMENT '租户套餐ID',
+    code         varchar(32)           NOT NULL COMMENT '套餐编码',
+    name         varchar(32)           NOT NULL COMMENT '套餐名称',
+    type         varchar(32)           NOT NULL COMMENT '套餐类型',
+    description  varchar(32)           NOT NULL COMMENT '套餐描述',
+    status       tinyint  default 0    NOT NULL COMMENT '套餐状态（1正常 0停用）',
+    create_time  timestamp             NULL COMMENT '创建时间',
+    update_time  timestamp             NULL COMMENT '更新时间',
+    creator      varchar(32)           NULL COMMENT '创建人',
+    updater      varchar(32)           NULL COMMENT '更新人',
+    deleted      bit      default b'0' NULL COMMENT '是否删除',
+    deleted_time datetime DEFAULT NULL NULL COMMENT '删除时间'
+) COMMENT '租户套餐';
+
+
 
 CREATE TABLE IF NOT EXISTS sys_tenant
 (
-    id              varchar(36)           NULL COMMENT '租户编号',
+    id              varchar(36)           NOT NULL COMMENT '租户编号',
     name            varchar(100)          NULL COMMENT '租户名',
     contact_user_id varchar(32)           NULL COMMENT '租户编号',
     contact_name    varchar(32)           NULL COMMENT '联系人',
@@ -80,7 +98,9 @@ CREATE TABLE IF NOT EXISTS sys_tenant
     updater         varchar(32)           NULL COMMENT '更新人',
     deleted         bit      default b'0' NULL COMMENT '是否删除',
     deleted_time    datetime DEFAULT NULL NULL COMMENT '删除时间'
-);
+) COMMENT '租户信息表';
+
+
 
 CREATE TABLE IF NOT EXISTS sys_user
 (
@@ -105,7 +125,7 @@ CREATE TABLE IF NOT EXISTS sys_user
     deleted_time datetime     DEFAULT NULL              NULL COMMENT '删除时间',
     tenant_id    bigint       default 0                 NOT NULL COMMENT '租户编号'
 )
-    COMMENT '用户信息表' collate = utf8mb4_unicode_ci;
+    COMMENT '用户信息表';
 
 
 CREATE TABLE sys_dict_type
@@ -129,7 +149,7 @@ CREATE TABLE sys_dict_type
     KEY `idx_deleted` (`deleted`) USING BTREE,
     KEY `idx_create_time` (`create_time`) USING BTREE,
     KEY `idx_update_time` (`update_time`) USING BTREE
-) COMMENT '字典主表' collate = utf8mb4_unicode_ci;
+) COMMENT '字典主表';
 
 CREATE TABLE sys_dict_data
 (
@@ -158,7 +178,7 @@ CREATE TABLE sys_dict_data
     KEY `idx_sort` (`sort`) USING BTREE,
     KEY `idx_create_time` (`create_time`) USING BTREE,
     KEY `idx_update_time` (`update_time`) USING BTREE
-) COMMENT '字典项表' collate = utf8mb4_unicode_ci;
+) COMMENT '字典项表';
 
 -- 优化后的菜单表
 CREATE TABLE IF NOT EXISTS sys_menu

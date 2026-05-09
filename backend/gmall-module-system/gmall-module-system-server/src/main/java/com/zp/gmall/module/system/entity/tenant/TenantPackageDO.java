@@ -11,90 +11,53 @@ import lombok.NoArgsConstructor;
 import lombok.experimental.Accessors;
 
 import java.io.Serial;
-import java.time.LocalDateTime;
 
 /**
  *
- * Description: 租户
+ * Description: 租户套餐
  *
  * @author zhengpan
  * @version 1.0.0
- * @since 2026-05-08
+ * @since 2026-05-09
  */
 @Data
-@TableName(value = "sys_tenant", autoResultMap = true)
+@TableName(value = "sys_tenant_package", autoResultMap = true)
 @Accessors(chain = true)
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
-public class TenantDO extends BaseDO {
-
+public class TenantPackageDO extends BaseDO {
     @Serial
     private static final long serialVersionUID = 1L;
 
-    /**
-     * 租户ID
-     */
     @TableId
     private String id;
     /**
-     * 租户编号
+     * 套餐编码
      */
     private String code;
     /**
-     * 租户名称
+     * 套餐名称
      */
     private String name;
-    /**
-     * 联系人
-     */
-    private String contactUserName;
-    /**
-     * 联系电话
-     */
-    private String contactPhone;
 
     /**
-     * 统一社会信用代码
+     * 套餐类型
      */
-    private String licenseNumber;
+    private String type;
 
     /**
-     * 地址
+     * 套餐描述
      */
-    private String address;
+    private String description;
 
     /**
-     * 域名
+     * 套餐ID
      */
-    private String domain;
+    private String menuIds;
 
     /**
-     * 简介
-     */
-    private String intro;
-
-    /**
-     * 备注
-     */
-    private String remark;
-
-    /**
-     * 租户套餐编号
-     */
-    private String packageId;
-    /**
-     * 过期时间
-     */
-    private LocalDateTime expireTime;
-
-    /**
-     * 用户数量（-1不限制）
-     */
-    private Long accountCount;
-
-    /**
-     * 租户状态
+     * 状态
      * {@link CommonStatusEnum}
      */
     private String status;

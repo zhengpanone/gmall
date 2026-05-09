@@ -19,13 +19,14 @@ import jakarta.validation.constraints.NotNull;
  * @since 2026-05-08
  */
 public interface ITenantService extends IService<TenantDO> {
-    void createTenant(@Valid TenantDTO tenantDTO);
 
-    TenantVO getTenant(@Valid @NotNull(message = "租户ID不能为空") String id);
+    void create(@Valid TenantDTO tenantDTO);
 
-    PageResult<TenantVO> getTenantPage(@Valid TenantPageDTO tenantPageDTO);
+    TenantVO queryById(@Valid @NotNull(message = "租户ID不能为空") String id);
 
-    void deleteTenant(@Valid Ids ids);
+    PageResult<TenantVO> getPageList(@Valid TenantPageDTO tenantPageDTO);
 
-    void updateTenant(@Valid TenantDTO tenantDTO);
+    void deleteByIds(@Valid Ids ids);
+
+    void updateById(@Valid TenantDTO tenantDTO);
 }

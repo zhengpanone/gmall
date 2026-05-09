@@ -38,35 +38,35 @@ public class TenantController {
 
     @PostMapping("/create")
     @Operation(summary = "新增租户")
-    public Result<?> createTenant(@RequestBody @Validated(CreateGroup.class) @Valid TenantDTO tenantDTO) {
-        tenantService.createTenant(tenantDTO);
+    public Result<?> create(@RequestBody @Validated(CreateGroup.class) @Valid TenantDTO tenantDTO) {
+        tenantService.create(tenantDTO);
         return Result.ok();
     }
 
     @PutMapping("/update")
     @Operation(summary = "更新租户")
-    public Result<?> updateTenant(@RequestBody @Validated(UpdateGroup.class) @Valid TenantDTO tenantDTO) {
-        tenantService.updateTenant(tenantDTO);
+    public Result<?> updateById(@RequestBody @Validated(UpdateGroup.class) @Valid TenantDTO tenantDTO) {
+        tenantService.updateById(tenantDTO);
         return Result.ok();
     }
 
 
     @DeleteMapping("/delete")
     @Operation(summary = "删除租户")
-    public Result<?> deleteTenant(@RequestBody @Valid Ids ids) {
-        tenantService.deleteTenant(ids);
+    public Result<?> deleteByIds(@RequestBody @Valid Ids ids) {
+        tenantService.deleteByIds(ids);
         return Result.ok();
     }
 
     @GetMapping("/page")
     @Operation(summary = "获取租户分页")
-    public PageResult<TenantVO> getTenantPage(@Valid TenantPageDTO tenantPageDTO) {
-        return tenantService.getTenantPage(tenantPageDTO);
+    public PageResult<TenantVO> getPageList(@Valid TenantPageDTO tenantPageDTO) {
+        return tenantService.getPageList(tenantPageDTO);
     }
 
     @GetMapping("/get")
     @Operation(summary = "获取租户详情")
-    public Result<TenantVO> getTenant(@Valid @NotNull(message = "租户ID不能为空") String id) {
-        return Result.ok(tenantService.getTenant(id));
+    public Result<TenantVO> queryById(@Valid @NotNull(message = "租户ID不能为空") String id) {
+        return Result.ok(tenantService.queryById(id));
     }
 }
