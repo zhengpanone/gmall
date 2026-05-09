@@ -1,4 +1,4 @@
-package com.zp.gmall.module.crm.controller.admin.business.vo;
+package com.zp.gmall.module.crm.controller.admin.opportunity.vo;
 
 import java.io.Serial;
 import java.io.Serializable;

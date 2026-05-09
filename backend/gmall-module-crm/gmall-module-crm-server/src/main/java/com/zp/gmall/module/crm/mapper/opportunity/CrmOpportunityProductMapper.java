@@ -1,7 +1,7 @@
-package com.zp.gmall.module.crm.mapper.business;
+package com.zp.gmall.module.crm.mapper.opportunity;
 
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
-import com.zp.gmall.module.crm.entity.bussiness.CrmBusinessProductDO;
+import com.zp.gmall.module.crm.entity.opportunity.CrmOpportunityProductDO;
 import org.apache.ibatis.annotations.Mapper;
 
 /**
@@ -11,5 +11,5 @@ import org.apache.ibatis.annotations.Mapper;
  * Description: CRM 商机与产品关联
  */
 @Mapper
-public interface CrmBusinessProductMapper extends BaseMapper<CrmBusinessProductDO> {
+public interface CrmOpportunityProductMapper extends BaseMapper<CrmOpportunityProductDO> {
 }

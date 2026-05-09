@@ -1,7 +1,7 @@
-package com.zp.gmall.module.crm.controller.admin.business;
+package com.zp.gmall.module.crm.controller.admin.opportunity;
 
 import com.zp.gmall.framework.common.domain.vo.Result;
-import com.zp.gmall.module.crm.controller.admin.business.dto.CrmBusinessDTO;
+import com.zp.gmall.module.crm.controller.admin.opportunity.dto.CrmBusinessDTO;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.Parameter;
 import io.swagger.v3.oas.annotations.tags.Tag;
@@ -24,9 +24,9 @@ import org.springframework.web.bind.annotation.*;
 
 @Tag(name = "管理后台 - CRM 商机")
 @RestController
-@RequestMapping("/business")
+@RequestMapping("/opportunity")
 @Validated
-public class CrmBusinessController {
+public class CrmOpportunityController {
 
     @PostMapping("/create")
     @Operation(summary = "创建商机")

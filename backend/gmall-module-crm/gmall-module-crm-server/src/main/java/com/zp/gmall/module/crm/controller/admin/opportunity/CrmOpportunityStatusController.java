@@ -1,4 +1,4 @@
-package com.zp.gmall.module.crm.controller.admin.business;
+package com.zp.gmall.module.crm.controller.admin.opportunity;
 
 import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
@@ -10,12 +10,12 @@ import org.springframework.web.bind.annotation.RestController;
  * @author : zhengpanone
  * Date : 2026/5/9 22:31
  * Version : v1.0.0
- * Description: CRM 商机与产品关联
+ * Description: CRM 商机状态
  */
-@Tag(name = "管理后台 - CRM 商机与产品关联")
+@Tag(name = "管理后台 - CRM 商机状态")
 @RestController
-@RequestMapping("/business/product")
+@RequestMapping("/opportunity/status")
 @RequiredArgsConstructor
 @Validated
-public class CrmBusinessProductController {
+public class CrmOpportunityStatusController {
 }

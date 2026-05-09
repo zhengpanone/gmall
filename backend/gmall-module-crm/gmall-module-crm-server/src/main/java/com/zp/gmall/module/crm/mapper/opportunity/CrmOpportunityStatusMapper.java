@@ -1,7 +1,7 @@
-package com.zp.gmall.module.crm.mapper.business;
+package com.zp.gmall.module.crm.mapper.opportunity;
 
 import com.zp.gmall.framework.mybatis.core.mapper.BaseMapperX;
-import com.zp.gmall.module.crm.entity.bussiness.CrmBusinessStatusDO;
+import com.zp.gmall.module.crm.entity.opportunity.CrmOpportunityStatusDO;
 import org.apache.ibatis.annotations.Mapper;
 
 /**
@@ -11,5 +11,5 @@ import org.apache.ibatis.annotations.Mapper;
  * Description: CRM 商机状态
  */
 @Mapper
-public interface CrmBusinessStatusMapper extends BaseMapperX<CrmBusinessStatusDO> {
+public interface CrmOpportunityStatusMapper extends BaseMapperX<CrmOpportunityStatusDO> {
 }

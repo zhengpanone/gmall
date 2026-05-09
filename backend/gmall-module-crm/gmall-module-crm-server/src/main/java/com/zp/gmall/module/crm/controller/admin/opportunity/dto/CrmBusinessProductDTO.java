@@ -1,4 +1,4 @@
-package com.zp.gmall.module.crm.controller.admin.business.vo;
+package com.zp.gmall.module.crm.controller.admin.opportunity.dto;
 
 import java.io.Serial;
 import java.io.Serializable;
@@ -9,7 +9,7 @@ import java.io.Serializable;
  * Version : v1.0.0
  * Description:
  */
-public class CrmBusinessStatusVO implements Serializable {
+public class CrmBusinessProductDTO implements Serializable {
 
     @Serial
     private static final long serialVersionUID = 1L;

@@ -1,4 +1,4 @@
-package com.zp.gmall.module.crm.entity.bussiness;
+package com.zp.gmall.module.crm.entity.opportunity;
 
 import com.zp.gmall.framework.mybatis.core.dataobject.BaseDO;
 
@@ -8,5 +8,5 @@ import com.zp.gmall.framework.mybatis.core.dataobject.BaseDO;
  * Version : v1.0.0
  * Description: CRM 商机与产品关联
  */
-public class CrmBusinessProductDO  extends BaseDO {
+public class CrmOpportunityProductDO  extends BaseDO {
 }
