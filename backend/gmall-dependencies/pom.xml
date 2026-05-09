@@ -643,6 +643,17 @@
                 <version>${revision}</version>
             </dependency>
 
+            <dependency>
+                <groupId>com.zp.gmall</groupId>
+                <artifactId>gmall-module-crm-api</artifactId>
+                <version>${revision}</version>
+            </dependency>
+
+            <dependency>
+                <groupId>com.zp.gmall</groupId>
+                <artifactId>gmall-module-crm-server</artifactId>
+                <version>${revision}</version>
+            </dependency>
 
             <dependency>
                 <groupId>org.projectlombok</groupId>

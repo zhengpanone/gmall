@@ -1,7 +1,7 @@
-package com.zp.gmall.module.crm.controller.admin;
+package com.zp.gmall.module.crm.controller.admin.business;
 
 import com.zp.gmall.framework.common.domain.vo.Result;
-import com.zp.gmall.module.crm.controller.admin.dto.CrmBusinessDTO;
+import com.zp.gmall.module.crm.controller.admin.business.dto.CrmBusinessDTO;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.Parameter;
 import io.swagger.v3.oas.annotations.tags.Tag;
