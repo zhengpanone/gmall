@@ -2,6 +2,7 @@ package com.zp.gmall.module.crm.mapper.product;
 
 import com.zp.gmall.framework.mybatis.core.mapper.BaseMapperX;
 import com.zp.gmall.module.crm.entity.product.CrmProductCategoryDO;
+import org.apache.ibatis.annotations.Mapper;
 
 /**
  * @author : zhengpanone
@@ -9,5 +10,6 @@ import com.zp.gmall.module.crm.entity.product.CrmProductCategoryDO;
  * Version : v1.0.0
  * Description:
  */
+@Mapper
 public interface CrmProductCategoryMapper extends BaseMapperX<CrmProductCategoryDO> {
 }

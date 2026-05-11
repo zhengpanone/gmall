@@ -34,3 +34,21 @@ CREATE TABLE IF NOT EXISTS crm_product_category
     deleted      bit          NOT NULL COMMENT '是否删除',
     deleted_time datetime     NOT NULL COMMENT '删除时间'
 ) COMMENT = 'crm 产品分类表';
+
+CREATE TABLE IF NOT EXISTS crm_follow_up_record
+(
+    id                varchar(36)  NOT NULL COMMENT '主键ID' PRIMARY KEY,
+    customer_id       varchar(36)  NOT NULL COMMENT '客户ID',
+    follow_up_type    TINYINT      NOT NULL COMMENT '跟进类型：1电话 2微信 3QQ 4邮件 5其他',
+    follow_up_status  TINYINT DEFAULT 1 COMMENT '跟进状态：1未跟进 2跟进中 3已跟进',
+    follow_up_content varchar(255) NOT NULL COMMENT '跟进内容',
+    follow_up_time    datetime     NOT NULL COMMENT '跟进时间',
+    file_urls         varchar(1024) COMMENT '附件URL列表',
+    pic_urls          varchar(1024) COMMENT '图片URL列表',
+    creator           varchar(64)  NOT NULL COMMENT '创建者',
+    create_time       datetime     NOT NULL COMMENT '创建时间',
+    updater           varchar(64)  NOT NULL COMMENT '更新者',
+    update_time       datetime     NOT NULL COMMENT '更新时间',
+    deleted           bit          NOT NULL COMMENT '是否删除',
+    deleted_time      datetime     NOT NULL COMMENT '删除时间'
+) COMMENT = 'crm 跟进记录表';

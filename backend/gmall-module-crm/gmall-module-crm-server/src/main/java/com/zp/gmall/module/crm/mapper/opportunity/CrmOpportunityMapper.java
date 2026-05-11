@@ -2,6 +2,7 @@ package com.zp.gmall.module.crm.mapper.opportunity;
 
 import com.zp.gmall.framework.mybatis.core.mapper.BaseMapperX;
 import com.zp.gmall.module.crm.entity.opportunity.CrmOpportunityDO;
+import org.apache.ibatis.annotations.Mapper;
 
 /**
  * @author : zhengpanone
@@ -9,5 +10,6 @@ import com.zp.gmall.module.crm.entity.opportunity.CrmOpportunityDO;
  * Version : v1.0.0
  * Description:
  */
+@Mapper
 public interface CrmOpportunityMapper extends BaseMapperX<CrmOpportunityDO> {
 }
