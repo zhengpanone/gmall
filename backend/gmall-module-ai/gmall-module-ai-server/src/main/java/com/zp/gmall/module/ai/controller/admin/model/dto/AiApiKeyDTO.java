@@ -34,32 +34,32 @@ import lombok.NoArgsConstructor;
 public class AiApiKeyDTO {
 
     @JsonView(UpdateView.class)
-    @Schema(title = "API密钥ID", description = "API密钥ID", example = "1", requiredMode = Schema.RequiredMode.REQUIRED)
+    @Schema(title = "API密钥ID", description = "API密钥ID", example = "1")
     @NotNull(message = "API密钥ID不能为空", groups = UpdateGroup.class)
     private String id;
 
     @JsonView({CreateView.class, UpdateView.class})
-    @Schema(title = "API密钥名称", description = "API密钥名称", example = "测试密钥", requiredMode = Schema.RequiredMode.REQUIRED)
+    @Schema(title = "API密钥名称", description = "API密钥名称", example = "测试密钥")
     @NotBlank(message = "API密钥名称不能为空", groups = {CreateGroup.class, UpdateGroup.class})
     @Size(max = 32, message = "API密钥名称长度不能超过32个字符", groups = {CreateGroup.class, UpdateGroup.class})
     private String apiKeyName;
 
-    @Schema(title = "API密钥", description = "API密钥", example = "<KEY>", requiredMode = Schema.RequiredMode.REQUIRED)
+    @Schema(title = "API密钥", description = "API密钥", example = "<KEY>")
     @NotBlank(message = "API密钥不能为空", groups = {CreateGroup.class, UpdateGroup.class})
     @Size(max = 32, message = "API密钥长度不能超过32个字符", groups = {CreateGroup.class, UpdateGroup.class})
     private String apiKey;
 
-    @Schema(title = "平台", description = "平台", example = "1", requiredMode = Schema.RequiredMode.REQUIRED)
+    @Schema(title = "平台", description = "平台", example = "1")
     @NotBlank(message = "平台不能为空", groups = {CreateGroup.class, UpdateGroup.class})
     @Size(max = 32, message = "平台长度不能超过32个字符", groups = {CreateGroup.class, UpdateGroup.class})
     private String platform;
 
-    @Schema(title = "URL", description = "URL", example = "https://www.baidu.com", requiredMode = Schema.RequiredMode.REQUIRED)
+    @Schema(title = "URL", description = "URL", example = "https://www.baidu.com")
     @NotBlank(message = "URL不能为空", groups = {CreateGroup.class, UpdateGroup.class})
     @Size(max = 255, message = "URL长度不能超过255个字符", groups = {CreateGroup.class, UpdateGroup.class})
     private String url;
 
-    @Schema(title = "状态", description = "状态", example = "1", requiredMode = Schema.RequiredMode.REQUIRED)
+    @Schema(title = "状态", description = "状态", example = "1")
     @NotBlank(message = "状态不能为空", groups = {CreateGroup.class, UpdateGroup.class})
     @Size(max = 32, message = "状态长度不能超过32个字符", groups = {CreateGroup.class, UpdateGroup.class})
     private String status;

@@ -158,7 +158,7 @@
     </root>
 
     <!-- 环境相关配置 -->
-    <springProfile name="dev,test">
+    <springProfile name="dev,test,local">
         <!-- 开发测试环境：输出更多日志到控制台 -->
         <logger name="com.zp" level="DEBUG" additivity="false">
             <appender-ref ref="CONSOLE" />

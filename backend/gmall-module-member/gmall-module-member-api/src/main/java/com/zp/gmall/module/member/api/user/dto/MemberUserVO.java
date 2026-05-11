@@ -14,13 +14,13 @@ import java.time.LocalDateTime;
 @Schema(description = "RPC 服务 - 用户信息 Response VO")
 @Data
 public class MemberUserVO {
-    @Schema(description = "用户编号", requiredMode = Schema.RequiredMode.REQUIRED, example = "1024")
+    @Schema(description = "用户编号", example = "1024")
     private String id;
 
     @Schema(description = "昵称", example = "小王同学")
     private String nickname;
 
-    @Schema(description = "帐号状态", requiredMode = Schema.RequiredMode.REQUIRED, example = "1")
+    @Schema(description = "帐号状态", example = "1")
     private Integer status; // 参见 CommonStatusEnum 枚举
 
     @Schema(description = "用户头像", example = "https://www.iocoder.cn/xxx.jpg")
@@ -29,15 +29,15 @@ public class MemberUserVO {
     @Schema(description = "手机号", example = "15601691300")
     private String mobile;
 
-    @Schema(description = "创建时间", requiredMode = Schema.RequiredMode.REQUIRED)
+    @Schema(description = "创建时间")
     private LocalDateTime createTime;
 
     // ========== 其它信息 ==========
 
-    @Schema(description = "会员级别编号", requiredMode = Schema.RequiredMode.REQUIRED, example = "1")
+    @Schema(description = "会员级别编号", example = "1")
     private Long levelId;
 
-    @Schema(description = "积分", requiredMode = Schema.RequiredMode.REQUIRED, example = "886")
+    @Schema(description = "积分", example = "886")
     private Integer point;
 
 }

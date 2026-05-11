@@ -20,13 +20,13 @@ public class UserDTO {
     private String id;
 
 
-    @Schema(description = "用户账号", requiredMode = Schema.RequiredMode.REQUIRED, type = "string", example = "admin")
+    @Schema(description = "用户账号", type = "string", example = "admin")
     @NotBlank(message = "用户账号不能为空", groups = {CreateGroup.class})
     @Pattern(regexp = "^[a-zA-Z0-9]+$", message = "用户账号由 数字、字母 组成")
     @Size(min = 4, max = 30, message = "用户账号长度为 4-30 个字符")
     private String username;
 
-    @Schema(description = "用户昵称", requiredMode = Schema.RequiredMode.REQUIRED, type = "string", example = "管理员")
+    @Schema(description = "用户昵称", type = "string", example = "管理员")
     @Size(max = 30, message = "用户昵称长度不能超过30个字符", groups = {CreateGroup.class, UpdateGroup.class})
     private String nickname;
 

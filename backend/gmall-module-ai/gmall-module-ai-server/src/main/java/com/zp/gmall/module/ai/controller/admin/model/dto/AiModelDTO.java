@@ -39,61 +39,61 @@ public class AiModelDTO implements Serializable {
     private static final long serialVersionUID = 1L;
 
     @JsonView(ViewGroup.UpdateView.class)
-    @Schema(title = "模型ID", description = "模型ID", example = "1", requiredMode = Schema.RequiredMode.REQUIRED)
+    @Schema(title = "模型ID", description = "模型ID", example = "1")
     @NotNull(message = "模型ID不能为空", groups = UpdateGroup.class)
     private String id;
 
     @JsonView({ViewGroup.CreateView.class, ViewGroup.UpdateView.class})
-    @Schema(title = "密钥ID", description = "密钥ID", example = "1", requiredMode = Schema.RequiredMode.REQUIRED)
+    @Schema(title = "密钥ID", description = "密钥ID", example = "1")
     @NotNull(message = "密钥ID不能为空", groups = CreateGroup.class)
     private String keyId;
 
     @JsonView({ViewGroup.CreateView.class, ViewGroup.UpdateView.class})
-    @Schema(title = "模型名称", description = "模型名称", example = "测试模型", requiredMode = Schema.RequiredMode.REQUIRED)
+    @Schema(title = "模型名称", description = "模型名称", example = "测试模型")
     @NotBlank(message = "模型名称不能为空", groups = CreateGroup.class)
     @Size(max = 32, message = "模型名称长度不能超过32个字符", groups = CreateGroup.class)
     private String name;
 
     @JsonView({ViewGroup.CreateView.class, ViewGroup.UpdateView.class})
-    @Schema(title = "模型", description = "模型", example = "测试模型", requiredMode = Schema.RequiredMode.REQUIRED)
+    @Schema(title = "模型", description = "模型", example = "测试模型")
     @NotBlank(message = "模型不能为空", groups = CreateGroup.class)
     @Size(max = 32, message = "模型长度不能超过32个字符", groups = CreateGroup.class)
     private String model;
 
     @JsonView({ViewGroup.CreateView.class, ViewGroup.UpdateView.class})
-    @Schema(title = "平台", description = "平台", example = "1", requiredMode = Schema.RequiredMode.REQUIRED)
+    @Schema(title = "平台", description = "平台", example = "1")
     @NotBlank(message = "平台不能为空", groups = CreateGroup.class)
     @Size(max = 32, message = "平台长度不能超过32个字符", groups = CreateGroup.class)
     private String platform;
 
     @JsonView({ViewGroup.CreateView.class, ViewGroup.UpdateView.class})
-    @Schema(title = "类型", description = "类型", example = "1", requiredMode = Schema.RequiredMode.REQUIRED)
+    @Schema(title = "类型", description = "类型", example = "1")
     @NotBlank(message = "类型不能为空", groups = CreateGroup.class)
     @Size(max = 32, message = "类型长度不能超过32个字符", groups = CreateGroup.class)
     private String type;
 
     @JsonView({ViewGroup.CreateView.class, ViewGroup.UpdateView.class})
-    @Schema(title = "排序", description = "排序", example = "1", requiredMode = Schema.RequiredMode.REQUIRED)
+    @Schema(title = "排序", description = "排序", example = "1")
     @NotNull(message = "排序不能为空", groups = CreateGroup.class)
     private Integer sort;
 
     @JsonView({ViewGroup.CreateView.class, ViewGroup.UpdateView.class})
-    @Schema(title = "状态", description = "状态", example = "1", requiredMode = Schema.RequiredMode.REQUIRED)
+    @Schema(title = "状态", description = "状态", example = "1")
     @NotNull(message = "状态不能为空", groups = CreateGroup.class)
     private Integer status;
 
     @JsonView({ViewGroup.CreateView.class, ViewGroup.UpdateView.class})
-    @Schema(title = "温度", description = "温度", example = "1", requiredMode = Schema.RequiredMode.REQUIRED)
+    @Schema(title = "温度", description = "温度", example = "1")
     @NotNull(message = "温度不能为空", groups = CreateGroup.class)
     private Double temperature;
 
     @JsonView({ViewGroup.CreateView.class, ViewGroup.UpdateView.class})
-    @Schema(title = "最大令牌数", description = "最大令牌数", example = "1", requiredMode = Schema.RequiredMode.REQUIRED)
+    @Schema(title = "最大令牌数", description = "最大令牌数", example = "1")
     @NotNull(message = "最大令牌数不能为空", groups = CreateGroup.class)
     private Integer maxTokens;
 
     @JsonView({ViewGroup.CreateView.class, ViewGroup.UpdateView.class})
-    @Schema(title = "最大上下文数", description = "最大上下文数", example = "1", requiredMode = Schema.RequiredMode.REQUIRED)
+    @Schema(title = "最大上下文数", description = "最大上下文数", example = "1")
     @NotNull(message = "最大上下文数不能为空", groups = CreateGroup.class)
     private Integer maxContexts;
 }

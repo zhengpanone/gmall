@@ -27,13 +27,13 @@ public class RoleDTO {
     private String id;
 
     @JsonView({ViewGroup.CreateView.class, ViewGroup.UpdateView.class})
-    @Schema(description = "角色名称", requiredMode = Schema.RequiredMode.REQUIRED, title = "角色名称", type = "string", example = "管理员")
+    @Schema(description = "角色名称", title = "角色名称", type = "string", example = "管理员")
     @NotBlank(message = "角色名称不能为空", groups = {CreateGroup.class, UpdateGroup.class})
     @Size(max = 32, message = "角色名称长度不能超过32个字符", groups = {CreateGroup.class, UpdateGroup.class})
     private String roleName;
 
     @JsonView({ViewGroup.CreateView.class, ViewGroup.UpdateView.class})
-    @Schema(description = "角色编码", requiredMode = Schema.RequiredMode.REQUIRED, title = "角色编码", type = "string", example = "admin")
+    @Schema(description = "角色编码", title = "角色编码", type = "string", example = "admin")
     @NotBlank(message = "角色编码不能为空", groups = {CreateGroup.class, UpdateGroup.class})
     @Size(max = 32, message = "角色编码长度不能超过32个字符", groups = {CreateGroup.class, UpdateGroup.class})
     private String roleCode;
@@ -48,7 +48,7 @@ public class RoleDTO {
     private Integer sort;
 
     @JsonView({ViewGroup.CreateView.class, ViewGroup.UpdateView.class})
-    @Schema(description = "角色类型", title = "角色类型", requiredMode = Schema.RequiredMode.REQUIRED, type = "string", example = "1")
+    @Schema(description = "角色类型", title = "角色类型", type = "string", example = "1")
     @NotBlank(message = "角色类型不能为空", groups = {CreateGroup.class, UpdateGroup.class})
     @Size(max = 32, message = "角色类型长度不能超过32个字符", groups = {CreateGroup.class, UpdateGroup.class})
     private String roleType;

@@ -41,7 +41,7 @@ public class ConfigDTO implements Serializable {
     private static final long serialVersionUID = 1L;
 
     @JsonView(ViewGroup.UpdateView.class)
-    @Schema(description = "参数ID", requiredMode = Schema.RequiredMode.REQUIRED, example = "1")
+    @Schema(description = "参数ID", example = "1")
     @NotNull(message = "参数ID不能为空", groups = UpdateGroup.class)
     private String id;
 
@@ -77,7 +77,7 @@ public class ConfigDTO implements Serializable {
      * {@link CommonStatusEnum}
      */
     @NotNull(message = "状态不能为空")
-    @Schema(description = "状态：0-禁用 1-启用", requiredMode = Schema.RequiredMode.REQUIRED, example = "1")
+    @Schema(description = "状态：0-禁用 1-启用", example = "1")
     @Range(min = 0, max = 1, message = "状态只能为0-1")
     @Builder.Default
     private Integer status = 1;

@@ -21,14 +21,14 @@ import static com.zp.gmall.framework.common.util.date.DateUtils.FORMAT_YEAR_MONT
 @EqualsAndHashCode(callSuper = false)
 public class OperateLogPageDTO extends PageParam {
 
-    @Schema(description = "用户编号", requiredMode = Schema.RequiredMode.REQUIRED, example = "666")
+    @Schema(description = "用户编号", example = "666")
     private String userId;
 
-    @Schema(description = "操作模块业务编号", requiredMode = Schema.RequiredMode.REQUIRED, example = "188")
+    @Schema(description = "操作模块业务编号", example = "188")
     private Long bizId;
 
 
-    @Schema(description = "模块类型", requiredMode = Schema.RequiredMode.REQUIRED, example = "订单")
+    @Schema(description = "模块类型", example = "订单")
     private String type;
 
     @Schema(description = "操作名，模拟匹配", example = "创建订单")

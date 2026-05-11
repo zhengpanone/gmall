@@ -19,7 +19,7 @@ public class RouteVO {
     @Schema(description = "路由路径", example = "/system/user")
     private String path;
 
-    @Schema(description = "路由名称（唯一）", requiredMode = Schema.RequiredMode.REQUIRED, example = "User")
+    @Schema(description = "路由名称（唯一）", example = "User")
     private String name;
 
     @Schema(description = "路由组件", example = "system/user/index")

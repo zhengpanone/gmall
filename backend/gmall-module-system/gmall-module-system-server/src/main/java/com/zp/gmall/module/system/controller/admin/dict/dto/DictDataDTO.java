@@ -19,7 +19,7 @@ public class DictDataDTO implements Serializable {
     private static final long serialVersionUID = 1L;
 
     @NotNull(message = "字典类型ID不能为空")
-    @Schema(description = "字典类型：1-系统字典 2-业务字典", requiredMode = Schema.RequiredMode.REQUIRED, example = "yudao")
+    @Schema(description = "字典类型：1-系统字典 2-业务字典", example = "yudao")
     private String typeId;
 
     @NotNull(message = "字典类型Code不能为空")
@@ -27,25 +27,25 @@ public class DictDataDTO implements Serializable {
 
     @NotBlank(message = "字典编码不能为空")
     @Size(max = 50, message = "字典编码长度不能超过50")
-    @Schema(description = "字典编码", requiredMode = Schema.RequiredMode.REQUIRED, example = "yudao")
+    @Schema(description = "字典编码", example = "yudao")
     private String dataCode;
 
     @NotBlank(message = "字典名称不能为空")
     @Size(max = 100, message = "字典名称长度不能超过100")
-    @Schema(description = "字典名称", requiredMode = Schema.RequiredMode.REQUIRED, example = "yudao")
+    @Schema(description = "字典名称", example = "yudao")
     private String dataName;
 
-    @Schema(description = "备注", requiredMode = Schema.RequiredMode.REQUIRED, example = "yudao")
+    @Schema(description = "备注", example = "yudao")
     @Size(max = 500, message = "备注长度不能超过500")
     private String remark;
 
     @NotNull(message = "排序不能为空")
-    @Schema(description = "排序不能为空", requiredMode = Schema.RequiredMode.REQUIRED, example = "yudao")
+    @Schema(description = "排序不能为空", example = "yudao")
     private Integer sort;
 
 
     @InEnum(enumClass = CommonStatusEnum.class, allowNull = false, allowEmpty = false)
     @NotNull(message = "状态不能为空")
-    @Schema(description = "状态：0-禁用 1-启用", requiredMode = Schema.RequiredMode.REQUIRED, example = "yudao")
+    @Schema(description = "状态：0-禁用 1-启用", example = "yudao")
     private Integer status;
 }

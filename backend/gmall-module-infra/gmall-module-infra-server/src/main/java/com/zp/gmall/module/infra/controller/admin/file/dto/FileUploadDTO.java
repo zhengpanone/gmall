@@ -11,7 +11,7 @@ import org.springframework.web.multipart.MultipartFile;
 @Schema(description = "管理后台 - 上传文件 Request DTO")
 @Data
 public class FileUploadDTO {
-    @Schema(description = "文件附件", requiredMode = Schema.RequiredMode.REQUIRED)
+    @Schema(description = "文件附件")
     @NotNull(message = "文件附件不能为空")
     private MultipartFile file;
 

@@ -37,7 +37,7 @@ public final class PageResult<T> implements Serializable {
     /**
      * 总记录数
      */
-    @Schema(description = "总记录数", requiredMode = Schema.RequiredMode.REQUIRED)
+    @Schema(description = "总记录数")
     private Long total;
 
     /**

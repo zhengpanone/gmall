@@ -46,9 +46,14 @@ public class TenantDO extends BaseDO {
      */
     private String name;
     /**
-     * 联系人
+     * 联系人ID
      */
-    private String contactUserName;
+    private String contactUserId;
+
+    /**
+     * 联系人名称
+     */
+    private String contactName;
     /**
      * 联系电话
      */
@@ -77,7 +82,7 @@ public class TenantDO extends BaseDO {
     /**
      * 备注
      */
-    private String remark;
+    private String description;
 
     /**
      * 租户套餐编号
