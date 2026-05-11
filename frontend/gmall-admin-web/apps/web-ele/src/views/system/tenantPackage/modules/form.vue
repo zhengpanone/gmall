@@ -1,5 +1,10 @@
 <script lang="ts" setup>
 import type { VbenFormSchema } from '#/adapter/form';
+import type {
+  CreateTenantPackageParams,
+  TenantPackage,
+  UpdateTenantPackageParams,
+} from '#/api/system/tenantPackage/model';
 
 import { computed, ref } from 'vue';
 
@@ -10,55 +15,66 @@ import { ElMessage } from 'element-plus';
 
 import { useVbenForm } from '#/adapter/form';
 import { CommonStatusEnum } from '#/api/core/common';
-import { createNotice, SystemNoticeApi, updateNotice } from '#/api/system/notice';
+import { createTenantPackage, updateTenantPackage } from '#/api/system/tenantPackage';
 
 const emit = defineEmits<{
   success: [];
 }>();
 
-const formData = ref<SystemNoticeApi.Notice>();
+const formData = ref<TenantPackage>();
 const isEdit = computed(() => !!formData.value?.id);
 
 const schema: VbenFormSchema[] = [
   {
     component: 'Input',
-    fieldName: 'title',
-    label: $t('system.notice.title'),
+    fieldName: 'packageCode',
+    label: $t('system.tenantPackage.code'),
+    rules: 'required',
+    componentProps: () => ({
+      disabled: isEdit.value,
+    }),
+  },
+  {
+    component: 'Input',
+    fieldName: 'packageName',
+    label: $t('system.tenantPackage.name'),
     rules: 'required',
   },
   {
-    component: 'RadioGroup',
-    fieldName: 'type',
-    label: $t('system.notice.type'),
-    defaultValue: SystemNoticeApi.NoticeTypeEnum.NOTICE,
+    component: 'InputNumber',
+    fieldName: 'sort',
+    label: $t('system.role.sort'),
+    defaultValue: 0,
     componentProps: {
-      options: [
-        { label: $t('system.notice.type1'), value: SystemNoticeApi.NoticeTypeEnum.NOTICE },
-        { label: $t('system.notice.type2'), value: SystemNoticeApi.NoticeTypeEnum.ANNOUNCEMENT },
-      ],
+      min: 0,
+      style: { width: '100%' },
     },
   },
   {
     component: 'RadioGroup',
     fieldName: 'status',
-    label: $t('system.notice.status'),
+    label: $t('system.role.status'),
     defaultValue: CommonStatusEnum.ENABLED,
     componentProps: {
       options: [
-        { label: $t('common.enabled'), value: CommonStatusEnum.ENABLED },
-        { label: $t('common.disabled'), value: CommonStatusEnum.DISABLED },
+        {
+          label: $t('common.enabled'),
+          value: CommonStatusEnum.ENABLED,
+        },
+        {
+          label: $t('common.disabled'),
+          value: CommonStatusEnum.DISABLED,
+        },
       ],
     },
   },
   {
     component: 'Input',
-    fieldName: 'content',
-    label: $t('system.notice.content'),
-    rules: 'required',
-    formItemClass: 'col-span-1',
+    fieldName: 'remark',
+    label: $t('system.role.remark'),
     componentProps: {
       type: 'textarea',
-      rows: 6,
+      rows: 3,
     },
   },
 ];
@@ -77,12 +93,12 @@ const [Drawer, drawerApi] = useVbenDrawer({
   onConfirm: onSubmit,
   onOpenChange(isOpen) {
     if (isOpen) {
-      const data = drawerApi.getData<SystemNoticeApi.Notice>();
+      const data = drawerApi.getData<TenantPackage>();
       if (data?.id) {
         formData.value = data;
         formApi.setValues(data);
       } else {
-        formData.value = {} as SystemNoticeApi.Notice;
+        formData.value = {} as TenantPackage;
         formApi.resetForm();
       }
     }
@@ -96,17 +112,19 @@ async function onSubmit() {
     const values = await formApi.getValues();
     try {
       if (formData.value?.id) {
-        await updateNotice({
-          ...(values as SystemNoticeApi.UpdateNoticeParams),
+        await updateTenantPackage({
+          ...(values as UpdateTenantPackageParams),
           id: formData.value.id,
         });
         ElMessage.success($t('common.actionMessage.editSuccess'));
       } else {
-        await createNotice(values as SystemNoticeApi.CreateNoticeParams);
+        await createTenantPackage(values as CreateTenantPackageParams);
         ElMessage.success($t('common.actionMessage.createSuccess'));
       }
       drawerApi.close();
       emit('success');
+    } catch {
+      // 全局错误拦截器会展示接口返回的消息，无需再次提示
     } finally {
       drawerApi.unlock();
     }
@@ -115,8 +133,8 @@ async function onSubmit() {
 
 const getDrawerTitle = computed(() =>
   isEdit.value
-    ? $t('common.actionMessage.editItem', [$t('system.notice.noticeManage')])
-    : $t('common.actionMessage.createItem', [$t('system.notice.noticeManage')]),
+    ? $t('common.actionMessage.editItem', [$t('system.tenantPackage.tenantPackageManage')])
+    : $t('common.actionMessage.createItem', [$t('system.tenantPackage.tenantPackageManage')]),
 );
 </script>
 

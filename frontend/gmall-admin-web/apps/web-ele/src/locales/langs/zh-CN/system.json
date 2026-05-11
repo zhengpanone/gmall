@@ -106,6 +106,24 @@
     "createTime": "创建时间",
     "status": "状态"
   },
+  "tenant": {
+    "tenantManage": "租户管理",
+    "name": "租户名称",
+    "code": "租户编号",
+    "contactPhone": "联系电话",
+    "contactUserName": "联系人",
+    "creator": "发布人",
+    "createTime": "创建时间",
+    "status": "状态"
+  },
+  "tenantPackage": {
+    "tenantPackageManage": "租户套餐管理",
+    "name": "套餐名称",
+    "code": "套餐编码",
+    "creator": "发布人",
+    "createTime": "创建时间",
+    "status": "状态"
+  },
   "log": {
     "operLog": "操作日志",
     "loginLog": "登录日志",

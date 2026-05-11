@@ -132,7 +132,7 @@ async function onSubmit() {
       }
       drawerApi.close();
       emit('success');
-    } catch (error) {
+    } catch {
       // 全局错误拦截器会展示接口返回的消息，无需再次提示
     } finally {
       drawerApi.unlock();

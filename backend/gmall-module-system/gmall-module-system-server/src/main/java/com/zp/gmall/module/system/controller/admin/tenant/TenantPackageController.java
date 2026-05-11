@@ -28,7 +28,7 @@ import org.springframework.web.bind.annotation.*;
  */
 @Tag(name = "管理后台 - 租户套餐")
 @RestController
-@RequestMapping("/tenant_package")
+@RequestMapping("/tenantPackage")
 @RequiredArgsConstructor
 @Validated
 public class TenantPackageController {
