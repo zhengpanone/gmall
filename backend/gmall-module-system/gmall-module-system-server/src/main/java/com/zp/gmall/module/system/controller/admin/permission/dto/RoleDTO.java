@@ -10,6 +10,9 @@ import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Size;
 import lombok.Data;
 
+import java.io.Serial;
+import java.io.Serializable;
+
 /**
  * @author : zhengpanone
  * Date : 2026/4/24 23:41
@@ -18,8 +21,10 @@ import lombok.Data;
  */
 @Schema(name = "角色保存DTO", description = "管理后台 - 角色保存DTO")
 @Data
-public class RoleDTO {
+public class RoleDTO implements Serializable {
 
+    @Serial
+    private static final long serialVersionUID = 1L;
 
     @JsonView(ViewGroup.UpdateView.class)
     @Schema(description = "角色编号", requiredMode = Schema.RequiredMode.NOT_REQUIRED, title = "角色编号", type = "string", example = "1")

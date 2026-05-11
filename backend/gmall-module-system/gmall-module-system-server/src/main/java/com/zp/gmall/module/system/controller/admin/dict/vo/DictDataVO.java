@@ -1,12 +1,10 @@
 package com.zp.gmall.module.system.controller.admin.dict.vo;
 
 import io.swagger.v3.oas.annotations.media.Schema;
-import lombok.Builder;
 import lombok.Data;
 
 @Schema(description = "管理后台 - 字典数据 Response VO")
 @Data
-@Builder
 public class DictDataVO {
 
     @Schema(description = "字典数据ID", example = "1")

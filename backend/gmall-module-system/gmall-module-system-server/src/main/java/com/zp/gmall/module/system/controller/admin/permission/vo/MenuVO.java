@@ -6,6 +6,8 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.io.Serial;
+import java.io.Serializable;
 import java.util.List;
 
 /**
@@ -19,7 +21,10 @@ import java.util.List;
 @NoArgsConstructor
 @AllArgsConstructor
 @Schema(title = "菜单VO", description = "菜单视图对象")
-public class MenuVO {
+public class MenuVO implements Serializable {
+
+    @Serial
+    private static final long serialVersionUID = 1L;
 
     @Schema(title = "菜单ID", description = "菜单ID", example = "1")
     private String id;

@@ -3,23 +3,18 @@ package com.zp.gmall.module.system.controller.admin.dict.dto;
 import com.fasterxml.jackson.annotation.JsonView;
 import com.zp.gmall.framework.common.domain.ViewGroup;
 import com.zp.gmall.framework.common.enums.CommonStatusEnum;
-import com.zp.gmall.framework.validation.group.CreateGroup;
 import com.zp.gmall.framework.validation.group.UpdateGroup;
 import io.swagger.v3.oas.annotations.media.Schema;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Size;
-import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
-import lombok.NoArgsConstructor;
 
 import java.io.Serial;
 import java.io.Serializable;
 
 @Builder
-@NoArgsConstructor
-@AllArgsConstructor
 @Schema(description = "管理后台 - 字典创建DTO")
 @Data
 public class DictTypeDTO implements Serializable {
