@@ -5,6 +5,8 @@ import com.baomidou.mybatisplus.annotation.TableName;
 import com.zp.gmall.framework.mybatis.core.dataobject.BaseDO;
 import lombok.*;
 
+import java.io.Serial;
+
 @TableName("infra_file")
 @Data
 @EqualsAndHashCode(callSuper = true)
@@ -13,6 +15,9 @@ import lombok.*;
 @NoArgsConstructor
 @AllArgsConstructor
 public class FileDO extends BaseDO {
+
+    @Serial
+    private static final long serialVersionUID = 1L;
 
     @TableId
     private String id;

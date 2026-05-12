@@ -10,7 +10,7 @@ import com.zp.gmall.module.system.controller.admin.permission.vo.MenuTreeVO;
 import com.zp.gmall.module.system.controller.admin.permission.vo.MenuVO;
 import com.zp.gmall.module.system.controller.admin.permission.vo.RouteMetaVO;
 import com.zp.gmall.module.system.controller.admin.permission.vo.RouteVO;
-import com.zp.gmall.module.system.convert.permission.MenuConvertMapper;
+import com.zp.gmall.module.system.convert.permission.MenuConvert;
 import com.zp.gmall.module.system.entity.permission.MenuDO;
 import com.zp.gmall.module.system.mapper.permission.MenuMapper;
 import com.zp.gmall.module.system.mapper.permission.RoleMenuMapper;
@@ -31,7 +31,7 @@ public class MenuServiceImpl extends ServiceImpl<MenuMapper, MenuDO> implements 
 
     private final RoleMenuMapper roleMenuMapper;
 
-    private final MenuConvertMapper menuConvertMapper = Mappers.getMapper(MenuConvertMapper.class);
+    private final MenuConvert menuConvertMapper = Mappers.getMapper(MenuConvert.class);
 
     @Override
     public List<MenuVO> getMenuByUserId(String userId) {

@@ -11,7 +11,7 @@ import com.zp.gmall.framework.common.domain.vo.PageResult;
 import com.zp.gmall.module.system.controller.admin.tenant.dto.TenantPackageDTO;
 import com.zp.gmall.module.system.controller.admin.tenant.dto.TenantPackagePageDTO;
 import com.zp.gmall.module.system.controller.admin.tenant.vo.TenantPackageVO;
-import com.zp.gmall.module.system.convert.tenant.TenantPackageConvertMapper;
+import com.zp.gmall.module.system.convert.tenant.TenantPackageConvert;
 import com.zp.gmall.module.system.entity.tenant.TenantPackageDO;
 import com.zp.gmall.module.system.mapper.tenant.TenantPackageMapper;
 import com.zp.gmall.module.system.service.tenant.ITenantPackageService;
@@ -36,7 +36,7 @@ import static com.zp.gmall.module.system.enums.ErrorCodeConstants.TENANT_PACKAGE
 @Service
 public class TenantPackageServiceImpl extends ServiceImpl<TenantPackageMapper, TenantPackageDO> implements ITenantPackageService {
 
-    private final TenantPackageConvertMapper convertMapper = Mappers.getMapper(TenantPackageConvertMapper.class);
+    private final TenantPackageConvert convertMapper = Mappers.getMapper(TenantPackageConvert.class);
 
     @Override
     public void create(TenantPackageDTO tenantPackageDTO) {

@@ -22,13 +22,13 @@ import jakarta.validation.Valid;
  * @since 2026-04-30
  */
 public interface IAiApiKeyService extends IService<AiApiKeyDO> {
-    void createApiKey(@Valid AiApiKeyDTO dto);
+    void create(@Valid AiApiKeyDTO dto);
 
-    void updateApiKey(@Valid AiApiKeyDTO dto);
+    void update(@Valid AiApiKeyDTO dto);
 
-    void deleteApiKey(@Valid Ids ids);
+    void deleteByIds(@Valid Ids ids);
 
-    AiApiKeyVO getApiKey(String id);
+    AiApiKeyVO getById(String id);
 
-    PageResult<AiApiKeyVO> getAiApiKeyPage(@Valid AiApiKeyPageDTO dto);
+    PageResult<AiApiKeyVO> getPageList(@Valid AiApiKeyPageDTO dto);
 }

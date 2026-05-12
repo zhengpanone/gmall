@@ -18,7 +18,7 @@ import org.mapstruct.Mapper;
  * @since 2026-05-06
  */
 @Mapper
-public interface ConfigConvertMapper {
+public interface ConfigConvert {
 
     ConfigVO convert(ConfigDO configDO);
 

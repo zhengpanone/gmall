@@ -18,7 +18,7 @@ import org.mapstruct.Mapper;
  * @since 2026-05-08
  */
 @Mapper(componentModel = "spring")
-public interface DeptConvertMapper {
+public interface DeptConvert {
 
     DeptDO convert(DeptDTO dto);
 

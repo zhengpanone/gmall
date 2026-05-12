@@ -11,7 +11,7 @@ import com.zp.gmall.framework.common.domain.vo.PageResult;
 import com.zp.gmall.module.system.controller.admin.tenant.dto.TenantDTO;
 import com.zp.gmall.module.system.controller.admin.tenant.dto.TenantPageDTO;
 import com.zp.gmall.module.system.controller.admin.tenant.vo.TenantVO;
-import com.zp.gmall.module.system.convert.tenant.TenantConvertMapper;
+import com.zp.gmall.module.system.convert.tenant.TenantConvert;
 import com.zp.gmall.module.system.entity.tenant.TenantDO;
 import com.zp.gmall.module.system.mapper.tenant.TenantMapper;
 import com.zp.gmall.module.system.service.tenant.ITenantService;
@@ -35,7 +35,7 @@ import static com.zp.gmall.module.system.enums.ErrorCodeConstants.TENANT_NOT_EXI
  */
 @Service
 public class TenantServiceImpl extends ServiceImpl<TenantMapper, TenantDO> implements ITenantService {
-    private final TenantConvertMapper convertMapper = Mappers.getMapper(TenantConvertMapper.class);
+    private final TenantConvert convertMapper = Mappers.getMapper(TenantConvert.class);
 
     @Override
     public void create(TenantDTO dto) {

@@ -12,7 +12,7 @@ import org.mapstruct.Mapping;
  * @author zhengpan
  */
 @Mapper(componentModel = "spring")
-public interface TenantConvertMapper {
+public interface TenantConvert {
 
     @Mapping(source = "name", target = "tenantName")
     @Mapping(source = "code", target = "tenantCode")

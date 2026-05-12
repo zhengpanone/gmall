@@ -11,20 +11,21 @@ import jakarta.validation.Valid;
 
 /**
  *
- * Description:
+ * Description: 商品品牌服务接口
  *
  * @author zhengpan
  * @version 1.0.0
  * @since 2026-05-08
  */
 public interface IProductBrandService extends IService<ProductBrandDO> {
-    ProductBrandVO getBrandById(String id);
 
-    PageResult<ProductBrandVO> getBrandPage(@Valid ProductBrandPageDTO productBrandPageDTO);
+    ProductBrandVO getById(String id);
 
-    void deleteBrand(@Valid Ids ids);
+    PageResult<ProductBrandVO> getPage(@Valid ProductBrandPageDTO productBrandPageDTO);
 
-    void updateBrand(@Valid ProductBrandDTO productBrandDTO);
+    void delete(@Valid Ids ids);
 
-    void createBrand(@Valid ProductBrandDTO productBrandDTO);
+    void update(@Valid ProductBrandDTO productBrandDTO);
+
+    void create(@Valid ProductBrandDTO productBrandDTO);
 }

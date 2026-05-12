@@ -4,7 +4,7 @@ import cn.hutool.core.convert.Convert;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.zp.gmall.module.system.controller.admin.user.dto.UserDTO;
 import com.zp.gmall.module.system.controller.admin.user.vo.AdminUserVO;
-import com.zp.gmall.module.system.convert.user.UserConvertMapper;
+import com.zp.gmall.module.system.convert.user.UserConvert;
 import com.zp.gmall.module.system.entity.user.UserDO;
 import com.zp.gmall.module.system.mapper.user.UserMapper;
 import com.zp.gmall.module.system.service.user.IUserService;
@@ -26,7 +26,7 @@ import java.util.List;
 @Service
 public class UserServiceImpl extends ServiceImpl<UserMapper, UserDO> implements IUserService {
 
-    private final UserConvertMapper convertMapper = Mappers.getMapper(UserConvertMapper.class);
+    private final UserConvert convertMapper = Mappers.getMapper(UserConvert.class);
 
     @Override
     public String createUser(UserDTO userDTO) {

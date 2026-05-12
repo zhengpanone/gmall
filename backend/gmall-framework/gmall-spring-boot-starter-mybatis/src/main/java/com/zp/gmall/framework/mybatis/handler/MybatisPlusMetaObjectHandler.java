@@ -2,12 +2,14 @@ package com.zp.gmall.framework.mybatis.handler;
 
 import cn.hutool.core.util.StrUtil;
 import com.baomidou.mybatisplus.core.handlers.MetaObjectHandler;
+import com.zp.gmall.framework.mybatis.core.dataobject.BaseDO;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.ibatis.reflection.MetaObject;
 import org.springframework.util.ClassUtils;
 
 import java.nio.charset.Charset;
 import java.time.LocalDateTime;
+import java.util.Objects;
 
 /**
  * @author : zhengpanone
@@ -24,31 +26,51 @@ public class MybatisPlusMetaObjectHandler implements MetaObjectHandler {
      */
     @Override
     public void insertFill(MetaObject metaObject) {
+
+        if (Objects.nonNull(metaObject) && metaObject.getOriginalObject() instanceof BaseDO) {
+            BaseDO baseDO = (BaseDO) metaObject.getOriginalObject();
+            LocalDateTime current = LocalDateTime.now();
+            if (Objects.isNull(baseDO.getCreateTime())) {
+                baseDO.setCreateTime(current);
+            }
+            if (Objects.isNull(baseDO.getUpdateTime())) {
+                baseDO.setUpdateTime(current);
+            }
+            String currentUser = "system"; // 实际应从SecurityContext获取
+            if (Objects.isNull(baseDO.getCreator())) {
+                baseDO.setCreator(currentUser);
+            }
+            if (Objects.isNull(baseDO.getUpdater())) {
+                baseDO.setUpdater(currentUser);
+            }
+
+        }
         // 插入时自动填充
-        fillValIfNullByName("createTime", LocalDateTime.now(), metaObject, true);
-        fillValIfNullByName("updateTime", LocalDateTime.now(), metaObject, true);
-        // 更新时设置updater
-        String currentUser = "system"; // 实际应从SecurityContext获取
-        this.strictUpdateFill(metaObject, "creator", String.class, currentUser);
-        this.strictUpdateFill(metaObject, "updater", String.class, currentUser);
+//        fillValIfNullByName("createTime", LocalDateTime.now(), metaObject, true);
+//        fillValIfNullByName("updateTime", LocalDateTime.now(), metaObject, true);
+//        // 更新时设置updater
+//        String currentUser = "system"; // 实际应从SecurityContext获取
+//        this.strictUpdateFill(metaObject, "creator", String.class, currentUser);
+//        this.strictUpdateFill(metaObject, "updater", String.class, currentUser);
     }
 
     @Override
     public void updateFill(MetaObject metaObject) {
         // 更新时自动填充
-        this.strictUpdateFill(metaObject, "updateTime", LocalDateTime.class, LocalDateTime.now());
+        fillValIfNullByName("updateTime", LocalDateTime.now(), metaObject, true);
 
         // 更新时设置updater
         String currentUser = "system"; // 实际应从SecurityContext获取
-        this.strictUpdateFill(metaObject, "updater", String.class, currentUser);
+        fillValIfNullByName("updater", currentUser, metaObject, true);
     }
 
     /**
      * 填充值，先判断是否有手动设置，优先手动设置的值，例如：job必须手动设置
-     * @param fieldName 属性名
-     * @param fieldVal 属性值
+     *
+     * @param fieldName  属性名
+     * @param fieldVal   属性值
      * @param metaObject MetaObject
-     * @param isCover 是否覆盖原有值,避免更新操作手动入参
+     * @param isCover    是否覆盖原有值,避免更新操作手动入参
      */
     private static void fillValIfNullByName(String fieldName, Object fieldVal, MetaObject metaObject, boolean isCover) {
         // 0. 如果填充值为空

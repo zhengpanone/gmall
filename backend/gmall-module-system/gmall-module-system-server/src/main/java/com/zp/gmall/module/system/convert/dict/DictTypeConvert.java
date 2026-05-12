@@ -12,7 +12,7 @@ import org.mapstruct.Mapping;
  * @author zhengpan
  */
 @Mapper(componentModel = "spring")
-public interface DictTypeConvertMapper {
+public interface DictTypeConvert {
     @Mapping(source = "code", target = "typeCode")
     @Mapping(source = "name", target = "typeName")
     DictTypeVO convert(DictTypeDO dictDO);

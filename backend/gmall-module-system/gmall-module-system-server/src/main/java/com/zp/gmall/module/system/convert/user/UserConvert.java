@@ -16,7 +16,7 @@ import java.util.stream.Collectors;
  * Description:
  */
 @Mapper(componentModel = "spring")
-public interface UserConvertMapper {
+public interface UserConvert {
 
     @Mapping(source = "id", target = "id")
     @Mapping(source = "username", target = "username")

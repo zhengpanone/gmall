@@ -13,7 +13,7 @@ import java.util.List;
  * @author zhengpan
  */
 @Mapper(componentModel = "spring")
-public interface TenantPackageConvertMapper {
+public interface TenantPackageConvert {
 
     TenantPackageVO convert(TenantPackageDO tenantPackageDO);
 

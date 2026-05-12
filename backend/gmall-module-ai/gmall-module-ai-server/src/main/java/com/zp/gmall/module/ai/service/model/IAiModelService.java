@@ -28,21 +28,21 @@ public interface IAiModelService extends IService<AiModelDO> {
      *
      * @param dto 模型DTO
      */
-    void createModel(@Valid AiModelDTO dto);
+    void create(@Valid AiModelDTO dto);
 
     /**
      * 更新模型
      *
      * @param dto 模型DTO
      */
-    void updateModel(@Valid AiModelDTO dto);
+    void update(@Valid AiModelDTO dto);
 
     /**
      * 删除模型
      *
      * @param ids 模型ID
      */
-    void deleteModel(@Valid Ids ids);
+    void delete(@Valid Ids ids);
 
     /**
      * 获取模型
@@ -50,7 +50,7 @@ public interface IAiModelService extends IService<AiModelDO> {
      * @param id 模型ID
      * @return 模型VO
      */
-    AiModelVO getModel(String id);
+    AiModelVO getById(String id);
 
     /**
      * 获取模型分页
@@ -58,7 +58,7 @@ public interface IAiModelService extends IService<AiModelDO> {
      * @param dto 模型分页DTO
      * @return 模型分页VO
      */
-    PageResult<AiModelVO> getAiModelPage(@Valid AiModelPageDTO dto);
+    PageResult<AiModelVO> getPage(@Valid AiModelPageDTO dto);
 
 
 }

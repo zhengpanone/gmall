@@ -1,8 +1,11 @@
 package com.zp.module.bpm.entity.task;
 
+import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.annotation.TableName;
 import com.zp.gmall.framework.mybatis.core.dataobject.BaseDO;
 import lombok.*;
+
+import java.io.Serial;
 
 /**
  * 流程抄送 DO
@@ -14,6 +17,14 @@ import lombok.*;
 @AllArgsConstructor
 @EqualsAndHashCode(callSuper = true)
 public class BpmProcessInstanceCopyDO extends BaseDO {
+
+    @Serial
+    private static final long serialVersionUID = 1L;
+
+    /**
+     * 主键
+     */
+    @TableId
     private String id;
 
     /**

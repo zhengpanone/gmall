@@ -14,7 +14,7 @@ import com.zp.gmall.framework.tenant.core.context.TenantContextHolder;
 import com.zp.gmall.module.system.controller.admin.permission.dto.RoleDTO;
 import com.zp.gmall.module.system.controller.admin.permission.dto.RolePageDTO;
 import com.zp.gmall.module.system.controller.admin.permission.vo.RoleVO;
-import com.zp.gmall.module.system.convert.permission.RoleConvertMapper;
+import com.zp.gmall.module.system.convert.permission.RoleConvert;
 import com.zp.gmall.module.system.entity.permission.RoleDO;
 import com.zp.gmall.module.system.enums.permission.RoleCodeEnum;
 import com.zp.gmall.module.system.mapper.permission.RoleMapper;
@@ -41,7 +41,7 @@ import static com.zp.gmall.module.system.enums.ErrorCodeConstants.*;
 @Service
 public class RoleServiceImpl extends ServiceImpl<RoleMapper, RoleDO> implements IRoleService {
 
-    private final RoleConvertMapper roleConvertMapper = Mappers.getMapper(RoleConvertMapper.class);
+    private final RoleConvert roleConvertMapper = Mappers.getMapper(RoleConvert.class);
 
     @Override
     public String createRole(RoleDTO roleDTO) {

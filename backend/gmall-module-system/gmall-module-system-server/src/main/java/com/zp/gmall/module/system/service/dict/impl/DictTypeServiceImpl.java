@@ -9,7 +9,7 @@ import com.zp.gmall.framework.common.domain.vo.PageResult;
 import com.zp.gmall.module.system.controller.admin.dict.dto.DictTypeDTO;
 import com.zp.gmall.module.system.controller.admin.dict.dto.DictTypePageDTO;
 import com.zp.gmall.module.system.controller.admin.dict.vo.DictTypeVO;
-import com.zp.gmall.module.system.convert.dict.DictTypeConvertMapper;
+import com.zp.gmall.module.system.convert.dict.DictTypeConvert;
 import com.zp.gmall.module.system.entity.dict.DictTypeDO;
 import com.zp.gmall.module.system.mapper.dict.DictTypeMapper;
 import com.zp.gmall.module.system.service.dict.IDictTypeService;
@@ -26,7 +26,7 @@ import static com.zp.gmall.module.system.enums.ErrorCodeConstants.ROLE_NOT_EXIST
 
 @Service
 public class DictTypeServiceImpl extends ServiceImpl<DictTypeMapper, DictTypeDO> implements IDictTypeService {
-    private final DictTypeConvertMapper convertMapper = Mappers.getMapper(DictTypeConvertMapper.class);
+    private final DictTypeConvert convertMapper = Mappers.getMapper(DictTypeConvert.class);
 
     @Transactional(rollbackFor = Exception.class)
     @Override

@@ -6,6 +6,7 @@ import lombok.Data;
 import lombok.EqualsAndHashCode;
 import org.springframework.format.annotation.DateTimeFormat;
 
+import java.io.Serial;
 import java.time.LocalDateTime;
 
 import static com.zp.gmall.framework.common.util.date.DateUtils.FORMAT_YEAR_MONTH_DAY_HOUR_MINUTE_SECOND;
@@ -20,6 +21,9 @@ import static com.zp.gmall.framework.common.util.date.DateUtils.FORMAT_YEAR_MONT
 @Data
 @EqualsAndHashCode(callSuper = false)
 public class OperateLogPageDTO extends PageParam {
+
+    @Serial
+    private static final long serialVersionUID = 1L;
 
     @Schema(description = "用户编号", example = "666")
     private String userId;

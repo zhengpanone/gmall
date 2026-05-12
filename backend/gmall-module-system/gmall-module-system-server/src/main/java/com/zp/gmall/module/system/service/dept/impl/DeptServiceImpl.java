@@ -8,7 +8,7 @@ import com.zp.gmall.framework.common.domain.vo.PageResult;
 import com.zp.gmall.module.system.controller.admin.dept.dto.DeptDTO;
 import com.zp.gmall.module.system.controller.admin.dept.dto.DeptPageDTO;
 import com.zp.gmall.module.system.controller.admin.dept.vo.DeptVO;
-import com.zp.gmall.module.system.convert.dept.DeptConvertMapper;
+import com.zp.gmall.module.system.convert.dept.DeptConvert;
 import com.zp.gmall.module.system.entity.dept.DeptDO;
 import com.zp.gmall.module.system.mapper.dept.DeptMapper;
 import com.zp.gmall.module.system.service.dept.IDeptService;
@@ -33,7 +33,7 @@ import java.util.List;
 @Service
 public class DeptServiceImpl extends ServiceImpl<DeptMapper, DeptDO> implements IDeptService {
 
-    private final DeptConvertMapper deptConvertMapper = Mappers.getMapper(DeptConvertMapper.class);
+    private final DeptConvert deptConvertMapper = Mappers.getMapper(DeptConvert.class);
 
     @Override
     public PageResult<DeptVO> getDeptPage(DeptPageDTO deptPageDTO) {

@@ -6,6 +6,8 @@ import com.zp.gmall.framework.mybatis.core.dataobject.BaseDO;
 import com.zp.gmall.module.infra.enums.ConfigTypeEnum;
 import lombok.*;
 
+import java.io.Serial;
+
 /**
  * 参数配置表
  */
@@ -17,6 +19,10 @@ import lombok.*;
 @NoArgsConstructor
 @AllArgsConstructor
 public class ConfigDO extends BaseDO {
+
+    @Serial
+    private static final long serialVersionUID = 1L;
+
     /**
      * 参数主键
      */

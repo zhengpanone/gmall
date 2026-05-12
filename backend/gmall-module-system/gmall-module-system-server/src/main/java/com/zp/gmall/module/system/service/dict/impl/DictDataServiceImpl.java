@@ -7,7 +7,7 @@ import com.zp.gmall.framework.common.domain.vo.Result;
 import com.zp.gmall.module.system.controller.admin.dict.dto.DictDataDTO;
 import com.zp.gmall.module.system.controller.admin.dict.dto.DictDataQueryDTO;
 import com.zp.gmall.module.system.controller.admin.dict.vo.DictDataVO;
-import com.zp.gmall.module.system.convert.dict.DictDataConvertMapper;
+import com.zp.gmall.module.system.convert.dict.DictDataConvert;
 import com.zp.gmall.module.system.entity.dict.DictDataDO;
 import com.zp.gmall.module.system.mapper.dict.DictDataMapper;
 import com.zp.gmall.module.system.service.dict.IDictDataService;
@@ -25,7 +25,7 @@ import static com.zp.gmall.module.system.enums.ErrorCodeConstants.ROLE_NOT_EXIST
 @Service
 public class DictDataServiceImpl extends ServiceImpl<DictDataMapper, DictDataDO> implements IDictDataService {
 
-    private final DictDataConvertMapper convertMapper = Mappers.getMapper(DictDataConvertMapper.class);
+    private final DictDataConvert convertMapper = Mappers.getMapper(DictDataConvert.class);
 
     @Transactional(rollbackFor = Exception.class)
     @Override

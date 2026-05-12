@@ -6,7 +6,7 @@ import org.apache.ibatis.annotations.Mapper;
 
 /**
  *
- * Description:
+ * Description: 商品品牌Mapper
  *
  * @author zhengpan
  * @version 1.0.0
@@ -14,4 +14,6 @@ import org.apache.ibatis.annotations.Mapper;
  */
 @Mapper
 public interface ProductBrandMapper extends BaseMapperX<ProductBrandDO> {
+
+    ProductBrandDO selectByName(String name);
 }

@@ -21,31 +21,31 @@ public enum CommonStatusEnum implements Valuable<String> {
     /**
      * 枚举值
      */
-    private final String value;
+    private final String code;
     /**
      * 枚举描述
      */
-    private final String label;
+    private final String name;
 
     @Override
     public String getValue() {
-        return value;
+        return code;
     }
 
     public static boolean isEnable(String value) {
-        return ENABLE.value.equals(value);
+        return ENABLE.code.equals(value);
     }
 
     public static boolean isDisable(String value) {
-        return DISABLE.value.equals(value);
+        return DISABLE.code.equals(value);
     }
 
     public static String getLabelByValue(String value) {
 
         return Arrays.stream(values())
-                .filter(item -> item.value.equals(value))
+                .filter(item -> item.code.equals(value))
                 .findFirst()
-                .map(CommonStatusEnum::getLabel)
+                .map(CommonStatusEnum::getName)
                 .orElse("");
     }
 

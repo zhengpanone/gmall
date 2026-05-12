@@ -6,7 +6,7 @@ CREATE TABLE IF NOT EXISTS sys_role
     id           varchar(36)                            NOT NULL COMMENT '角色ID' PRIMARY KEY,
     name         varchar(30)                            NOT NULL COMMENT '角色名称',
     code         varchar(100)                           NOT NULL COMMENT '角色权限字符串',
-    sort         int                                    NOT NULL DEFAULT 1 COMMENT '显示顺序',
+    sort         int          DEFAULT 1                 NOT NULL COMMENT '显示顺序',
     status       tinyint      DEFAULT 1                 NOT NULL COMMENT '角色状态（1正常 0停用）',
     type         tinyint                                NOT NULL COMMENT '角色类型',
     remark       varchar(500) DEFAULT NULL              NULL COMMENT '备注',

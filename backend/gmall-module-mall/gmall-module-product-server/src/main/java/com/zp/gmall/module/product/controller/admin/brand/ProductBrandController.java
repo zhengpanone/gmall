@@ -32,36 +32,36 @@ public class ProductBrandController {
 
     @PostMapping("/create")
     @Operation(summary = "创建品牌")
-    public Result<?> createBrand(@Valid @RequestBody ProductBrandDTO productBrandDTO) {
-        brandService.createBrand(productBrandDTO);
+    public Result<?> create(@Valid @RequestBody ProductBrandDTO productBrandDTO) {
+        brandService.create(productBrandDTO);
         return Result.ok();
     }
 
     @PutMapping("/update")
     @Operation(summary = "更新品牌")
-    public Result<?> updateBrand(@Valid @RequestBody ProductBrandDTO productBrandDTO) {
-        brandService.updateBrand(productBrandDTO);
+    public Result<?> update(@Valid @RequestBody ProductBrandDTO productBrandDTO) {
+        brandService.update(productBrandDTO);
         return Result.ok();
     }
 
     @DeleteMapping("/delete")
     @Operation(summary = "删除品牌")
-    public Result<?> deleteBrand(@Valid @RequestBody Ids ids) {
-        brandService.deleteBrand(ids);
+    public Result<?> delete(@Valid @RequestBody Ids ids) {
+        brandService.delete(ids);
         return Result.ok();
     }
 
     @GetMapping("/page")
     @Operation(summary = "获取品牌分页")
-    public PageResult<ProductBrandVO> getBrandPage(@Valid ProductBrandPageDTO productBrandPageDTO) {
-        return brandService.getBrandPage(productBrandPageDTO);
+    public PageResult<ProductBrandVO> getPage(@Valid ProductBrandPageDTO productBrandPageDTO) {
+        return brandService.getPage(productBrandPageDTO);
     }
 
     @GetMapping("/get")
     @Operation(summary = "获取品牌详情")
-    public Result<ProductBrandVO> getBrandById(
+    public Result<ProductBrandVO> getById(
             @Parameter(description = "品牌ID", required = true, example = "1")
             @RequestParam("id") String id) {
-        return Result.ok(brandService.getBrandById(id));
+        return Result.ok(brandService.getById(id));
     }
 }

@@ -9,6 +9,8 @@ import com.zp.gmall.module.product.controller.admin.category.vo.ProductCategoryV
 import com.zp.gmall.module.product.entity.category.ProductCategoryDO;
 import jakarta.validation.Valid;
 
+import java.util.List;
+
 /**
  *
  * Description:
@@ -18,11 +20,16 @@ import jakarta.validation.Valid;
  * @since 2026-05-08
  */
 public interface IProductCategoryService extends IService<ProductCategoryDO> {
-    void updateCategory(@Valid ProductCategoryDTO productCategoryDTO);
 
-    void deleteCategory(@Valid Ids ids);
+    void update(@Valid ProductCategoryDTO productCategoryDTO);
 
-    void createCategory(@Valid ProductCategoryDTO productCategoryDTO);
+    void delete(@Valid Ids ids);
 
-    PageResult<ProductCategoryVO> getCategoryPage(@Valid ProductCategoryPageDTO productCategoryPageDTO);
+    void create(@Valid ProductCategoryDTO productCategoryDTO);
+
+    PageResult<ProductCategoryVO> getPage(@Valid ProductCategoryPageDTO productCategoryPageDTO);
+
+    List<ProductCategoryVO> getList();
+
+    ProductCategoryVO getById(String id);
 }

@@ -16,7 +16,7 @@ import java.util.List;
  * Description:
  */
 @Mapper(componentModel = "spring")
-public interface MenuConvertMapper {
+public interface MenuConvert {
 
     @Mapping(target = "ancestorIds", ignore = true)
     @Mapping(target = "title", ignore = true)

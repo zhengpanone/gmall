@@ -30,7 +30,7 @@ public class UserController {
 
     @Operation(summary = "根据ID获取用户")
     @GetMapping("/{id}")
-    public Result<?> getUserById(
+    public Result<?> getById(
             @Parameter(description = "用户ID", required = true, example = "1")
             @PathVariable String id) {
         return Result.ok(adminUserService.getUserById(id));
@@ -38,14 +38,14 @@ public class UserController {
 
     @PostMapping("/create")
     @Operation(summary = "新增用户")
-    public Result<String> createUser(@RequestBody @Valid UserDTO userDTO) {
+    public Result<String> create(@RequestBody @Valid UserDTO userDTO) {
         String userId = adminUserService.createUser(userDTO);
         return Result.ok(userId);
     }
 
     @PutMapping("/update")
     @Operation(summary = "根据ID更新用户")
-    public Result<?> updateUser(UserDTO userDTO) {
+    public Result<?> update(UserDTO userDTO) {
         adminUserService.updateUser(userDTO);
         return Result.ok();
     }

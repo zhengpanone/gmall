@@ -36,31 +36,27 @@
             <artifactId>spring-cloud-starter-alibaba-nacos-config</artifactId>
         </dependency>
 
-
         <!-- 依赖服务 -->
         <dependency>
             <groupId>com.zp.gmall</groupId>
             <artifactId>gmall-module-product-api</artifactId>
-            <version>1.0-SNAPSHOT</version>
         </dependency>
         <dependency>
             <groupId>com.zp.gmall</groupId>
             <artifactId>gmall-module-member-api</artifactId>
-            <version>1.0-SNAPSHOT</version>
         </dependency>
 
         <!-- 业务组件 -->
         <dependency>
             <groupId>com.zp.gmall</groupId>
             <artifactId>gmall-spring-boot-starter-biz-tenant</artifactId>
-            <version>1.0-SNAPSHOT</version>
         </dependency>
 
 
         <!-- Web 相关 -->
         <dependency>
-            <groupId>org.springframework.boot</groupId>
-            <artifactId>spring-boot-starter-web</artifactId>
+            <groupId>com.zp.gmall</groupId>
+            <artifactId>gmall-spring-boot-starter-web</artifactId>
         </dependency>
 
         <dependency>
@@ -72,7 +68,6 @@
         <dependency>
             <groupId>com.zp.gmall</groupId>
             <artifactId>gmall-spring-boot-starter-mybatis</artifactId>
-            <version>1.0-SNAPSHOT</version>
         </dependency>
 
         <!-- flyway-->
@@ -103,8 +98,30 @@
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-actuator</artifactId>
         </dependency>
-
-
     </dependencies>
+
+    <build>
+        <finalName>${project.artifactId}</finalName>
+        <plugins>
+            <!-- 打包 -->
+            <plugin>
+                <groupId>org.springframework.boot</groupId>
+                <artifactId>spring-boot-maven-plugin</artifactId>
+                <version>${spring.boot.version}</version>
+                <executions>
+                    <execution>
+                        <goals>
+                            <goal>repackage</goal> <!-- 将引入的 jar 打入其中 -->
+                        </goals>
+                    </execution>
+                </executions>
+            </plugin>
+
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-enforcer-plugin</artifactId>
+            </plugin>
+        </plugins>
+    </build>
 
 </project>

@@ -17,7 +17,7 @@ import org.mapstruct.MappingTarget;
  * Description:
  */
 @Mapper(componentModel = "spring")
-public interface RoleConvertMapper {
+public interface RoleConvert {
 
     /**
      * 转换角色保存DTO为角色DO

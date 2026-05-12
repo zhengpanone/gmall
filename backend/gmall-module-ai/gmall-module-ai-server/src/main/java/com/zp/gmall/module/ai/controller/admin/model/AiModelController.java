@@ -34,36 +34,36 @@ public class AiModelController {
 
     @PostMapping("/create")
     @Operation(summary = "创建AI模型", description = "创建AI模型")
-    public Result<?> createModel(@Valid @RequestBody AiModelDTO dto) {
-        aiModelService.createModel(dto);
+    public Result<?> create(@Valid @RequestBody AiModelDTO dto) {
+        aiModelService.create(dto);
         return Result.ok();
     }
 
     @PutMapping("/update")
     @Operation(summary = "更新AI模型", description = "更新AI模型")
-    public Result<?> updateModel(@Valid @RequestBody AiModelDTO dto) {
-        aiModelService.updateModel(dto);
+    public Result<?> update(@Valid @RequestBody AiModelDTO dto) {
+        aiModelService.update(dto);
         return Result.ok();
     }
 
     @DeleteMapping("/delete")
     @Operation(summary = "删除AI模型", description = "删除AI模型")
-    public Result<?> deleteModel(@Valid @RequestBody Ids ids) {
-        aiModelService.deleteModel(ids);
+    public Result<?> delete(@Valid @RequestBody Ids ids) {
+        aiModelService.delete(ids);
         return Result.ok();
     }
 
     @GetMapping("/get")
     @Operation(summary = "获取AI模型", description = "获取AI模型")
-    public Result<?> getModel(@Valid @RequestParam("id") String id) {
-        AiModelVO model = aiModelService.getModel(id);
+    public Result<?> getById(@Valid @RequestParam("id") String id) {
+        AiModelVO model = aiModelService.getById(id);
         return Result.ok(model);
     }
 
     @PostMapping("/page")
     @Operation(summary = "分页获取AI模型", description = "分页获取AI模型")
-    public PageResult<AiModelVO> pageModel(@Valid @RequestBody AiModelPageDTO dto) {
-        return aiModelService.getAiModelPage(dto);
+    public PageResult<AiModelVO> getPage(@Valid @RequestBody AiModelPageDTO dto) {
+        return aiModelService.getPage(dto);
     }
 
 

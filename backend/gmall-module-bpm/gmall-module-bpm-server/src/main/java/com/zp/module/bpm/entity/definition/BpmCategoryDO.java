@@ -6,6 +6,8 @@ import com.zp.gmall.framework.common.enums.CommonStatusEnum;
 import com.zp.gmall.framework.mybatis.core.dataobject.BaseDO;
 import lombok.*;
 
+import java.io.Serial;
+
 @TableName("bpm_category")
 @Data
 @Builder
@@ -14,6 +16,8 @@ import lombok.*;
 @EqualsAndHashCode(callSuper = true)
 public class BpmCategoryDO extends BaseDO {
 
+    @Serial
+    private static final long serialVersionUID = 1L;
     /**
      * 主键
      */

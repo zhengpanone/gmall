@@ -6,7 +6,7 @@ import org.apache.ibatis.annotations.Mapper;
 
 /**
  *
- * Description:
+ * Description: 商品分类Mapper
  *
  * @author zhengpan
  * @version 1.0.0
@@ -14,4 +14,6 @@ import org.apache.ibatis.annotations.Mapper;
  */
 @Mapper
 public interface ProductCategoryMapper extends BaseMapperX<ProductCategoryDO> {
+
+    ProductCategoryDO selectByName(String name);
 }

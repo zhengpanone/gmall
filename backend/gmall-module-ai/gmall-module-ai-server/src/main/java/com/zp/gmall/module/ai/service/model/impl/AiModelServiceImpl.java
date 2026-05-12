@@ -39,30 +39,30 @@ public class AiModelServiceImpl extends ServiceImpl<AiModelMapper, AiModelDO> im
     private final AiModelConvert aiModelConvert = Mappers.getMapper(AiModelConvert.class);
 
     @Override
-    public void createModel(AiModelDTO dto) {
+    public void create(AiModelDTO dto) {
         AiModelDO aiModelDO = aiModelConvert.convert(dto);
         save(aiModelDO);
     }
 
     @Override
-    public void updateModel(AiModelDTO dto) {
+    public void update(AiModelDTO dto) {
         AiModelDO aiModelDO = aiModelConvert.convert(dto);
         updateById(aiModelDO);
     }
 
     @Override
-    public void deleteModel(Ids ids) {
+    public void delete(Ids ids) {
         removeByIds(ids.getIds());
     }
 
     @Override
-    public AiModelVO getModel(String id) {
-        AiModelDO aiModelDO = getById(id);
+    public AiModelVO getById(String id) {
+        AiModelDO aiModelDO = baseMapper.selectById(id);
         return aiModelConvert.convert(aiModelDO);
     }
 
     @Override
-    public PageResult<AiModelVO> getAiModelPage(AiModelPageDTO pageDTO) {
+    public PageResult<AiModelVO> getPage(AiModelPageDTO pageDTO) {
         Page<AiModelDO> page = new Page<>(pageDTO.getPageNo(), pageDTO.getPageSize());
         LambdaQueryWrapper<AiModelDO> queryWrapper = Wrappers.<AiModelDO>lambdaQuery()
                 .like(StringUtils.isNotBlank(pageDTO.getName()), AiModelDO::getName, pageDTO.getName());

@@ -1,4 +1,4 @@
-package com.gmall.module.bpm.constant;
+package com.zp.gmall.module.bpm.constant;
 
 import com.zp.gmall.framework.common.exception.ErrorCode;
 

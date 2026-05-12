@@ -20,10 +20,7 @@
         <dependency>
             <groupId>com.zp.gmall</groupId>
             <artifactId>gmall-common</artifactId>
-            <version>1.0-SNAPSHOT</version>
         </dependency>
-
-
 
         <!-- 参数校验 -->
         <dependency>

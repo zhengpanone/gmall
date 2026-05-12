@@ -38,30 +38,30 @@ public class AiApiKeyServiceImpl extends ServiceImpl<AiApiKeyMapper, AiApiKeyDO>
     private final AiApiKeyConvert aiApiKeyConvert = Mappers.getMapper(AiApiKeyConvert.class);
 
     @Override
-    public void createApiKey(AiApiKeyDTO dto) {
+    public void create(AiApiKeyDTO dto) {
         AiApiKeyDO aiApiKey = aiApiKeyConvert.convert(dto);
         save(aiApiKey);
     }
 
     @Override
-    public void updateApiKey(AiApiKeyDTO dto) {
+    public void update(AiApiKeyDTO dto) {
         AiApiKeyDO aiApiKey = aiApiKeyConvert.convert(dto);
         updateById(aiApiKey);
     }
 
     @Override
-    public void deleteApiKey(Ids ids) {
+    public void deleteByIds(Ids ids) {
         removeByIds(ids.getIds());
     }
 
     @Override
-    public AiApiKeyVO getApiKey(String id) {
-        AiApiKeyDO apiKeyDO = getById(id);
+    public AiApiKeyVO getById(String id) {
+        AiApiKeyDO apiKeyDO = baseMapper.selectById(id);
         return aiApiKeyConvert.convert(apiKeyDO);
     }
 
     @Override
-    public PageResult<AiApiKeyVO> getAiApiKeyPage(AiApiKeyPageDTO pageDTO) {
+    public PageResult<AiApiKeyVO> getPageList(AiApiKeyPageDTO pageDTO) {
         Page<AiApiKeyDO> page = new Page<>(pageDTO.getPageNo(), pageDTO.getPageSize());
         LambdaQueryWrapper<AiApiKeyDO> queryWrapper = Wrappers.<AiApiKeyDO>lambdaQuery()
                 .like(StringUtils.isNotBlank(pageDTO.getApiKeyName()), AiApiKeyDO::getName, pageDTO.getApiKeyName());

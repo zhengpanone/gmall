@@ -38,36 +38,36 @@ public class AiApiKeyController {
 
     @PostMapping("/create")
     @Operation(summary = "创建API密钥", description = "创建API密钥")
-    public Result<?> createApiKey(@Valid @RequestBody AiApiKeyDTO dto) {
-        aiApiKeyService.createApiKey(dto);
+    public Result<?> create(@Valid @RequestBody AiApiKeyDTO dto) {
+        aiApiKeyService.create(dto);
         return Result.ok();
     }
 
     @PutMapping("/update")
     @Operation(summary = "更新API密钥", description = "更新API密钥")
-    public Result<?> updateApiKey(@Valid @RequestBody AiApiKeyDTO dto) {
-        aiApiKeyService.updateApiKey(dto);
+    public Result<?> update(@Valid @RequestBody AiApiKeyDTO dto) {
+        aiApiKeyService.update(dto);
         return Result.ok();
     }
 
     @DeleteMapping("/delete")
     @Operation(summary = "删除API密钥", description = "删除API密钥")
-    public Result<?> deleteApiKey(@Valid @RequestBody Ids ids) {
-        aiApiKeyService.deleteApiKey(ids);
+    public Result<?> deleteByIds(@Valid @RequestBody Ids ids) {
+        aiApiKeyService.deleteByIds(ids);
         return Result.ok();
     }
 
     @GetMapping("/get")
     @Parameter(name = "id", description = "API密钥ID", required = true, example = "1")
     @Operation(summary = "获取API密钥", description = "获取API密钥")
-    public Result<AiApiKeyVO> getApiKey(@Valid @RequestParam("id") String id) {
-        AiApiKeyVO apiKeyVO = aiApiKeyService.getApiKey(id);
+    public Result<AiApiKeyVO> getById(@Valid @RequestParam("id") String id) {
+        AiApiKeyVO apiKeyVO = aiApiKeyService.getById(id);
         return Result.ok(apiKeyVO);
     }
 
     @PostMapping("/page")
     @Operation(summary = "获取字典分页")
-    public PageResult<AiApiKeyVO> getAiApiKeyPage(@Valid @RequestBody AiApiKeyPageDTO aiApiKeyPageDTO) {
-        return aiApiKeyService.getAiApiKeyPage(aiApiKeyPageDTO);
+    public PageResult<AiApiKeyVO> getPageList(@Valid @RequestBody AiApiKeyPageDTO aiApiKeyPageDTO) {
+        return aiApiKeyService.getPageList(aiApiKeyPageDTO);
     }
 }

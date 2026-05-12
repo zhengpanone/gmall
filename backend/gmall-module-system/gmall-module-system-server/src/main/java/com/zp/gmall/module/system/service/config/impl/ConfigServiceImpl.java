@@ -9,7 +9,7 @@ import com.zp.gmall.framework.common.domain.vo.PageResult;
 import com.zp.gmall.module.system.controller.admin.config.dto.ConfigDTO;
 import com.zp.gmall.module.system.controller.admin.config.dto.ConfigPageDTO;
 import com.zp.gmall.module.system.controller.admin.config.vo.ConfigVO;
-import com.zp.gmall.module.system.convert.config.ConfigConvertMapper;
+import com.zp.gmall.module.system.convert.config.ConfigConvert;
 import com.zp.gmall.module.system.entity.config.ConfigDO;
 import com.zp.gmall.module.system.mapper.config.ConfigMapper;
 import com.zp.gmall.module.system.service.config.IConfigService;
@@ -35,7 +35,7 @@ import java.util.stream.Collectors;
 @Service
 public class ConfigServiceImpl extends ServiceImpl<ConfigMapper, ConfigDO> implements IConfigService {
 
-    private final ConfigConvertMapper convertMapper = Mappers.getMapper(ConfigConvertMapper.class);
+    private final ConfigConvert convertMapper = Mappers.getMapper(ConfigConvert.class);
 
     @Override
     public PageResult<ConfigVO> getConfigPage(ConfigPageDTO pageDTO) {
