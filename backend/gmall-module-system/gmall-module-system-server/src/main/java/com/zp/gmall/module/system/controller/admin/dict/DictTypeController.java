@@ -25,13 +25,13 @@ public class DictTypeController {
     // 字典相关接口
     @PostMapping("/create")
     @Operation(summary = "创建字典类型")
-    public Result<?> createDictType(@Valid @RequestBody DictTypeDTO dictDTO) {
+    public Result<?> create(@Valid @RequestBody DictTypeDTO dictDTO) {
         return Result.ok(dictTYpeService.createDictType(dictDTO));
     }
 
     @PostMapping("/update")
     @Operation(summary = "更新字典")
-    public Result<?> updateDictTyp(@Valid @RequestBody DictTypeDTO dictDTO) {
+    public Result<?> updateById(@Valid @RequestBody DictTypeDTO dictDTO) {
         dictTYpeService.updateDict(dictDTO);
         return Result.ok();
     }

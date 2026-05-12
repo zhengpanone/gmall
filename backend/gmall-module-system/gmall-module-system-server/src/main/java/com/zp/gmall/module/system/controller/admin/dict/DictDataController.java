@@ -26,21 +26,21 @@ public class DictDataController {
     // 字典相关接口
     @PostMapping("/create")
     @Operation(summary = "创建字典数据")
-    public Result<?> createDict(@Valid @RequestBody DictDataDTO dictDTO) {
+    public Result<?> create(@Valid @RequestBody DictDataDTO dictDTO) {
         dictTYpeService.createDictData(dictDTO);
         return Result.ok();
     }
 
     @PostMapping("/update")
     @Operation(summary = "更新字典")
-    public Result<?> updateDict(@Valid @RequestBody DictDataDTO dictDTO) {
+    public Result<?> updateById(@Valid @RequestBody DictDataDTO dictDTO) {
         dictTYpeService.updateDictData(dictDTO);
         return Result.ok();
     }
 
     @PostMapping("/delete")
     @Operation(summary = "删除字典")
-    public Result<?> deleteDict(@Valid @RequestBody Ids ids) {
+    public Result<?> deleteByIds(@Valid @RequestBody Ids ids) {
         dictTYpeService.deleteDictData(ids);
         return Result.ok();
     }
@@ -48,13 +48,13 @@ public class DictDataController {
 
     @GetMapping("/list")
     @Operation(summary = "获取字典分页")
-    public Result<List<DictDataVO>> getDictList(@Valid DictDataQueryDTO dataQueryDTO) {
+    public Result<List<DictDataVO>> getList(@Valid DictDataQueryDTO dataQueryDTO) {
         return dictTYpeService.getDictDataList(dataQueryDTO);
     }
 
     @GetMapping("/get")
     @Operation(summary = "获取字典详情")
-    public Result<DictDataVO> getDictById(
+    public Result<DictDataVO> getById(
             @Parameter(description = "字典ID", required = true, example = "1")
             @RequestParam("id") String id) {
         return Result.ok(dictTYpeService.getDictDataById(id));
