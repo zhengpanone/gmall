@@ -14,6 +14,7 @@ logging:
   file:
     name: ${user.home}/log/${spring.application.name}.log # 日志文件名，全路径
   level:
+#    org.springframework: debug
     web: debug
 #    root: debug
     com.zp.gmall: debug

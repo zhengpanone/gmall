@@ -14,7 +14,7 @@ import org.springframework.security.config.annotation.web.configurers.AuthorizeH
  * @author 芋道源码
  */
 public abstract class AuthorizeRequestsCustomizer
-        implements Customizer<AuthorizeHttpRequestsConfigurer<HttpSecurity>.AuthorizationManagerRequestMatcherRegistry>, Ordered {
+        implements Customizer<AuthorizeHttpRequestsConfigurer<HttpSecurity>.AuthorizationManagerRequestMatcherRegistry>, Ordered{
 
     @Resource
     private WebProperties webProperties;
