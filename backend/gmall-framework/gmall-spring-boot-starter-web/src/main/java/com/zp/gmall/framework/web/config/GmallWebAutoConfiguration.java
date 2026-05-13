@@ -1,5 +1,6 @@
 package com.zp.gmall.framework.web.config;
 
+import com.zp.gmall.framework.common.biz.infra.logger.ApiErrorLogCommonApi;
 import com.zp.gmall.framework.web.core.handler.GlobalExceptionHandler;
 import jakarta.annotation.Resource;
 import org.springframework.beans.factory.annotation.Value;
@@ -46,7 +47,7 @@ public class GmallWebAutoConfiguration implements WebMvcConfigurer {
     }
 
     @Bean
-    public GlobalExceptionHandler globalExceptionHandler() {
-        return new GlobalExceptionHandler();
+    public GlobalExceptionHandler globalExceptionHandler(ApiErrorLogCommonApi apiErrorLogApi) {
+        return new GlobalExceptionHandler(applicationName, apiErrorLogApi);
     }
 }

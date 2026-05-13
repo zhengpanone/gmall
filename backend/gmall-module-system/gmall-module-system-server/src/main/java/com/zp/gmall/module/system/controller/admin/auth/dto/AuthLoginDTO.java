@@ -33,4 +33,8 @@ public class AuthLoginDTO extends CaptchaVerificationDTO {
     @NotEmpty(message = "密码不能为空")
     //@Length(min = 4, max = 16, message = "密码长度为 4-16 位")
     private String password;
+
+    @Schema(description = "租户ID", example = "1")
+    @NotEmpty(message = "租户ID不能为空")
+    private String tenantId;
 }

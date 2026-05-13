@@ -35,6 +35,7 @@ public class AdminAuthServiceImpl implements IAdminAuthService {
 
     @Override
     public AuthLoginVO login(AuthLoginDTO authLoginDTO) {
+        // TODO 校验用户
         UserDO user = authenticate(authLoginDTO.getUsername(), authLoginDTO.getPassword());
 
         return createTokenAfterLoginSuccess(user.getId(),authLoginDTO.getUsername(),LoginLogTypeEnum.LOGIN_USERNAME);

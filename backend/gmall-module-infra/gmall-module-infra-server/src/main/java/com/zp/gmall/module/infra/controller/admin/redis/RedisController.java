@@ -3,10 +3,9 @@ package com.zp.gmall.module.infra.controller.admin.redis;
 import com.zp.gmall.framework.common.domain.vo.Result;
 import com.zp.gmall.module.infra.controller.admin.redis.vo.RedisMonitorRespVO;
 import com.zp.gmall.module.infra.convert.redis.RedisConvert;
-import jakarta.annotation.Resource;
-
-import io.swagger.v3.oas.annotations.tags.Tag;
 import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.tags.Tag;
+import jakarta.annotation.Resource;
 import org.springframework.data.redis.connection.RedisServerCommands;
 import org.springframework.data.redis.core.RedisCallback;
 import org.springframework.data.redis.core.StringRedisTemplate;
@@ -28,7 +27,6 @@ public class RedisController {
 
     @GetMapping("/get-monitor-info")
     @Operation(summary = "获得 Redis 监控信息")
-//    @PreAuthorize("@ss.hasPermission('infra:redis:get-monitor-info')")
     public Result<RedisMonitorRespVO> getRedisMonitorInfo() {
         // 获得 Redis 统计信息
         Properties info = stringRedisTemplate.execute((RedisCallback<Properties>) RedisServerCommands::info);

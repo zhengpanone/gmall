@@ -4,6 +4,8 @@ import com.zp.gmall.framework.common.domain.dto.PageParam;
 import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.Data;
 
+import java.io.Serial;
+
 /**
  *
  * Description:
@@ -15,6 +17,10 @@ import lombok.Data;
 @Schema(description = "管理后台 - 操作日志分页DTO")
 @Data
 public class OperLogPageDTO extends PageParam {
+
+    @Serial
+    private static final long serialVersionUID = 1L;
+
     @Schema(description = "模块标题", example = "用户管理")
     private String title;
 

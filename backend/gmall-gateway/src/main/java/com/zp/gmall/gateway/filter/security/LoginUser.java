@@ -23,7 +23,7 @@ public class LoginUser {
     /**
      * 用户类型
      */
-    private Integer userType;
+    private String userType;
     /**
      * 额外的用户信息
      */
