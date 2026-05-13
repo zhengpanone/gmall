@@ -1,0 +1,24 @@
+{
+  "title": "工作流",
+  "category": {
+    "title": "流程分类"
+  },
+  "monitor": {
+    "title": "流程监控",
+    "allTaskWait": {
+      "title": "待办任务"
+    },
+    "processInstance": {
+      "title": "流程实例"
+    }
+  },
+  "processDefinition": {
+    "title": "流程定义"
+  },
+  "processDesign": {
+    "title": "流程设计"
+  },
+  "spel": {
+    "title": "流程表达式"
+  }
+}

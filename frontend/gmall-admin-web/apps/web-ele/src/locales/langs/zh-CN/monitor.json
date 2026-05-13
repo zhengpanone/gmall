@@ -1,0 +1,15 @@
+{
+  "title": "系统监控",
+  "cache": {
+    "title": "缓存监控"
+  },
+  "online": {
+    "title": "在线用户"
+  },
+  "admin": {
+    "title": "Admin监控"
+  },
+  "task": {
+    "title": "任务调度中心"
+  }
+}
