@@ -16,7 +16,7 @@ public interface IDictTypeService extends IService<DictTypeDO> {
      * @param dictDTO 字典DTO
      * @return 字典VO
      */
-    DictTypeVO createDictType(@Valid DictTypeDTO dictDTO);
+    DictTypeVO create(@Valid DictTypeDTO dictDTO);
 
     Boolean checkDictCodeExists(String dictCode, String excludeId);
 
@@ -26,11 +26,11 @@ public interface IDictTypeService extends IService<DictTypeDO> {
      * @param dictDTO 字典DTO
      * @return 字典VO
      */
-    DictTypeVO updateDict(@Valid DictTypeDTO dictDTO);
+    DictTypeVO updateById(@Valid DictTypeDTO dictDTO);
 
-    void deleteDict(@Valid Ids ids);
+    void delete(@Valid Ids ids);
 
-    PageResult<DictTypeVO> getDictPage(@Valid DictTypePageDTO dictPageDTO);
+    PageResult<DictTypeVO> getPageList(@Valid DictTypePageDTO dictPageDTO);
 
-    DictTypeVO getDictById(String id);
+    DictTypeVO getById(String id);
 }

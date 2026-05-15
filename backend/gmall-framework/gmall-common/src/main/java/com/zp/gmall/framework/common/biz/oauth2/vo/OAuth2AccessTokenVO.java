@@ -1,4 +1,4 @@
-package com.zp.gmall.module.system.api.oauth2.dto;
+package com.zp.gmall.framework.common.biz.oauth2.vo;
 
 
 import io.swagger.v3.oas.annotations.media.Schema;
@@ -11,7 +11,7 @@ import java.time.LocalDateTime;
 @Schema(description = "RPC 服务 - OAuth2 访问令牌的信息 Response DTO")
 @Data
 @Accessors(chain = true)
-public class OAuth2AccessTokenRespDTO implements Serializable {
+public class OAuth2AccessTokenVO implements Serializable {
 
     @Schema(description = "访问令牌", example = "tudou")
     private String accessToken;

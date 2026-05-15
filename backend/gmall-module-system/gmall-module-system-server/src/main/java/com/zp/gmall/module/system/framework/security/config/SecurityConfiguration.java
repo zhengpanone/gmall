@@ -23,7 +23,9 @@ public class SecurityConfiguration {
         return new AuthorizeRequestsCustomizer() {
             @Override
             public void customize(AuthorizeHttpRequestsConfigurer<HttpSecurity>.AuthorizationManagerRequestMatcherRegistry registry) {
-                registry.requestMatchers("/v3/api-docs/**").permitAll()
+                registry.
+                        requestMatchers("/**").permitAll()
+                        .requestMatchers("/v3/api-docs/**").permitAll()
                         .requestMatchers("/webjars/**").permitAll()
                         .requestMatchers("/swagger-ui/**").permitAll();
                 // Druid 监控

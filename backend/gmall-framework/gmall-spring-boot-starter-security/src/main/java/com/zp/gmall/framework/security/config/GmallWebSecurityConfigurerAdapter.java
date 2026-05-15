@@ -7,6 +7,7 @@ import com.zp.gmall.framework.security.core.filter.TokenAuthenticationFilter;
 import com.zp.gmall.framework.web.config.WebProperties;
 import jakarta.annotation.Resource;
 import jakarta.annotation.security.PermitAll;
+import jakarta.servlet.DispatcherType;
 import org.springframework.boot.autoconfigure.AutoConfiguration;
 import org.springframework.boot.autoconfigure.AutoConfigureOrder;
 import org.springframework.context.ApplicationContext;
@@ -30,10 +31,7 @@ import org.springframework.web.servlet.mvc.method.RequestMappingInfo;
 import org.springframework.web.servlet.mvc.method.annotation.RequestMappingHandlerMapping;
 import org.springframework.web.util.pattern.PathPattern;
 
-import java.util.HashSet;
-import java.util.List;
-import java.util.Map;
-import java.util.Set;
+import java.util.*;
 
 import static com.zp.gmall.framework.common.util.collection.CollectionUtils.convertList;
 
@@ -123,9 +121,24 @@ public class GmallWebSecurityConfigurerAdapter {
                 // 一堆自定义的 Spring Security 处理器
                 .exceptionHandling(c -> c.authenticationEntryPoint(authenticationEntryPoint)
                         .accessDeniedHandler(accessDeniedHandler));
+        // 登录、登录暂时不使用 Spring Security 的拓展点，主要考虑一方面拓展多用户、多种登录方式相对复杂，一方面用户的学习成本较高
 
         // 获得 @PermitAll 带来的 URL 列表，免登录
         Multimap<HttpMethod, String> permitAllUrls = getPermitAllUrlsFromAnnotations();
+
+        // ========== 收集所有 permit-all URL，设置给 TokenAuthenticationFilter ==========
+        List<String> allPermitAllUrls = new ArrayList<>();
+        // 1) @PermitAll 注解扫描的 URL（忽略 HTTP 方法，统一收集）
+        permitAllUrls.values().stream().distinct().forEach(allPermitAllUrls::add);
+        // 2) YAML 配置的 permit-all-urls
+        if (CollUtil.isNotEmpty(securityProperties.getPermitAllUrls())) {
+            allPermitAllUrls.addAll(securityProperties.getPermitAllUrls());
+        }
+        // 3) 静态资源等
+        allPermitAllUrls.addAll(List.of("/*.html", "/*.css", "/*.js"));
+        // 设置到 filter
+        authenticationTokenFilter.setPermitAllUrls(allPermitAllUrls);
+
 
         // 设置每个请求的权限
         httpSecurity
@@ -148,7 +161,10 @@ public class GmallWebSecurityConfigurerAdapter {
                 // ②：每个项目的自定义规则
                 .authorizeHttpRequests(c -> authorizeRequestsCustomizers.forEach(customizer -> customizer.customize(c)))
                 // ③：兜底规则，必须认证
-                .authorizeHttpRequests(c -> c.anyRequest().authenticated());
+                .authorizeHttpRequests(c -> c
+                        .dispatcherTypeMatchers(DispatcherType.ASYNC).permitAll() // WebFlux 异步请求，无需认证，目的：SSE 场景
+                        .anyRequest().authenticated());
+
 
         // 添加 Token Filter
         httpSecurity.addFilterBefore(authenticationTokenFilter, UsernamePasswordAuthenticationFilter.class);

@@ -9,6 +9,7 @@ import com.zp.gmall.module.system.service.permission.IMenuService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.Parameter;
 import io.swagger.v3.oas.annotations.tags.Tag;
+import jakarta.annotation.security.PermitAll;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.validation.annotation.Validated;
@@ -67,6 +68,7 @@ public class MenuController {
     /**
      * 获取用户菜单
      */
+    @PermitAll
     @GetMapping("/list")
     public Result<List<MenuVO>> getMenuList() {
         // 获取当前用户ID

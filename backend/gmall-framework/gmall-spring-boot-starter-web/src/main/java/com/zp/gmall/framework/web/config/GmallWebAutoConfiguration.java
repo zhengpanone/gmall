@@ -2,7 +2,9 @@ package com.zp.gmall.framework.web.config;
 
 import com.zp.gmall.framework.common.biz.infra.logger.ApiErrorLogCommonApi;
 import com.zp.gmall.framework.web.core.handler.GlobalExceptionHandler;
+import com.zp.gmall.framework.web.util.WebFrameworkUtils;
 import jakarta.annotation.Resource;
+import org.jetbrains.annotations.NotNull;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.autoconfigure.AutoConfiguration;
 import org.springframework.boot.context.properties.EnableConfigurationProperties;
@@ -28,7 +30,7 @@ public class GmallWebAutoConfiguration implements WebMvcConfigurer {
     private String applicationName;
 
     @Override
-    public void configurePathMatch(PathMatchConfigurer configurer) {
+    public void configurePathMatch(@NotNull PathMatchConfigurer configurer) {
         configurePathMatch(configurer, webProperties.getAdminApi());
         configurePathMatch(configurer, webProperties.getAppApi());
     }
@@ -50,4 +52,10 @@ public class GmallWebAutoConfiguration implements WebMvcConfigurer {
     public GlobalExceptionHandler globalExceptionHandler(ApiErrorLogCommonApi apiErrorLogApi) {
         return new GlobalExceptionHandler(applicationName, apiErrorLogApi);
     }
+
+    @Bean
+    public WebFrameworkUtils webFrameworkUtils(WebProperties webProperties) {
+        return new WebFrameworkUtils(webProperties);
+    }
+
 }

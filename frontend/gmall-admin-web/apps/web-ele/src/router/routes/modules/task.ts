@@ -17,7 +17,7 @@ const routes: RouteRecordRaw[] = [
         meta: {
           title: $t('task.myTask.title'),
         },
-        name: 'Cache',
+        name: 'MyTask',
         path: '/task/myTask',
         component: () => import('#/views/task/myTask/index.vue'),
       },

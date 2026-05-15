@@ -19,7 +19,7 @@ import static com.zp.gmall.framework.common.domain.vo.Result.ok;
 
 @Tag(name = "管理后台 - 参数配置")
 @RestController
-@RequestMapping("/infra/config")
+@RequestMapping("/config")
 @Validated
 @RequiredArgsConstructor
 public class ConfigController {

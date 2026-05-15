@@ -1,106 +1,133 @@
-<script lang="ts" setup>
-import { ref } from 'vue';
+<script setup lang="ts">
+import type { CommandStats, RedisInfo } from '#/api/monitor/cache/model';
+
+import { computed, onMounted, reactive, ref } from 'vue';
 
 import { Page } from '@vben/common-ui';
+import { CommandLineIcon, MemoryIcon, RedisIcon } from '@vben/icons';
 
 import {
   ElButton,
   ElCard,
-  ElMessage,
-  ElNotification,
-  ElSegmented,
-  ElSpace,
-  ElTable,
+  ElCol,
+  ElEmpty,
+  ElRow,
+  ElSkeleton,
 } from 'element-plus';
 
-type NotificationType = 'error' | 'info' | 'success' | 'warning';
+import { redisCacheInfo } from '#/api/monitor/cache/index';
 
-function info() {
-  ElMessage.info('How many roads must a man walk down');
+import CommandChart from './components/command-chart.vue';
+import MemoryChart from './components/memory-chart.vue';
+import RedisDescription from './components/redis-description.vue';
+
+const baseSpan = { lg: 12, md: 24, sm: 24, xl: 12, xs: 24 };
+
+const chartData = reactive<{
+  command: { name: string; value: number }[];
+  memory: string;
+}>({
+  command: [],
+  memory: '0',
+});
+
+interface IRedisInfo extends RedisInfo {
+  dbSize?: string;
+}
+const redisInfo = ref<IRedisInfo>();
+const loading = ref(false);
+
+const hasCommandData = computed(() => chartData.command.length > 0);
+const hasMemoryData = computed(() => Number.parseFloat(chartData.memory) > 0);
+
+onMounted(async () => {
+  await loadInfo();
+});
+
+async function loadInfo() {
+  loading.value = true;
+  try {
+    const result = await redisCacheInfo();
+    const ret = result.data;
+
+    const usedMemory = formatMemoryByMb(ret.info.used_memory);
+    chartData.memory = usedMemory;
+
+    chartData.command = formatCommandStats(ret.commandStats ?? []);
+    redisInfo.value = { ...ret.info, dbSize: String(ret.dbSize) };
+  } catch (error) {
+    console.warn(error);
+  } finally {
+    loading.value = false;
+  }
 }
 
-function error() {
-  ElMessage.error({
-    duration: 2500,
-    message: 'Once upon a time you dressed so fine',
-  });
+function formatCommandStats(data: CommandStats[]) {
+  return data
+    .map((item) => ({
+      name: item.command,
+      value: item.calls,
+    }))
+    .filter((item) => item.name && item.value > 0)
+    .sort((prev, next) => next.value - prev.value);
 }
 
-function warning() {
-  ElMessage.warning('How many roads must a man walk down');
-}
-function success() {
-  ElMessage.success('Cause you walked hand in hand With another man in my place');
-}
+function formatMemoryByMb(value?: string) {
+  const bytes = Number.parseInt(value ?? '0', 10);
+  if (!Number.isFinite(bytes) || bytes <= 0) {
+    return '0';
+  }
 
-function notify(type: NotificationType) {
-  ElNotification({
-    duration: 2500,
-    message: '说点啥呢',
-    type,
-  });
+  return (bytes / 1024 / 1024).toFixed(2);
 }
-const tableData = [
-  { prop1: '1', prop2: 'A' },
-  { prop1: '2', prop2: 'B' },
-  { prop1: '3', prop2: 'C' },
-  { prop1: '4', prop2: 'D' },
-  { prop1: '5', prop2: 'E' },
-  { prop1: '6', prop2: 'F' },
-];
-
-const segmentedValue = ref('Mon');
-
-const segmentedOptions = ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun'];
 </script>
 
 <template>
-  <Page description="支持多语言，主题功能集成切换等" title="Element Plus组件使用演示">
-    <div class="flex flex-wrap gap-5">
-      <ElCard class="mb-5 w-auto">
-        <template #header> 按钮 </template>
-        <ElSpace>
-          <ElButton text>Text</ElButton>
-          <ElButton>Default</ElButton>
-          <ElButton type="primary"> Primary </ElButton>
-          <ElButton type="info"> Info </ElButton>
-          <ElButton type="success"> Success </ElButton>
-          <ElButton type="warning"> Warning </ElButton>
-          <ElButton type="danger"> Error </ElButton>
-        </ElSpace>
-      </ElCard>
-      <ElCard class="mb-5 w-80">
-        <template #header> Message </template>
-        <ElSpace>
-          <ElButton type="info" @click="info"> 信息 </ElButton>
-          <ElButton type="danger" @click="error"> 错误 </ElButton>
-          <ElButton type="warning" @click="warning"> 警告 </ElButton>
-          <ElButton type="success" @click="success"> 成功 </ElButton>
-        </ElSpace>
-      </ElCard>
-      <ElCard class="mb-5 w-80">
-        <template #header> Notification </template>
-        <ElSpace>
-          <ElButton type="info" @click="notify('info')"> 信息 </ElButton>
-          <ElButton type="danger" @click="notify('error')"> 错误 </ElButton>
-          <ElButton type="warning" @click="notify('warning')"> 警告 </ElButton>
-          <ElButton type="success" @click="notify('success')"> 成功 </ElButton>
-        </ElSpace>
-      </ElCard>
-      <ElCard class="mb-5 w-auto">
-        <template #header> Segmented </template>
-        <ElSegmented v-model="segmentedValue" :options="segmentedOptions" size="large" />
-      </ElCard>
-      <ElCard class="mb-5 w-80">
-        <template #header> V-Loading </template>
-        <div class="flex-center size-72" v-loading="true">一些演示的内容</div>
-      </ElCard>
-      <ElCard class="mb-5 w-80">
-        <ElTable :data="tableData" stripe>
-          <ElTable.TableColumn label="测试列1" prop="prop1" />
-          <ElTable.TableColumn label="测试列2" prop="prop2" />
-        </ElTable>
-      </ElCard>
-    </div>
+  <Page>
+    <ElRow :gutter="15">
+      <ElCol :span="24">
+        <ElCard v-loading="loading" class="mb-[15px]" shadow="never">
+          <template #header>
+            <div class="flex items-center justify-between">
+              <div class="flex items-center justify-start gap-[6px]">
+                <RedisIcon class="size-[16px]" />
+                <span>redis信息</span>
+              </div>
+              <ElButton :loading="loading" size="small" @click="loadInfo">
+                <span class="icon-[charm--refresh]"></span>
+              </ElButton>
+            </div>
+          </template>
+          <RedisDescription v-if="redisInfo" :data="redisInfo" />
+          <ElSkeleton v-else :rows="3" animated />
+        </ElCard>
+      </ElCol>
+
+      <ElCol v-bind="baseSpan" class="mb-[15px]">
+        <ElCard v-loading="loading" shadow="never">
+          <template #header>
+            <div class="flex items-center gap-[6px]">
+              <CommandLineIcon class="size-[16px]" />
+              <span>命令统计</span>
+            </div>
+          </template>
+          <CommandChart v-if="hasCommandData" :data="chartData.command" />
+          <ElEmpty v-else :image-size="80" description="暂无命令统计" />
+        </ElCard>
+      </ElCol>
+
+      <ElCol v-bind="baseSpan">
+        <ElCard v-loading="loading" shadow="never">
+          <template #header>
+            <div class="flex items-center justify-start gap-[6px]">
+              <MemoryIcon class="size-[16px]" />
+              <span>内存占用</span>
+            </div>
+          </template>
+          <MemoryChart v-if="hasMemoryData" :data="chartData.memory" />
+          <ElEmpty v-else :image-size="80" description="暂无内存数据" />
+        </ElCard>
+      </ElCol>
+    </ElRow>
   </Page>
 </template>

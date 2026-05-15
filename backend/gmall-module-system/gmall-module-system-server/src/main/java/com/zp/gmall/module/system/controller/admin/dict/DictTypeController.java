@@ -26,35 +26,35 @@ public class DictTypeController {
     @PostMapping("/create")
     @Operation(summary = "创建字典类型")
     public Result<?> create(@Valid @RequestBody DictTypeDTO dictDTO) {
-        return Result.ok(dictTYpeService.createDictType(dictDTO));
+        return Result.ok(dictTYpeService.create(dictDTO));
     }
 
     @PostMapping("/update")
     @Operation(summary = "更新字典")
     public Result<?> updateById(@Valid @RequestBody DictTypeDTO dictDTO) {
-        dictTYpeService.updateDict(dictDTO);
+        dictTYpeService.updateById(dictDTO);
         return Result.ok();
     }
 
     @PostMapping("/delete")
     @Operation(summary = "删除字典")
-    public Result<?> deleteDictTyp(@Valid @RequestBody Ids ids) {
-        dictTYpeService.deleteDict(ids);
+    public Result<?> delete(@Valid @RequestBody Ids ids) {
+        dictTYpeService.delete(ids);
         return Result.ok();
     }
 
 
     @GetMapping("/page")
     @Operation(summary = "获取字典分页")
-    public PageResult<DictTypeVO> getDictTypPage(@Valid DictTypePageDTO typePageDTO) {
-        return dictTYpeService.getDictPage(typePageDTO);
+    public PageResult<DictTypeVO> getPageList(@Valid DictTypePageDTO typePageDTO) {
+        return dictTYpeService.getPageList(typePageDTO);
     }
 
     @GetMapping("/get")
     @Operation(summary = "获取字典详情")
-    public Result<DictTypeVO> getDictTypById(
+    public Result<DictTypeVO> getById(
             @Parameter(description = "字典ID", required = true, example = "1")
             @RequestParam("id") String id) {
-        return Result.ok(dictTYpeService.getDictById(id));
+        return Result.ok(dictTYpeService.getById(id));
     }
 }

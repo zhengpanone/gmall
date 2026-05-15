@@ -41,7 +41,7 @@ const routes: RouteRecordRaw[] = [
         meta: {
           title: $t('monitor.task.title'),
         },
-        name: 'Task',
+        name: 'TaskCenter',
         path: '/monitor/task',
         component: () => import('#/views/monitor/task/index.vue'),
       },

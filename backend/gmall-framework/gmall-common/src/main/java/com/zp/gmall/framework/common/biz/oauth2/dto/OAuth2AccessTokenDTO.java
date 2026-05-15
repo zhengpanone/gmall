@@ -1,4 +1,4 @@
-package com.zp.gmall.module.system.api.oauth2.dto;
+package com.zp.gmall.framework.common.biz.oauth2.dto;
 
 
 import io.swagger.v3.oas.annotations.media.Schema;
@@ -10,7 +10,7 @@ import java.util.List;
 
 @Schema(description = "RPC 服务 - OAuth2 访问令牌创建 Request DTO")
 @Data
-public class OAuth2AccessTokenCreateReqDTO implements Serializable {
+public class OAuth2AccessTokenDTO implements Serializable {
 
     @Schema(description = "用户编号", example = "10")
     @NotNull(message = "用户编号不能为空")

@@ -72,7 +72,7 @@
 
         <dependency>
             <groupId>com.zp.gmall</groupId>
-            <artifactId>gmall-spring-boot-starter-web</artifactId>
+            <artifactId>gmall-spring-boot-starter-security</artifactId>
         </dependency>
 
         <dependency>
@@ -150,11 +150,6 @@
             <artifactId>screw-core</artifactId>
         </dependency>
 
-        <dependency>
-            <groupId>org.springframework.boot</groupId>
-            <artifactId>spring-boot-starter-web</artifactId>
-        </dependency>
-
         <!-- 监控相关 -->
         <!-- <dependency>
             <groupId>com.zp.gmall</groupId>
@@ -189,6 +184,11 @@
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-configuration-processor</artifactId>
             <optional>true</optional>
+        </dependency>
+
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-actuator</artifactId>
         </dependency>
 
     </dependencies>

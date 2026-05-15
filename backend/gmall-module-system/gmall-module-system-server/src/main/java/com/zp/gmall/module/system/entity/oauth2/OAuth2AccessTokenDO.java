@@ -18,7 +18,7 @@ import java.util.Map;
  * Author : zhengpanone
  * Date : 2025/4/7 18:56
  * Version : v1.0.0
- * Description:
+ * Description: OAuth2 访问令牌
  */
 @TableName(value = "system_oauth2_access_token", autoResultMap = true)
 @Data
@@ -31,7 +31,7 @@ public class OAuth2AccessTokenDO extends TenantBaseDO {
      * 编号，数据库递增
      */
     @TableId
-    private Long id;
+    private String id;
     /**
      * 访问令牌
      */
@@ -43,13 +43,13 @@ public class OAuth2AccessTokenDO extends TenantBaseDO {
     /**
      * 用户编号
      */
-    private Long userId;
+    private String userId;
     /**
      * 用户类型
      * <p>
      * 枚举 {@link UserTypeEnum}
      */
-    private Integer userType;
+    private String userType;
     /**
      * 用户信息
      */

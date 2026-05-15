@@ -36,3 +36,6 @@ gmall:
     title: 管理后台
     description: 提供管理员管理的所有功能
     version: 1.0.0
+
+  security:
+    mock-enable: false

@@ -7,7 +7,6 @@ import com.zp.gmall.framework.security.core.handler.AuthenticationEntryPointImpl
 import com.zp.gmall.framework.security.core.service.SecurityFrameworkService;
 import com.zp.gmall.framework.security.core.service.impl.SecurityFrameworkServiceImpl;
 import com.zp.gmall.framework.web.core.handler.GlobalExceptionHandler;
-import com.zp.gmall.module.system.api.oauth2.OAuth2TokenApi;
 import com.zp.gmall.module.system.api.permission.PermissionApi;
 import jakarta.annotation.Resource;
 import org.springframework.boot.autoconfigure.AutoConfiguration;
@@ -75,8 +74,8 @@ public class GmallSecurityAutoConfiguration {
      * Token 认证过滤器 Bean
      */
     @Bean
-    public TokenAuthenticationFilter authenticationFilter(GlobalExceptionHandler globalExceptionHandler, OAuth2TokenApi oAuth2TokenApi) {
-        return new TokenAuthenticationFilter(securityProperties, globalExceptionHandler, oAuth2TokenApi);
+    public TokenAuthenticationFilter authenticationFilter(GlobalExceptionHandler globalExceptionHandler, com.zp.gmall.framework.common.biz.oauth2.OAuth2TokenCommonApi oAuth2TokenCommonApi) {
+        return new TokenAuthenticationFilter(securityProperties, globalExceptionHandler, oAuth2TokenCommonApi);
     }
 
     @Bean("ss") // 使用 Spring Security 的缩写，方便使用

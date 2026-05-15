@@ -1,8 +1,10 @@
 
 package com.zp.gmall.framework.security.core.filter;
 
+import cn.hutool.core.collection.CollUtil;
 import cn.hutool.core.util.ObjectUtil;
 import cn.hutool.core.util.StrUtil;
+import com.zp.gmall.framework.common.biz.oauth2.vo.OAuth2AccessTokenCheckVO;
 import com.zp.gmall.framework.common.domain.vo.Result;
 import com.zp.gmall.framework.common.exception.ServiceException;
 import com.zp.gmall.framework.common.util.json.JsonUtils;
@@ -12,18 +14,19 @@ import com.zp.gmall.framework.security.core.LoginUser;
 import com.zp.gmall.framework.security.core.util.SecurityFrameworkUtils;
 import com.zp.gmall.framework.web.core.handler.GlobalExceptionHandler;
 import com.zp.gmall.framework.web.util.WebFrameworkUtils;
-import com.zp.gmall.module.system.api.oauth2.OAuth2TokenApi;
-import com.zp.gmall.module.system.api.oauth2.dto.OAuth2AccessTokenCheckRespDTO;
 import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
-import lombok.RequiredArgsConstructor;
+import lombok.Setter;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.security.access.AccessDeniedException;
+import org.springframework.util.AntPathMatcher;
 import org.springframework.web.filter.OncePerRequestFilter;
 
 import java.io.IOException;
+import java.util.Collections;
+import java.util.List;
 
 
 /**
@@ -32,7 +35,6 @@ import java.io.IOException;
  *
  * @author 芋道源码
  */
-@RequiredArgsConstructor
 @Slf4j
 public class TokenAuthenticationFilter extends OncePerRequestFilter {
 
@@ -40,12 +42,32 @@ public class TokenAuthenticationFilter extends OncePerRequestFilter {
 
     private final GlobalExceptionHandler globalExceptionHandler;
 
-    private final OAuth2TokenApi oauth2TokenApi;
+    private final com.zp.gmall.framework.common.biz.oauth2.OAuth2TokenCommonApi oauth2TokenCommonApi;
+
+
+    public TokenAuthenticationFilter(SecurityProperties securityProperties,
+                                     GlobalExceptionHandler globalExceptionHandler,
+                                     com.zp.gmall.framework.common.biz.oauth2.OAuth2TokenCommonApi oauth2TokenCommonApi) {
+        this.securityProperties = securityProperties;
+        this.globalExceptionHandler = globalExceptionHandler;
+        this.oauth2TokenCommonApi = oauth2TokenCommonApi;
+    }
+    /**
+     * 免认证URL列表，由 GmallWebSecurityConfigurerAdapter 在 filterChain 中设置
+     */
+    @Setter
+    private List<String> permitAllUrls = Collections.emptyList();
 
     @Override
     @SuppressWarnings("NullableProblems")
     protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain chain)
             throws ServletException, IOException {
+
+        if(isPermitAllUrl(request)){
+            chain.doFilter(request, response);
+            return;
+        }
+
         // 情况一，基于 header[login-user] 获得用户，例如说来自 Gateway 或者其它服务透传
         LoginUser loginUser = buildLoginUserByHeader(request);
 
@@ -82,7 +104,7 @@ public class TokenAuthenticationFilter extends OncePerRequestFilter {
     private LoginUser buildLoginUserByToken(String token, String userType) {
         try {
             // 校验访问令牌
-            OAuth2AccessTokenCheckRespDTO accessToken = oauth2TokenApi.checkAccessToken(token).getCheckedData();
+            OAuth2AccessTokenCheckVO accessToken = oauth2TokenCommonApi.checkAccessToken(token).getCheckedData();
             if (accessToken == null) {
                 return null;
             }
@@ -131,6 +153,17 @@ public class TokenAuthenticationFilter extends OncePerRequestFilter {
     private LoginUser buildLoginUserByHeader(HttpServletRequest request) {
         String loginUserStr = request.getHeader(SecurityFrameworkUtils.LOGIN_USER_HEADER);
         return StrUtil.isNotEmpty(loginUserStr) ? JsonUtils.parseObject(loginUserStr, LoginUser.class) : null;
+    }
+
+    private boolean isPermitAllUrl(HttpServletRequest request){
+        if(CollUtil.isEmpty(permitAllUrls)){
+            return false;
+        }
+        String servletPath = request.getServletPath();
+        AntPathMatcher matcher = new AntPathMatcher();
+
+        return permitAllUrls.stream()
+                .anyMatch(pattern -> matcher.match(pattern, servletPath));
     }
 
 }

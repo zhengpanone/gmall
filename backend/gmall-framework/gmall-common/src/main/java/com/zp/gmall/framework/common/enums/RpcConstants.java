@@ -24,6 +24,8 @@ public interface RpcConstants {
      */
     String SYSTEM_PREFIX = RPC_API_PREFIX + "/system";
 
+    String SYSTEM_CONTEXT_PATH = "/system";
+
     /**
      * infra 服务名
      */
@@ -33,4 +35,6 @@ public interface RpcConstants {
      * infra 服务的前缀
      */
     String INFRA_PREFIX = RPC_API_PREFIX + "/infra";
+
+    String INFRA_CONTEXT_PATH = "/infra";
 }

@@ -1,4 +1,4 @@
-package com.zp.gmall.module.system.api.oauth2.dto;
+package com.zp.gmall.framework.common.biz.oauth2.vo;
 
 import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.Data;
@@ -9,7 +9,7 @@ import java.util.Map;
 
 @Schema(description = "RPC 服务 - OAuth2 访问令牌的校验 Response DTO")
 @Data
-public class OAuth2AccessTokenCheckRespDTO implements Serializable {
+public class OAuth2AccessTokenCheckVO implements Serializable {
 
     @Schema(description = "用户编号", example = "10")
     private String userId;

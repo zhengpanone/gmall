@@ -1,22 +1,20 @@
 package com.zp.gmall.gateway.filter.security;
 
 import cn.hutool.core.util.StrUtil;
-
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.google.common.cache.CacheLoader;
 import com.google.common.cache.LoadingCache;
+import com.zp.gmall.framework.common.biz.oauth2.vo.OAuth2AccessTokenCheckVO;
+import com.zp.gmall.framework.common.core.KeyValue;
 import com.zp.gmall.framework.common.domain.vo.Result;
 import com.zp.gmall.framework.common.util.json.JsonUtils;
 import com.zp.gmall.gateway.util.SecurityFrameworkUtils;
 import com.zp.gmall.gateway.util.WebFrameworkUtils;
-import com.zp.gmall.module.system.api.oauth2.OAuth2TokenApi;
-import com.zp.gmall.module.system.api.oauth2.dto.OAuth2AccessTokenCheckRespDTO;
 import org.springframework.cloud.client.loadbalancer.reactive.ReactorLoadBalancerExchangeFilterFunction;
 import org.springframework.cloud.gateway.filter.GatewayFilterChain;
 import org.springframework.cloud.gateway.filter.GlobalFilter;
 import org.springframework.core.Ordered;
 import org.springframework.http.HttpStatus;
-import org.springframework.stereotype.Component;
 import org.springframework.web.reactive.function.client.WebClient;
 import org.springframework.web.server.ServerWebExchange;
 import reactor.core.publisher.Mono;
@@ -26,8 +24,6 @@ import java.util.Objects;
 import java.util.function.Function;
 
 import static com.zp.gmall.framework.common.util.cache.CacheUtils.buildAsyncReloadingCache;
-
-import com.zp.gmall.framework.common.core.KeyValue;
 
 /**
  * Token 过滤器，验证 token 的有效性
@@ -42,7 +38,7 @@ public class TokenAuthenticationFilter implements GlobalFilter, Ordered {
     /**
      * CommonResult<OAuth2AccessTokenCheckRespDTO> 对应的 TypeReference 结果，用于解析 checkToken 的结果
      */
-    private static final TypeReference<Result<OAuth2AccessTokenCheckRespDTO>> CHECK_RESULT_TYPE_REFERENCE
+    private static final TypeReference<Result<OAuth2AccessTokenCheckVO>> CHECK_RESULT_TYPE_REFERENCE
             = new TypeReference<>() {};
 
     /**
@@ -132,14 +128,14 @@ public class TokenAuthenticationFilter implements GlobalFilter, Ordered {
 
     private Mono<String> checkAccessToken(Long tenantId, String token) {
         return webClient.get()
-                .uri(OAuth2TokenApi.URL_CHECK, uriBuilder -> uriBuilder.queryParam("accessToken", token).build())
+                .uri(com.zp.gmall.framework.common.biz.oauth2.OAuth2TokenCommonApi.URL_CHECK, uriBuilder -> uriBuilder.queryParam("accessToken", token).build())
                 .headers(httpHeaders -> WebFrameworkUtils.setTenantIdHeader(tenantId, httpHeaders)) // 设置租户的 Header
                 .retrieve().bodyToMono(String.class);
     }
 
     private LoginUser buildUser(String body) {
         // 处理结果，结果不正确
-        Result<OAuth2AccessTokenCheckRespDTO> result = JsonUtils.parseObject(body, CHECK_RESULT_TYPE_REFERENCE);
+        Result<OAuth2AccessTokenCheckVO> result = JsonUtils.parseObject(body, CHECK_RESULT_TYPE_REFERENCE);
         if (result == null) {
             return null;
         }
@@ -152,7 +148,7 @@ public class TokenAuthenticationFilter implements GlobalFilter, Ordered {
         }
 
         // 创建登录用户
-        OAuth2AccessTokenCheckRespDTO tokenInfo = result.getData();
+        OAuth2AccessTokenCheckVO tokenInfo = result.getData();
         return new LoginUser().setId(tokenInfo.getUserId()).setUserType(tokenInfo.getUserType())
                 .setInfo(tokenInfo.getUserInfo()) // 额外的用户信息
                 .setTenantId(tokenInfo.getTenantId()).setScopes(tokenInfo.getScopes());

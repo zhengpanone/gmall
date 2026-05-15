@@ -30,7 +30,7 @@ public class DictTypeServiceImpl extends ServiceImpl<DictTypeMapper, DictTypeDO>
 
     @Transactional(rollbackFor = Exception.class)
     @Override
-    public DictTypeVO createDictType(DictTypeDTO dictDTO) {
+    public DictTypeVO create(DictTypeDTO dictDTO) {
         // 检查字典编码是否已存在
         if (checkDictCodeExists(dictDTO.getTypeCode(), null)) {
             throw new RuntimeException("字典编码已存在");
@@ -51,7 +51,7 @@ public class DictTypeServiceImpl extends ServiceImpl<DictTypeMapper, DictTypeDO>
 
     @Transactional(rollbackFor = Exception.class)
     @Override
-    public DictTypeVO updateDict(DictTypeDTO dictDTO) {
+    public DictTypeVO updateById(DictTypeDTO dictDTO) {
         // 检查字典编码是否已存在
         if (checkDictCodeExists(dictDTO.getTypeCode(), dictDTO.getId())) {
             throw new RuntimeException("字典编码已存在");
@@ -61,12 +61,12 @@ public class DictTypeServiceImpl extends ServiceImpl<DictTypeMapper, DictTypeDO>
     }
 
     @Override
-    public void deleteDict(Ids ids) {
+    public void delete(Ids ids) {
         baseMapper.deleteByIds(ids.getIds());
     }
 
     @Override
-    public PageResult<DictTypeVO> getDictPage(DictTypePageDTO dictPageDTO) {
+    public PageResult<DictTypeVO> getPageList(DictTypePageDTO dictPageDTO) {
         Page<DictTypeDO> page = new Page<>(dictPageDTO.getPageNo(), dictPageDTO.getPageSize());
         LambdaQueryWrapper<DictTypeDO> queryWrapper = new LambdaQueryWrapper<>();
         queryWrapper.eq(StringUtils.isNotBlank(dictPageDTO.getTypeName()), DictTypeDO::getName, dictPageDTO.getTypeName());
@@ -82,7 +82,7 @@ public class DictTypeServiceImpl extends ServiceImpl<DictTypeMapper, DictTypeDO>
     }
 
     @Override
-    public DictTypeVO getDictById(String id) {
+    public DictTypeVO getById(String id) {
         DictTypeDO dictDO = baseMapper.selectById(id);
         if (dictDO == null) {
             throw exception(ROLE_NOT_EXISTS);

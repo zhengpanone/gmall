@@ -1,7 +1,6 @@
 package com.zp.gmall.framework.security.config;
 
 import com.zp.gmall.framework.security.core.rpc.LoginUserRequestInterceptor;
-import com.zp.gmall.module.system.api.oauth2.OAuth2TokenApi;
 import com.zp.gmall.module.system.api.permission.PermissionApi;
 import org.springframework.boot.autoconfigure.AutoConfiguration;
 import org.springframework.cloud.openfeign.EnableFeignClients;
@@ -14,7 +13,7 @@ import org.springframework.context.annotation.Bean;
  * Description: Security 使用到Feign的配置项
  */
 @AutoConfiguration
-@EnableFeignClients(clients = {OAuth2TokenApi.class, // 主要是引入相关的 API 服务
+@EnableFeignClients(clients = {com.zp.gmall.framework.common.biz.oauth2.OAuth2TokenCommonApi.class, // 主要是引入相关的 API 服务
         PermissionApi.class})
 public class GmallSecurityRpcAutoConfiguration {
 

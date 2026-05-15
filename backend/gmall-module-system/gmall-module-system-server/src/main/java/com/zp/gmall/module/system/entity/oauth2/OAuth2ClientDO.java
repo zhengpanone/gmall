@@ -33,7 +33,7 @@ public class OAuth2ClientDO extends BaseDO {
      * 由于 SQL Server 在存储 String 主键有点问题，所以暂时使用 Long 类型
      */
     @TableId
-    private Long id;
+    private String id;
     /**
      * 客户端编号
      */

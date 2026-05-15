@@ -18,7 +18,7 @@ import java.util.Properties;
 import static com.zp.gmall.framework.common.domain.vo.Result.ok;
 
 @Tag(name = "管理后台 - Redis 监控")
-@RequestMapping("/infra/redis")
+@RequestMapping("/redis")
 @RestController
 public class RedisController {
 

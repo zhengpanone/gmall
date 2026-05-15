@@ -10,7 +10,7 @@ import org.springframework.web.bind.annotation.RestController;
 @RequiredArgsConstructor
 @Tag(name = "用户 App - 文件存储")
 @RestController
-@RequestMapping("/infra/file")
+@RequestMapping("/file")
 @Validated
 @Slf4j
 public class AppFileController {
