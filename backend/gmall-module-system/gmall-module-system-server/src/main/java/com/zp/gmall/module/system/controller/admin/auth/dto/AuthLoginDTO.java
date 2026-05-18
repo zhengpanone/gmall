@@ -1,7 +1,6 @@
 package com.zp.gmall.module.system.controller.admin.auth.dto;
 
 
-import com.zp.gmall.module.system.controller.admin.captcha.dto.CaptchaVerificationDTO;
 import io.swagger.v3.oas.annotations.media.Schema;
 import jakarta.validation.constraints.NotEmpty;
 import jakarta.validation.constraints.Pattern;

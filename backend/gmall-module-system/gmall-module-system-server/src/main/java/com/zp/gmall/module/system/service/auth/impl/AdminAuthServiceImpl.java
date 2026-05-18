@@ -1,5 +1,6 @@
 package com.zp.gmall.module.system.service.auth.impl;
 
+import com.google.common.annotations.VisibleForTesting;
 import com.zp.gmall.framework.common.enums.UserTypeEnum;
 import com.zp.gmall.module.system.controller.admin.auth.dto.AuthLoginDTO;
 import com.zp.gmall.module.system.controller.admin.auth.vo.AuthLoginVO;
@@ -34,11 +35,11 @@ public class AdminAuthServiceImpl implements IAdminAuthService {
     private IUserService userService;
 
     @Override
-    public AuthLoginVO login(AuthLoginDTO authLoginDTO) {
+    public AuthLoginVO login(AuthLoginDTO dto) {
         // TODO 校验用户
-        UserDO user = authenticate(authLoginDTO.getUsername(), authLoginDTO.getPassword());
+        UserDO user = authenticate(dto.getUsername(), dto.getPassword());
 
-        return createTokenAfterLoginSuccess(user.getId(),authLoginDTO.getUsername(),LoginLogTypeEnum.LOGIN_USERNAME);
+        return createTokenAfterLoginSuccess(user.getId(),dto.getUsername(),LoginLogTypeEnum.LOGIN_USERNAME);
     }
 
     @Override
@@ -50,6 +51,15 @@ public class AdminAuthServiceImpl implements IAdminAuthService {
         }
         return user;
     }
+    @VisibleForTesting
+    private void validateCaptcha(AuthLoginDTO dto){
+
+    }
+
+//    private ResponseModel doValidateCaptcha(CaptchaVerificationDTO dto){
+//
+//
+//    }
 
 
 

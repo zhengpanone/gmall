@@ -15,5 +15,14 @@ ENV TZ=Asia/Shanghai JAVA_OPTS="-Xms512m -Xmx512m"
 EXPOSE 48081
 
 ## 启动后端项目
-CMD java ${JAVA_OPTS} -Djava.security.egd=file:/dev/./urandom -jar app.jar
+CMD java ${JAVA_OPTS} -Djava.security.egd=file:/dev/./urandom \
+    -jar -XX:+HeapDumpOnOutOfMemoryError \
+    -XX:HeapDumpPath=./heapdump_$(date +%Y%m%d_%H%M%S).hprof \
+    -XX:+PrintGCDetails \
+    -XX:+PrintGCDateStamps \
+    -XX:+PrintGCTimeStamps \
+    -Xloggc:/tmp/gc.log \
+    -XX:+PrintFlagsFinal \
+    -XX:+PrintCommandLineFlags \
+    app.jar
 
