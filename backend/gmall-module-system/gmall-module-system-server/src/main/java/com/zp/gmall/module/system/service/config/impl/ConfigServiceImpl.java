@@ -13,8 +13,14 @@ import com.zp.gmall.module.system.convert.config.ConfigConvert;
 import com.zp.gmall.module.system.entity.config.ConfigDO;
 import com.zp.gmall.module.system.mapper.config.ConfigMapper;
 import com.zp.gmall.module.system.service.config.IConfigService;
+import lombok.RequiredArgsConstructor;
 import org.apache.commons.lang3.StringUtils;
 import org.mapstruct.factory.Mappers;
+import org.springframework.cache.Cache;
+import org.springframework.cache.CacheManager;
+import org.springframework.cache.annotation.CacheConfig;
+import org.springframework.cache.annotation.CachePut;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -22,20 +28,20 @@ import java.util.stream.Collectors;
 
 /**
  *
- * Project: backend
- * <p>
- * Module: com.zp.gmall.module.system.service.config.impl
- * <p>
- * Description:
+ * Description: https://mp.weixin.qq.com/s/mnYJvMIfzyFv7AleqihN6g
  *
  * @author zhengpan
  * @version 1.0.0
  * @since 2026-05-06
  */
 @Service
+@CacheConfig(cacheNames = "config")
+@RequiredArgsConstructor
 public class ConfigServiceImpl extends ServiceImpl<ConfigMapper, ConfigDO> implements IConfigService {
 
     private final ConfigConvert convertMapper = Mappers.getMapper(ConfigConvert.class);
+
+    private final CacheManager cacheManager;
 
     @Override
     public PageResult<ConfigVO> getConfigPage(ConfigPageDTO pageDTO) {
@@ -54,6 +60,7 @@ public class ConfigServiceImpl extends ServiceImpl<ConfigMapper, ConfigDO> imple
         return PageResult.ok(configDOPage.getTotal(), voList);
     }
 
+    @CachePut(key = "#result.configKey")
     @Override
     public ConfigVO createConfig(ConfigDTO configDTO) {
         if (checkConfigKeyExists(configDTO.getConfigKey(), configDTO.getId())) {
@@ -64,6 +71,10 @@ public class ConfigServiceImpl extends ServiceImpl<ConfigMapper, ConfigDO> imple
         return convertMapper.convert(config);
     }
 
+    /**
+     * 更新缓存
+     */
+    @CachePut(key = "#configDTO.configKey")
     @Override
     public ConfigVO updateConfig(ConfigDTO configDTO) {
         if (checkConfigKeyExists(configDTO.getConfigKey(), configDTO.getId())) {
@@ -74,14 +85,41 @@ public class ConfigServiceImpl extends ServiceImpl<ConfigMapper, ConfigDO> imple
         return convertMapper.convert(config);
     }
 
+    /**
+     * 更新后自动清除缓存
+     */
     @Override
     public void deleteConfig(Ids ids) {
         baseMapper.deleteByIds(ids.getIds());
+        Cache cache = cacheManager.getCache("config");
+        if (cache != null) {
+            ids.getIds().forEach(cache::evict);
+        }
     }
 
+    /**
+     * 查询时自动缓存，key 为 "config::1"
+     *
+     * @param id 参数ID
+     * @return VO
+     */
     @Override
-    public ConfigVO getConfig(String id) {
+    @Cacheable(key = "#id", unless = "#result== null")
+    public ConfigVO getById(String id) {
         ConfigDO config = baseMapper.selectById(id);
+        return convertMapper.convert(config);
+    }
+
+    /**
+     * 查询时自动缓存，key 为 "config::1"
+     *
+     * @param configKey 参数ID
+     * @return VO
+     */
+    @Override
+    @Cacheable(key = "#configKey", unless = "#result== null")
+    public ConfigVO getByKey(String configKey) {
+        ConfigDO config = baseMapper.selectFirstOne(ConfigDO::getConfigKey, configKey);
         return convertMapper.convert(config);
     }
 

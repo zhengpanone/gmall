@@ -42,29 +42,29 @@ public class DeptController {
 
     @PostMapping("/create")
     @Operation(summary = "新增部门")
-    public Result<?> createDept(@RequestBody @Validated(CreateGroup.class) @Valid DeptDTO deptDTO) {
+    public Result<?> create(@RequestBody @Validated(CreateGroup.class) @Valid DeptDTO deptDTO) {
         deptService.createDept(deptDTO);
         return Result.ok();
     }
 
     @PutMapping("/update")
     @Operation(summary = "更新部门")
-    public Result<?> updateDept(@RequestBody @Validated(UpdateGroup.class) @Valid DeptDTO deptDTO) {
+    public Result<?> updateById(@RequestBody @Validated(UpdateGroup.class) @Valid DeptDTO deptDTO) {
         deptService.updateDept(deptDTO);
         return Result.ok();
     }
 
     @DeleteMapping("/delete")
     @Operation(summary = "删除部门")
-    public Result<?> deleteDept(@RequestBody @Valid Ids ids) {
+    public Result<?> deleteByIds(@RequestBody @Valid Ids ids) {
         deptService.deleteDept(ids);
         return Result.ok();
     }
 
     @GetMapping("/page")
     @Operation(summary = "获取部门分页")
-    public PageResult<DeptVO> getDeptPage(@Valid DeptPageDTO deptPageDTO) {
-     return deptService.getDeptPage(deptPageDTO);
+    public PageResult<DeptVO> getPageList(@Valid DeptPageDTO deptPageDTO) {
+        return deptService.getDeptPage(deptPageDTO);
     }
 
     @GetMapping("/tree")

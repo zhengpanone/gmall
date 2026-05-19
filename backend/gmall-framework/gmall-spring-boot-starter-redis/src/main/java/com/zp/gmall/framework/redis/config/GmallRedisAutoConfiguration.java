@@ -4,6 +4,7 @@ import cn.hutool.core.util.ReflectUtil;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
 import org.springframework.boot.autoconfigure.AutoConfiguration;
+import org.springframework.cache.annotation.EnableCaching;
 import org.springframework.data.redis.connection.RedisConnectionFactory;
 import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.data.redis.serializer.RedisSerializer;
@@ -14,6 +15,7 @@ import org.springframework.data.redis.serializer.RedisSerializer;
  * Version : v1.0.0
  * Description: Redis配置类
  */
+@EnableCaching
 @AutoConfiguration
 public class GmallRedisAutoConfiguration {
     /**

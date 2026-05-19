@@ -66,7 +66,7 @@ public class TenantPackageController {
 
     @GetMapping("/get")
     @Operation(summary = "获取租户套餐详情")
-    public Result<TenantPackageVO> queryById(@Valid @NotNull(message = "租户套餐ID不能为空") String id) {
+    public Result<TenantPackageVO> getById(@Valid @NotNull(message = "租户套餐ID不能为空") String id) {
         return Result.ok(tenantPackageService.queryById(id));
     }
 }

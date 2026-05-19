@@ -75,7 +75,7 @@ CREATE TABLE IF NOT EXISTS sys_tenant_package
     creator      varchar(32)           NULL COMMENT '创建人',
     updater      varchar(32)           NULL COMMENT '更新人',
     deleted      bit      default b'0' NULL COMMENT '是否删除',
-    deleted_time datetime DEFAULT NULL NULL COMMENT '删除时间'
+    deleted_time datetime DEFAULT NULL COMMENT '删除时间'
 ) COMMENT '租户套餐';
 
 
@@ -102,7 +102,7 @@ CREATE TABLE IF NOT EXISTS sys_tenant
     creator         varchar(32)           NULL COMMENT '创建人',
     updater         varchar(32)           NULL COMMENT '更新人',
     deleted         bit      default b'0' NULL COMMENT '是否删除',
-    deleted_time    datetime DEFAULT NULL NULL COMMENT '删除时间'
+    deleted_time    datetime DEFAULT NULL COMMENT '删除时间'
 ) COMMENT '租户信息表';
 
 
@@ -216,7 +216,7 @@ CREATE TABLE IF NOT EXISTS sys_menu
     updater       varchar(64) DEFAULT ''   NULL COMMENT '更新人ID',
     update_time   DATETIME    DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT '更新时间',
     deleted       bit         DEFAULT b'0' NOT NULL COMMENT '是否删除',
-    deleted_time  datetime    DEFAULT NULL NULL COMMENT '删除时间',
+    deleted_time  datetime    DEFAULT NULL COMMENT '删除时间',
 
     -- 添加索引
     INDEX idx_parent_id (parent_id),
@@ -244,16 +244,17 @@ CREATE TABLE IF NOT EXISTS sys_role_menu
 
 CREATE TABLE IF NOT EXISTS sys_config
 (
-    id           varchar(36)  NOT NULL COMMENT '主键ID' PRIMARY KEY,
-    config_key   varchar(100) NOT NULL COMMENT '配置键',
-    config_value varchar(100) NOT NULL COMMENT '配置值',
-    config_type  varchar(100) NOT NULL COMMENT '配置类型',
-    remark       varchar(500) NOT NULL COMMENT '备注',
-    status       TINYINT DEFAULT 1 COMMENT '状态：0停用 1正常',
-    creator      varchar(64)  NOT NULL COMMENT '创建者',
-    create_time  datetime     NOT NULL COMMENT '创建时间',
-    updater      varchar(64)  NOT NULL COMMENT '更新者',
-    update_time  datetime     NOT NULL COMMENT '更新时间',
-    deleted      bit          NOT NULL COMMENT '是否删除',
-    deleted_time datetime     NOT NULL COMMENT '删除时间'
+    id           varchar(36)           NOT NULL COMMENT '主键ID' PRIMARY KEY,
+    config_name  varchar(100)          NOT NULL COMMENT '配置名称',
+    config_key   varchar(100)          NOT NULL COMMENT '配置键',
+    config_value varchar(100)          NOT NULL COMMENT '配置值',
+    config_type  varchar(100)          NOT NULL COMMENT '配置类型',
+    remark       varchar(500)          NOT NULL COMMENT '备注',
+    status       TINYINT  DEFAULT 1 COMMENT '状态：0停用 1正常',
+    creator      varchar(64)           NOT NULL COMMENT '创建者',
+    create_time  datetime              NOT NULL COMMENT '创建时间',
+    updater      varchar(64)           NOT NULL COMMENT '更新者',
+    update_time  datetime              NOT NULL COMMENT '更新时间',
+    deleted      bit      DEFAULT b'0' NOT NULL COMMENT '是否删除',
+    deleted_time datetime DEFAULT NULL COMMENT '删除时间'
 ) COMMENT = '系统配置表';

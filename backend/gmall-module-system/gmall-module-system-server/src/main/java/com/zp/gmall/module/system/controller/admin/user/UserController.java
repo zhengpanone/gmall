@@ -1,6 +1,8 @@
 package com.zp.gmall.module.system.controller.admin.user;
 
 import com.zp.gmall.framework.common.domain.vo.Result;
+import com.zp.gmall.framework.validation.group.CreateGroup;
+import com.zp.gmall.framework.validation.group.UpdateGroup;
 import com.zp.gmall.module.system.controller.admin.user.dto.UserDTO;
 import com.zp.gmall.module.system.controller.admin.user.vo.AdminUserVO;
 import com.zp.gmall.module.system.service.user.IUserService;
@@ -8,7 +10,6 @@ import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.Parameter;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.annotation.Resource;
-import jakarta.validation.Valid;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
@@ -38,21 +39,21 @@ public class UserController {
 
     @PostMapping("/create")
     @Operation(summary = "新增用户")
-    public Result<String> create(@RequestBody @Valid UserDTO userDTO) {
+    public Result<String> create(@RequestBody @Validated(CreateGroup.class) UserDTO userDTO) {
         String userId = adminUserService.createUser(userDTO);
         return Result.ok(userId);
     }
 
     @PutMapping("/update")
     @Operation(summary = "根据ID更新用户")
-    public Result<?> update(UserDTO userDTO) {
+    public Result<?> update(@RequestBody @Validated(UpdateGroup.class) UserDTO userDTO) {
         adminUserService.updateUser(userDTO);
         return Result.ok();
     }
 
     @PostMapping("/list")
     @Operation(summary = "获取验证码")
-    public Result<List<AdminUserVO>> getUserList() {
+    public Result<List<AdminUserVO>> getList() {
         List<AdminUserVO> userList = adminUserService.getUserListByIds(List.of("1"));
         return Result.ok(userList);
     }

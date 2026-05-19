@@ -11,10 +11,12 @@ import com.zp.gmall.module.system.service.user.IUserService;
 import lombok.extern.slf4j.Slf4j;
 import org.mapstruct.factory.Mappers;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.io.Serializable;
 import java.util.Collection;
 import java.util.List;
+import java.util.stream.Collectors;
 
 /**
  * Author : zhengpanone
@@ -57,5 +59,17 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, UserDO> implements 
     public AdminUserVO getUserById(String id) {
         UserDO userDO = baseMapper.selectById(id);
         return convertMapper.convert(userDO);
+    }
+
+    /**
+     * 批量插入（性能优于逐条插入）
+     */
+    @Override
+    @Transactional(rollbackFor = Exception.class)
+    public void batchCreate(List<UserDTO> dtoList) {
+        List<UserDO> users = dtoList.stream()
+                .map(convertMapper::convert)
+                .collect(Collectors.toList());
+        saveBatch(users, 500); // 每批 500 条
     }
 }

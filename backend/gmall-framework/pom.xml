@@ -31,7 +31,7 @@
         <!--        <module>gmall-spring-boot-starter-banner</module>-->
         <!--        <module>gmall-spring-boot-starter-env</module>-->
         <!--        <module>gmall-spring-boot-starter-biz-sms</module>-->
-        <!--        <module>gmall-spring-boot-starter-redis</module>-->
+        <module>gmall-spring-boot-starter-redis</module>
 
         <!--        <module>gmall-spring-boot-starter-captcha</module>-->
         <module>gmall-spring-boot-starter-security</module>

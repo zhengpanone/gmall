@@ -16,13 +16,15 @@ public class UserDTO {
 
     @JsonView(UpdateView.class)
     @Schema(description = "用户编号", example = "f47ac10b-58cc-4372-a567-0e02b2c3d479")
-    @NotNull(message = "用户ID不能为空", groups = UpdateGroup.class)
+    @Null(groups = CreateGroup.class, message = "创建时不能传 id")
+    @NotNull(message = "更新时 id 不能为空", groups = UpdateGroup.class)
     private String id;
 
 
     @Schema(description = "用户账号", type = "string", example = "admin")
     @NotBlank(message = "用户账号不能为空", groups = {CreateGroup.class})
-    @Pattern(regexp = "^[a-zA-Z0-9]+$", message = "用户账号由 数字、字母 组成")
+//    @Pattern(regexp = "^[a-zA-Z0-9]+$", message = "用户账号由 数字、字母 组成")
+    @Pattern(regexp = "^(?=.*[a-z])(?=.*[A-Z])(?=.*\\d).{4,30}$", message = "密码需包含大小写字母和数字，长度 8-20 位")
     @Size(min = 4, max = 30, message = "用户账号长度为 4-30 个字符")
     private String username;
 
@@ -42,6 +44,7 @@ public class UserDTO {
     private String email;
 
     @Schema(description = "手机号码", example = "15601691300")
+    @Pattern(regexp = "^1[3-9]\\d{9}$", message = "手机号格式不正确")
     private String mobile;
 
     @Schema(description = "用户性别，参见 SexEnum 枚举类", example = "1")

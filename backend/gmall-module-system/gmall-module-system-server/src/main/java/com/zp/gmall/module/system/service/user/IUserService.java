@@ -57,4 +57,6 @@ public interface IUserService extends IService<UserDO> {
      * @return 用户对象信息
      */
     AdminUserVO getUserById(String id);
+
+     void batchCreate(List<UserDTO> dtoList);
 }

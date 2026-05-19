@@ -40,7 +40,7 @@ public class MenuController {
 
     @Operation(summary = "修改菜单")
     @PutMapping("/update")
-    public Result<?> edit(@Valid @RequestBody MenuDTO dto) {
+    public Result<?> updateById(@Valid @RequestBody MenuDTO dto) {
         if (!menuService.checkMenuKeyUnique(dto)) {
             return Result.failed("修改菜单'" + dto.getName() + "'失败，菜单标识已存在");
         }

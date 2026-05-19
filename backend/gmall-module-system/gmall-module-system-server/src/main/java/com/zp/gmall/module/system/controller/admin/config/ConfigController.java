@@ -35,34 +35,41 @@ public class ConfigController {
 
     @GetMapping("/page")
     @Operation(summary = "获取参数分页")
-    public PageResult<ConfigVO> getConfigPage(ConfigPageDTO configPageDTO) {
+    public PageResult<ConfigVO> getPageList(ConfigPageDTO configPageDTO) {
         return configService.getConfigPage(configPageDTO);
     }
 
     @PostMapping("/create")
     @Operation(summary = "创建参数")
-    public Result<?> createConfig(@RequestBody ConfigDTO configDTO) {
+    public Result<?> create(@RequestBody ConfigDTO configDTO) {
         return Result.ok(configService.createConfig(configDTO));
     }
 
     @PutMapping("/update")
     @Operation(summary = "更新参数")
-    public Result<?> updateConfig(@RequestBody ConfigDTO configDTO) {
+    public Result<?> updateById(@RequestBody ConfigDTO configDTO) {
         return Result.ok(configService.updateConfig(configDTO));
     }
 
     @DeleteMapping("/delete")
     @Operation(summary = "删除参数")
-    public Result<?> deleteConfig(@RequestBody Ids ids) {
+    public Result<?> deleteByIds(@RequestBody Ids ids) {
         configService.deleteConfig(ids);
         return Result.ok();
     }
 
     @GetMapping("/get")
     @Operation(summary = "获取参数详情")
-    public Result<ConfigVO> getConfig(@Parameter(description = "角色ID", required = true, example = "1")
-                                      @RequestParam("id") String id) {
-        return Result.ok(configService.getConfig(id));
+    public Result<ConfigVO> getById(@Parameter(description = "角色ID", required = true, example = "1")
+                                    @RequestParam("id") String id) {
+        return Result.ok(configService.getById(id));
+    }
+
+    @GetMapping("/getByKey")
+    @Operation(summary = "获取参数详情")
+    public Result<ConfigVO> getByKey(@Parameter(description = "角色ID", required = true, example = "1")
+                                    @RequestParam("configKey") String configKey) {
+        return Result.ok(configService.getByKey(configKey));
     }
 
 }

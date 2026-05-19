@@ -14,6 +14,8 @@ import com.zp.gmall.framework.common.util.monitor.TracerUtils;
 import com.zp.gmall.framework.common.util.servlet.ServletUtils;
 import com.zp.gmall.framework.web.util.WebFrameworkUtils;
 import jakarta.servlet.http.HttpServletRequest;
+import jakarta.validation.ConstraintViolation;
+import jakarta.validation.ConstraintViolationException;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.util.Assert;
@@ -27,6 +29,7 @@ import java.nio.file.AccessDeniedException;
 import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Map;
+import java.util.stream.Collectors;
 
 import static com.zp.gmall.framework.common.exception.enums.GlobalErrorCodeConstants.*;
 
@@ -68,9 +71,9 @@ public class GlobalExceptionHandler {
 //        if (ex instanceof BindException) {
 //            return bindExceptionHandler((BindException) ex);
 //        }
-//        if (ex instanceof ConstraintViolationException) {
-//            return constraintViolationExceptionHandler((ConstraintViolationException) ex);
-//        }
+        if (ex instanceof ConstraintViolationException) {
+            return constraintViolationExceptionHandler((ConstraintViolationException) ex);
+        }
 //        if (ex instanceof ValidationException) {
 //            return validationException((ValidationException) ex);
 //        }
@@ -174,6 +177,27 @@ public class GlobalExceptionHandler {
         } else {
             errorMessage = fieldError.getDefaultMessage();
         }
+        // 转换 CommonResult
+        if (StrUtil.isEmpty(errorMessage)) {
+            return Result.failed(BAD_REQUEST);
+        }
+        return Result.failed(BAD_REQUEST.getCode(), String.format("请求参数不正确:%s", errorMessage));
+    }
+
+    /**
+     * 参数校验异常 （@RequestParam 校验失败）
+     *
+     * @param exception 异常
+     * @return 结果
+     */
+    @ExceptionHandler(value = ConstraintViolationException.class)
+    public Result<?> constraintViolationExceptionHandler(ConstraintViolationException exception) {
+        log.warn("[constraintViolationExceptionHandler]", exception);
+        // 获取 errorMessage
+        String errorMessage = exception.getConstraintViolations().stream()
+                .map(ConstraintViolation::getMessage)
+                .collect(Collectors.joining("; "));
+
         // 转换 CommonResult
         if (StrUtil.isEmpty(errorMessage)) {
             return Result.failed(BAD_REQUEST);

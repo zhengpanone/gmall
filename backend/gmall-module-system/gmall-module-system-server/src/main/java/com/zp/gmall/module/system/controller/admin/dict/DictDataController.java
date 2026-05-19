@@ -48,7 +48,7 @@ public class DictDataController {
 
     @GetMapping("/list")
     @Operation(summary = "获取字典分页")
-    public Result<List<DictDataVO>> getList(@Valid DictDataQueryDTO dataQueryDTO) {
+    public Result<List<DictDataVO>> getPageList(@Valid DictDataQueryDTO dataQueryDTO) {
         return dictTYpeService.getDictDataList(dataQueryDTO);
     }
 

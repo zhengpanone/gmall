@@ -30,5 +30,7 @@ public interface IConfigService extends IService<ConfigDO> {
 
     void deleteConfig(Ids ids);
 
-    ConfigVO getConfig(String id);
+    ConfigVO getById(String id);
+
+    ConfigVO getByKey(String configKey);
 }

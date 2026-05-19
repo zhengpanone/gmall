@@ -47,6 +47,8 @@ public class Result<T> implements Serializable {
     @JsonInclude(JsonInclude.Include.ALWAYS)
     private T data;
 
+    private Long timestamp = System.currentTimeMillis();
+
     public Result(int code, String message) {
         this.code = code;
         this.msg = message;
