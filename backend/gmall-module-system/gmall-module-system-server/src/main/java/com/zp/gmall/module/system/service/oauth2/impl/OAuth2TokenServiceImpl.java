@@ -26,11 +26,12 @@ public class OAuth2TokenServiceImpl implements IOAuth2TokenService {
 
     private final OAuth2RefreshTokenMapper oAuth2RefreshTokenMapper;
 
-    private final IOAuth2ClientService oAuth2ClientService;
+    private final IOAuth2ClientService oauth2ClientService;
 
 
     @Override
     public OAuth2AccessTokenDO createAccessToken(String userId, String userType, String clientId, List<String> scopes) {
+       oauth2ClientService.validOAuthClientFromCache(clientId);
 
         return new OAuth2AccessTokenDO();
     }

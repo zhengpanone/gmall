@@ -53,5 +53,10 @@ public class UserDTO {
     @Schema(description = "用户头像", example = "https://www.iocoder.cn/xxx.png")
     private String avatar;
 
+    @Schema(description = "用户密码", example = "<PASSWORD>")
+    private String password;
+
+
+    private String status;
 
 }

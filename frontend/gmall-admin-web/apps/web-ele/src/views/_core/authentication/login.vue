@@ -16,7 +16,7 @@ const authStore = useAuthStore();
 const MOCK_USER_OPTIONS: BasicOption[] = [
   {
     label: 'Super',
-    value: 'vben',
+    value: 'superAdmin',
   },
   {
     label: 'Admin',
@@ -52,12 +52,10 @@ const formSchema = computed((): VbenFormSchema[] => {
       dependencies: {
         trigger(values, form) {
           if (values.selectAccount) {
-            const findUser = MOCK_USER_OPTIONS.find(
-              (item) => item.value === values.selectAccount,
-            );
+            const findUser = MOCK_USER_OPTIONS.find((item) => item.value === values.selectAccount);
             if (findUser) {
               form.setValues({
-                password: '123456',
+                password: 'admin123',
                 username: findUser.value,
               });
             }

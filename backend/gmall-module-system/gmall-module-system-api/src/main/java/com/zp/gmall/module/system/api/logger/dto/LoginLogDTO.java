@@ -14,7 +14,7 @@ import lombok.Data;
  */
 @Schema(description = "RPC 服务 - 登录日志创建 Request DTO")
 @Data
-public class LoginLogCreateDTO {
+public class LoginLogDTO {
     @Schema(description = "日志类型,参见LoginLogTypeEnum枚举类", example = "1")
     @NotNull(message = "日志类型不能为空")
     private Integer logType;
@@ -27,7 +27,7 @@ public class LoginLogCreateDTO {
 
     @Schema(description = "用户类型,参见UserTypeEnum枚举", example = "2")
     @NotNull(message = "用户类型不能为空")
-    private Integer userType;
+    private String userType;
 
     @Schema(description = "用户账号", example = "admin")
     @NotNull(message = "用户账号不能为空")

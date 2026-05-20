@@ -34,27 +34,27 @@ public class UserController {
     public Result<?> getById(
             @Parameter(description = "用户ID", required = true, example = "1")
             @PathVariable String id) {
-        return Result.ok(adminUserService.getUserById(id));
+        return Result.ok(adminUserService.getById(id));
     }
 
     @PostMapping("/create")
     @Operation(summary = "新增用户")
     public Result<String> create(@RequestBody @Validated(CreateGroup.class) UserDTO userDTO) {
-        String userId = adminUserService.createUser(userDTO);
+        String userId = adminUserService.create(userDTO);
         return Result.ok(userId);
     }
 
     @PutMapping("/update")
     @Operation(summary = "根据ID更新用户")
     public Result<?> update(@RequestBody @Validated(UpdateGroup.class) UserDTO userDTO) {
-        adminUserService.updateUser(userDTO);
+        adminUserService.update(userDTO);
         return Result.ok();
     }
 
     @PostMapping("/list")
     @Operation(summary = "获取验证码")
     public Result<List<AdminUserVO>> getList() {
-        List<AdminUserVO> userList = adminUserService.getUserListByIds(List.of("1"));
+        List<AdminUserVO> userList = adminUserService.getByIds(List.of("1"));
         return Result.ok(userList);
     }
 }

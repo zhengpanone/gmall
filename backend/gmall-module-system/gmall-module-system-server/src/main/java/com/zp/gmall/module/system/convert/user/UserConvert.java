@@ -28,8 +28,6 @@ public interface UserConvert {
     }
 
 
-    @Mapping(target = "password", ignore = true)
-    @Mapping(target = "status", ignore = true)
     @Mapping(target = "loginIp", ignore = true)
     @Mapping(target = "loginDate", ignore = true)
     UserDO convert(UserDTO userDTO);

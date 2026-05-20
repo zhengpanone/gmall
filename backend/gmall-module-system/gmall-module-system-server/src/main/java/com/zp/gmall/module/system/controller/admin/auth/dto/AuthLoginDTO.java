@@ -8,6 +8,7 @@ import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import org.hibernate.validator.constraints.Length;
 
 /**
  * Author : zhengpanone
@@ -22,15 +23,15 @@ import lombok.NoArgsConstructor;
 @Builder
 public class AuthLoginDTO extends CaptchaVerificationDTO {
 
-    @Schema(description = "账号", example = "yudaoyuanma")
+    @Schema(description = "账号", example = "admin")
     @NotEmpty(message = "登录账号不能为空")
-    //@Length(min = 4, max = 16, message = "账号长度为 4-16 位")
+    @Length(min = 4, max = 16, message = "账号长度为 4-16 位")
     @Pattern(regexp = "^[A-Za-z0-9]+$", message = "账号格式为数字以及字母")
     private String username;
 
-    @Schema(description = "密码", example = "buzhidao")
+    @Schema(description = "密码", example = "admin123")
     @NotEmpty(message = "密码不能为空")
-    //@Length(min = 4, max = 16, message = "密码长度为 4-16 位")
+    @Length(min = 4, max = 16, message = "密码长度为 4-16 位")
     private String password;
 
     @Schema(description = "租户ID", example = "1")

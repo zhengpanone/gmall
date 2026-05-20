@@ -73,7 +73,7 @@ public class UserDO extends TenantBaseDO {
      * 账号状态
      * 枚举 {@link CommonStatusEnum}
      */
-    private Integer status;
+    private String status;
     /**
      * 最后登录IP
      */

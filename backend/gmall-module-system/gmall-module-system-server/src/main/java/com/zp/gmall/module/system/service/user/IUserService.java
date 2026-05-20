@@ -24,7 +24,7 @@ public interface IUserService extends IService<UserDO> {
      * @param userDTO 用户信息
      * @return 用户编号
      */
-    String createUser(@Valid UserDTO userDTO);
+    String create(@Valid UserDTO userDTO);
 
 
     /**
@@ -33,7 +33,7 @@ public interface IUserService extends IService<UserDO> {
      * @param userDTO 用户信息
      * @return 用户编号
      */
-    String updateUser(@Valid UserDTO userDTO);
+    String update(@Valid UserDTO userDTO);
 
     /**
      * 获得用户列表
@@ -41,7 +41,7 @@ public interface IUserService extends IService<UserDO> {
      * @param ids 用户编号数组
      * @return 用户列表
      */
-    List<AdminUserVO> getUserListByIds(Collection<? extends Serializable> ids);
+    List<AdminUserVO> getByIds(Collection<? extends Serializable> ids);
 
     /**
      * 通过用户名查询用户
@@ -56,7 +56,15 @@ public interface IUserService extends IService<UserDO> {
      * @param id 用户ID
      * @return 用户对象信息
      */
-    AdminUserVO getUserById(String id);
+    AdminUserVO getById(String id);
 
      void batchCreate(List<UserDTO> dtoList);
+
+     /**
+      * 验证密码
+      * @param rawPassword 原始密码
+      * @param encodePassword 加密密码
+      * @return 是否匹配
+      */
+     boolean verifyPassword(String rawPassword, String encodePassword);
 }

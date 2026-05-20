@@ -1,7 +1,7 @@
 package com.zp.gmall.module.system.api.logger;
 
 import com.zp.gmall.framework.common.domain.vo.Result;
-import com.zp.gmall.module.system.api.logger.dto.LoginLogCreateDTO;
+import com.zp.gmall.module.system.api.logger.dto.LoginLogDTO;
 import com.zp.gmall.module.system.enums.ApiConstants;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
@@ -23,5 +23,5 @@ public interface LoginLogApi {
 
     @PostMapping(PREFIX + "/create")
     @Operation(summary = "创建登录日志")
-    Result<Boolean> createLoginLog(@Valid @RequestBody LoginLogCreateDTO reqDTO);
+    Result<Boolean> createLoginLog(@Valid @RequestBody LoginLogDTO reqDTO);
 }

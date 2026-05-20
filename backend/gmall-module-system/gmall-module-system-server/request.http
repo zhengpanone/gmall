@@ -3,12 +3,13 @@ POST {{sysBaseUrl}}/admin-api/user/create
 Content-Type: application/json
 
 {
-    "password": "admin123",
-    "nickname": "管理员",
-    "email": "admin@qq.com",
-    "phone": "13800138000",
-    "status": 1,
-    "remark": "管理员"
+  "password": "admin123",
+  "nickname": "管理员",
+  "email": "admin@qq.com",
+  "phone": "13800138000",
+  "username": "superAdmin",
+  "status": 1,
+  "remark": "管理员"
 }
 
 

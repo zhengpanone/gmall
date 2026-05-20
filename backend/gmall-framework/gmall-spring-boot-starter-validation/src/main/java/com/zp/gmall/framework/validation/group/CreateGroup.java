@@ -12,5 +12,5 @@ package com.zp.gmall.framework.validation.group;
  * @version 1.0.0
  * @since 2026-05-07
  */
-public class CreateGroup {
+public interface CreateGroup {
 }
