@@ -6,6 +6,8 @@ import com.baomidou.mybatisplus.annotation.TableName;
 import com.baomidou.mybatisplus.extension.handlers.JacksonTypeHandler;
 import com.zp.gmall.framework.common.enums.UserTypeEnum;
 import com.zp.gmall.framework.mybatis.core.dataobject.BaseDO;
+import com.zp.gmall.framework.tenant.core.db.TenantBaseDO;
+import com.zp.gmall.module.system.entity.tenant.TenantDO;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 
@@ -24,7 +26,7 @@ import java.util.List;
 @Data
 @TableName(value = "system_oauth2_refresh_token", autoResultMap = true)
 @EqualsAndHashCode(callSuper = true)
-public class OAuth2RefreshTokenDO extends BaseDO {
+public class OAuth2RefreshTokenDO extends TenantBaseDO {
 
     @Serial
     private static final long serialVersionUID = 1L;

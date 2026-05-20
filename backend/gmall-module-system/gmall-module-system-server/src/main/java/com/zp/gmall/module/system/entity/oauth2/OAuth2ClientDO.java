@@ -59,7 +59,7 @@ public class OAuth2ClientDO extends BaseDO {
      * <p>
      * 枚举 {@link CommonStatusEnum}
      */
-    private Integer status;
+    private String status;
     /**
      * 访问令牌的有效期
      */

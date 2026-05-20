@@ -1,6 +1,11 @@
 package com.zp.gmall.module.system.service.oauth2.impl;
 
+import cn.hutool.core.collection.CollUtil;
+import cn.hutool.core.util.ObjectUtil;
+import cn.hutool.core.util.StrUtil;
 import com.google.common.annotations.VisibleForTesting;
+import com.zp.gmall.framework.common.enums.CommonStatusEnum;
+import com.zp.gmall.framework.common.util.string.StrUtils;
 import com.zp.gmall.module.system.constant.RedisKeyConstants;
 import com.zp.gmall.module.system.controller.admin.oauth2.dto.OAuth2ClientDTO;
 import com.zp.gmall.module.system.convert.oauth2.OAuth2ClientConvert;
@@ -17,7 +22,7 @@ import org.springframework.validation.annotation.Validated;
 import java.util.Collection;
 
 import static com.zp.gmall.framework.common.exception.util.ServiceExceptionUtils.exception;
-import static com.zp.gmall.module.system.enums.ErrorCodeConstants.OAUTH2_CLIENT_EXISTS;
+import static com.zp.gmall.module.system.enums.ErrorCodeConstants.*;
 
 /**
  * Author : zhengpanone
@@ -50,16 +55,34 @@ public class OAuth2ClientServiceImpl implements IOAuth2ClientService {
         return oauth2ClientMapper.selectByClientId(clientId);
     }
 
-    @Override
-    public OAuth2ClientDO validOAuthClientFromCache(String clientId) {
-        return null;
-    }
 
     @Override
     public OAuth2ClientDO validOAuthClientFromCache(String clientId, String clientSecret, String grantType, Collection<String> scope, String redirectUri) {
         // 校验客户端是否存在
-
-        return null;
+        OAuth2ClientDO client = getOAuth2ClientFromCache(clientId);
+        if (client == null) {
+            throw exception(OAUTH2_CLIENT_NOT_EXISTS);
+        }
+        if (CommonStatusEnum.isDisable(client.getStatus())) {
+            throw exception(OAUTH2_CLIENT_DISABLE);
+        }
+        // 校验客户端密钥
+        if (StrUtil.isNotEmpty(clientSecret) && ObjectUtil.notEqual(client.getSecret(), clientSecret)) {
+            throw exception(OAUTH2_CLIENT_CLIENT_SECRET_ERROR);
+        }
+        // 校验授权方式
+        if (StrUtil.isNotEmpty(grantType) && !CollUtil.contains(client.getAuthorizedGrantTypes(), grantType)) {
+            throw exception(OAUTH2_CLIENT_AUTHORIZED_GRANT_TYPE_NOT_EXISTS);
+        }
+        // 校验授权范围
+        if (CollUtil.isNotEmpty(scope) && !CollUtil.containsAll(client.getScopes(), scope)) {
+            throw exception(OAUTH2_CLIENT_SCOPE_OVER);
+        }
+        // 校验回调地址
+        if (StrUtil.isNotEmpty(redirectUri) && StrUtils.startWithAny(redirectUri, client.getRedirectUris())) {
+            throw exception(OAUTH2_CLIENT_REDIRECT_URI_NOT_MATCH, redirectUri);
+        }
+        return client;
     }
 
     @VisibleForTesting
