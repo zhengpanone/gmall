@@ -1,9 +1,11 @@
 package com.zp.gmall.module.system.entity.tenant;
 
+import com.baomidou.mybatisplus.annotation.TableField;
 import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.annotation.TableName;
 import com.zp.gmall.framework.common.enums.CommonStatusEnum;
 import com.zp.gmall.framework.mybatis.core.dataobject.BaseDO;
+import com.zp.gmall.framework.mybatis.core.type.StringListTypeHandler;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -12,6 +14,7 @@ import lombok.experimental.Accessors;
 
 import java.io.Serial;
 import java.time.LocalDateTime;
+import java.util.List;
 
 /**
  *
@@ -83,6 +86,15 @@ public class TenantDO extends BaseDO {
      * 备注
      */
     private String description;
+
+    /**
+     * 绑定域名列表
+     * <p>
+     * 1. 考虑到对微信小程序的兼容，也允许传递 appid
+     * 2. 为什么是数组，考虑到管理后台、会员前台都有独立的域名，又或者多个管理后台
+     */
+    @TableField(typeHandler = StringListTypeHandler.class)
+    private List<String> websites;
 
     /**
      * 租户套餐编号

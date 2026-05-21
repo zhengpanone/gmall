@@ -19,7 +19,7 @@ import java.util.List;
  * Version : v1.0.0
  * Description: OAuth2 客户端 DO
  */
-@TableName(value = "system_oauth2_client", autoResultMap = true)
+@TableName(value = "sys_oauth2_client", autoResultMap = true)
 @Data
 @EqualsAndHashCode(callSuper = true)
 public class OAuth2ClientDO extends BaseDO {
@@ -29,8 +29,6 @@ public class OAuth2ClientDO extends BaseDO {
 
     /**
      * 编号，数据库自增
-     * <p>
-     * 由于 SQL Server 在存储 String 主键有点问题，所以暂时使用 Long 类型
      */
     @TableId
     private String id;
@@ -41,7 +39,7 @@ public class OAuth2ClientDO extends BaseDO {
     /**
      * 客户端密钥
      */
-    private String secret;
+    private String clientSecret;
     /**
      * 应用名
      */

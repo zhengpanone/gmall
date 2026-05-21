@@ -67,7 +67,7 @@ public class OAuth2ClientServiceImpl implements IOAuth2ClientService {
             throw exception(OAUTH2_CLIENT_DISABLE);
         }
         // 校验客户端密钥
-        if (StrUtil.isNotEmpty(clientSecret) && ObjectUtil.notEqual(client.getSecret(), clientSecret)) {
+        if (StrUtil.isNotEmpty(clientSecret) && ObjectUtil.notEqual(client.getClientSecret(), clientSecret)) {
             throw exception(OAUTH2_CLIENT_CLIENT_SECRET_ERROR);
         }
         // 校验授权方式

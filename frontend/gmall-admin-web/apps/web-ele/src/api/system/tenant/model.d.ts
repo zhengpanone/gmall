@@ -17,6 +17,15 @@ export interface Tenant {
   tenantId: string;
 }
 
+export interface TenantByWebsite {
+  description?: string;
+  id: string;
+  status?: string;
+  tenantCode?: string;
+  tenantName: string;
+  websites?: string[];
+}
+
 /** 角色分页查询参数 */
 export interface TenantPageParam extends PageParam {
   tenantName?: string;

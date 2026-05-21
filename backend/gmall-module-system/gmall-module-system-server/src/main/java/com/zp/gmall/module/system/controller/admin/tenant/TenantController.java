@@ -10,10 +10,12 @@ import com.zp.gmall.module.system.controller.admin.tenant.dto.TenantPageDTO;
 import com.zp.gmall.module.system.controller.admin.tenant.vo.TenantVO;
 import com.zp.gmall.module.system.service.tenant.ITenantService;
 import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.Parameter;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.annotation.Resource;
 import jakarta.validation.Valid;
 import jakarta.validation.constraints.NotNull;
+import jakarta.validation.constraints.Pattern;
 import lombok.RequiredArgsConstructor;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
@@ -68,5 +70,14 @@ public class TenantController {
     @Operation(summary = "获取租户详情")
     public Result<TenantVO> getById(@Valid @NotNull(message = "租户ID不能为空") String id) {
         return Result.ok(tenantService.queryById(id));
+    }
+
+    @GetMapping("/get-by-website")
+    @Operation(summary = "使用域名，获得租户信息", description = "登录界面，根据用户的域名，获得租户信息")
+    @Parameter(name = "website", description = "域名", required = true, example = "www.iocoder.cn")
+    public Result<?> getTenantByWebsite(@RequestParam("website") @Pattern(regexp = "^[a-zA-Z0-9.-]+(:\\d{1,5})?$", message = "网站域名格式不正确") String website
+                                      ) {
+        TenantVO tenant = tenantService.getTenantByWebsite(website);
+        return Result.ok(tenant);
     }
 }

@@ -93,6 +93,7 @@ CREATE TABLE IF NOT EXISTS sys_tenant
     domain          varchar(32)           NULL COMMENT '域名',
     intro           varchar(32)           NULL COMMENT '简介',
     description     varchar(32)           NULL COMMENT '描述',
+    websites        varchar(500)          NOT NULL COMMENT '绑定域名列表',
     package_id      varchar(32)           NULL COMMENT '租户套餐编号',
     expire_time     timestamp             NULL COMMENT '过期时间',
     account_count   int                   NULL COMMENT '账号数量',
@@ -258,3 +259,30 @@ CREATE TABLE IF NOT EXISTS sys_config
     deleted      bit      DEFAULT b'0' NOT NULL COMMENT '是否删除',
     deleted_time datetime DEFAULT NULL COMMENT '删除时间'
 ) COMMENT = '系统配置表';
+
+CREATE TABLE IF NOT EXISTS sys_oauth2_client
+(
+    id                             varchar(36)           NOT NULL COMMENT '主键ID' PRIMARY KEY,
+    client_id                      varchar(36)           NOT NULL COMMENT '客户端ID',
+    client_secret                  varchar(36)           NOT NULL COMMENT '客户端密钥',
+    name                           varchar(100)          NOT NULL COMMENT '应用名称',
+    logo                           varchar(255)          NOT NULL COMMENT '应用logo地址',
+    description                    varchar(255)          NOT NULL COMMENT '应用描述',
+    access_token_validity_seconds  int                   NOT NULL COMMENT '访问令牌有效期',
+    refresh_token_validity_seconds int                   NOT NULL COMMENT '刷新令牌有效期',
+    redirect_uris                  varchar(500)          NOT NULL COMMENT '重定向URI',
+    authorized_grant_types         varchar(36)           NOT NULL COMMENT '授权类型',
+    scopes                         varchar(500)          NOT NULL COMMENT '范围',
+    auto_approve_scopes            varchar(500)          NOT NULL COMMENT '自动批准范围',
+    authorities                    varchar(36)           NOT NULL COMMENT '权限',
+    resource_ids                   varchar(36)           NOT NULL COMMENT '资源ID',
+    additional_information         varchar(36)           NOT NULL COMMENT '附加信息',
+    status                         tinyint  DEFAULT 1    NOT NULL COMMENT '角色状态（1正常 0停用）',
+    creator                        varchar(64)           NOT NULL COMMENT '创建者',
+    create_time                    datetime              NOT NULL COMMENT '创建时间',
+    updater                        varchar(64)           NOT NULL COMMENT '更新者',
+    update_time                    datetime              NOT NULL COMMENT '更新时间',
+    deleted                        bit      DEFAULT b'0' NOT NULL COMMENT '是否删除',
+    deleted_time                   datetime DEFAULT NULL COMMENT '删除时间'
+
+) COMMENT ='OAuth2 客户端信息表';

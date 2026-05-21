@@ -2,47 +2,61 @@
 import type { VbenFormSchema } from '@vben/common-ui';
 import type { BasicOption } from '@vben/types';
 
-import { computed, markRaw } from 'vue';
+import { computed, markRaw, nextTick, onMounted, ref } from 'vue';
 
 import { AuthenticationLogin, SliderCaptcha, z } from '@vben/common-ui';
 import { $t } from '@vben/locales';
 
+import { getTenantByWebsite } from '#/api/system/tenant';
 import { useAuthStore } from '#/store';
 
 defineOptions({ name: 'Login' });
 
 const authStore = useAuthStore();
+const loginRef = ref();
 
-const MOCK_USER_OPTIONS: BasicOption[] = [
-  {
-    label: 'Super',
-    value: 'superAdmin',
-  },
-  {
-    label: 'Admin',
-    value: 'admin',
-  },
-  {
-    label: 'User',
-    value: 'jack',
-  },
-];
+const tenantOptions = ref<BasicOption[]>([]);
+const tenantOptionsLoading = ref(false);
+
+async function loadTenantOptions() {
+  tenantOptionsLoading.value = true;
+  try {
+    const website = window.location.host;
+    const result = await getTenantByWebsite(website);
+    if (!result) {
+      tenantOptions.value = [];
+      return;
+    }
+
+    tenantOptions.value = [
+      {
+        label: result.tenantName,
+        value: result.id,
+      },
+    ];
+
+    await nextTick();
+    loginRef.value?.getFormApi()?.setFieldValue('tenantId', result.id);
+  } finally {
+    tenantOptionsLoading.value = false;
+  }
+}
+
+onMounted(loadTenantOptions);
 
 const formSchema = computed((): VbenFormSchema[] => {
   return [
     {
       component: 'VbenSelect',
       componentProps: {
-        options: MOCK_USER_OPTIONS,
+        loading: tenantOptionsLoading.value,
+        options: tenantOptions.value,
         placeholder: $t('authentication.selectAccount'),
       },
-      fieldName: 'selectAccount',
+      defaultValue: tenantOptions.value[0]?.value,
+      fieldName: 'tenantId',
       label: $t('authentication.selectAccount'),
-      rules: z
-        .string()
-        .min(1, { message: $t('authentication.selectAccount') })
-        .optional()
-        .default('vben'),
+      rules: z.string().min(1, { message: $t('authentication.selectAccount') }),
     },
     {
       component: 'VbenInput',
@@ -51,17 +65,13 @@ const formSchema = computed((): VbenFormSchema[] => {
       },
       dependencies: {
         trigger(values, form) {
-          if (values.selectAccount) {
-            const findUser = MOCK_USER_OPTIONS.find((item) => item.value === values.selectAccount);
-            if (findUser) {
-              form.setValues({
-                password: 'admin123',
-                username: findUser.value,
-              });
-            }
-          }
+          if (!values.tenantId) return;
+
+          form.setValues({
+            password: 'admin123',
+          });
         },
-        triggerFields: ['selectAccount'],
+        triggerFields: ['tenantId'],
       },
       fieldName: 'username',
       label: $t('authentication.username'),
@@ -89,6 +99,7 @@ const formSchema = computed((): VbenFormSchema[] => {
 
 <template>
   <AuthenticationLogin
+    ref="loginRef"
     :form-schema="formSchema"
     :loading="authStore.loginLoading"
     @submit="authStore.authLogin"

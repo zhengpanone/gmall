@@ -16,5 +16,5 @@ public class GlobalConstant {
 
     public static final String REQUEST_ATTRIBUTE_COMMON_RESULT = "common_result";
 
-
+    public static final String SPLITTER_COMMA = ",";
 }

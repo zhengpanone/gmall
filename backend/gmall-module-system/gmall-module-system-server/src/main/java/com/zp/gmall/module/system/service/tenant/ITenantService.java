@@ -9,6 +9,7 @@ import com.zp.gmall.module.system.controller.admin.tenant.vo.TenantVO;
 import com.zp.gmall.module.system.entity.tenant.TenantDO;
 import jakarta.validation.Valid;
 import jakarta.validation.constraints.NotNull;
+import jakarta.validation.constraints.Pattern;
 
 /**
  *
@@ -29,4 +30,6 @@ public interface ITenantService extends IService<TenantDO> {
     void deleteByIds(@Valid Ids ids);
 
     void updateById(@Valid TenantDTO tenantDTO);
+
+    TenantVO getTenantByWebsite(@Pattern(regexp = "^[a-zA-Z0-9.-]+(:\\d{1,5})?$", message = "网站域名格式不正确") String websites);
 }

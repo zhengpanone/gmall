@@ -1,4 +1,9 @@
-import type { CreateTenantParams, TenantPageParam, UpdateTenantParams } from './model';
+import type {
+  CreateTenantParams,
+  TenantByWebsite,
+  TenantPageParam,
+  UpdateTenantParams,
+} from './model';
 
 import { backendClient } from '#/api/request';
 
@@ -10,6 +15,7 @@ enum Api {
   tenantDynamic = '/system/admin-api/tenant/dynamic',
   tenantDynamicClear = '/system/admin-api/tenant/dynamic/clear',
   tenantExport = '/system/admin-api/tenant/export',
+  tenantGetByWebsite = '/system/admin-api/tenant/get-by-website',
   tenantList = '/system/admin-api/tenant/list',
   tenantPageList = '/system/admin-api/tenant/page',
   tenantStatus = '/system/admin-api/tenant/changeStatus',
@@ -19,6 +25,12 @@ enum Api {
 
 export async function getTenantPageList(params: TenantPageParam) {
   return backendClient.get(Api.tenantPageList, { params, responseReturn: 'body' });
+}
+
+export async function getTenantByWebsite(website: string) {
+  return backendClient.get<null | TenantByWebsite>(Api.tenantGetByWebsite, {
+    params: { website },
+  });
 }
 
 export async function deleteTenant(ids: Array<number | string>) {

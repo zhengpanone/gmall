@@ -12,6 +12,7 @@ import lombok.NoArgsConstructor;
 
 import java.io.Serial;
 import java.io.Serializable;
+import java.util.List;
 
 /**
  *
@@ -65,4 +66,7 @@ public class TenantDTO implements Serializable {
 
     @Schema(title = "租户描述", description = "租户描述", example = "租户描述")
     private String description;
+
+    @Schema(title = "域名列表", description = "域名列表", example = "域名列表")
+    private List<String> websites;
 }

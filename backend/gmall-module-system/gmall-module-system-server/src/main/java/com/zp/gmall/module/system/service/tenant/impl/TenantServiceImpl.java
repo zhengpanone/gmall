@@ -1,5 +1,6 @@
 package com.zp.gmall.module.system.service.tenant.impl;
 
+import cn.hutool.core.collection.CollUtil;
 import cn.hutool.core.util.ObjectUtil;
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.baomidou.mybatisplus.core.metadata.IPage;
@@ -8,6 +9,7 @@ import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.zp.gmall.framework.common.domain.dto.Ids;
 import com.zp.gmall.framework.common.domain.vo.PageResult;
+import com.zp.gmall.framework.common.enums.CommonStatusEnum;
 import com.zp.gmall.module.system.controller.admin.tenant.dto.TenantDTO;
 import com.zp.gmall.module.system.controller.admin.tenant.dto.TenantPageDTO;
 import com.zp.gmall.module.system.controller.admin.tenant.vo.TenantVO;
@@ -77,5 +79,15 @@ public class TenantServiceImpl extends ServiceImpl<TenantMapper, TenantDO> imple
     public void updateById(TenantDTO tenantDTO) {
         TenantDO tenantDO = convertMapper.convert(tenantDTO);
         baseMapper.updateById(tenantDO);
+    }
+
+    @Override
+    public TenantVO getTenantByWebsite(String websites) {
+        List<TenantDO> tenants = baseMapper.selectListByWebsite(websites);
+        TenantDO tenant = CollUtil.getFirst(tenants);
+        if (tenant == null || CommonStatusEnum.isDisable(tenant.getStatus())) {
+            return null;
+        }
+        return convertMapper.convert(tenant);
     }
 }

@@ -2,8 +2,12 @@ package com.zp.gmall.framework.mybatis.core.util;
 
 import cn.hutool.core.collection.CollectionUtil;
 import cn.hutool.core.util.StrUtil;
+import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.baomidou.mybatisplus.core.metadata.OrderItem;
+import com.baomidou.mybatisplus.core.toolkit.LambdaUtils;
 import com.baomidou.mybatisplus.core.toolkit.StringPool;
+import com.baomidou.mybatisplus.core.toolkit.support.LambdaMeta;
+import com.baomidou.mybatisplus.core.toolkit.support.SFunction;
 import com.baomidou.mybatisplus.extension.plugins.MybatisPlusInterceptor;
 import com.baomidou.mybatisplus.extension.plugins.inner.InnerInterceptor;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
@@ -12,6 +16,7 @@ import com.zp.gmall.framework.common.domain.dto.SortingField;
 import net.sf.jsqlparser.expression.Alias;
 import net.sf.jsqlparser.schema.Column;
 import net.sf.jsqlparser.schema.Table;
+import org.apache.ibatis.reflection.property.PropertyNamer;
 
 import java.util.ArrayList;
 import java.util.Collection;
@@ -87,5 +92,17 @@ public class MyBatisUtils {
         return new Column(tableName + StringPool.DOT + column);
     }
 
+    public static <T> void findInSet(LambdaQueryWrapper<T> wrapper, SFunction<T, ?> column, String value) {
+        // 1. 从 Lambda 表达式中解析出实体类的字段名
+        LambdaMeta meta = LambdaUtils.extract(column);
+        String fieldName = PropertyNamer.methodToProperty(meta.getImplMethodName());
 
+//        // 2. 通过 MyBatis-Plus 内置机制，将实体类字段名转换为真实的数据库列名
+//        Map<String, ColumnCache> fieldToColumnMap = LambdaUtils.getColumnMap(meta.getClass());
+//        ColumnCache columnCache = fieldToColumnMap.get(fieldName);
+
+//        String realColumnName = columnCache.getColumn();
+        // 3. 拼装 SQL 并防止 SQL 注入
+        wrapper.apply("FIND_IN_SET({0}, " + fieldName + ") > 0", value);
+    }
 }
