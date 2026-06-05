@@ -53,6 +53,11 @@ public class UserDO extends TenantBaseDO {
     private String remark;
 
     /**
+     * 部门 ID
+     */
+    private String deptId;
+
+    /**
      * 用户邮箱
      */
     private String email;

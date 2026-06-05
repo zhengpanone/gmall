@@ -21,7 +21,7 @@ import java.util.List;
  * @version 1.0.0
  * @since 2026-05-15
  */
-@TableName(value = "system_oauth2_code", autoResultMap = true)
+@TableName(value = "sys_oauth2_code", autoResultMap = true)
 @Data
 @EqualsAndHashCode(callSuper = true)
 public class OAuth2CodeDO extends BaseDO {

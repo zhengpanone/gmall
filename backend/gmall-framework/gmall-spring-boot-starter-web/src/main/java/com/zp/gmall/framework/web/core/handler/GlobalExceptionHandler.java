@@ -148,6 +148,7 @@ public class GlobalExceptionHandler {
      */
     @ExceptionHandler(value = ServiceException.class)
     public Result<?> serviceExceptionHandler(ServiceException exception) {
+        log.error("[serviceExceptionHandler]", exception);
         return Result.failed(exception.getCode(), exception.getMessage());
     }
 

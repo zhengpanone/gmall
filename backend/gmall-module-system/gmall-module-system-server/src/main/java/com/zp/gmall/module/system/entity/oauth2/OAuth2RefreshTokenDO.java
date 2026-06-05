@@ -24,7 +24,7 @@ import java.util.List;
  * @since 2026-05-15
  */
 @Data
-@TableName(value = "system_oauth2_refresh_token", autoResultMap = true)
+@TableName(value = "sys_oauth2_refresh_token", autoResultMap = true)
 @EqualsAndHashCode(callSuper = true)
 public class OAuth2RefreshTokenDO extends TenantBaseDO {
 
@@ -38,7 +38,6 @@ public class OAuth2RefreshTokenDO extends TenantBaseDO {
      * 刷新令牌
      */
     private String refreshToken;
-
 
     /**
      * 用户ID

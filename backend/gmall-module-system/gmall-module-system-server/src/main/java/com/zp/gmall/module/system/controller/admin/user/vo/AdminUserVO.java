@@ -4,6 +4,8 @@ import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.Builder;
 import lombok.Data;
 
+import java.io.Serial;
+import java.io.Serializable;
 import java.util.HashSet;
 import java.util.Set;
 
@@ -16,7 +18,10 @@ import java.util.Set;
 @Schema(description = "管理后台 - 用户 Response VO")
 @Data
 @Builder
-public class AdminUserVO {
+public class AdminUserVO implements Serializable {
+
+    @Serial
+    private static final long serialVersionUID = 1L;
 
     @Schema(description = "用户编号", example = "1")
     private String id;

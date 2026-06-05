@@ -20,7 +20,7 @@ import java.util.Map;
  * Version : v1.0.0
  * Description: OAuth2 访问令牌
  */
-@TableName(value = "system_oauth2_access_token", autoResultMap = true)
+@TableName(value = "sys_oauth2_access_token", autoResultMap = true)
 @Data
 @EqualsAndHashCode(callSuper = true)
 public class OAuth2AccessTokenDO extends TenantBaseDO {

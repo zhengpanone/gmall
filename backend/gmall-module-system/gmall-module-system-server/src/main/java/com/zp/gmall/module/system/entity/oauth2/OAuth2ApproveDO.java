@@ -17,7 +17,7 @@ import java.time.LocalDateTime;
  * Description: OAuth2 批准 DO
  * 用户在 sso.vue 界面时，记录接受的 scope 列表
  */
-@TableName(value = "system_oauth2_approve", autoResultMap = true)
+@TableName(value = "sys_oauth2_approve", autoResultMap = true)
 @Data
 @EqualsAndHashCode(callSuper = true)
 public class OAuth2ApproveDO extends BaseDO {

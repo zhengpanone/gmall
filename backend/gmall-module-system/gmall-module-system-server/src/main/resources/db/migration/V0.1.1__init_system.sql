@@ -30,3 +30,9 @@ INSERT INTO sys_dict_data (id, type_id, type_code, parent_id, data_code, data_na
 INSERT INTO sys_dict_data (id, type_id, type_code, parent_id, data_code, data_name, status, remark, sort, creator, create_time, updater, update_time, deleted, deleted_time) VALUES ('2051973418375815170', '2051883762766323713', 'sys_device_type', '0', 'iOS', 'iOS', 1, 'iOS', 0, 'system', '2026-05-06 18:32:41', 'system', '2026-05-06 10:35:30', false, null);
 INSERT INTO sys_dict_data (id, type_id, type_code, parent_id, data_code, data_name, status, remark, sort, creator, create_time, updater, update_time, deleted, deleted_time) VALUES ('2051973564610224130', '2051883762766323713', 'sys_device_type', '0', 'miniapp', '小程序', 1, '小程序', 0, 'system', '2026-05-06 18:33:16', 'system', '2026-05-06 10:35:30', false, null);
 INSERT INTO sys_dict_data (id, type_id, type_code, parent_id, data_code, data_name, status, remark, sort, creator, create_time, updater, update_time, deleted, deleted_time) VALUES ('2051973644675293185', '2051883762766323713', 'sys_device_type', '0', 'chat', '对话', 1, '对话', 0, 'system', '2026-05-06 18:33:35', 'system', '2026-05-06 10:35:30', false, null);
+
+INSERT INTO sys_oauth2_client (id, client_id, client_secret, name, logo, description, access_token_validity_seconds, refresh_token_validity_seconds, redirect_uris, authorized_grant_types, scopes, auto_approve_scopes, authorities, resource_ids, additional_information, status, creator, create_time, updater, update_time, deleted, deleted_time) VALUES ('1', 'default', 'admin123', 'Gmall', 'http://127.0.0.1:8080/logo.pg', '我是描述', 0, 1800, '["https://www.iocoder.cn","https://doc.iocoder.cn"]', '["password","authorization_code","implicit","refresh_token","client_credentials"]', '["user.read","user.write"]', '[]', '["user.read","user.write"]', '[]', '{}', 1, 'system', '2026-06-05 20:41:47', 'system', '2026-06-05 20:42:26', false, null);
+
+
+
+

@@ -34,9 +34,9 @@ import java.util.stream.Collectors;
 public class UserServiceImpl extends ServiceImpl<UserMapper, UserDO> implements IUserService {
 
     private final UserConvert convertMapper = Mappers.getMapper(UserConvert.class);
+
     @Resource
     private final PasswordEncoder passwordEncoder;
-
 
     @Override
     public String create(UserDTO userDTO) {

@@ -32,6 +32,10 @@ public class UserDTO {
     @Size(max = 30, message = "用户昵称长度不能超过30个字符", groups = {CreateGroup.class, UpdateGroup.class})
     private String nickname;
 
+    @Schema(description = "部门编号", type = "string", example = "f47ac10b-58cc-4372-a567-0e02b2c3d479")
+    @NotBlank(message = "部门编号不能为空", groups = {CreateGroup.class})
+    private String deptId;
+
     @Schema(description = "备注", type = "string", example = "我是管理员")
     private String remark;
 
