@@ -1,5 +1,6 @@
 package com.zp.gmall.module.system.service.config.impl;
 
+import cn.hutool.core.collection.CollUtil;
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.baomidou.mybatisplus.core.toolkit.Wrappers;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
@@ -23,7 +24,10 @@ import org.springframework.cache.annotation.CachePut;
 import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;
 
+import java.io.Serializable;
 import java.util.List;
+import java.util.Map;
+import java.util.function.Function;
 import java.util.stream.Collectors;
 
 /**
@@ -121,6 +125,13 @@ public class ConfigServiceImpl extends ServiceImpl<ConfigMapper, ConfigDO> imple
     public ConfigVO getByKey(String configKey) {
         ConfigDO config = baseMapper.selectFirstOne(ConfigDO::getConfigKey, configKey);
         return convertMapper.convert(config);
+    }
+
+    @Override
+    public Map<String, ConfigVO> getByKeys(List<String> keys) {
+        List<ConfigDO> list = baseMapper.selectList(Wrappers.<ConfigDO>lambdaQuery().in(CollUtil.isNotEmpty(keys), ConfigDO::getConfigKey, keys));
+        List<ConfigVO> result = convertMapper.convertList(list);
+        return result.stream().collect(Collectors.toMap(ConfigVO::getConfigKey, Function.identity(), (oldValue, newValue) -> newValue));
     }
 
     public Boolean checkConfigKeyExists(String configKey, String excludeId) {

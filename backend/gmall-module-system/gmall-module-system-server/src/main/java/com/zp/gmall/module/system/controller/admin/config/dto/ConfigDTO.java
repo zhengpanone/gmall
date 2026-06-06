@@ -45,6 +45,12 @@ public class ConfigDTO implements Serializable {
     @NotNull(message = "参数ID不能为空", groups = UpdateGroup.class)
     private String id;
 
+    @NotBlank(message = "参数分类不能为空", groups = {CreateGroup.class, UpdateGroup.class})
+    @Size(max = 50, message = "参数分类长度不能超过50个字符", groups = {CreateGroup.class, UpdateGroup.class})
+    @Size(max = 50, message = "参数分类长度不能超过50个字符")
+    @Schema(description = "参数分类", example = "系统参数")
+    private String category;
+
     @NotBlank(message = "参数名称不能为空", groups = {CreateGroup.class, UpdateGroup.class})
     @Size(max = 50, message = "参数名称长度不能超过50个字符", groups = {CreateGroup.class, UpdateGroup.class})
     @Size(max = 50, message = "参数名称长度不能超过50个字符")

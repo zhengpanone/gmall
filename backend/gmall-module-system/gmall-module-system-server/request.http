@@ -6,8 +6,8 @@ Content-Type: application/json
   "tenantName": "GMALL",
   "tenantCode": "gmall",
   "websites": [
-    "127.0.0.1:5777",
-    "localhost:5777"
+    "127.0.0.1:5778",
+    "localhost:5778"
   ]
 }
 
@@ -54,12 +54,24 @@ POST {{sysBaseUrl}}/admin-api/config/create
 Content-Type: application/json
 
 {
-  "configName": "系统配置",
-  "configKey": "CATEGORY_TYPE",
-  "configValue": "sys_config",
+  "category": "system",
+  "configName": "是否开启验证码",
+  "configKey": "CAPTCHA_ENABLE2",
+  "configValue": "false",
   "configType": "1",
-  "remark": "系统配置"
+  "remark": "系统配置",
+  "visible": "1"
 }
+
+### 根据key数组获取系统配置
+POST {{sysBaseUrl}}/admin-api/config/getKeys
+Content-Type: application/json
+
+[
+  "CAPTCHA_ENABLE",
+  "CAPTCHA_ENABLE2"
+]
+
 
 ### 登录
 POST {{sysBaseUrl}}/admin-api/auth/login

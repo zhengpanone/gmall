@@ -10,7 +10,16 @@ import { resetAllStores, useAccessStore, useUserStore } from '@vben/stores';
 import { ElNotification } from 'element-plus';
 import { defineStore } from 'pinia';
 
-import { getAccessCodesApi, getUserInfoApi, loginApi, logoutApi } from '#/api';
+import {
+  type AuthApi,
+  getAccessCodesApi,
+  getUserInfoApi,
+  loginApi,
+  logoutApi,
+  registerApi,
+  smsLoginApi,
+  socialLoginApi,
+} from '#/api';
 import { $t } from '#/locales';
 
 export const useAuthStore = defineStore('auth', () => {
@@ -26,14 +35,34 @@ export const useAuthStore = defineStore('auth', () => {
    * @param params 登录表单数据
    */
   async function authLogin(
+    type: 'mobile' | 'register' | 'social' | 'username',
     params: Recordable<any>,
     onSuccess?: () => Promise<void> | void,
   ) {
     // 异步处理用户登录操作并获取 accessToken
     let userInfo: null | UserInfo = null;
     try {
+      let loginResult: AuthApi.LoginResult;
       loginLoading.value = true;
-      const { accessToken } = await loginApi(params);
+      switch (type) {
+        case 'mobile': {
+          loginResult = await smsLoginApi(params);
+          break;
+        }
+        case 'register': {
+          loginResult = await registerApi(params);
+          break;
+        }
+        case 'social': {
+          loginResult = await socialLoginApi(params);
+          break;
+        }
+        default: {
+          loginResult = await loginApi(params);
+          break;
+        }
+      }
+      const { accessToken } = loginResult;
 
       // 如果成功获取到 accessToken
       if (accessToken) {
@@ -56,9 +85,7 @@ export const useAuthStore = defineStore('auth', () => {
         } else {
           onSuccess
             ? await onSuccess?.()
-            : await router.push(
-                userInfo.homePath || preferences.app.defaultHomePath,
-              );
+            : await router.push(userInfo.homePath || preferences.app.defaultHomePath);
         }
 
         if (userInfo?.realName) {

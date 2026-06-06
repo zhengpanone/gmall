@@ -2,18 +2,29 @@
 import type { VbenFormSchema } from '@vben/common-ui';
 import type { BasicOption } from '@vben/types';
 
-import { computed, markRaw, nextTick, onMounted, ref } from 'vue';
+import { computed, nextTick, onMounted, ref } from 'vue';
 
-import { AuthenticationLogin, SliderCaptcha, z } from '@vben/common-ui';
+import { AuthenticationLogin, z } from '@vben/common-ui';
 import { $t } from '@vben/locales';
 
+import {
+  checkCaptcha,
+  type ConfigResult,
+  getAnonymousConfigListApi,
+  getCaptcha,
+} from '#/api/core/common';
 import { getTenantByWebsite } from '#/api/system/tenant';
 import { useAuthStore } from '#/store';
 
 defineOptions({ name: 'Login' });
 
 const authStore = useAuthStore();
+const captchaEnable = ref(false);
+
 const loginRef = ref();
+const verifyRef = ref();
+
+const captchaType = 'blockPuzzle'; // 验证码类型：'blockPuzzle' | 'clickWord'
 
 const tenantOptions = ref<BasicOption[]>([]);
 const tenantOptionsLoading = ref(false);
@@ -42,7 +53,44 @@ async function loadTenantOptions() {
   }
 }
 
-onMounted(loadTenantOptions);
+async function loadConfig() {
+  try {
+    const configResult = await getAnonymousConfigListApi(['CAPTCHA_ENABLE']);
+    const configMap = configResult as unknown as Record<string, ConfigResult>;
+
+    captchaEnable.value = configMap?.CAPTCHA_ENABLE?.configValue === 'true';
+  } catch (error) {
+    console.error('Failed to load captcha config:', error);
+    captchaEnable.value = false;
+  }
+}
+
+onMounted(() => {
+  void loadConfig();
+  void loadTenantOptions();
+});
+
+async function handleLogin(values: any) {
+  // 如果开启验证码，则先验证验证码
+  if (captchaEnable.value) {
+    verifyRef.value.show();
+    return;
+  }
+  // 无验证码直接登录
+  await authStore.authLogin('username', values);
+}
+
+/** 验证码通过，执行登录 */
+async function handleVerifySuccess({ captchaVerification }: any) {
+  try {
+    await authStore.authLogin('username', {
+      ...(await loginRef.value.getFormApi().getValues()),
+      captchaVerification,
+    });
+  } catch (error) {
+    console.error('Error in handleLogin:', error);
+  }
+}
 
 const formSchema = computed((): VbenFormSchema[] => {
   return [
@@ -86,22 +134,27 @@ const formSchema = computed((): VbenFormSchema[] => {
       label: $t('authentication.password'),
       rules: z.string().min(1, { message: $t('authentication.passwordTip') }),
     },
-    {
-      component: markRaw(SliderCaptcha),
-      fieldName: 'captcha',
-      rules: z.boolean().refine((value) => value, {
-        message: $t('authentication.verifyRequiredTip'),
-      }),
-    },
   ];
 });
 </script>
 
 <template>
-  <AuthenticationLogin
-    ref="loginRef"
-    :form-schema="formSchema"
-    :loading="authStore.loginLoading"
-    @submit="authStore.authLogin"
-  />
+  <div>
+    <AuthenticationLogin
+      ref="loginRef"
+      :form-schema="formSchema"
+      :loading="authStore.loginLoading"
+      @submit="handleLogin"
+    />
+    <Verification
+      ref="verifyRef"
+      v-if="captchaEnable"
+      :captcha-type="captchaType"
+      :check-captcha-api="checkCaptcha"
+      :get-captcha-api="getCaptcha"
+      :img-size="{ width: '400px', height: '200px' }"
+      mode="pop"
+      @on-success="handleVerifySuccess"
+    />
+  </div>
 </template>

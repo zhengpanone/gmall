@@ -8,6 +8,7 @@ import com.zp.gmall.framework.web.config.WebProperties;
 import jakarta.annotation.Resource;
 import jakarta.annotation.security.PermitAll;
 import jakarta.servlet.DispatcherType;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.boot.autoconfigure.AutoConfiguration;
 import org.springframework.boot.autoconfigure.AutoConfigureOrder;
 import org.springframework.context.ApplicationContext;
@@ -41,6 +42,7 @@ import static com.zp.gmall.framework.common.util.collection.CollectionUtils.conv
  * Version : v1.0.0
  */
 
+@Slf4j
 @AutoConfiguration
 @AutoConfigureOrder(-1) // 目的：先于 Spring Security 自动配置，避免一键改包后，org.* 基础包无法生效
 @EnableMethodSecurity(securedEnabled = true)
@@ -125,6 +127,11 @@ public class GmallWebSecurityConfigurerAdapter {
 
         // 获得 @PermitAll 带来的 URL 列表，免登录
         Multimap<HttpMethod, String> permitAllUrls = getPermitAllUrlsFromAnnotations();
+        List<String> customizerPermitAllUrls = authorizeRequestsCustomizers.stream()
+                .sorted(Comparator.comparingInt(AuthorizeRequestsCustomizer::getOrder))
+                .flatMap(customizer -> customizer.permitAllUrls().stream())
+                .distinct()
+                .toList();
 
         // ========== 收集所有 permit-all URL，设置给 TokenAuthenticationFilter ==========
         List<String> allPermitAllUrls = new ArrayList<>();
@@ -135,7 +142,9 @@ public class GmallWebSecurityConfigurerAdapter {
             allPermitAllUrls.addAll(securityProperties.getPermitAllUrls());
         }
         // 3) 静态资源等
+        allPermitAllUrls.addAll(customizerPermitAllUrls);
         allPermitAllUrls.addAll(List.of("/*.html", "/*.css", "/*.js"));
+        log.info("allPermitAllUrls: {}", allPermitAllUrls);
         // 设置到 filter
         authenticationTokenFilter.setPermitAllUrls(allPermitAllUrls);
 
@@ -155,6 +164,7 @@ public class GmallWebSecurityConfigurerAdapter {
                         .requestMatchers(HttpMethod.PATCH, permitAllUrls.get(HttpMethod.PATCH).toArray(new String[0])).permitAll()
                         // 1.3 基于 gmall.security.permit-all-urls 无需认证
                         .requestMatchers(securityProperties.getPermitAllUrls().toArray(new String[0])).permitAll()
+                        .requestMatchers(customizerPermitAllUrls.toArray(new String[0])).permitAll()
                         // 1.3 设置 App API 无需认证
                         .requestMatchers(buildAppApi("/**")).permitAll()
                 )

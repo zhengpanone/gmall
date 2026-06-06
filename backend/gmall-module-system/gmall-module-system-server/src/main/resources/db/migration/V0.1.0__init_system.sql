@@ -247,12 +247,14 @@ DROP TABLE IF EXISTS sys_config;
 CREATE TABLE IF NOT EXISTS sys_config
 (
     id           varchar(36)           NOT NULL PRIMARY KEY COMMENT '主键ID',
+    category     varchar(100)          NOT NULL COMMENT '配置分类',
     config_name  varchar(100)          NOT NULL COMMENT '配置名称',
     config_key   varchar(100)          NOT NULL COMMENT '配置键',
     config_value varchar(100)          NOT NULL COMMENT '配置值',
     config_type  varchar(100)          NOT NULL COMMENT '配置类型',
     remark       varchar(500)          NOT NULL COMMENT '备注',
     status       TINYINT  DEFAULT 1 COMMENT '状态：0停用 1正常',
+    visible      TINYINT  DEFAULT 1 COMMENT '是否显示：0隐藏 1显示',
     creator      varchar(64)           NOT NULL COMMENT '创建者',
     create_time  datetime              NOT NULL COMMENT '创建时间',
     updater      varchar(64)           NOT NULL COMMENT '更新者',

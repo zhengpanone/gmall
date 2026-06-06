@@ -13,30 +13,21 @@
     },
     {
       "type": "chrome",
-      "name": "vben admin antd dev",
-      "request": "launch",
-      "url": "http://localhost:5666",
-      "env": { "NODE_ENV": "development" },
-      "sourceMaps": true,
-      "webRoot": "${workspaceFolder}/apps/web-antd"
-    },
-    {
-      "type": "chrome",
       "name": "vben admin ele dev",
       "request": "launch",
-      "url": "http://localhost:5777",
+      "url": "http://localhost:5778",
       "env": { "NODE_ENV": "development" },
       "sourceMaps": true,
       "webRoot": "${workspaceFolder}/apps/web-ele"
     },
     {
       "type": "chrome",
-      "name": "vben admin naive dev",
+      "name": "vben admin ele prod",
       "request": "launch",
-      "url": "http://localhost:5888",
-      "env": { "NODE_ENV": "development" },
+      "url": "http://localhost:5778",
+      "env": { "NODE_ENV": "production" },
       "sourceMaps": true,
-      "webRoot": "${workspaceFolder}/apps/web-naive"
+      "webRoot": "${workspaceFolder}/apps/web-ele"
     }
   ]
 }

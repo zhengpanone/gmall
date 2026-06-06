@@ -72,8 +72,8 @@ public class TenantController {
         return Result.ok(tenantService.queryById(id));
     }
 
-    @GetMapping("/get-by-website")
-    @Operation(summary = "使用域名，获得租户信息", description = "登录界面，根据用户的域名，获得租户信息")
+    @GetMapping("/anonymous/get-by-website")
+    @Operation(summary = "匿名使用域名，获得租户信息", description = "登录界面，根据用户的域名，获得租户信息")
     @Parameter(name = "website", description = "域名", required = true, example = "www.iocoder.cn")
     public Result<?> getTenantByWebsite(@RequestParam("website") @Pattern(regexp = "^[a-zA-Z0-9.-]+(:\\d{1,5})?$", message = "网站域名格式不正确") String website
                                       ) {

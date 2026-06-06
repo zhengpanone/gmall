@@ -28,7 +28,7 @@ public class AuthLoginVO implements Serializable {
     private static final long serialVersionUID = 1L;
 
     @Schema(description = "用户编号", requiredMode = Schema.RequiredMode.REQUIRED, example = "1024")
-    private Long userId;
+    private String userId;
 
     @Schema(description = "访问令牌", requiredMode = Schema.RequiredMode.REQUIRED, example = "happy")
     private String accessToken;

@@ -8,6 +8,9 @@ import com.zp.gmall.module.system.controller.admin.config.dto.ConfigPageDTO;
 import com.zp.gmall.module.system.controller.admin.config.vo.ConfigVO;
 import com.zp.gmall.module.system.entity.config.ConfigDO;
 
+import java.util.List;
+import java.util.Map;
+
 /**
  *
  * Project: backend
@@ -33,4 +36,6 @@ public interface IConfigService extends IService<ConfigDO> {
     ConfigVO getById(String id);
 
     ConfigVO getByKey(String configKey);
+
+    Map<String,ConfigVO> getByKeys(List<String> keys);
 }

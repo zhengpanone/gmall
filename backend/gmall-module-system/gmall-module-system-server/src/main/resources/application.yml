@@ -54,9 +54,14 @@ gmall:
   tenant: # 多租户相关配置项
     enable: false
     ignore-urls:
-      - /admin-api/system/tenant/get-by-name # 基于名字获取租户，不许带租户编号
-      - /admin-api/system/tenant/get-by-website # 基于域名获取租户，不许带租户编号
-      - /admin-api/system/dept/*
+      - /admin-api/auth/login # 租户登录接口
+#      - /admin-api/tenant/get-by-website # 基于域名获取租户，不许带租户编号
+#      - /admin-api/dept/*
+#      - /admin-api/config/**
+
+  security:
+    permit-all-urls:
+      - /admin-api/auth/login # 租户登录接口
 
 
 

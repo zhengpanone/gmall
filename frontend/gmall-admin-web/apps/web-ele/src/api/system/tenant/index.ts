@@ -15,7 +15,7 @@ enum Api {
   tenantDynamic = '/system/admin-api/tenant/dynamic',
   tenantDynamicClear = '/system/admin-api/tenant/dynamic/clear',
   tenantExport = '/system/admin-api/tenant/export',
-  tenantGetByWebsite = '/system/admin-api/tenant/get-by-website',
+  tenantGetByWebsite = '/system/admin-api/tenant/anonymous/get-by-website',
   tenantList = '/system/admin-api/tenant/list',
   tenantPageList = '/system/admin-api/tenant/page',
   tenantStatus = '/system/admin-api/tenant/changeStatus',

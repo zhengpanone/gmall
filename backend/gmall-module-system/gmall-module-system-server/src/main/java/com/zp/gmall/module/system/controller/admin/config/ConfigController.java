@@ -13,6 +13,9 @@ import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
+import java.util.Map;
+
 /**
  *
  * Project: backend
@@ -65,10 +68,16 @@ public class ConfigController {
         return Result.ok(configService.getById(id));
     }
 
+    @PostMapping("/anonymous/getKeys")
+    @Operation(summary = "匿名根据key数组获取配置")
+    public Result<Map<String, ConfigVO>> getByKeys(@RequestBody List<String> keys) {
+        return Result.ok(configService.getByKeys(keys));
+    }
+
     @GetMapping("/getByKey")
     @Operation(summary = "获取参数详情")
     public Result<ConfigVO> getByKey(@Parameter(description = "角色ID", required = true, example = "1")
-                                    @RequestParam("configKey") String configKey) {
+                                     @RequestParam("configKey") String configKey) {
         return Result.ok(configService.getByKey(configKey));
     }
 
