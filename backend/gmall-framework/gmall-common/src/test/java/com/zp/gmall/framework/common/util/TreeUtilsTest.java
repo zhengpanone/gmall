@@ -1,11 +1,14 @@
 package com.zp.gmall.framework.common.util;
 
+import com.zp.gmall.framework.common.util.tree.ITreeNode;
 import com.zp.gmall.framework.common.util.tree.TreeJson;
 import com.zp.gmall.framework.common.util.tree.TreeUtils;
 import org.junit.jupiter.api.Test;
 
 import java.util.ArrayList;
 import java.util.List;
+
+import static org.assertj.core.api.Assertions.assertThat;
 
 /**
  * Author : zhengpanone
@@ -27,8 +30,33 @@ class TreeUtilsTest {
         treeJson2.setName("children1");
         treeJson2.setTreeNodeParent("1");
         treeJsonList.add(treeJson2);
+
         List<TreeJson> tree = TreeUtils.toTree(treeJsonList);
-        System.out.println(tree.toString());
+
+        assertThat(tree).hasSize(1);
+        assertThat(tree.get(0).getName()).isEqualTo("root");
+
+        List<ITreeNode> children = new ArrayList<>(tree.get(0).getChildren());
+        assertThat(children).hasSize(1);
+        assertThat((TreeJson) children.get(0))
+                .extracting(TreeJson::getParentId, TreeJson::getName)
+                .containsExactly("1", "children1");
+    }
+
+    @Test
+    void toTreeKeepsSameNameChildrenWhenSortEnabled() {
+        List<TreeJson> treeJsonList = new ArrayList<>();
+        treeJsonList.add(new TreeJson("1", "root", "root", "1", "0"));
+        treeJsonList.add(new TreeJson("2", "child-a", "same", "2", "1"));
+        treeJsonList.add(new TreeJson("3", "child-b", "same", "2", "1"));
+
+        List<TreeJson> tree = TreeUtils.toTree(treeJsonList, true);
+
+        assertThat(tree).hasSize(1);
+        assertThat(tree.get(0).getChildren()).hasSize(2);
+        assertThat(tree.get(0).getChildren())
+                .extracting(ITreeNode::getTreeNodeId)
+                .containsExactly("2", "3");
     }
 
     @Test

@@ -2,13 +2,19 @@ package com.zp.gmall.module.system.convert.permission;
 
 import com.zp.gmall.framework.common.enums.CommonStatusEnum;
 import com.zp.gmall.module.system.controller.admin.permission.dto.RoleDTO;
+import com.zp.gmall.module.system.controller.admin.permission.vo.MenuTreeVO;
 import com.zp.gmall.module.system.controller.admin.permission.vo.RoleVO;
+import com.zp.gmall.module.system.convert.user.UserConvert;
+import com.zp.gmall.module.system.entity.permission.MenuDO;
 import com.zp.gmall.module.system.entity.permission.RoleDO;
 import com.zp.gmall.module.system.enums.permission.RoleTypeEnum;
 import org.mapstruct.AfterMapping;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
 import org.mapstruct.MappingTarget;
+import org.mapstruct.factory.Mappers;
+
+import java.util.List;
 
 /**
  * @author : zhengpanone
@@ -18,6 +24,8 @@ import org.mapstruct.MappingTarget;
  */
 @Mapper(componentModel = "spring")
 public interface RoleConvert {
+
+    RoleConvert INSTANCE = Mappers.getMapper(RoleConvert.class);
 
     /**
      * 转换角色保存DTO为角色DO
@@ -45,6 +53,9 @@ public interface RoleConvert {
     @Mapping(target = "statusName", ignore = true)
     @Mapping(target = "roleTypeName", ignore = true)
     RoleVO convert(RoleDO roleDO);
+
+
+    List<RoleVO> convert(List<RoleDO> roleList);
 
 
     @AfterMapping

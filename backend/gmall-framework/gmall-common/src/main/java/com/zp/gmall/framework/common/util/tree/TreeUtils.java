@@ -16,6 +16,11 @@ import java.util.*;
  */
 public class TreeUtils {
 
+    private static final String ROOT_PARENT_ID = "0";
+
+    private TreeUtils() {
+    }
+
     /**
      * 构建树节点
      */
@@ -36,35 +41,30 @@ public class TreeUtils {
     public static <T extends ITreeNode> List<T> toTree(Collection<T> source, boolean sortEnabled, boolean childrenEmptyToNull) {
         if (CollectionUtil.isEmpty(source)) {
             return Collections.emptyList();
-        } else {
-            List<T> resultTree = new ArrayList<>();
-            List<T> roots = findRootNode(source);
-            for (T root : roots) {
-                root.setChildren(buildChildren(source, root.getTreeNodeId(), sortEnabled, childrenEmptyToNull));
-                resultTree.add(root);
-            }
-            if (sortEnabled) {
-                resultTree.sort((o1, o2) -> Collator.getInstance(Locale.CHINA).compare(o1.getTreeNodeName(), o2.getTreeNodeName()));
-            }
-            return resultTree;
         }
+        List<T> resultTree = new ArrayList<>();
+        List<T> roots = findRootNode(source);
+        for (T root : roots) {
+            root.setChildren(buildChildren(source, root.getTreeNodeId(), sortEnabled, childrenEmptyToNull));
+            resultTree.add(root);
+        }
+        if (sortEnabled) {
+            resultTree.sort(TreeUtils::compareTreeNode);
+        }
+        return resultTree;
     }
 
     public static <T extends ITreeNode> List<T> findRootNode(@NotNull Collection<T> nodes) {
         List<T> roots = new ArrayList<>();
+        Set<String> nodeIds = new HashSet<>();
         for (T node : nodes) {
-            boolean hasParent = false;
-            if (!StringUtils.isEmpty(node.getTreeNodeParent()) && !"0".equals(node.getTreeNodeParent())) {
-                for (T parent : nodes) {
-                    if (node.getTreeNodeParent().equals(parent.getTreeNodeId())) {
-                        hasParent = true;
-                        break;
-                    }
-                }
-                if (!hasParent) {
-                    roots.add(node);
-                }
-            } else {
+            if (StringUtils.isNotEmpty(node.getTreeNodeId())) {
+                nodeIds.add(node.getTreeNodeId());
+            }
+        }
+        for (T node : nodes) {
+            String parentId = node.getTreeNodeParent();
+            if (StringUtils.isEmpty(parentId) || ROOT_PARENT_ID.equals(parentId) || !nodeIds.contains(parentId)) {
                 roots.add(node);
             }
         }
@@ -80,22 +80,41 @@ public class TreeUtils {
     public static <T extends ITreeNode> Collection<T> buildChildren(Collection<T> nodes, String parentId, boolean sortEnable, boolean childrenEmptyToNull) {
         if (CollectionUtil.isEmpty(nodes)) {
             return Collections.emptySet();
-        } else {
-            Set<T> childrenNodes = sortEnable ? new TreeSet<>((Comparator<ITreeNode>) (o1, o2) -> Collator.getInstance(Locale.CHINA).compare(o1.getTreeNodeName(), o2.getTreeNodeName())) : new LinkedHashSet<>();
-            for (T node : nodes) {
-                if (!StringUtils.isEmpty(parentId) && parentId.equals(node.getTreeNodeParent())) {
-                    node.setChildren(buildChildren(nodes, node.getTreeNodeId(), sortEnable, childrenEmptyToNull));
-                    childrenNodes.add(node);
-                }
-
-            }
-            if (childrenEmptyToNull && CollectionUtil.isEmpty(childrenNodes)) {
-                return null;
-            } else {
-                return childrenNodes;
-            }
-
-
         }
+        List<T> childrenNodes = new ArrayList<>();
+        for (T node : nodes) {
+            if (StringUtils.isNotEmpty(parentId) && parentId.equals(node.getTreeNodeParent())) {
+                node.setChildren(buildChildren(nodes, node.getTreeNodeId(), sortEnable, childrenEmptyToNull));
+                childrenNodes.add(node);
+            }
+        }
+        if (sortEnable) {
+            childrenNodes.sort(TreeUtils::compareTreeNode);
+        }
+        if (childrenEmptyToNull && CollectionUtil.isEmpty(childrenNodes)) {
+            return null;
+        }
+        return childrenNodes;
+    }
+
+    private static int compareTreeNode(ITreeNode left, ITreeNode right) {
+        int result = compareNullableString(left.getTreeNodeName(), right.getTreeNodeName());
+        if (result != 0) {
+            return result;
+        }
+        return compareNullableString(left.getTreeNodeId(), right.getTreeNodeId());
+    }
+
+    private static int compareNullableString(String left, String right) {
+        if (Objects.equals(left, right)) {
+            return 0;
+        }
+        if (left == null) {
+            return -1;
+        }
+        if (right == null) {
+            return 1;
+        }
+        return Collator.getInstance(Locale.CHINA).compare(left, right);
     }
 }

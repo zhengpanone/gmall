@@ -9,6 +9,9 @@ import com.zp.gmall.module.system.controller.admin.permission.vo.RoleVO;
 import com.zp.gmall.module.system.entity.permission.RoleDO;
 import jakarta.validation.Valid;
 
+import java.util.Collection;
+import java.util.List;
+
 /**
  * @author : zhengpanone
  * Date : 2026/4/24 23:39
@@ -22,7 +25,7 @@ public interface IRoleService extends IService<RoleDO> {
      * @param roleDTO 角色信息
      * @return 角色编号
      */
-    String createRole(@Valid RoleDTO roleDTO);
+    RoleDO createRole(@Valid RoleDTO roleDTO);
 
     /**
      * 获取角色分页
@@ -39,7 +42,7 @@ public interface IRoleService extends IService<RoleDO> {
      * @param roleId 角色编号
      * @return 角色
      */
-    RoleVO getRoleById(String roleId);
+    RoleDO getRoleById(String roleId);
 
     /**
      * 更新角色
@@ -55,4 +58,9 @@ public interface IRoleService extends IService<RoleDO> {
      * @param ids 角色编号
      */
     void deleteRole(Ids ids);
+
+
+    List<RoleVO> getRoleListByRoleIds(Collection<String> roleIds);
+
+    boolean hasAnySuperAdmin(Collection<String> roleIds);
 }

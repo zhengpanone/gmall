@@ -27,15 +27,15 @@ public interface IConfigService extends IService<ConfigDO> {
 
     PageResult<ConfigVO> getConfigPage(ConfigPageDTO configPageDTO);
 
-    ConfigVO createConfig(ConfigDTO configDTO);
+    ConfigDO createConfig(ConfigDTO configDTO);
 
-    ConfigVO updateConfig(ConfigDTO configDTO);
+    ConfigDO updateConfig(ConfigDTO configDTO);
 
     void deleteConfig(Ids ids);
 
-    ConfigVO getById(String id);
+    ConfigDO getById(String id);
 
-    ConfigVO getByKey(String configKey);
+    ConfigDO getByKey(String configKey);
 
     Map<String,ConfigVO> getByKeys(List<String> keys);
 }

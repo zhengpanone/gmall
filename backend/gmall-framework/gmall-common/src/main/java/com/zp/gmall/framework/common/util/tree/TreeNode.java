@@ -15,6 +15,7 @@ import java.util.Collections;
  * @since 1.0.0
  */
 @EqualsAndHashCode
+@SuppressWarnings("serial")
 public abstract class TreeNode implements ITreeNode, Serializable {
     @Serial
     private static final long serialVersionUID = 1L;
@@ -44,25 +45,25 @@ public abstract class TreeNode implements ITreeNode, Serializable {
     @Schema(description = "是否被选中", accessMode = Schema.AccessMode.READ_ONLY)
     private boolean selected;
     @Schema(description = "子孙数量", accessMode = Schema.AccessMode.READ_ONLY)
-    private String sonNum;
+    private Integer sonNum;
 
     public TreeNode() {
         this.children = Collections.emptyList();
         this.sort = "0";
         this.selected = false;
-        this.sonNum = "0";
+        this.sonNum = 0;
     }
 
     public TreeNode(String treeNodeId, String treeNodeName, String treeNodeParent, String treeNodeType, String treeNodeBizType) {
         this.children = Collections.emptyList();
         this.sort = "0";
         this.selected = false;
-        this.sonNum = "0";
-        this.setTreeNodeId(treeNodeId);
-        this.setTreeNodeName(treeNodeName);
-        this.setTreeNodeParent(treeNodeParent);
-        this.setTreeNodeType(treeNodeType);
-        this.setTreeNodeBizType(treeNodeBizType);
+        this.sonNum = 0;
+        this.treeNodeId = treeNodeId;
+        this.treeNodeName = treeNodeName;
+        this.treeNodeParent = treeNodeParent;
+        this.treeNodeType = treeNodeType;
+        this.treeNodeBizType = treeNodeBizType;
     }
 
     @Override

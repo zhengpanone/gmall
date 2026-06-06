@@ -1,15 +1,22 @@
 package com.zp.gmall.module.system.service.auth.impl;
 
+import cn.hutool.core.collection.CollUtil;
 import com.google.common.annotations.VisibleForTesting;
 import com.zp.gmall.framework.common.enums.CommonStatusEnum;
 import com.zp.gmall.framework.common.enums.UserTypeEnum;
 import com.zp.gmall.framework.common.util.monitor.TracerUtils;
 import com.zp.gmall.framework.common.util.servlet.ServletUtils;
+import com.zp.gmall.framework.security.core.util.SecurityFrameworkUtils;
 import com.zp.gmall.module.system.api.logger.dto.LoginLogDTO;
 import com.zp.gmall.module.system.controller.admin.auth.dto.AuthLoginDTO;
 import com.zp.gmall.module.system.controller.admin.auth.vo.AuthLoginVO;
+import com.zp.gmall.module.system.controller.admin.auth.vo.AuthPermissionInfoVO;
+import com.zp.gmall.module.system.controller.admin.permission.vo.RoleVO;
+import com.zp.gmall.module.system.controller.admin.user.vo.AdminUserVO;
 import com.zp.gmall.module.system.convert.auth.AuthConvert;
 import com.zp.gmall.module.system.entity.oauth2.OAuth2AccessTokenDO;
+import com.zp.gmall.module.system.entity.permission.MenuDO;
+import com.zp.gmall.module.system.entity.permission.RoleDO;
 import com.zp.gmall.module.system.entity.user.UserDO;
 import com.zp.gmall.module.system.enums.logger.LoginLogTypeEnum;
 import com.zp.gmall.module.system.enums.logger.LoginResultEnum;
@@ -17,13 +24,23 @@ import com.zp.gmall.module.system.enums.oauth2.OAuth2ClientConstants;
 import com.zp.gmall.module.system.service.auth.IAdminAuthService;
 import com.zp.gmall.module.system.service.log.ILoginLogService;
 import com.zp.gmall.module.system.service.oauth2.IOAuth2TokenService;
+import com.zp.gmall.module.system.service.permission.IMenuService;
+import com.zp.gmall.module.system.service.permission.IPermissionService;
+import com.zp.gmall.module.system.service.permission.IRoleService;
 import com.zp.gmall.module.system.service.user.IUserService;
 import jakarta.annotation.Resource;
+import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 
+import java.util.Collections;
+import java.util.List;
 import java.util.Objects;
+import java.util.Set;
 
+import static com.zp.gmall.framework.common.domain.vo.Result.ok;
 import static com.zp.gmall.framework.common.exception.util.ServiceExceptionUtils.exception;
+import static com.zp.gmall.framework.common.util.collection.CollectionUtils.convertSet;
 import static com.zp.gmall.module.system.enums.ErrorCodeConstants.AUTH_LOGIN_BAD_CREDENTIALS;
 import static com.zp.gmall.module.system.enums.ErrorCodeConstants.AUTH_LOGIN_USER_DISABLED;
 
@@ -33,15 +50,22 @@ import static com.zp.gmall.module.system.enums.ErrorCodeConstants.AUTH_LOGIN_USE
  * Version : v1.0.0
  * Description:
  */
+@Slf4j
+@RequiredArgsConstructor
 @Service
 public class AdminAuthServiceImpl implements IAdminAuthService {
 
-    @Resource
-    private IOAuth2TokenService oauth2TokenService;
-    @Resource
-    private IUserService userService;
-    @Resource
-    private ILoginLogService loginLogService;
+    private final IOAuth2TokenService oauth2TokenService;
+
+    private final IUserService userService;
+
+    private final IRoleService roleService;
+
+    private final ILoginLogService loginLogService;
+
+    private final IPermissionService permissionService;
+    
+    private final IMenuService menuService;
 
     @Override
     public AuthLoginVO login(AuthLoginDTO dto) {
@@ -69,6 +93,27 @@ public class AdminAuthServiceImpl implements IAdminAuthService {
             throw exception(AUTH_LOGIN_USER_DISABLED);
         }
         return user;
+    }
+
+    @Override
+    public AuthPermissionInfoVO getPermissionInfo(String userId) {
+        // 1.1 获取用户信息
+        AdminUserVO user = userService.getById(userId);
+        if (user == null) {
+            return null;
+        }
+        // 1.2 获得角色列表
+        Set<String> roleIds = permissionService.getUserRoleIdListByUserId(userId);
+        if (CollUtil.isEmpty(roleIds)) {
+            return AuthConvert.INSTANCE.convert(user, Collections.emptyList(), Collections.emptyList());
+        }
+        List<RoleDO> roleList = roleService.listByIds(roleIds);
+        roleList.removeIf(role->CommonStatusEnum.isDisable(role.getStatus()));
+
+        Set<String> menuIdList = permissionService.getRoleMenuIdListByRoleId(convertSet(roleList, RoleDO::getId));
+        List<MenuDO> menuList = menuService.listByIds(menuIdList);
+
+        return AuthConvert.INSTANCE.convert(user, roleList, menuList);
     }
 
     @VisibleForTesting

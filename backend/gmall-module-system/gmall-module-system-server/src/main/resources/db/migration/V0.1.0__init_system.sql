@@ -243,6 +243,23 @@ CREATE INDEX idx_menu_id on sys_role_menu (menu_id);
 -- 唯一约束
 CREATE UNIQUE INDEX uk_role_menu on sys_role_menu (role_id, menu_id);
 
+
+-- 用户角色关联表
+DROP TABLE IF EXISTS sys_user_role;
+CREATE TABLE IF NOT EXISTS sys_user_role
+(
+    id      varchar(36) NOT NULL PRIMARY KEY COMMENT '主键ID',
+    user_id varchar(36) NOT NULL COMMENT '用户ID',
+    role_id varchar(36) NOT NULL COMMENT '角色ID'
+) COMMENT = '用户角色关联表' COLLATE = utf8mb4_unicode_ci;
+
+-- 添加索引
+CREATE INDEX idx_user_id on sys_user_role (user_id);
+CREATE INDEX idx_role_id on sys_user_role (role_id);
+-- 唯一约束
+CREATE UNIQUE INDEX uk_user_role on sys_user_role (user_id, role_id);
+
+
 DROP TABLE IF EXISTS sys_config;
 CREATE TABLE IF NOT EXISTS sys_config
 (

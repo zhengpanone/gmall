@@ -8,6 +8,7 @@ import com.zp.gmall.framework.validation.group.UpdateGroup;
 import com.zp.gmall.module.system.controller.admin.permission.dto.RoleDTO;
 import com.zp.gmall.module.system.controller.admin.permission.dto.RolePageDTO;
 import com.zp.gmall.module.system.controller.admin.permission.vo.RoleVO;
+import com.zp.gmall.module.system.convert.permission.RoleConvert;
 import com.zp.gmall.module.system.service.permission.IRoleService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.Parameter;
@@ -66,6 +67,6 @@ public class RoleController {
     public Result<RoleVO> getRoleById(
             @Parameter(description = "角色ID", required = true, example = "1")
             @RequestParam("id") String id) {
-        return Result.ok(roleService.getRoleById(id));
+        return Result.ok(RoleConvert.INSTANCE.convert(roleService.getRoleById(id)));
     }
 }

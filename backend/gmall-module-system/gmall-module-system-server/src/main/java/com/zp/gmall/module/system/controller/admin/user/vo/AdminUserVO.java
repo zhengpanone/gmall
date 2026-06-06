@@ -1,8 +1,10 @@
 package com.zp.gmall.module.system.controller.admin.user.vo;
 
 import io.swagger.v3.oas.annotations.media.Schema;
+import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 
 import java.io.Serial;
 import java.io.Serializable;
@@ -15,9 +17,11 @@ import java.util.Set;
  * Version : v1.0.0
  * Description:
  */
-@Schema(description = "管理后台 - 用户 Response VO")
+@Schema(description = "管理后台 - 用户信息 VO")
 @Data
 @Builder
+@NoArgsConstructor
+@AllArgsConstructor
 public class AdminUserVO implements Serializable {
 
     @Serial
@@ -35,6 +39,14 @@ public class AdminUserVO implements Serializable {
     @Schema(description = "用户昵称", example = "zhengpanone")
     private String nickname;
 
+    @Schema(description = "用户邮箱", example = "yudao@iocoder.cn")
+    private String email;
+
+    @Schema(description = "用户头像", example = "https://www.iocoder.cn/xx.jpg")
+    private String avatar;
+
+    @Schema(description = "部门编号", example = "2048")
+    private Long deptId;
     /**
      * 备注
      */

@@ -6,6 +6,7 @@ import com.zp.gmall.framework.common.domain.vo.Result;
 import com.zp.gmall.module.system.controller.admin.config.dto.ConfigDTO;
 import com.zp.gmall.module.system.controller.admin.config.dto.ConfigPageDTO;
 import com.zp.gmall.module.system.controller.admin.config.vo.ConfigVO;
+import com.zp.gmall.module.system.convert.config.ConfigConvert;
 import com.zp.gmall.module.system.service.config.IConfigService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.Parameter;
@@ -45,7 +46,7 @@ public class ConfigController {
     @PostMapping("/create")
     @Operation(summary = "创建参数")
     public Result<?> create(@RequestBody ConfigDTO configDTO) {
-        return Result.ok(configService.createConfig(configDTO));
+        return Result.ok(ConfigConvert.INSTANCE.convert(configService.createConfig(configDTO)));
     }
 
     @PutMapping("/update")
@@ -65,7 +66,7 @@ public class ConfigController {
     @Operation(summary = "获取参数详情")
     public Result<ConfigVO> getById(@Parameter(description = "角色ID", required = true, example = "1")
                                     @RequestParam("id") String id) {
-        return Result.ok(configService.getById(id));
+        return Result.ok(ConfigConvert.INSTANCE.convert(configService.getById(id)));
     }
 
     @PostMapping("/anonymous/getKeys")
@@ -78,7 +79,7 @@ public class ConfigController {
     @Operation(summary = "获取参数详情")
     public Result<ConfigVO> getByKey(@Parameter(description = "角色ID", required = true, example = "1")
                                      @RequestParam("configKey") String configKey) {
-        return Result.ok(configService.getByKey(configKey));
+        return Result.ok(ConfigConvert.INSTANCE.convert(configService.getByKey(configKey)));
     }
 
 }

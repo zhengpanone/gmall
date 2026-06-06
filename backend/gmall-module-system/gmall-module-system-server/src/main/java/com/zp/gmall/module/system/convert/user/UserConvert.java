@@ -2,9 +2,11 @@ package com.zp.gmall.module.system.convert.user;
 
 import com.zp.gmall.module.system.controller.admin.user.dto.UserDTO;
 import com.zp.gmall.module.system.controller.admin.user.vo.AdminUserVO;
+import com.zp.gmall.module.system.convert.auth.AuthConvert;
 import com.zp.gmall.module.system.entity.user.UserDO;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
+import org.mapstruct.factory.Mappers;
 
 import java.util.List;
 import java.util.stream.Collectors;
@@ -17,6 +19,9 @@ import java.util.stream.Collectors;
  */
 @Mapper(componentModel = "spring")
 public interface UserConvert {
+
+    UserConvert INSTANCE = Mappers.getMapper(UserConvert.class);
+
 
     @Mapping(source = "id", target = "id")
     @Mapping(source = "username", target = "username")

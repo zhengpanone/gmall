@@ -1,7 +1,6 @@
 package com.zp.gmall.module.system.service.permission.impl;
 
 import cn.hutool.core.collection.CollUtil;
-import cn.hutool.core.convert.Convert;
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
@@ -10,7 +9,9 @@ import com.google.common.annotations.VisibleForTesting;
 import com.zp.gmall.framework.common.domain.dto.Ids;
 import com.zp.gmall.framework.common.domain.vo.PageResult;
 import com.zp.gmall.framework.common.enums.CommonStatusEnum;
+import com.zp.gmall.framework.redis.core.annotation.BatchCacheEvict;
 import com.zp.gmall.framework.tenant.core.context.TenantContextHolder;
+import com.zp.gmall.module.system.constant.RedisKeyConstants;
 import com.zp.gmall.module.system.controller.admin.permission.dto.RoleDTO;
 import com.zp.gmall.module.system.controller.admin.permission.dto.RolePageDTO;
 import com.zp.gmall.module.system.controller.admin.permission.vo.RoleVO;
@@ -22,9 +23,13 @@ import com.zp.gmall.module.system.service.permission.IRoleService;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.StringUtils;
 import org.mapstruct.factory.Mappers;
+import org.springframework.cache.annotation.CacheEvict;
+import org.springframework.cache.annotation.CachePut;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;
 
 import java.io.Serializable;
+import java.util.Collection;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -44,7 +49,8 @@ public class RoleServiceImpl extends ServiceImpl<RoleMapper, RoleDO> implements 
     private final RoleConvert roleConvertMapper = Mappers.getMapper(RoleConvert.class);
 
     @Override
-    public String createRole(RoleDTO roleDTO) {
+    @CachePut(cacheNames = RedisKeyConstants.ROLE, key = "#result.id", unless = "#result == null || #result.id == null")
+    public RoleDO createRole(RoleDTO roleDTO) {
         String tenantId = TenantContextHolder.getTenantId();
         if (StringUtils.isBlank(tenantId)) {
             tenantId = "0";
@@ -59,7 +65,7 @@ public class RoleServiceImpl extends ServiceImpl<RoleMapper, RoleDO> implements 
             roleDO.setSort(0);
         }
         baseMapper.insert(roleDO);
-        return Convert.toStr(roleDO.getId());
+        return roleDO;
     }
 
     @Override
@@ -99,15 +105,17 @@ public class RoleServiceImpl extends ServiceImpl<RoleMapper, RoleDO> implements 
         return PageResult.ok(rolePage.getTotal(), rolePage.getCurrent(), rolePage.getSize(), voList);
     }
 
+    @Cacheable(cacheNames = RedisKeyConstants.ROLE, key = "#roleId", unless = "#result == null")
     @Override
-    public RoleVO getRoleById(String roleId) {
-        RoleDO roleDO = baseMapper.selectById(roleId);
-        if (roleDO == null) {
+    public RoleDO getRoleById(String roleId) {
+        RoleDO role = baseMapper.selectById(roleId);
+        if (role == null) {
             throw exception(ROLE_NOT_EXISTS);
         }
-        return roleConvertMapper.convert(roleDO);
+        return role;
     }
 
+    @CacheEvict(cacheNames = RedisKeyConstants.ROLE, key = "#roleDTO.id")
     @Override
     public void updateRole(RoleDTO roleDTO) {
         String tenantId = TenantContextHolder.getTenantId();
@@ -127,19 +135,39 @@ public class RoleServiceImpl extends ServiceImpl<RoleMapper, RoleDO> implements 
         baseMapper.updateById(roleDO);
     }
 
+    @BatchCacheEvict(cacheName = RedisKeyConstants.ROLE, keys = "#ids?.ids")
     @Override
     public void deleteRole(Ids ids) {
-        if (CollUtil.isEmpty(ids.getIds())) {
+        if (ids == null || CollUtil.isEmpty(ids.getIds())) {
             return;
         }
+        Collection<? extends Serializable> roleIds = ids.getIds();
         // 校验角色是否存在
-        for (Serializable id : ids.getIds()) {
+        for (Serializable id : roleIds) {
             RoleDO roleDO = baseMapper.selectById(id);
             if (roleDO == null) {
                 throw exception(ROLE_NOT_EXISTS);
             }
         }
-        baseMapper.deleteByIds(ids.getIds());
+        baseMapper.deleteByIds(roleIds);
+    }
+
+    @Override
+    public List<RoleVO> getRoleListByRoleIds(Collection<String> roleIds) {
+        List<RoleDO> roleList = baseMapper.selectByIds(roleIds);
+        return RoleConvert.INSTANCE.convert(roleList);
+    }
+
+    @Override
+    public boolean hasAnySuperAdmin(Collection<String> roleIds) {
+        if (CollUtil.isEmpty(roleIds)) {
+            return false;
+        }
+        return roleIds.stream().anyMatch(roleId -> {
+            RoleDO role = getRoleById(roleId);
+            return role != null && RoleCodeEnum.isSuperAdmin(role.getCode());
+        });
+
     }
 
 

@@ -7,6 +7,7 @@ import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.zp.gmall.framework.common.domain.dto.Ids;
 import com.zp.gmall.framework.common.domain.vo.PageResult;
+import com.zp.gmall.module.system.constant.RedisKeyConstants;
 import com.zp.gmall.module.system.controller.admin.config.dto.ConfigDTO;
 import com.zp.gmall.module.system.controller.admin.config.dto.ConfigPageDTO;
 import com.zp.gmall.module.system.controller.admin.config.vo.ConfigVO;
@@ -22,12 +23,17 @@ import org.springframework.cache.CacheManager;
 import org.springframework.cache.annotation.CacheConfig;
 import org.springframework.cache.annotation.CachePut;
 import org.springframework.cache.annotation.Cacheable;
+import org.springframework.cache.annotation.Caching;
 import org.springframework.stereotype.Service;
 
 import java.io.Serializable;
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.Collections;
+import java.util.LinkedHashMap;
+import java.util.LinkedHashSet;
 import java.util.List;
 import java.util.Map;
-import java.util.function.Function;
 import java.util.stream.Collectors;
 
 /**
@@ -39,7 +45,7 @@ import java.util.stream.Collectors;
  * @since 2026-05-06
  */
 @Service
-@CacheConfig(cacheNames = "config")
+@CacheConfig(cacheNames = RedisKeyConstants.CONFIG)
 @RequiredArgsConstructor
 public class ConfigServiceImpl extends ServiceImpl<ConfigMapper, ConfigDO> implements IConfigService {
 
@@ -64,40 +70,72 @@ public class ConfigServiceImpl extends ServiceImpl<ConfigMapper, ConfigDO> imple
         return PageResult.ok(configDOPage.getTotal(), voList);
     }
 
-    @CachePut(key = "#result.configKey")
+    @Caching(put = {
+            @CachePut(key = "#result.id", unless = "#result == null || #result.id == null"),
+            @CachePut(key = "#result.configKey", unless = "#result == null || #result.configKey == null")
+    })
     @Override
-    public ConfigVO createConfig(ConfigDTO configDTO) {
+    public ConfigDO createConfig(ConfigDTO configDTO) {
         if (checkConfigKeyExists(configDTO.getConfigKey(), configDTO.getId())) {
             throw new RuntimeException("参数键已存在");
         }
         ConfigDO config = convertMapper.convert(configDTO);
         baseMapper.insert(config);
-        return convertMapper.convert(config);
+        return config;
     }
 
     /**
-     * 更新缓存
+     * 更新配置后，同步刷新 id 和 configKey 两种缓存 key。
      */
-    @CachePut(key = "#configDTO.configKey")
+    @Caching(put = {
+            @CachePut(key = "#result.id", unless = "#result == null || #result.id == null"),
+            @CachePut(key = "#result.configKey", unless = "#result == null || #result.configKey == null")
+    })
     @Override
-    public ConfigVO updateConfig(ConfigDTO configDTO) {
+    public ConfigDO updateConfig(ConfigDTO configDTO) {
+        ConfigDO oldConfig = baseMapper.selectById(configDTO.getId());
+        if (oldConfig == null) {
+            throw new RuntimeException("参数不存在");
+        }
         if (checkConfigKeyExists(configDTO.getConfigKey(), configDTO.getId())) {
             throw new RuntimeException("参数键已存在");
         }
         ConfigDO config = convertMapper.convert(configDTO);
         baseMapper.updateById(config);
-        return convertMapper.convert(config);
+        ConfigDO result = baseMapper.selectById(configDTO.getId());
+        if (StringUtils.isNotBlank(oldConfig.getConfigKey())
+                && !oldConfig.getConfigKey().equals(result.getConfigKey())) {
+            evictConfigCaches(List.of(oldConfig.getConfigKey()));
+        }
+        return result;
     }
 
     /**
-     * 更新后自动清除缓存
+     * 删除配置后，同时清理 id 和 configKey 两种缓存 key。
      */
     @Override
     public void deleteConfig(Ids ids) {
-        baseMapper.deleteByIds(ids.getIds());
-        Cache cache = cacheManager.getCache("config");
+        if (ids == null || CollUtil.isEmpty(ids.getIds())) {
+            return;
+        }
+        Collection<? extends Serializable> configIds = ids.getIds();
+        List<ConfigDO> configs = baseMapper.selectList(ConfigDO::getId, configIds);
+        Collection<Object> cacheKeys = new LinkedHashSet<>(configIds);
+        configs.stream()
+                .map(ConfigDO::getConfigKey)
+                .filter(StringUtils::isNotBlank)
+                .forEach(cacheKeys::add);
+        baseMapper.deleteByIds(configIds);
+        evictConfigCaches(cacheKeys);
+    }
+
+    private void evictConfigCaches(Collection<?> keys) {
+        if (CollUtil.isEmpty(keys)) {
+            return;
+        }
+        Cache cache = cacheManager.getCache(RedisKeyConstants.CONFIG);
         if (cache != null) {
-            ids.getIds().forEach(cache::evict);
+            keys.forEach(cache::evict);
         }
     }
 
@@ -109,9 +147,8 @@ public class ConfigServiceImpl extends ServiceImpl<ConfigMapper, ConfigDO> imple
      */
     @Override
     @Cacheable(key = "#id", unless = "#result== null")
-    public ConfigVO getById(String id) {
-        ConfigDO config = baseMapper.selectById(id);
-        return convertMapper.convert(config);
+    public ConfigDO getById(String id) {
+        return baseMapper.selectById(id);
     }
 
     /**
@@ -122,16 +159,73 @@ public class ConfigServiceImpl extends ServiceImpl<ConfigMapper, ConfigDO> imple
      */
     @Override
     @Cacheable(key = "#configKey", unless = "#result== null")
-    public ConfigVO getByKey(String configKey) {
-        ConfigDO config = baseMapper.selectFirstOne(ConfigDO::getConfigKey, configKey);
-        return convertMapper.convert(config);
+    public ConfigDO getByKey(String configKey) {
+        return baseMapper.selectFirstOne(ConfigDO::getConfigKey, configKey);
     }
 
     @Override
     public Map<String, ConfigVO> getByKeys(List<String> keys) {
-        List<ConfigDO> list = baseMapper.selectList(Wrappers.<ConfigDO>lambdaQuery().in(CollUtil.isNotEmpty(keys), ConfigDO::getConfigKey, keys));
-        List<ConfigVO> result = convertMapper.convertList(list);
-        return result.stream().collect(Collectors.toMap(ConfigVO::getConfigKey, Function.identity(), (oldValue, newValue) -> newValue));
+        if (CollUtil.isEmpty(keys)) {
+            return Collections.emptyMap();
+        }
+
+        Cache cache = getConfigCache();
+        Map<String, ConfigVO> result = new LinkedHashMap<>();
+        List<String> missedKeys = new ArrayList<>();
+        for (String key : keys) {
+            if (StringUtils.isBlank(key) || result.containsKey(key)) {
+                continue;
+            }
+            ConfigVO config = getConfigFromCache(cache, key);
+            if (config == null) {
+                missedKeys.add(key);
+            } else {
+                result.put(key, config);
+            }
+        }
+
+        if (CollUtil.isEmpty(missedKeys)) {
+            return result;
+        }
+
+        List<ConfigDO> list = baseMapper.selectList(Wrappers.<ConfigDO>lambdaQuery()
+                .in(ConfigDO::getConfigKey, missedKeys));
+        List<ConfigVO> configs = convertMapper.convertList(list);
+        for (ConfigVO config : configs) {
+            if (config == null || StringUtils.isBlank(config.getConfigKey())) {
+                continue;
+            }
+            result.put(config.getConfigKey(), config);
+            putConfigCaches(cache, config);
+        }
+        return result;
+    }
+
+    private Cache getConfigCache() {
+        return cacheManager.getCache(RedisKeyConstants.CONFIG);
+    }
+
+    private ConfigVO getConfigFromCache(Cache cache, String key) {
+        if (cache == null) {
+            return null;
+        }
+        Cache.ValueWrapper valueWrapper = cache.get(key);
+        if (valueWrapper == null || !(valueWrapper.get() instanceof ConfigVO config)) {
+            return null;
+        }
+        return config;
+    }
+
+    private void putConfigCaches(Cache cache, ConfigVO config) {
+        if (cache == null || config == null) {
+            return;
+        }
+        if (StringUtils.isNotBlank(config.getId())) {
+            cache.put(config.getId(), config);
+        }
+        if (StringUtils.isNotBlank(config.getConfigKey())) {
+            cache.put(config.getConfigKey(), config);
+        }
     }
 
     public Boolean checkConfigKeyExists(String configKey, String excludeId) {

@@ -3,8 +3,11 @@ package com.zp.gmall.framework.redis.config;
 import cn.hutool.core.util.ReflectUtil;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
+import com.zp.gmall.framework.redis.core.aop.BatchCacheEvictAspect;
 import org.springframework.boot.autoconfigure.AutoConfiguration;
+import org.springframework.cache.CacheManager;
 import org.springframework.cache.annotation.EnableCaching;
+import org.springframework.context.annotation.Bean;
 import org.springframework.data.redis.connection.RedisConnectionFactory;
 import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.data.redis.serializer.RedisSerializer;
@@ -33,6 +36,11 @@ public class GmallRedisAutoConfiguration {
         template.setKeySerializer(RedisSerializer.string());
         template.setHashValueSerializer(buildRedisSerializer());
         return template;
+    }
+
+    @Bean
+    public BatchCacheEvictAspect batchCacheEvictAspect(CacheManager cacheManager) {
+        return new BatchCacheEvictAspect(cacheManager);
     }
 
     public static RedisSerializer<?> buildRedisSerializer() {

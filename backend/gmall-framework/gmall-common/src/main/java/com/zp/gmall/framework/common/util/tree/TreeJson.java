@@ -1,7 +1,7 @@
 package com.zp.gmall.framework.common.util.tree;
 
 import io.swagger.v3.oas.annotations.media.Schema;
-import lombok.Getter;
+import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import java.io.Serial;
@@ -14,7 +14,7 @@ import java.io.Serial;
  */
 @Schema(description = "树形节点")
 @NoArgsConstructor
-@Getter
+@Data
 public class TreeJson extends TreeNode {
     @Serial
     private static final long serialVersionUID = 1L;
@@ -34,11 +34,12 @@ public class TreeJson extends TreeNode {
 
 
     public TreeJson(String id, String code, String name, String type, String parentId) {
-        this.setId(id);
-        this.setCode(code);
-        this.setName(name);
-        this.setType(type);
-        this.setParentId(parentId);
+        super(id, name, parentId, type, null);
+        this.id = id;
+        this.code = code;
+        this.name = name;
+        this.type = type;
+        this.parentId = parentId;
     }
 
 
@@ -47,21 +48,14 @@ public class TreeJson extends TreeNode {
     }
 
     public void setId(String id) {
-        this.id = id;
         this.setTreeNodeId(id);
     }
 
     public void setName(String name) {
-        this.name = name;
         this.setTreeNodeName(name);
     }
 
-    public void setCode(String code) {
-        this.code = code;
-    }
-
     public void setType(String type) {
-        this.type = type;
         this.setTreeNodeType(type);
     }
 
@@ -70,8 +64,42 @@ public class TreeJson extends TreeNode {
     }
 
     public void setParentId(String parentId) {
-        this.parentId = parentId;
         this.setTreeNodeParent(parentId);
     }
 
+    @Override
+    public void setTreeNodeId(String id) {
+        super.setTreeNodeId(id);
+        this.id = id;
+    }
+
+    @Override
+    public void setTreeNodeName(String name) {
+        super.setTreeNodeName(name);
+        this.name = name;
+    }
+
+    @Override
+    public void setTreeNodeParent(String parentId) {
+        super.setTreeNodeParent(parentId);
+        this.parentId = parentId;
+    }
+
+    @Override
+    public void setTreeNodeType(String type) {
+        super.setTreeNodeType(type);
+        this.type = type;
+    }
+
+    @Override
+    public String toString() {
+        return "TreeJson{" +
+                "id='" + id + '\'' +
+                ", name='" + name + '\'' +
+                ", parentId='" + parentId + '\'' +
+                ", type='" + type + '\'' +
+                ", code='" + code + '\'' +
+                ", selFag='" + selFag + '\'' +
+                '}';
+    }
 }

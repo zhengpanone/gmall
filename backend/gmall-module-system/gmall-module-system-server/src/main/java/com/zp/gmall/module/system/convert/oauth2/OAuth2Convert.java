@@ -1,8 +1,10 @@
 package com.zp.gmall.module.system.convert.oauth2;
 
 import com.zp.gmall.framework.common.biz.oauth2.vo.OAuth2AccessTokenVO;
+import com.zp.gmall.module.system.convert.dict.DictDataConvert;
 import com.zp.gmall.module.system.entity.oauth2.OAuth2AccessTokenDO;
 import org.mapstruct.Mapper;
+import org.mapstruct.factory.Mappers;
 
 /**
  *
@@ -14,6 +16,8 @@ import org.mapstruct.Mapper;
  */
 @Mapper(componentModel = "spring")
 public interface OAuth2Convert {
+
+    OAuth2Convert INSTANCE = Mappers.getMapper(OAuth2Convert.class);
 
     OAuth2AccessTokenVO convert(OAuth2AccessTokenDO oAuth2AccessTokenDO);
 
