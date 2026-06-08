@@ -3,4 +3,5 @@
 **/logs
 **/*.iml
 **/.flattened-pom.xml
+**/rebel.xml
 

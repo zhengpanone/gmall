@@ -1,4 +1,4 @@
-import { backendClient, baseRequestClient } from '../request';
+import { backendClient } from '../request';
 
 /** 分页参数 */
 export interface PageParam {
@@ -57,5 +57,5 @@ export async function checkCaptcha(data: any) {
 
 /** 获取验证码 */
 export async function getCaptcha(data: any) {
-  return baseRequestClient.post('/system/captcha/get', data);
+  return backendClient.post('/system/captcha/get', data);
 }

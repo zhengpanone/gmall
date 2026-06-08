@@ -62,6 +62,8 @@ gmall:
   security:
     permit-all-urls:
       - /admin-api/auth/login # 租户登录接口
+      - /admin-api/tenant/create
+      - /admin-api/user/create
 
 
 

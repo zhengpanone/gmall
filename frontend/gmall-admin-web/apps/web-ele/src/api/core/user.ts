@@ -1,10 +1,10 @@
 import type { UserInfo } from '@vben/types';
 
-import { requestClient } from '#/api/request';
+import { backendClient } from '#/api/request';
 
 /**
  * 获取用户信息
  */
 export async function getUserInfoApi() {
-  return requestClient.get<UserInfo>('/system/admin-api/user/info');
+  return backendClient.get<UserInfo>('/system/admin-api/auth/get-permission-info');
 }

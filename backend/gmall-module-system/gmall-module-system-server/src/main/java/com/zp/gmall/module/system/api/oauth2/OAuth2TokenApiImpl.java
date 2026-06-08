@@ -40,7 +40,8 @@ public class OAuth2TokenApiImpl implements OAuth2TokenCommonApi {
 
     @Override
     public Result<OAuth2AccessTokenCheckVO> checkAccessToken(String accessToken) {
-        return Result.ok(null);
+        OAuth2AccessTokenDO oAuth2AccessTokenDO = oAuth2TokenService.checkAccessToken(accessToken);
+        return Result.ok(convertMapper.convert2CheckVO(oAuth2AccessTokenDO));
     }
 
     @Override

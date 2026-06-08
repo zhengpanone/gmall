@@ -40,7 +40,6 @@ public class AuthPermissionInfoVO implements Serializable {
     @NoArgsConstructor
     @AllArgsConstructor
     @Builder
-    
     public static class MenuVO implements Serializable {
 
         @Serial

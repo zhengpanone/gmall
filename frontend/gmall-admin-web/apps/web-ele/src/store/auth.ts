@@ -12,7 +12,6 @@ import { defineStore } from 'pinia';
 
 import {
   type AuthApi,
-  getAccessCodesApi,
   getUserInfoApi,
   loginApi,
   logoutApi,
@@ -62,23 +61,21 @@ export const useAuthStore = defineStore('auth', () => {
           break;
         }
       }
-      const { accessToken } = loginResult;
+      const { accessToken, refreshToken } = loginResult;
 
       // 如果成功获取到 accessToken
       if (accessToken) {
         // 将 accessToken 存储到 accessStore 中
         accessStore.setAccessToken(accessToken);
+        accessStore.setRefreshToken(refreshToken);
 
         // 获取用户信息并存储到 accessStore 中
-        const [fetchUserInfoResult, accessCodes] = await Promise.all([
-          fetchUserInfo(),
-          getAccessCodesApi(),
-        ]);
+        // eslint-disable-next-line unicorn/no-single-promise-in-promise-methods
+        const [fetchUserInfoResult] = await Promise.all([fetchUserInfo()]);
 
         userInfo = fetchUserInfoResult;
 
         userStore.setUserInfo(userInfo);
-        accessStore.setAccessCodes(accessCodes);
 
         if (accessStore.loginExpired) {
           accessStore.setLoginExpired(false);

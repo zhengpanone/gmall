@@ -6,13 +6,17 @@ import cn.hutool.core.util.StrUtil;
 import com.zp.gmall.framework.common.biz.oauth2.dto.OAuth2AccessTokenPageDTO;
 import com.zp.gmall.framework.common.domain.vo.PageResult;
 import com.zp.gmall.framework.common.enums.UserTypeEnum;
+import com.zp.gmall.framework.common.exception.enums.GlobalErrorCodeConstants;
+import com.zp.gmall.framework.common.util.date.DateUtils;
 import com.zp.gmall.framework.security.core.LoginUser;
 import com.zp.gmall.framework.tenant.core.context.TenantContextHolder;
+import com.zp.gmall.module.system.convert.oauth2.OAuth2Convert;
 import com.zp.gmall.module.system.entity.oauth2.OAuth2AccessTokenDO;
 import com.zp.gmall.module.system.entity.oauth2.OAuth2ClientDO;
 import com.zp.gmall.module.system.entity.oauth2.OAuth2RefreshTokenDO;
 import com.zp.gmall.module.system.entity.user.UserDO;
 import com.zp.gmall.module.system.mapper.oauth2.OAuth2AccessTokenMapper;
+import com.zp.gmall.module.system.mapper.oauth2.OAuth2AccessTokenRedisDao;
 import com.zp.gmall.module.system.mapper.oauth2.OAuth2RefreshTokenMapper;
 import com.zp.gmall.module.system.mapper.user.UserMapper;
 import com.zp.gmall.module.system.service.oauth2.IOAuth2ClientService;
@@ -27,6 +31,8 @@ import java.time.LocalDateTime;
 import java.util.Collections;
 import java.util.List;
 import java.util.Map;
+
+import static com.zp.gmall.framework.common.exception.util.ServiceExceptionUtils.exception;
 
 /**
  * Author : zhengpanone
@@ -47,6 +53,8 @@ public class OAuth2TokenServiceImpl implements IOAuth2TokenService {
 
     private final UserMapper userMapper;
 
+    private final OAuth2AccessTokenRedisDao oAuth2AccessTokenRedisDao;
+
     @Override
     @Transactional(rollbackFor = Exception.class)
     public OAuth2AccessTokenDO createAccessToken(String userId, String userType, String clientId, List<String> scopes) {
@@ -62,12 +70,33 @@ public class OAuth2TokenServiceImpl implements IOAuth2TokenService {
 
     @Override
     public OAuth2AccessTokenDO getAccessToken(String accessToken) {
-        return null;
+        OAuth2AccessTokenDO accessTokenDO = oAuth2AccessTokenRedisDao.get(accessToken);
+        if(accessTokenDO!=null){
+            return accessTokenDO;
+        }
+        accessTokenDO = oauth2AccessTokenMapper.selectByAccessToken(accessToken);
+        if(accessTokenDO==null){
+            OAuth2RefreshTokenDO refreshTokenDO =  oauth2RefreshTokenMapper.selectByRefreshToken(accessToken);
+            if(refreshTokenDO!=null && !DateUtils.isExpired(refreshTokenDO.getExpireTime())){
+                accessTokenDO = convertToAccessToken(refreshTokenDO);
+            }
+        }
+        if(accessTokenDO!=null && !DateUtils.isExpired(accessTokenDO.getExpiresTime())){
+            oAuth2AccessTokenRedisDao.set(accessTokenDO);
+        }
+        return accessTokenDO;
     }
 
     @Override
     public OAuth2AccessTokenDO checkAccessToken(String accessToken) {
-        return null;
+        OAuth2AccessTokenDO accessTokenDO = getAccessToken(accessToken);
+        if (accessTokenDO == null) {
+            throw exception(GlobalErrorCodeConstants.UNAUTHORIZED.getCode(), "访问令牌不存在");
+        }
+        if (DateUtils.isExpired(accessTokenDO.getExpiresTime())) {
+            throw exception(GlobalErrorCodeConstants.UNAUTHORIZED.getCode(), "访问令牌已过期");
+        }
+        return accessTokenDO;
     }
 
     @Override
@@ -144,5 +173,12 @@ public class OAuth2TokenServiceImpl implements IOAuth2TokenService {
             return Collections.emptyMap();
         }
         throw new IllegalArgumentException("未知用户类型：" + userType);
+    }
+
+
+    private OAuth2AccessTokenDO convertToAccessToken(OAuth2RefreshTokenDO refreshTokenDO) {
+        OAuth2AccessTokenDO accessTokenDO = OAuth2Convert.INSTANCE.convert(refreshTokenDO);
+        accessTokenDO.setAccessToken(refreshTokenDO.getRefreshToken());
+        return accessTokenDO;
     }
 }

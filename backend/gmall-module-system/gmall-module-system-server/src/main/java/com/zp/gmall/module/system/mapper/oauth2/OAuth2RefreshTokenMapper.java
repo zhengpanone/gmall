@@ -14,4 +14,8 @@ import org.apache.ibatis.annotations.Mapper;
  */
 @Mapper
 public interface OAuth2RefreshTokenMapper extends BaseMapperX<OAuth2RefreshTokenDO> {
+
+    default OAuth2RefreshTokenDO selectByRefreshToken(String refreshToken) {
+        return selectOne(OAuth2RefreshTokenDO::getRefreshToken, refreshToken);
+    }
 }

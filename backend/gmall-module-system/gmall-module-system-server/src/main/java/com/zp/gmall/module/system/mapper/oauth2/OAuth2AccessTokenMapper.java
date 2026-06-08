@@ -15,4 +15,7 @@ import org.apache.ibatis.annotations.Mapper;
 @Mapper
 public interface OAuth2AccessTokenMapper extends BaseMapperX<OAuth2AccessTokenDO> {
 
+    default OAuth2AccessTokenDO selectByAccessToken(String accessToken) {
+        return selectOne(OAuth2AccessTokenDO::getAccessToken, accessToken);
+    }
 }

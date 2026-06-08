@@ -234,7 +234,13 @@ CREATE TABLE IF NOT EXISTS sys_role_menu
 (
     id      varchar(36) NOT NULL PRIMARY KEY COMMENT '主键ID',
     role_id varchar(36) NOT NULL COMMENT '角色ID',
-    menu_id varchar(36) NOT NULL COMMENT '菜单ID'
+    menu_id varchar(36) NOT NULL COMMENT '菜单ID',
+    creator      varchar(64)           NOT NULL COMMENT '创建者',
+    create_time  datetime              NOT NULL COMMENT '创建时间',
+    updater      varchar(64)           NOT NULL COMMENT '更新者',
+    update_time  datetime              NOT NULL COMMENT '更新时间',
+    deleted      bit      DEFAULT b'0' NOT NULL COMMENT '是否删除',
+    deleted_time datetime DEFAULT NULL COMMENT '删除时间'
 ) COMMENT = '角色菜单关联表' COLLATE = utf8mb4_unicode_ci;
 
 -- 添加索引
@@ -250,7 +256,13 @@ CREATE TABLE IF NOT EXISTS sys_user_role
 (
     id      varchar(36) NOT NULL PRIMARY KEY COMMENT '主键ID',
     user_id varchar(36) NOT NULL COMMENT '用户ID',
-    role_id varchar(36) NOT NULL COMMENT '角色ID'
+    role_id varchar(36) NOT NULL COMMENT '角色ID',
+    creator      varchar(64)           NOT NULL COMMENT '创建者',
+    create_time  datetime              NOT NULL COMMENT '创建时间',
+    updater      varchar(64)           NOT NULL COMMENT '更新者',
+    update_time  datetime              NOT NULL COMMENT '更新时间',
+    deleted      bit      DEFAULT b'0' NOT NULL COMMENT '是否删除',
+    deleted_time datetime DEFAULT NULL COMMENT '删除时间'
 ) COMMENT = '用户角色关联表' COLLATE = utf8mb4_unicode_ci;
 
 -- 添加索引
@@ -323,6 +335,7 @@ CREATE TABLE IF NOT EXISTS sys_oauth2_refresh_token
     updater       varchar(64)  NULL     DEFAULT '' COMMENT '更新者',
     update_time   datetime     NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT '更新时间',
     deleted       bit          NOT NULL DEFAULT b'0' COMMENT '是否删除',
+    deleted_time  datetime              DEFAULT NULL COMMENT '删除时间',
     tenant_id     varchar(36)  NOT NULL DEFAULT 0 COMMENT '租户ID'
 ) COMMENT ='OAuth2 刷新令牌信息表' COLLATE = utf8mb4_unicode_ci;
 
@@ -343,6 +356,7 @@ CREATE TABLE sys_oauth2_access_token
     updater       varchar(64)  DEFAULT ''   NULL COMMENT '更新者',
     update_time   datetime                  NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT '更新时间',
     deleted       bit          DEFAULT b'0' NOT NULL COMMENT '是否删除',
+    deleted_time  datetime     DEFAULT NULL COMMENT '删除时间',
     tenant_id     varchar(36)               NOT NULL DEFAULT 0 COMMENT '租户ID'
 ) COMMENT ='OAuth2 访问令牌信息表' COLLATE = utf8mb4_unicode_ci;
 
