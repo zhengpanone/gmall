@@ -5,6 +5,7 @@ import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.Data;
 import lombok.experimental.Accessors;
 
+import java.io.Serial;
 import java.io.Serializable;
 import java.time.LocalDateTime;
 
@@ -12,6 +13,9 @@ import java.time.LocalDateTime;
 @Data
 @Accessors(chain = true)
 public class OAuth2AccessTokenVO implements Serializable {
+
+    @Serial
+    private static final long serialVersionUID = 1L;
 
     @Schema(description = "访问令牌", example = "tudou")
     private String accessToken;

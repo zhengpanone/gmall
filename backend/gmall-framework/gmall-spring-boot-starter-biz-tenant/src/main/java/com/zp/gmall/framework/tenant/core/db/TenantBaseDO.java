@@ -4,6 +4,8 @@ import com.zp.gmall.framework.mybatis.core.dataobject.BaseDO;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 
+import java.io.Serial;
+
 /**
  * Author : zhengpanone
  * Date : 2023/12/20 15:11
@@ -13,6 +15,10 @@ import lombok.EqualsAndHashCode;
 @Data
 @EqualsAndHashCode(callSuper = true)
 public abstract class TenantBaseDO extends BaseDO {
+
+    @Serial
+    private static final long serialVersionUID = 1L;
+
     /**
      * 多租户编号
      */

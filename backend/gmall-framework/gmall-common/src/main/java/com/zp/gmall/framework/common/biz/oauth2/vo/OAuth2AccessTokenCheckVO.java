@@ -3,6 +3,7 @@ package com.zp.gmall.framework.common.biz.oauth2.vo;
 import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.Data;
 
+import java.io.Serial;
 import java.io.Serializable;
 import java.util.List;
 import java.util.Map;
@@ -10,6 +11,9 @@ import java.util.Map;
 @Schema(description = "RPC 服务 - OAuth2 访问令牌的校验 Response DTO")
 @Data
 public class OAuth2AccessTokenCheckVO implements Serializable {
+
+    @Serial
+    private static final long serialVersionUID = 1L;
 
     @Schema(description = "用户编号", example = "10")
     private String userId;

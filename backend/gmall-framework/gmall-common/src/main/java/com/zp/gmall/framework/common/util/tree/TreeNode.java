@@ -15,7 +15,6 @@ import java.util.Collections;
  * @since 1.0.0
  */
 @EqualsAndHashCode
-@SuppressWarnings("serial")
 public abstract class TreeNode implements ITreeNode, Serializable {
     @Serial
     private static final long serialVersionUID = 1L;

@@ -2,10 +2,7 @@ package com.zp.gmall.module.system.convert.config;
 
 import com.zp.gmall.module.system.controller.admin.config.dto.ConfigDTO;
 import com.zp.gmall.module.system.controller.admin.config.vo.ConfigVO;
-import com.zp.gmall.module.system.controller.admin.permission.vo.MenuVO;
-import com.zp.gmall.module.system.convert.auth.AuthConvert;
 import com.zp.gmall.module.system.entity.config.ConfigDO;
-import com.zp.gmall.module.system.entity.permission.MenuDO;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
 import org.mapstruct.factory.Mappers;
@@ -29,9 +26,10 @@ public interface ConfigConvert {
 
     ConfigConvert INSTANCE = Mappers.getMapper(ConfigConvert.class);
 
+    @Mapping(target = "sort", ignore = true)
     ConfigVO convert(ConfigDO configDO);
 
-
+    @Mapping(target = "visible", ignore = true)
     ConfigDO convert(ConfigDTO dto);
 
     // List 转换（自动处理）

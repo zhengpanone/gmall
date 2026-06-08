@@ -5,12 +5,16 @@ import io.swagger.v3.oas.annotations.media.Schema;
 import jakarta.validation.constraints.NotNull;
 import lombok.Data;
 
+import java.io.Serial;
 import java.io.Serializable;
 import java.util.List;
 
 @Schema(description = "RPC 服务 - OAuth2 访问令牌创建 Request DTO")
 @Data
 public class OAuth2AccessTokenDTO implements Serializable {
+
+    @Serial
+    private static final long serialVersionUID = 1L;
 
     @Schema(description = "用户编号", example = "10")
     @NotNull(message = "用户编号不能为空")

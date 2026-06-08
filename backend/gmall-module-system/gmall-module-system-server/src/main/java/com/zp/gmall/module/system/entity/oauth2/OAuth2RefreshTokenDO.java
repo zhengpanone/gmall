@@ -26,6 +26,7 @@ import java.util.List;
 @Data
 @TableName(value = "sys_oauth2_refresh_token", autoResultMap = true)
 @EqualsAndHashCode(callSuper = true)
+
 public class OAuth2RefreshTokenDO extends TenantBaseDO {
 
     @Serial

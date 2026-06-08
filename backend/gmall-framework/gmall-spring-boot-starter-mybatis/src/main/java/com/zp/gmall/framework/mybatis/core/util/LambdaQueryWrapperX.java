@@ -8,6 +8,7 @@ import com.baomidou.mybatisplus.core.toolkit.support.SFunction;
 import com.zp.gmall.framework.common.util.collection.ArrayUtils;
 import org.springframework.util.StringUtils;
 
+import java.io.Serial;
 import java.util.Collection;
 
 /**
@@ -18,6 +19,9 @@ import java.util.Collection;
  * @param <T> 数据类型
  */
 public class LambdaQueryWrapperX<T> extends LambdaQueryWrapper<T> {
+
+    @Serial
+    private static final long serialVersionUID = 1L;
 
     public LambdaQueryWrapperX<T> likeIfPresent(SFunction<T, ?> column, String val) {
         if (StringUtils.hasText(val)) {

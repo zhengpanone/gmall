@@ -3,6 +3,8 @@ package com.zp.gmall.framework.common.biz.oauth2.dto;
 import com.zp.gmall.framework.common.domain.dto.PageParam;
 import lombok.Data;
 
+import java.io.Serial;
+
 /**
  *
  * Description:
@@ -13,4 +15,7 @@ import lombok.Data;
  */
 @Data
 public class OAuth2AccessTokenPageDTO extends PageParam {
+
+    @Serial
+    private static final long serialVersionUID = 1L;
 }

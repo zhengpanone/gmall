@@ -7,6 +7,7 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.io.Serial;
 import java.io.Serializable;
 import java.util.List;
 import java.util.Set;
@@ -17,6 +18,9 @@ import java.util.Set;
 @AllArgsConstructor
 @Builder
 public class AuthPermissionInfoVO implements Serializable {
+
+    @Serial
+    private static final long serialVersionUID = 1L;
 
     @Schema(description = "用户信息", requiredMode = Schema.RequiredMode.REQUIRED)
     private AdminUserVO user;
@@ -36,7 +40,11 @@ public class AuthPermissionInfoVO implements Serializable {
     @NoArgsConstructor
     @AllArgsConstructor
     @Builder
-    public static class MenuVO {
+    
+    public static class MenuVO implements Serializable {
+
+        @Serial
+        private static final long serialVersionUID = 1L;
 
         @Schema(description = "菜单名称", requiredMode = Schema.RequiredMode.REQUIRED, example = "芋道")
         private Long id;
