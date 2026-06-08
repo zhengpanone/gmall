@@ -1,5 +1,7 @@
 package com.zp.gmall.framework.redis.core.annotation;
 
+import org.springframework.core.annotation.AliasFor;
+
 import java.lang.annotation.ElementType;
 import java.lang.annotation.Retention;
 import java.lang.annotation.RetentionPolicy;
@@ -16,9 +18,21 @@ import java.lang.annotation.Target;
 public @interface BatchCacheEvict {
 
     /**
-     * 缓存名称。
+     * 缓存名称，等价于 {@link #cacheNames()}。
      */
-    String cacheName();
+    @AliasFor("cacheNames")
+    String[] value() default {};
+
+    /**
+     * 缓存名称，支持一次清理多个缓存。
+     */
+    @AliasFor("value")
+    String[] cacheNames() default {};
+
+    /**
+     * 缓存名称，兼容单缓存写法。
+     */
+    String cacheName() default "";
 
     /**
      * 缓存 key 的 SpEL 表达式，例如 {@code #ids.ids} 或 {@code #ids?.ids}。

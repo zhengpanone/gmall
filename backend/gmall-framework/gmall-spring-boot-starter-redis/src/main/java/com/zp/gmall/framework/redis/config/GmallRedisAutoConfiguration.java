@@ -4,11 +4,15 @@ import com.fasterxml.jackson.annotation.JsonTypeInfo;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.jsontype.BasicPolymorphicTypeValidator;
 import com.zp.gmall.framework.redis.core.aop.BatchCacheEvictAspect;
+import org.springframework.beans.factory.ObjectProvider;
+import org.springframework.boot.autoconfigure.AutoConfigureAfter;
 import org.springframework.boot.autoconfigure.AutoConfigureBefore;
 import org.springframework.boot.autoconfigure.AutoConfiguration;
 import org.springframework.boot.autoconfigure.cache.CacheAutoConfiguration;
 import org.springframework.boot.autoconfigure.cache.CacheProperties;
+import org.springframework.boot.autoconfigure.condition.ConditionalOnClass;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnMissingBean;
+import org.springframework.boot.autoconfigure.condition.ConditionalOnSingleCandidate;
 import org.springframework.boot.autoconfigure.data.redis.RedisAutoConfiguration;
 import org.springframework.boot.context.properties.EnableConfigurationProperties;
 import org.springframework.cache.CacheManager;
@@ -29,7 +33,9 @@ import org.springframework.data.redis.serializer.RedisSerializer;
  */
 @EnableCaching
 @AutoConfiguration
-@AutoConfigureBefore({RedisAutoConfiguration.class, CacheAutoConfiguration.class})
+@AutoConfigureAfter(RedisAutoConfiguration.class)
+@AutoConfigureBefore(CacheAutoConfiguration.class)
+@ConditionalOnClass({RedisTemplate.class, RedisConnectionFactory.class, CacheManager.class})
 @EnableConfigurationProperties(CacheProperties.class)
 public class GmallRedisAutoConfiguration {
 
@@ -41,6 +47,7 @@ public class GmallRedisAutoConfiguration {
      */
     @Bean
     @ConditionalOnMissingBean(name = "redisTemplate")
+    @ConditionalOnSingleCandidate(RedisConnectionFactory.class)
     public RedisTemplate<String, Object> redisTemplate(RedisConnectionFactory factory,
                                                        RedisSerializer<Object> redisJsonSerializer) {
         // 创建RedisTemplate对象
@@ -69,7 +76,7 @@ public class GmallRedisAutoConfiguration {
             CacheProperties cacheProperties, RedisSerializer<Object> redisJsonSerializer) {
         CacheProperties.Redis redisProperties = cacheProperties.getRedis();
         RedisCacheConfiguration config =
-                org.springframework.data.redis.cache.RedisCacheConfiguration.defaultCacheConfig()
+                RedisCacheConfiguration.defaultCacheConfig()
                         .serializeKeysWith(RedisSerializationContext.SerializationPair.fromSerializer(RedisSerializer.string()))
                         .serializeValuesWith(RedisSerializationContext.SerializationPair.fromSerializer(redisJsonSerializer));
 
@@ -90,8 +97,8 @@ public class GmallRedisAutoConfiguration {
 
     @Bean
     @ConditionalOnMissingBean
-    public BatchCacheEvictAspect batchCacheEvictAspect(CacheManager cacheManager) {
-        return new BatchCacheEvictAspect(cacheManager);
+    public BatchCacheEvictAspect batchCacheEvictAspect(ObjectProvider<CacheManager> cacheManagerProvider) {
+        return new BatchCacheEvictAspect(cacheManagerProvider);
     }
 
     /**

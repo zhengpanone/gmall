@@ -49,4 +49,16 @@
         </dependency>
     </dependencies>
 
+    <build>
+        <resources combine.self="override">
+            <resource>
+                <directory>src/main/resources</directory>
+                <filtering>true</filtering>
+                <excludes>
+                    <exclude>rebel.xml</exclude>
+                </excludes>
+            </resource>
+        </resources>
+    </build>
+
 </project>

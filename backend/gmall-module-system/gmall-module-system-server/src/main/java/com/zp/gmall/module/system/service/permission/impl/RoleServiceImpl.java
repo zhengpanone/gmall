@@ -20,9 +20,11 @@ import com.zp.gmall.module.system.entity.permission.RoleDO;
 import com.zp.gmall.module.system.enums.permission.RoleCodeEnum;
 import com.zp.gmall.module.system.mapper.permission.RoleMapper;
 import com.zp.gmall.module.system.service.permission.IRoleService;
+import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.StringUtils;
 import org.mapstruct.factory.Mappers;
+import org.springframework.beans.factory.ObjectProvider;
 import org.springframework.cache.annotation.CacheEvict;
 import org.springframework.cache.annotation.CachePut;
 import org.springframework.cache.annotation.Cacheable;
@@ -44,9 +46,13 @@ import static com.zp.gmall.module.system.enums.ErrorCodeConstants.*;
  */
 @Slf4j
 @Service
+@RequiredArgsConstructor
 public class RoleServiceImpl extends ServiceImpl<RoleMapper, RoleDO> implements IRoleService {
 
     private final RoleConvert roleConvertMapper = Mappers.getMapper(RoleConvert.class);
+
+    private final ObjectProvider<IRoleService> roleServiceProvider;
+
 
     @Override
     @CachePut(cacheNames = RedisKeyConstants.ROLE, key = "#result.id", unless = "#result == null || #result.id == null")
@@ -135,7 +141,7 @@ public class RoleServiceImpl extends ServiceImpl<RoleMapper, RoleDO> implements 
         baseMapper.updateById(roleDO);
     }
 
-    @BatchCacheEvict(cacheName = RedisKeyConstants.ROLE, keys = "#ids?.ids")
+    @BatchCacheEvict(value = RedisKeyConstants.ROLE, keys = "#ids?.ids")
     @Override
     public void deleteRole(Ids ids) {
         if (ids == null || CollUtil.isEmpty(ids.getIds())) {
@@ -163,8 +169,9 @@ public class RoleServiceImpl extends ServiceImpl<RoleMapper, RoleDO> implements 
         if (CollUtil.isEmpty(roleIds)) {
             return false;
         }
+        IRoleService roleService = roleServiceProvider.getObject();
         return roleIds.stream().anyMatch(roleId -> {
-            RoleDO role = getRoleById(roleId);
+            RoleDO role = roleService.getRoleById(roleId);
             return role != null && RoleCodeEnum.isSuperAdmin(role.getCode());
         });
 
