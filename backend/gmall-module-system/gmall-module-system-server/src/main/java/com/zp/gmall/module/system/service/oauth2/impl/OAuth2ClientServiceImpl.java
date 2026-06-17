@@ -79,7 +79,7 @@ public class OAuth2ClientServiceImpl implements IOAuth2ClientService {
             throw exception(OAUTH2_CLIENT_SCOPE_OVER);
         }
         // 校验回调地址
-        if (StrUtil.isNotEmpty(redirectUri) && StrUtils.startWithAny(redirectUri, client.getRedirectUris())) {
+        if (StrUtil.isNotEmpty(redirectUri) && !StrUtils.startWithAny(redirectUri, client.getRedirectUris())) {
             throw exception(OAUTH2_CLIENT_REDIRECT_URI_NOT_MATCH, redirectUri);
         }
         return client;
@@ -89,6 +89,9 @@ public class OAuth2ClientServiceImpl implements IOAuth2ClientService {
     void validateClientIdExists(String id, String clientId) {
         OAuth2ClientDO client = oauth2ClientMapper.selectByClientId(clientId);
         if (client == null) {
+            return;
+        }
+        if (StrUtil.isBlank(id)) {
             throw exception(OAUTH2_CLIENT_EXISTS);
         }
         if (!client.getId().equals(id)) {

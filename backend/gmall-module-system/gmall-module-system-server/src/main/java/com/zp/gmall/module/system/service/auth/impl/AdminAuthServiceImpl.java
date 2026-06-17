@@ -64,7 +64,7 @@ public class AdminAuthServiceImpl implements IAdminAuthService {
     private final ILoginLogService loginLogService;
 
     private final IPermissionService permissionService;
-    
+
     private final IMenuService menuService;
 
     @Override
@@ -84,8 +84,9 @@ public class AdminAuthServiceImpl implements IAdminAuthService {
         if (Objects.isNull(user)) {
             throw exception(AUTH_LOGIN_BAD_CREDENTIALS);
         }
-        if (!userService.verifyPassword(user.getId(), password)) {
+        if (!userService.verifyPassword(password, user.getPassword())) {
             createLoginLog(user.getId(), username, logTypeEnum, LoginResultEnum.BAD_CREDENTIALS);
+            throw exception(AUTH_LOGIN_BAD_CREDENTIALS);
         }
         // 校验是否禁用
         if (CommonStatusEnum.isDisable(user.getStatus())) {
@@ -108,7 +109,7 @@ public class AdminAuthServiceImpl implements IAdminAuthService {
             return AuthConvert.INSTANCE.convert(user, Collections.emptyList(), Collections.emptyList());
         }
         List<RoleDO> roleList = roleService.listByIds(roleIds);
-        roleList.removeIf(role->CommonStatusEnum.isDisable(role.getStatus()));
+        roleList.removeIf(role -> CommonStatusEnum.isDisable(role.getStatus()));
 
         Set<String> menuIdList = permissionService.getRoleMenuIdListByRoleId(convertSet(roleList, RoleDO::getId));
         List<MenuDO> menuList = menuService.listByIds(menuIdList);
@@ -126,8 +127,7 @@ public class AdminAuthServiceImpl implements IAdminAuthService {
         // 插入登陆日志
         createLoginLog(userId, username, logType, LoginResultEnum.SUCCESS);
         // 创建访问令牌
-        OAuth2AccessTokenDO accessTokenDO = oauth2TokenService.createAccessToken(userId, getUserType().getValue(),
-                OAuth2ClientConstants.CLIENT_ID_DEFAULT, null);
+        OAuth2AccessTokenDO accessTokenDO = oauth2TokenService.createAccessToken(userId, getUserType().getValue(), OAuth2ClientConstants.CLIENT_ID_DEFAULT, null);
         return AuthConvert.INSTANCE.convert(accessTokenDO);
     }
 
@@ -139,15 +139,7 @@ public class AdminAuthServiceImpl implements IAdminAuthService {
     private void createLoginLog(String userId, String username, LoginLogTypeEnum logTypeEnum, LoginResultEnum loginResultEnum) {
         // 插入登录日志
         LoginLogDTO loginLogDTO = new LoginLogDTO();
-        loginLogDTO.setLogType(logTypeEnum.getType())
-                .setTraceId(TracerUtils.getTraceId())
-                .setUserId(userId)
-                .setUserType(getUserType().getValue())
-                .setUsername(username)
-                .setUserAgent(ServletUtils.getUserAgent())
-                .setUserIp(ServletUtils.getClientIP())
-                .setResult(loginResultEnum.getResult())
-        ;
+        loginLogDTO.setLogType(logTypeEnum.getType()).setTraceId(TracerUtils.getTraceId()).setUserId(userId).setUserType(getUserType().getValue()).setUsername(username).setUserAgent(ServletUtils.getUserAgent()).setUserIp(ServletUtils.getClientIP()).setResult(loginResultEnum.getResult());
 
         loginLogService.create(loginLogDTO);
     }

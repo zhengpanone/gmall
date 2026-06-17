@@ -46,11 +46,13 @@ public class OAuth2TokenApiImpl implements OAuth2TokenCommonApi {
 
     @Override
     public Result<OAuth2AccessTokenVO> removeAccessToken(String accessToken) {
-        return Result.ok(null);
+        OAuth2AccessTokenDO accessTokenDO = oAuth2TokenService.removeAccessToken(accessToken);
+        return Result.ok(convertMapper.convert(accessTokenDO));
     }
 
     @Override
     public Result<OAuth2AccessTokenVO> refreshAccessToken(String refreshToken, String clientId) {
-        return Result.ok(null);
+        OAuth2AccessTokenDO accessTokenDO = oAuth2TokenService.refreshAccessToken(refreshToken, clientId);
+        return Result.ok(convertMapper.convert(accessTokenDO));
     }
 }

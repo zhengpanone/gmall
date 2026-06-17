@@ -77,7 +77,7 @@ public interface IOAuth2TokenService {
      * @param userId   用户编号
      * @param userType 用户类型
      */
-    void removeAccessToken(Long userId, Integer userType);
+    void removeAccessToken(String userId, String userType);
 
     /**
      * 获得访问令牌分页

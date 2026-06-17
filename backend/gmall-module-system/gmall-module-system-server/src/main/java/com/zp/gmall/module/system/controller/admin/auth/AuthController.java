@@ -10,6 +10,7 @@ import com.zp.gmall.module.system.service.permission.IPermissionService;
 import com.zp.gmall.module.system.service.user.IUserService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
+import jakarta.validation.Valid;
 import jakarta.validation.constraints.NotNull;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -39,7 +40,7 @@ public class AuthController {
 
     @PostMapping("/login")
     @Operation(summary = "使用账号密码登录")
-    public Result<?> login(@RequestBody AuthLoginDTO authLoginDTO) {
+    public Result<?> login(@Valid @RequestBody AuthLoginDTO authLoginDTO) {
         return ok(authService.login(authLoginDTO));
     }
 
