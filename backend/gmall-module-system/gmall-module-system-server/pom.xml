@@ -64,6 +64,11 @@
         </dependency>
 
         <dependency>
+            <groupId>com.zp.gmall</groupId>
+            <artifactId>gmall-spring-boot-starter-captcha</artifactId>
+        </dependency>
+
+        <dependency>
             <groupId>org.springdoc</groupId>
             <artifactId>springdoc-openapi-starter-webmvc-ui</artifactId>
         </dependency>

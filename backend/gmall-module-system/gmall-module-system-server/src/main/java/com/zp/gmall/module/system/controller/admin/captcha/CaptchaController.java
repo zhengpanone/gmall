@@ -1,28 +1,34 @@
 package com.zp.gmall.module.system.controller.admin.captcha;
 
+import com.xingyuv.captcha.model.common.ResponseModel;
+import com.xingyuv.captcha.model.vo.CaptchaVO;
+import com.xingyuv.captcha.service.CaptchaService;
 import com.zp.gmall.framework.common.domain.vo.Result;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
-import org.springframework.stereotype.Component;
+import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-/**
- * Author : zhengpanone
- * Date : 2025/3/27 13:05
- * Version : v1.0.0
- * Description:
- */
-@Component
-@Tag(name = "管理后台 - 验证码")
+@Tag(name = "Admin - Captcha")
 @RestController
 @RequestMapping("/captcha")
+@RequiredArgsConstructor
 public class CaptchaController {
 
-    @PostMapping("/getCaptcha")
-    @Operation(summary = "获取验证码")
-    public Result<?> getCaptcha() {
-        return Result.ok();
+    private final CaptchaService captchaService;
+
+    @PostMapping("/get")
+    @Operation(summary = "Get captcha")
+    public Result<ResponseModel> get(@RequestBody CaptchaVO captchaVO) {
+        return Result.ok(captchaService.get(captchaVO));
+    }
+
+    @PostMapping("/check")
+    @Operation(summary = "Check captcha")
+    public Result<ResponseModel> check(@RequestBody CaptchaVO captchaVO) {
+        return Result.ok(captchaService.check(captchaVO));
     }
 }

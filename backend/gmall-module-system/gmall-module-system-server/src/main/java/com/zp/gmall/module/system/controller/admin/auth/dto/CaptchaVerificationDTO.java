@@ -3,6 +3,7 @@ package com.zp.gmall.module.system.controller.admin.auth.dto;
 
 import io.swagger.v3.oas.annotations.media.Schema;
 import jakarta.validation.constraints.NotEmpty;
+import lombok.Data;
 
 /**
  * Author : zhengpanone
@@ -11,6 +12,7 @@ import jakarta.validation.constraints.NotEmpty;
  * Description:
  */
 @Schema(description = "管理后台 - 验证码 DTO")
+@Data
 public class CaptchaVerificationDTO {
 
     // ========== 图片验证码相关 ==========
