@@ -1,6 +1,13 @@
+-- 租户管理
+INSERT INTO sys_tenant (id, code, name, contact_user_id, contact_name, contact_phone, license_number, address, domain, intro, description, websites, package_id, expire_time, account_count, status, create_time, update_time, creator, updater, deleted, deleted_time) VALUES ('1', 'gmall', 'GMALL', null, null, null, null, null, null, null, null, '127.0.0.1:5778,localhost:5778', null, null, null, null, '2026-06-18 18:02:42', '2026-06-18 18:02:42', 'system', 'system', false, null);
+
+-- 用户管理
+INSERT INTO sys_user (id, username, password, nickname, dept_id, remark, email, mobile, sex, avatar, status, login_ip, login_date, creator, create_time, updater, update_time, deleted, deleted_time, tenant_id) VALUES ('1', 'superAdmin', '$2a$04$Nd341QsF.HLmoGJTvsy5AO/HqMnNynmcxuh7PZj6kZ1OEQzHQK2DW', '超级管理员', '1', '超级管理员', 'admin@qq.com', '', 0, '', 1, '', null, 'system', '2026-06-18 18:03:34', 'system', '2026-06-18 18:03:34', false, null, 0);
+
+
 -- 角色
 BEGIN;
-INSERT INTO sys_role (id, name, code, sort, status, type, remark, creator, create_time, updater, update_time, deleted, deleted_time, tenant_id) VALUES ('1', '系统管理员', 'admin', 1, 0, 1, '系统管理员', 'system', '2026-04-25 00:10:00', 'system', '2026-04-25 00:10:46', false, null, 0);
+INSERT INTO sys_role (id, name, code, sort, status, type, remark, creator, create_time, updater, update_time, deleted, deleted_time, tenant_id) VALUES ('1', '系统管理员', 'SYS_ADMIN', 1, 0, 1, '系统管理员', 'system', '2026-04-25 00:10:00', 'system', '2026-04-25 00:10:46', false, null, 0);
 INSERT INTO sys_role (id, name, code, sort, status, type, remark, creator, create_time, updater, update_time, deleted, deleted_time, tenant_id) VALUES ('2', '安全管理员', 'SEC_ADMIN', 2, 0, 1, '安全管理员', null, '2026-04-29 12:03:56', 'system','2026-04-29 04:06:12', false, null, 0);
 INSERT INTO sys_role (id, name, code, sort, status, type, remark, creator, create_time, updater, update_time, deleted, deleted_time, tenant_id) VALUES ('3', '安全审计员', 'AUDITOR', 3, 0, 1, '安全审计员', null, '2026-04-29 12:07:23', 'system','2026-04-29 13:05:22', false, null, 0);
 COMMIT;

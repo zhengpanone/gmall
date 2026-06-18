@@ -1,12 +1,16 @@
 package com.zp.gmall.module.system.service.permission.impl;
 
 import cn.hutool.core.collection.CollUtil;
+import com.zp.gmall.module.system.constant.ConfigKeyConstants;
+import com.zp.gmall.module.system.constant.RedisKeyConstants;
+import com.zp.gmall.module.system.entity.config.ConfigDO;
 import com.zp.gmall.module.system.entity.permission.MenuDO;
 import com.zp.gmall.module.system.entity.permission.RoleMenuDO;
 import com.zp.gmall.module.system.entity.permission.UserRoleDO;
 import com.zp.gmall.module.system.mapper.permission.MenuMapper;
 import com.zp.gmall.module.system.mapper.permission.RoleMenuMapper;
 import com.zp.gmall.module.system.mapper.permission.UserRoleMapper;
+import com.zp.gmall.module.system.service.config.IConfigService;
 import com.zp.gmall.module.system.service.permission.IPermissionService;
 import com.zp.gmall.module.system.service.permission.IRoleService;
 import lombok.RequiredArgsConstructor;
@@ -30,6 +34,8 @@ public class PermissionServiceImpl implements IPermissionService {
 
     private final IRoleService roleService;
 
+    private final IConfigService configService;
+
 
     @Override
     public Set<String> getUserRoleIdListByUserId(String userId) {
@@ -41,9 +47,23 @@ public class PermissionServiceImpl implements IPermissionService {
         if (CollUtil.isEmpty(roleIds)) {
             return Collections.emptySet();
         }
-        if (roleService.hasAnySuperAdmin(roleIds)) {
-            return convertSet(menuMapper.selectList(), MenuDO::getId);
+        // 判断是否开启三权
+        ConfigDO config = configService.getByKey(ConfigKeyConstants.ROLE_PERMISSION_MODE);
+//        if (config != null && config.getConfigValue().equals(RolePermissionModeEnum.THREE_PERMISSION.getCode())) {
+//            return convertSet(roleMenuMapper.selectList(RoleMenuDO::getRoleId, roleIds), RoleMenuDO::getMenuId);
+//        }
+        // 开启三权
+        if(true){
+            if (roleService.hasAnySysAdmin(roleIds)) {
+                return convertSet(menuMapper.selectList(), MenuDO::getId);
+            }
+        }else{
+            if (roleService.hasAnySuperAdmin(roleIds)) {
+                return convertSet(menuMapper.selectList(), MenuDO::getId);
+            }
         }
+
+
         return convertSet(roleMenuMapper.selectList(RoleMenuDO::getRoleId, roleIds), RoleMenuDO::getMenuId);
     }
 

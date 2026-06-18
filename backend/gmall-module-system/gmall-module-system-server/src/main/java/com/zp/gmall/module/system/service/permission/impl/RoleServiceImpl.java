@@ -177,6 +177,25 @@ public class RoleServiceImpl extends ServiceImpl<RoleMapper, RoleDO> implements 
 
     }
 
+    /**
+     * 三权模式下使用
+     *
+     * @param roleIds
+     * @return
+     */
+    @Override
+    public boolean hasAnySysAdmin(Collection<String> roleIds) {
+        if (CollUtil.isEmpty(roleIds)) {
+            return false;
+        }
+        IRoleService roleService = roleServiceProvider.getObject();
+        return roleIds.stream().anyMatch(roleId -> {
+            RoleDO role = roleService.getRoleById(roleId);
+            return role != null && RoleCodeEnum.isSystemAdmin(role.getCode());
+        });
+
+    }
+
 
     /**
      * 校验角色的唯一字段是否重复

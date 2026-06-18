@@ -63,4 +63,6 @@ public interface IRoleService extends IService<RoleDO> {
     List<RoleVO> getRoleListByRoleIds(Collection<String> roleIds);
 
     boolean hasAnySuperAdmin(Collection<String> roleIds);
+
+    boolean hasAnySysAdmin(Collection<String> roleIds);
 }
