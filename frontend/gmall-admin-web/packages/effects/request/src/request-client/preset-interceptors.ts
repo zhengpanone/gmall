@@ -6,6 +6,15 @@ import { isFunction } from '@vben/utils';
 
 import axios from 'axios';
 
+function isUnauthorizedError(error: any) {
+  const { response } = error || {};
+  return (
+    response?.status === 401 ||
+    response?.data?.code === 401 ||
+    error?.code === 401
+  );
+}
+
 export const defaultResponseInterceptor = ({
   codeField = 'code',
   dataField = 'data',
@@ -59,9 +68,9 @@ export const authenticateResponseInterceptor = ({
 }): ResponseInterceptorConfig => {
   return {
     rejected: async (error) => {
-      const { config, response } = error;
+      const { config } = error;
       // 如果不是 401 错误，直接抛出异常
-      if (response?.status !== 401) {
+      if (!isUnauthorizedError(error)) {
         throw error;
       }
       // 判断是否启用了 refreshToken 功能
