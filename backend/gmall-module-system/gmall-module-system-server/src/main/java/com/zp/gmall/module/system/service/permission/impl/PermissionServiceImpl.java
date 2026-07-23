@@ -49,16 +49,13 @@ public class PermissionServiceImpl implements IPermissionService {
         }
         // 判断是否开启三权
         ConfigDO config = configService.getByKey(ConfigKeyConstants.ROLE_PERMISSION_MODE);
-//        if (config != null && config.getConfigValue().equals(RolePermissionModeEnum.THREE_PERMISSION.getCode())) {
-//            return convertSet(roleMenuMapper.selectList(RoleMenuDO::getRoleId, roleIds), RoleMenuDO::getMenuId);
-//        }
         // 开启三权
-        if(true){
-            if (roleService.hasAnySysAdmin(roleIds)) {
+        if(config != null && Boolean.parseBoolean(config.getConfigValue())){
+            if (roleService.hasAnySuperAdmin(roleIds)) {
                 return convertSet(menuMapper.selectList(), MenuDO::getId);
             }
         }else{
-            if (roleService.hasAnySuperAdmin(roleIds)) {
+            if (roleService.hasAnySysAdmin(roleIds)) {
                 return convertSet(menuMapper.selectList(), MenuDO::getId);
             }
         }

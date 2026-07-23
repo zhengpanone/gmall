@@ -23,34 +23,64 @@ const isEdit = computed(() => !!formData.value?.id);
 const schema: VbenFormSchema[] = [
   {
     component: 'Input',
-    fieldName: 'name',
-    label: $t('system.config.name'),
-    rules: 'required',
-  },
-  {
-    component: 'Input',
-    fieldName: 'key',
-    label: $t('system.config.key'),
-    rules: 'required',
-  },
-  {
-    component: 'Input',
-    fieldName: 'value',
-    label: $t('system.config.value'),
+    fieldName: 'category',
+    label: $t('system.config.category'),
     rules: 'required',
     componentProps: {
-      type: 'textarea',
-      rows: 3,
+      clearable: true,
+      maxlength: 50,
+      placeholder: $t('system.config.category'),
+      showWordLimit: true,
     },
   },
   {
-    component: 'InputNumber',
-    fieldName: 'type',
-    label: $t('system.config.type'),
-    defaultValue: 0,
+    component: 'Input',
+    fieldName: 'configName',
+    label: $t('system.config.name'),
+    rules: 'required',
     componentProps: {
-      min: 0,
-      style: { width: '100%' },
+      clearable: true,
+      maxlength: 50,
+      placeholder: $t('system.config.name'),
+      showWordLimit: true,
+    },
+  },
+  {
+    component: 'Input',
+    fieldName: 'configKey',
+    label: $t('system.config.key'),
+    rules: 'required',
+    componentProps: () => ({
+      clearable: true,
+      disabled: isEdit.value,
+      maxlength: 50,
+      placeholder: 'system_name',
+      showWordLimit: true,
+    }),
+  },
+  {
+    component: 'Input',
+    fieldName: 'configValue',
+    label: $t('system.config.value'),
+    rules: 'required',
+    componentProps: {
+      maxlength: 500,
+      placeholder: $t('system.config.value'),
+      rows: 4,
+      showWordLimit: true,
+      type: 'textarea',
+    },
+  },
+  {
+    component: 'Input',
+    fieldName: 'configType',
+    label: $t('system.config.type'),
+    rules: 'required',
+    componentProps: {
+      clearable: true,
+      maxlength: 50,
+      placeholder: 'system',
+      showWordLimit: true,
     },
   },
   {
@@ -63,6 +93,18 @@ const schema: VbenFormSchema[] = [
         { label: $t('common.enabled'), value: CommonStatusEnum.ENABLED },
         { label: $t('common.disabled'), value: CommonStatusEnum.DISABLED },
       ],
+    },
+  },
+  {
+    component: 'Input',
+    fieldName: 'remark',
+    label: $t('system.config.remark'),
+    componentProps: {
+      maxlength: 500,
+      placeholder: $t('system.config.remark'),
+      rows: 3,
+      showWordLimit: true,
+      type: 'textarea',
     },
   },
 ];
@@ -95,25 +137,27 @@ const [Drawer, drawerApi] = useVbenDrawer({
 
 async function onSubmit() {
   const { valid } = await formApi.validate();
-  if (valid) {
-    drawerApi.lock();
-    const values = await formApi.getValues();
-    try {
-      if (formData.value?.id) {
-        await updateConfig({
-          ...(values as SystemConfigApi.UpdateConfigParams),
-          id: formData.value.id,
-        });
-        ElMessage.success($t('common.actionMessage.editSuccess'));
-      } else {
-        await createConfig(values as SystemConfigApi.CreateConfigParams);
-        ElMessage.success($t('common.actionMessage.createSuccess'));
-      }
-      drawerApi.close();
-      emit('success');
-    } finally {
-      drawerApi.unlock();
+  if (!valid) {
+    return;
+  }
+
+  drawerApi.lock();
+  const values = await formApi.getValues();
+  try {
+    if (formData.value?.id) {
+      await updateConfig({
+        ...(values as SystemConfigApi.CreateConfigParams),
+        id: formData.value.id,
+      });
+      ElMessage.success($t('common.actionMessage.editSuccess'));
+    } else {
+      await createConfig(values as SystemConfigApi.CreateConfigParams);
+      ElMessage.success($t('common.actionMessage.createSuccess'));
     }
+    drawerApi.close();
+    emit('success');
+  } finally {
+    drawerApi.unlock();
   }
 }
 

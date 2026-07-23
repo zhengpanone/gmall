@@ -6,7 +6,13 @@
     <include resource="org/springframework/boot/logging/logback/console-appender.xml"/>
     <!--    <property name="LOG_FILE" value="${LOG_FILE:-${LOG_PATH:-${LOG_TEMP:-${java.io.tmpdir:-/tmp}}}/spring.log}"/>-->
     <!--定义日志文件的存储地址,使用绝对路径-->
-    <property name="log.path" value="./logs/system-server"/>
+    <!-- <property name="log.path" value="./logs/system-server"/>-->
+
+    <!-- 日志文件存储路径 -->
+    <springProperty scope="context" name="log.path" source="log.path"  defaultValue="./logs/system-server"/>
+    <springProperty scope="context" name="application.name" source="spring.application.name"  defaultValue="system-server"/>
+    <springProperty scope="context" name="HOSTNAME" source="HOSTNAME" defaultValue="localhost"/>
+
 
     <!-- 日志输出格式 -->
     <!-- 彩色日志 -->
@@ -35,6 +41,38 @@
             <pattern>${CONSOLE_LOG_PATTERN}</pattern>
             <charset>utf8</charset>
         </encoder>
+    </appender>
+
+    <appender name="LOKI" class="com.github.loki4j.logback.LokiAppender">
+        <http>
+            <url>http://127.0.0.1:3100/loki/api/v1/push</url>
+            <basicAuth>
+                <username>admin</username>
+                <password>admin</password>
+            </basicAuth>
+        </http>
+        <batch>
+            <maxItems>1000</maxItems>
+            <maxBytes>4194304</maxBytes>
+            <timeoutMs>5000</timeoutMs>
+        </batch>
+
+        <encoder>
+            <pattern>${CONSOLE_LOG_PATTERN}</pattern>
+            <charset>utf8</charset>
+        </encoder>
+        <format>
+            <label>
+                <pattern>application=${application.name},hostname=${HOSTNAME},ip=${IP},level=${level}</pattern>
+                <readMarkers>true</readMarkers>
+            </label>
+            <message>
+                <pattern>
+                    {"timestamp": "%d{yyyy-MM-dd HH:mm:ss.SSS}", "level": "%level", "logger": "%logger{36}.%method", "method":"%M", "line":"%line", "thread": "%thread", "message": "%msg%n"}
+                </pattern>
+            </message>
+            <sortByTime>true</sortByTime>
+        </format>
     </appender>
 
     <!-- INFO级别日志文件输出（按天滚动） -->
@@ -162,6 +200,7 @@
     <root level="INFO">
         <!-- 控制台输出 -->
         <appender-ref ref="CONSOLE"/>
+        <appender-ref ref="LOKI"/>
         <!-- 异步文件输出 -->
         <appender-ref ref="ASYNC_INFO"/>
         <appender-ref ref="ASYNC_ERROR"/>

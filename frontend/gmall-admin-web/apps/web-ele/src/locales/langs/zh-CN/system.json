@@ -88,11 +88,13 @@
   },
   "config": {
     "configManage": "参数管理",
+    "category": "参数分类",
     "name": "参数名称",
     "key": "参数键名",
     "value": "参数键值",
     "type": "参数类型",
     "createTime": "创建时间",
+    "remark": "备注",
     "status": "状态"
   },
   "notice": {

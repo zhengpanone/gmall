@@ -88,11 +88,13 @@
   },
   "config": {
     "configManage": "Config Management",
+    "category": "Config Category",
     "name": "Config Name",
     "key": "Config Key",
     "value": "Config Value",
     "type": "Config Type",
     "createTime": "Create Time",
+    "remark": "Remark",
     "status": "Status"
   },
   "notice": {

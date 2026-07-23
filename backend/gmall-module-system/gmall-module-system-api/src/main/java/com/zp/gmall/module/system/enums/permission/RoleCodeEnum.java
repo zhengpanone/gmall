@@ -13,9 +13,9 @@ public enum RoleCodeEnum {
 
     SUPER_ADMIN("super_admin", "超级管理员"),
     // 三权
-    SYSTEM_ADMIN("SYSTEM_ADMIN", "系统管理员"),
-    SECURITY_ADMIN("SECURITY_ADMIN", "安全管理员"),
-    AUDIT_ADMIN("AUDIT_ADMIN", "审计管理员"),
+    SYSTEM_ADMIN("system_admin", "系统管理员"),
+    SECURITY_ADMIN("security_admin", "安全管理员"),
+    AUDIT_ADMIN("audit_admin", "审计管理员"),
 
     AUTH_ADMIN("auth_admin", "权限管理员"),
     USER_ADMIN("user_admin", "用户管理员"),

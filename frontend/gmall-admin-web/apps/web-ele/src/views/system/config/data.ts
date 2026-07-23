@@ -1,6 +1,7 @@
 import type { OnActionClickFn, VxeTableGridColumns } from '#/adapter/vxe-table';
 import type { SystemConfigApi } from '#/api/system/config';
 
+import { CommonStatusEnum } from '#/api/core/common';
 import { $t } from '#/locales';
 
 export function useColumns(
@@ -9,30 +10,49 @@ export function useColumns(
   return [
     { type: 'seq', width: 60, title: '#' },
     {
-      field: 'name',
+      field: 'configName',
       title: $t('system.config.name'),
-      width: 150,
+      width: 160,
     },
     {
-      field: 'key',
+      field: 'configKey',
+      minWidth: 180,
       title: $t('system.config.key'),
-      width: 180,
     },
     {
-      field: 'value',
+      field: 'configValue',
+      minWidth: 220,
       title: $t('system.config.value'),
-      width: 200,
     },
     {
-      field: 'type',
+      field: 'configType',
       title: $t('system.config.type'),
-      width: 100,
+      width: 140,
     },
     {
-      cellRender: { name: 'CellTag' },
+      cellRender: {
+        name: 'CellTag',
+        options: [
+          {
+            color: 'success',
+            label: $t('common.enabled'),
+            value: CommonStatusEnum.ENABLED,
+          },
+          {
+            color: 'danger',
+            label: $t('common.disabled'),
+            value: CommonStatusEnum.DISABLED,
+          },
+        ],
+      },
       field: 'status',
       title: $t('system.config.status'),
       width: 100,
+    },
+    {
+      field: 'remark',
+      minWidth: 160,
+      title: $t('system.config.remark'),
     },
     {
       field: 'createTime',
@@ -42,9 +62,9 @@ export function useColumns(
     {
       align: 'right',
       cellRender: {
-        attrs: { onClick: onActionClick },
+        attrs: { nameField: 'configName', onClick: onActionClick },
         name: 'CellOperation',
-        options: ['edit', 'delete'],
+        options: ['edit', { code: 'delete', danger: true, text: $t('common.delete') }],
       },
       field: 'operation',
       fixed: 'right',

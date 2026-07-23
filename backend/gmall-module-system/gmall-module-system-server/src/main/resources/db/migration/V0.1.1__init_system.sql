@@ -7,10 +7,17 @@ INSERT INTO sys_user (id, username, password, nickname, dept_id, remark, email, 
 
 -- 角色
 BEGIN;
-INSERT INTO sys_role (id, name, code, sort, status, type, remark, creator, create_time, updater, update_time, deleted, deleted_time, tenant_id) VALUES ('1', '系统管理员', 'SYS_ADMIN', 1, 0, 1, '系统管理员', 'system', '2026-04-25 00:10:00', 'system', '2026-04-25 00:10:46', false, null, 0);
-INSERT INTO sys_role (id, name, code, sort, status, type, remark, creator, create_time, updater, update_time, deleted, deleted_time, tenant_id) VALUES ('2', '安全管理员', 'SEC_ADMIN', 2, 0, 1, '安全管理员', null, '2026-04-29 12:03:56', 'system','2026-04-29 04:06:12', false, null, 0);
-INSERT INTO sys_role (id, name, code, sort, status, type, remark, creator, create_time, updater, update_time, deleted, deleted_time, tenant_id) VALUES ('3', '安全审计员', 'AUDITOR', 3, 0, 1, '安全审计员', null, '2026-04-29 12:07:23', 'system','2026-04-29 13:05:22', false, null, 0);
+INSERT INTO sys_role (id, name, code, sort, status, type, remark, creator, create_time, updater, update_time, deleted, deleted_time, tenant_id) VALUES ('1', '系统管理员', 'system_admin', 1, 1, 1, '系统管理员', 'system', '2026-04-25 00:10:00', 'system', '2026-04-25 00:10:46', false, null, 0);
+INSERT INTO sys_role (id, name, code, sort, status, type, remark, creator, create_time, updater, update_time, deleted, deleted_time, tenant_id) VALUES ('2', '安全管理员', 'security_admin', 2, 1, 1, '安全管理员', 'system', '2026-04-29 12:03:56', 'system','2026-04-29 04:06:12', false, null, 0);
+INSERT INTO sys_role (id, name, code, sort, status, type, remark, creator, create_time, updater, update_time, deleted, deleted_time, tenant_id) VALUES ('3', '安全审计员', 'audit_admin', 3, 1, 1, '安全审计员', 'system', '2026-04-29 12:07:23', 'system','2026-04-29 13:05:22', false, null, 0);
 COMMIT;
+
+-- 用户角色
+INSERT INTO sys_user_role (id, user_id, role_id, creator, create_time, updater, update_time, deleted, deleted_time) VALUES ('1', '1', '1', 'system', '2026-06-23 10:53:16', 'system', '2026-06-23 10:53:22', false, null);
+
+-- 系统配置
+INSERT INTO sys_config (id, category, config_name, config_key, config_value, config_type, remark, status, visible, creator, create_time, updater, update_time, deleted, deleted_time) VALUES ('2067563883653283841', '系统设置', '是否开启三权', 'role_permission_mode', 'true', 'boolean', 'true是开启三权', 1, 1, 'system', '2026-06-18 19:03:38', 'system', '2026-06-18 19:03:38', false, null);
+
 
 -- 菜单
 BEGIN;
