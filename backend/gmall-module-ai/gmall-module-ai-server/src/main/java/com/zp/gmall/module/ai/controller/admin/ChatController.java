@@ -2,6 +2,7 @@ package com.zp.gmall.module.ai.controller.admin;
 
 import com.zp.gmall.module.ai.service.IChatService;
 import lombok.RequiredArgsConstructor;
+import org.springframework.ai.chat.client.ChatClient;
 import org.springframework.ai.chat.messages.AssistantMessage;
 import org.springframework.ai.chat.messages.Message;
 import org.springframework.ai.chat.messages.SystemMessage;
@@ -37,7 +38,7 @@ public class ChatController {
      * @return
      */
     @GetMapping("/simple")
-    public String chat(@RequestParam(value = "prompt", defaultValue = "你是谁") String prompt) {
+    public String chatSimple(@RequestParam(value = "prompt", defaultValue = "你是谁") String prompt) {
         return chatService.dashChat(prompt);
     }
 
