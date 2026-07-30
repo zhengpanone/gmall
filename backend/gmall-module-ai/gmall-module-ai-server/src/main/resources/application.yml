@@ -18,3 +18,8 @@ springdoc:
     enabled: true # 2.1 是否开启 Swagger 文档的官方 UI 界面
     path: /swagger-ui/index.html
   default-flat-param-object: true # 参见 https://doc.xiaominfo.com/docs/faq/v4/knife4j-parameterobject-flat-param 文档
+
+gmall:
+  security:
+    permit-all-urls:
+      - /admin-api/**

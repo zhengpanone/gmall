@@ -17,7 +17,7 @@ public interface IChatService {
      * @param history
      * @return
      */
-    String chat(List<Message> history);
+    String chatHistory(List<Message> history);
 
     Flux<String> stream(String prompt);
 }
