@@ -56,7 +56,7 @@ public class ChatServiceImpl implements IChatService {
      * Ollama 历史消息对话
      */
     @Override
-    public String chat(List<Message> history) {
+    public String chatHistory(List<Message> history) {
         Prompt prompt = new Prompt(history);
         ChatClient.CallResponseSpec response = ollamaChatClient.prompt(prompt).call();
         return response.content();
