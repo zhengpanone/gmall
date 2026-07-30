@@ -30,16 +30,15 @@ public class ChatController {
 
     private final IChatService chatService;
 
-
     /**
      * 简单聊天
      *
      * @param prompt
      * @return
      */
-    @GetMapping("/simple")
-    public String chatSimple(@RequestParam(value = "prompt", defaultValue = "你是谁") String prompt) {
-        return chatService.dashChat(prompt);
+    @GetMapping("/chat")
+    public String chat(@RequestParam(value = "prompt", defaultValue = "你是谁") String prompt) {
+        return chatService.chat(prompt);
     }
 
     @GetMapping("/chatHistory")
@@ -49,7 +48,7 @@ public class ChatController {
         messages.add(new UserMessage("什么是Spring Boot"));
         messages.add(new AssistantMessage("Spring Boot是..."));
         messages.add(new UserMessage(prompt)); // 它的优点呢？
-        return chatService.chat(messages);
+        return chatService.chatHistory(messages);
     }
 
     @GetMapping(value = "/stream", produces = MediaType.TEXT_EVENT_STREAM_VALUE)
