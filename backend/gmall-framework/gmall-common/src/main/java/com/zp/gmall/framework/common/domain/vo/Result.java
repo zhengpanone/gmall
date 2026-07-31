@@ -55,7 +55,7 @@ public class Result<T> implements Serializable {
         this.data = null;
     }
 
-    public static Result<?> ok() {
+    public static Result<Void> ok() {
         return instance(ResultEnum.SUCCESS.getCode(), ResultEnum.SUCCESS.getMessage(), null);
     }
 
