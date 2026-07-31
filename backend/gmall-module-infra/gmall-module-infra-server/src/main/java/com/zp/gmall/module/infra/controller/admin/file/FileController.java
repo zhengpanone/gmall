@@ -4,9 +4,11 @@ import cn.hutool.core.io.IoUtil;
 import com.zp.gmall.framework.common.domain.vo.Result;
 import com.zp.gmall.module.infra.controller.admin.file.dto.FileCreateDTO;
 import com.zp.gmall.module.infra.controller.admin.file.dto.FileUploadDTO;
+import com.zp.gmall.module.infra.controller.admin.file.vo.FilePresignedUrlVO;
 import com.zp.gmall.module.infra.service.file.IFileService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.Parameter;
+import io.swagger.v3.oas.annotations.Parameters;
 import io.swagger.v3.oas.annotations.media.Schema;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.annotation.Resource;
@@ -14,10 +16,7 @@ import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.validation.annotation.Validated;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
 import static com.zp.gmall.framework.common.domain.vo.Result.ok;
@@ -42,6 +41,17 @@ public class FileController {
         byte[] content = IoUtil.readBytes(file.getInputStream());
         return ok(fileService.createFile(content, file.getOriginalFilename(),
                 fileUploadDTO.getDirectory(), file.getContentType()));
+    }
+
+    @GetMapping("/presigned-url")
+    @Operation(summary = "获取文件预签名地址（上传）", description = "模式二：前端上传文件：用于前端直接上传七牛、阿里云 OSS 等文件存储器")
+    @Parameters({
+            @Parameter(name = "name", description = "文件名称", required = true),
+            @Parameter(name = "directory", description = "文件目录")
+    })
+    public Result<FilePresignedUrlVO> getFilePresignedUrl(@RequestParam("name") String name,
+                                                          @RequestParam(value = "directory", required = false) String directory) {
+        return ok(fileService.presignPutUrl(name, directory));
     }
 
     @PostMapping("/create")

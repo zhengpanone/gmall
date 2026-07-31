@@ -36,7 +36,7 @@
         <module>gmall-spring-boot-starter-captcha</module>
         <module>gmall-spring-boot-starter-security</module>
 
-        <!--        <module>gmall-spring-boot-starter-file</module>-->
+        <module>gmall-spring-boot-starter-file</module>
         <!--        <module>gmall-spring-boot-starter-test</module>-->
         <!--        <module>gmall-spring-boot-starter-desensitize</module>-->
         <!--        <module>gmall-spring-boot-starter-mq</module>-->

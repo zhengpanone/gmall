@@ -13,7 +13,7 @@ public interface FileClientFactory {
      * @param configId 配置编号
      * @return 文件客户端
      */
-    FileClient getFileClient(Long configId);
+    FileClient getFileClient(String configId);
 
     /**
      * 创建文件客户端
@@ -22,5 +22,5 @@ public interface FileClientFactory {
      * @param config
      * @param <Config>
      */
-    <Config extends FileClientConfig> void createOrUpdateFileClient(Long configId, Integer storage, Config config);
+    <Config extends FileClientConfig> void createOrUpdateFileClient(String configId, Integer storage, Config config);
 }
