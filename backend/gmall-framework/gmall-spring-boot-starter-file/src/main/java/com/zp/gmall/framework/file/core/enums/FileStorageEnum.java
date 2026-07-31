@@ -8,8 +8,6 @@ import com.zp.gmall.framework.file.core.client.db.DBFileClientConfig;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 
-import java.io.File;
-
 /**
  * Author : zhengpanone
  * Date : 2023/11/17 16:27
