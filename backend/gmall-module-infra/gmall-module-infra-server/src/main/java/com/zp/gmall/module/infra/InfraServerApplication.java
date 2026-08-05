@@ -1,7 +1,9 @@
 package com.zp.gmall.module.infra;
 
+import com.zp.gmall.framework.file.config.GmallFileAutoConfiguration;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.context.annotation.Import;
 
 /**
  * Author : zhengpanone
@@ -10,6 +12,7 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
  
  */
 @SpringBootApplication
+@Import(GmallFileAutoConfiguration.class)
 public class InfraServerApplication {
     public static void main(String[] args) {
         SpringApplication.run(InfraServerApplication.class, args);

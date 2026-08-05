@@ -3,6 +3,7 @@ package com.zp.gmall.framework.file.config;
 import com.zp.gmall.framework.file.core.client.FileClientFactory;
 import com.zp.gmall.framework.file.core.client.FileClientFactoryImpl;
 import org.springframework.boot.autoconfigure.AutoConfiguration;
+import org.springframework.context.annotation.Bean;
 
 /**
  * Author : zhengpanone
@@ -13,6 +14,7 @@ import org.springframework.boot.autoconfigure.AutoConfiguration;
 @AutoConfiguration
 public class GmallFileAutoConfiguration {
 
+    @Bean
     public FileClientFactory fileClientFactory() {
         return new FileClientFactoryImpl();
     }

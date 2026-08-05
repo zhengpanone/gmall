@@ -1,6 +1,9 @@
 package com.zp.gmall.framework.file.core.client;
 
+import cn.hutool.core.lang.Assert;
+import cn.hutool.core.util.ReflectUtil;
 import com.fasterxml.jackson.core.PrettyPrinter;
+import com.zp.gmall.framework.file.core.enums.FileStorageEnum;
 import lombok.extern.slf4j.Slf4j;
 
 import java.util.Map;
@@ -16,7 +19,8 @@ import java.util.concurrent.ConcurrentHashMap;
 public class FileClientFactoryImpl implements FileClientFactory {
 
     /**
-     * 文件客户端的map
+     * 文件客户端 Map
+     * key：配置编号
      */
     private final Map<String, AbstractFileClient<?>> fileClientMap = new ConcurrentHashMap<>();
 
@@ -48,6 +52,9 @@ public class FileClientFactoryImpl implements FileClientFactory {
     }
 
     private <Config extends FileClientConfig> AbstractFileClient<Config> createFileClient(String configId, Integer storage, Config config) {
-        return null;
+        FileStorageEnum storageEnum = FileStorageEnum.getByStorage(storage);
+        Assert.notNull(storageEnum, String.format("文件配置(%s) 为空", storageEnum));
+        // 创建客户端
+        return (AbstractFileClient<Config>) ReflectUtil.newInstance(storageEnum.getClientClass(), configId, config);
     }
 }
