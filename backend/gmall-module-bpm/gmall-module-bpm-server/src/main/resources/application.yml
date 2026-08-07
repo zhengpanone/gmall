@@ -1,0 +1,10 @@
+gmall:
+  info:
+    version: 0.0.1
+  web:
+    admin-ui:
+      url: http://127.0.0.1:8080
+
+  security:
+    permit-all-urls:
+      - /admin-api/category/**
