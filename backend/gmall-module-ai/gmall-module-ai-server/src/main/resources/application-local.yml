@@ -81,3 +81,6 @@ gmall:
   web:
     admin-ui:
       url: http://dashboard.gmall.cn
+
+# 注意：日志推送（Loki）相关的 gmall.logging.loki.* 配置在 bootstrap-local.yml，
+# 因为 Logback 在 bootstrap 阶段初始化，写在这里 springProperty 取不到值
