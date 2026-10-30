@@ -84,6 +84,7 @@
         <xercesImpl.version>2.12.2</xercesImpl.version>
         <weixin-java.version>4.5.5.B</weixin-java.version>
         <bizlog-sdk.version>3.0.3</bizlog-sdk.version>
+        <loki.version>1.6.0</loki.version>
 
         <spring.ai.version>1.1.2</spring.ai.version>
         <spring.ai.alibaba.version>1.1.2.0</spring.ai.alibaba.version>
@@ -922,7 +923,7 @@
             <dependency>
                 <groupId>com.github.loki4j</groupId>
                 <artifactId>loki-logback-appender</artifactId>
-                <version>1.6.0</version>
+                <version>${loki.version}</version>
             </dependency>
 
 
