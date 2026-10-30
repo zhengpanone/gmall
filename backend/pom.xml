@@ -65,12 +65,13 @@
             </activation>
             <properties>
                 <profiles.active>local</profiles.active>
-                <nacos.server>127.0.0.1:30848</nacos.server>
+                <nacos.server.address>127.0.0.1:30848</nacos.server.address>
                 <nacos.namespace>gmall</nacos.namespace>
                 <nacos.group>local</nacos.group>
                 <nacos.username>nacos</nacos.username>
                 <nacos.password>nacos</nacos.password>
                 <logstash.address>127.0.0.1:4560</logstash.address>
+                <loki.address>127.0.0.1:31920</loki.address>
                 <ai.dashscope.base-url>https://dashscope.aliyuncs.com/compatible-mode</ai.dashscope.base-url>
                 <ai.dashscope.model-id>qwen3.5-plus</ai.dashscope.model-id>
             </properties>
@@ -85,6 +86,7 @@
                 <nacos.username>nacos</nacos.username>
                 <nacos.password>nacos</nacos.password>
                 <logstash.address>127.0.0.1:4560</logstash.address>
+                <loki.address>127.0.0.1:31920</loki.address>
                 <ai.dashscope.agent.url>https://dashscope.aliyuncs.com/api/v1</ai.dashscope.agent.url>
                 <ai.dashscope.agent.model-id>qwen3.5-plus</ai.dashscope.agent.model-id>
             </properties>
@@ -99,6 +101,7 @@
                 <nacos.username>nacos</nacos.username>
                 <nacos.password>nacos</nacos.password>
                 <logstash.address>127.0.0.1:4560</logstash.address>
+                <loki.address>127.0.0.1:31920</loki.address>
             </properties>
         </profile>
     </profiles>

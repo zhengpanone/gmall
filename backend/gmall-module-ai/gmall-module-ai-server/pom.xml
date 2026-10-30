@@ -71,6 +71,11 @@
             <artifactId>gmall-spring-boot-starter-biz-tenant</artifactId>
         </dependency>
 
+        <dependency>
+            <groupId>com.github.loki4j</groupId>
+            <artifactId>loki-logback-appender</artifactId>
+        </dependency>
+
         <!-- flyway-->
         <dependency>
             <groupId>org.flywaydb</groupId>
