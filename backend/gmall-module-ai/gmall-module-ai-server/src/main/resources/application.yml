@@ -23,3 +23,64 @@ gmall:
   security:
     permit-all-urls:
       - /admin-api/**
+
+--- #################### 应用基础配置 ####################
+spring:
+  application:
+    name: ai-server
+  profiles:
+    active: local
+  jmx:
+    enabled: true
+
+server:
+  port: 48085
+  servlet:
+    context-path: /ai
+    # 大模型型对话中文乱码UTF-8编码处理
+    encoding:
+      enabled: true
+      force: true
+      charset: UTF-8
+      force-response: true
+
+# 日志文件配置。原先必须放 bootstrap.yml 才会生效（否则报 LOG_FILE_IS_UNDEFINED），
+# 移除 spring-cloud-starter-bootstrap 后不再有 bootstrap 上下文，放这里即可
+logging:
+  file:
+    # name: ${user.home}/log/${spring.application.name}.log # 日志文件名，全路径
+    name: /data/gmall/log/gmall-infra/${spring.application.name}.log
+  level:
+    web: debug
+    com.zp.gmall: debug
+    org.springframework.web.client: DEBUG
+    com.alibaba.cloud.ai: DEBUG
+
+--- #################### 注册中心 / 配置中心 ####################
+spring:
+  cloud:
+    nacos:
+      server-addr: ${nacos.server.address:127.0.0.1:30848}
+      username: nacos
+      password: nacos
+      discovery:
+        group: gmall
+        namespace: gmall
+        metadata:
+          version: 1.0.0 # 服务实例的版本号，可用于灰度发布
+
+      # Nacos Config 配置项，对应 NacosConfigProperties 配置属性类
+      # 仅作为下面 spring.config.import 的默认参数（group / namespace / file-extension）
+      config:
+        group: gmall
+        namespace: gmall
+        file-extension: yaml
+
+  # 移除 spring-cloud-starter-bootstrap 后，Nacos 不再自动加载配置，
+  # 必须通过 spring.config.import 显式声明要拉取的 dataId。
+  # 这里等价于原先 bootstrap 模式默认加载的 {spring.application.name}.yaml；
+  # 注意：这里的 dataId 写死为 ai-server.yaml，改了 spring.application.name 要同步改。
+  # optional: 表示拉取不到该配置也不阻塞启动；去掉 optional: 则拉取异常会快速失败
+  config:
+    import:
+      - optional:nacos:ai-server.yaml?group=gmall&refreshEnabled=true
