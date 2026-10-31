@@ -57,6 +57,17 @@ logging:
     org.springframework.web.client: DEBUG
     com.alibaba.cloud.ai: DEBUG
 
+--- #################### Spring AI ####################
+# 关闭 Spring AI 自动配置的 ChatClient.Builder（chatClientBuilder）。
+# 它要求容器中只有一个 ChatModel，而本项目 dashScopeChatModel + ollamaChatModel 两个共存，
+# 只要有地方注入 ChatClient.Builder 就会报 NoUniqueBeanDefinitionException。
+# 本项目由 SaaLLMConfig 自己提供 ollamaChatClient / dashScopeChatClient 两个命名 Bean，用不上它
+spring:
+  ai:
+    chat:
+      client:
+        enabled: false
+
 --- #################### 注册中心 / 配置中心 ####################
 spring:
   cloud:
