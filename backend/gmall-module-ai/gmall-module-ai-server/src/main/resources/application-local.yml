@@ -82,5 +82,22 @@ gmall:
     admin-ui:
       url: http://dashboard.gmall.cn
 
-# 注意：日志推送（Loki）相关的 gmall.logging.loki.* 配置在 bootstrap-local.yml，
-# 因为 Logback 在 bootstrap 阶段初始化，写在这里 springProperty 取不到值
+# 等价于原先 bootstrap 模式默认加载的 {spring.application.name}-{profile}.yaml
+spring:
+  config:
+    import:
+      - optional:nacos:ai-server-local.yaml?group=gmall&refreshEnabled=true
+
+--- #################### 日志推送（Loki）配置 ####################
+# 移除 spring-cloud-starter-bootstrap 后不再需要放 bootstrap-local.yml，
+# Logback 初始化晚于 application-*.yml 的加载，springProperty 能正常取到值
+gmall:
+  logging:
+    loki:
+      # 本机 Loki 推送地址。校验方式：curl http://127.0.0.1:31920/ready 应返回 200
+      # 30310 端口虽然也监听，但返回 302（网关重定向），推过去必然失败
+      url: http://127.0.0.1:31920/loki/api/v1/push
+      # LOKI = 开启推送；LOKI_NOP = 关闭推送。
+      # Loki 没启动时务必切成 LOKI_NOP：启动瞬间推送失败会被 LogbackLoggingSystem
+      # 判定为”配置错误“并中断启动（运行期推送失败不会致命）
+      appender: LOKI
