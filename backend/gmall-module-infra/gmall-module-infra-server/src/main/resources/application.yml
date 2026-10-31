@@ -12,7 +12,7 @@ springdoc:
   swagger-ui:
     enabled: true # 2.1 是否开启 Swagger 文档的官方 UI 界面
     path: /swagger-ui.html
-    default-flat-param-object: true # 参见 https://doc.xiaominfo.com/docs/faq/v4/knife4j-parameterobject-flat-param 文档
+  default-flat-param-object: true # 参见 https://doc.xiaominfo.com/docs/faq/v4/knife4j-parameterobject-flat-param 文档，注意它是 springdoc 顶层配置，不是 swagger-ui 的子配置
 
 
 # Spring Data Redis 配置
@@ -39,3 +39,56 @@ gmall:
 
   security:
     mock-enable: false
+
+--- #################### 应用基础配置 ####################
+spring:
+  application:
+    name: infra-server
+  profiles:
+    active: local
+  jmx:
+    enabled: true
+
+server:
+  port: 48081
+  servlet:
+    context-path: /infra
+
+#mybatis-plus:
+#  base-package: com.zp.gmall.module.infra.mapper
+
+# 日志文件配置。移除 spring-cloud-starter-bootstrap 后不再有 bootstrap 上下文，
+# logging.file.name 放在 application.yaml 即可生效（不会再产生 LOG_FILE_IS_UNDEFINED 文件）。
+# 实际输出策略由 logback-spring.xml 定义，这里只保留兜底文件名。
+# 注意不要再在这里配 logging.level.*：Spring Boot 会在 logback 配置加载之后再应用它们，
+# 会覆盖 logback-spring.xml 里的级别（例如 org.springframework: debug 会把框架 debug 日志全量推到 Loki）
+logging:
+  file:
+    name: ${user.home}/logs/${spring.application.name}.log # 日志文件名，全路径
+--- #################### 注册中心 / 配置中心 ####################
+spring:
+  cloud:
+    nacos:
+      server-addr: ${nacos.server.address:127.0.0.1:30848}
+      username: nacos
+      password: nacos
+      discovery:
+        group: gmall
+        namespace: gmall # 命名空间。这里使用 dev 开发环境
+        metadata:
+          version: 1.0.0 # 服务实例的版本号，可用于灰度发布
+
+      # Nacos Config 配置项，对应 NacosConfigProperties 配置属性类
+      config:
+        group: gmall # 使用的 Nacos 配置分组，默认为 DEFAULT_GROUP
+        namespace: gmall # 命名空间 dev 的ID，不能直接使用 dev 名称。创建命名空间的时候需要指定ID为 dev，这里使用 dev 开发环境
+        file-extension: yaml # 使用的 Nacos 配置集的 dataId 的文件拓展名，同时也是 Nacos 配置集的配置格式，默认为 properties
+
+  # 移除 spring-cloud-starter-bootstrap 后，Nacos 不再自动加载配置，
+  # 必须通过 spring.config.import 显式声明要拉取的 dataId。
+  # 这里等价于原先 bootstrap 模式默认加载的 {spring.application.name}.yaml；
+  # 注意：这里的 dataId 写死为 infra-server.yaml，改了 spring.application.name 要同步改。
+  # optional: 表示拉取不到该配置也不阻塞启动；去掉 optional: 则拉取异常会快速失败
+  config:
+    import:
+      - optional:nacos:infra-server.yaml?group=gmall&refreshEnabled=true
