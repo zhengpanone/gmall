@@ -88,6 +88,14 @@ spring:
     import:
       - optional:nacos:ai-server-local.yaml?group=gmall&refreshEnabled=true
 
+--- #################### 控制台彩色输出 ####################
+# Boot 默认是 detect：IDEA 的 Run 控制台不是 TTY，会被判定为不支持 ANSI，%clr 就不上色。
+# 本地开发强制开启；部署到容器/生产时不要设（或者用 detect），否则日志里会混入 ANSI 转义序列
+spring:
+  output:
+    ansi:
+      enabled: always
+
 --- #################### 日志推送（Loki）配置 ####################
 # 移除 spring-cloud-starter-bootstrap 后不再需要放 bootstrap-local.yml，
 # Logback 初始化晚于 application-*.yml 的加载，springProperty 能正常取到值
