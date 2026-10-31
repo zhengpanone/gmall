@@ -17,13 +17,12 @@
         <springProperty name="lokiAppender" source="gmall.logging.loki.appender" defaultValue="LOKI"/>
     </springProfile>
 
-    <!-- 控制台输出器 -->
-    <appender name="CONSOLE" class="ch.qos.logback.core.ConsoleAppender">
-        <encoder>
-            <pattern>%d{yyyy-MM-dd HH:mm:ss.SSS} [thread %thread] %-5level %logger{35}.%method - %msg%n</pattern>
-            <charset>UTF-8</charset>
-        </encoder>
-    </appender>
+    <!-- 控制台输出：复用 Spring Boot 自带配置片段，不手写 pattern
+         defaults.xml         = %clr 彩色输出、%wex 异常转换、CONSOLE_LOG_PATTERN 等默认属性 + 官方默认 logger 级别
+         console-appender.xml = 官方 CONSOLE Appender（等价于 Boot 程序化初始化的那个）
+         想调样式直接改 logging.pattern.console / logging.pattern.level，不用动这个文件 -->
+    <include resource="org/springframework/boot/logging/logback/defaults.xml"/>
+    <include resource="org/springframework/boot/logging/logback/console-appender.xml"/>
 
     <!-- 空实现，用于关闭 Loki 推送时占位 -->
     <appender name="LOKI_NOP" class="ch.qos.logback.core.helpers.NOPAppender"/>
