@@ -23,6 +23,7 @@ gmall:
   security:
     permit-all-urls:
       - /admin-api/**
+      - /ai/**
 
 --- #################### 应用基础配置 ####################
 spring:

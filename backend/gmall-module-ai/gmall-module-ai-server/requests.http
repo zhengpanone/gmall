@@ -1,12 +1,12 @@
 
 ### 普通对话
-GET http://localhost:48085/ai/chat/simple?
+GET http://localhost:48085/ai/admin-api/chat/chat?
     prompt="你好，请问你叫什么名字？"
 
 ### 多轮对话
-GET http://localhost:48085/ai/chat/chatHistory?
+GET http://localhost:48085/ai/admin-api/chat/chatHistory?
     prompt="它的优点呢？"
 
 ### 流式对话
-GET http://localhost:48085/ai/chat/stream?
+GET http://localhost:48085/ai/admin-api/chat/stream?
     prompt="你好，请问你叫什么名字？"
