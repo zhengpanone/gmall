@@ -51,6 +51,10 @@
         </format>
     </appender>
 
+    <!-- 关掉 Nacos 自带日志配置后，它的日志会汇入 root。Nacos 客户端 INFO 日志量很大，
+         这里降到 WARN，避免刷屏并占用 Loki 配额（需要排查 Nacos 连接问题时临时改成 INFO） -->
+    <logger name="com.alibaba.nacos" level="WARN"/>
+
     <root level="INFO">
         <appender-ref ref="CONSOLE"/>
         <appender-ref ref="${lokiAppender}"/>
