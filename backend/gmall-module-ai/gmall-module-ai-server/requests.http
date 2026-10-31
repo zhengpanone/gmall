@@ -10,3 +10,6 @@ GET http://localhost:48085/ai/admin-api/chat/chatHistory?
 ### 流式对话
 GET http://localhost:48085/ai/admin-api/chat/stream?
     prompt="你好，请问你叫什么名字？"
+
+### 获取模型列表
+GET http://localhost:48085/ai/admin-api/chat/listOllamaModels
