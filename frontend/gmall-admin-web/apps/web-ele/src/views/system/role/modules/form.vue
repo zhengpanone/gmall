@@ -1,0 +1,154 @@
+<script lang="ts" setup>
+import type { VbenFormSchema } from '#/adapter/form';
+
+import { computed, ref } from 'vue';
+
+import { useVbenDrawer } from '@vben/common-ui';
+import { $t } from '@vben/locales';
+
+import { ElMessage } from 'element-plus';
+
+import { useVbenForm } from '#/adapter/form';
+import { CommonStatusEnum } from '#/api/core/common';
+import { createRole, SystemRoleApi, updateRole } from '#/api/system/role';
+
+const emit = defineEmits<{
+  success: [];
+}>();
+
+const formData = ref<SystemRoleApi.Role>();
+const isEdit = computed(() => !!formData.value?.id);
+
+const roleTypeOptions = [
+  { label: $t('system.role.type1'), value: SystemRoleApi.RoleTypeEnum.SYSTEM },
+  { label: $t('system.role.type2'), value: SystemRoleApi.RoleTypeEnum.CUSTOM },
+];
+
+const schema: VbenFormSchema[] = [
+  {
+    component: 'Input',
+    fieldName: 'roleCode',
+    label: $t('system.role.code'),
+    rules: 'required',
+    componentProps: () => ({
+      disabled: isEdit.value,
+    }),
+  },
+  {
+    component: 'Input',
+    fieldName: 'roleName',
+    label: $t('system.role.name'),
+    rules: 'required',
+  },
+  {
+    component: 'RadioGroup',
+    fieldName: 'roleType',
+    label: $t('system.role.type'),
+    rules: 'required',
+    componentProps: {
+      options: roleTypeOptions,
+    },
+  },
+  {
+    component: 'InputNumber',
+    fieldName: 'sort',
+    label: $t('system.role.sort'),
+    defaultValue: 0,
+    componentProps: {
+      min: 0,
+      style: { width: '100%' },
+    },
+  },
+  {
+    component: 'RadioGroup',
+    fieldName: 'status',
+    label: $t('system.role.status'),
+    defaultValue: CommonStatusEnum.ENABLED,
+    componentProps: {
+      options: [
+        {
+          label: $t('common.enabled'),
+          value: CommonStatusEnum.ENABLED,
+        },
+        {
+          label: $t('common.disabled'),
+          value: CommonStatusEnum.DISABLED,
+        },
+      ],
+    },
+  },
+  {
+    component: 'Input',
+    fieldName: 'remark',
+    label: $t('system.role.remark'),
+    componentProps: {
+      type: 'textarea',
+      rows: 3,
+    },
+  },
+];
+
+const [Form, formApi] = useVbenForm({
+  commonConfig: {
+    colon: true,
+    formItemClass: 'col-span-1',
+  },
+  schema,
+  showDefaultActions: false,
+  wrapperClass: 'grid-cols-1 gap-x-4',
+});
+
+const [Drawer, drawerApi] = useVbenDrawer({
+  onConfirm: onSubmit,
+  onOpenChange(isOpen) {
+    if (isOpen) {
+      const data = drawerApi.getData<SystemRoleApi.Role>();
+      if (data?.id) {
+        formData.value = data;
+        formApi.setValues(data);
+      } else {
+        formData.value = {} as SystemRoleApi.Role;
+        formApi.resetForm();
+      }
+    }
+  },
+});
+
+async function onSubmit() {
+  const { valid } = await formApi.validate();
+  if (valid) {
+    drawerApi.lock();
+    const values = await formApi.getValues();
+    try {
+      if (formData.value?.id) {
+        await updateRole({
+          ...(values as SystemRoleApi.UpdateRoleParams),
+          id: formData.value.id,
+        });
+        ElMessage.success($t('common.actionMessage.editSuccess'));
+      } else {
+        await createRole(values as SystemRoleApi.CreateRoleParams);
+        ElMessage.success($t('common.actionMessage.createSuccess'));
+      }
+      drawerApi.close();
+      emit('success');
+    } catch {
+      // 全局错误拦截器会展示接口返回的消息，无需再次提示
+    } finally {
+      drawerApi.unlock();
+    }
+  }
+}
+
+const getDrawerTitle = computed(() =>
+  isEdit.value
+    ? $t('common.actionMessage.editItem', [$t('system.role.roleManage')])
+    : $t('common.actionMessage.createItem', [$t('system.role.roleManage')]),
+);
+</script>
+
+<template>
+  <Drawer class="w-full max-w-150" :title="getDrawerTitle">
+    <Form class="mx-4" layout="horizontal" />
+  </Drawer>
+</template>

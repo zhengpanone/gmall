@@ -1,0 +1,80 @@
+import type { PageParam } from '#/api/core/common';
+
+import { CommonStatusEnum } from '#/api/core/common';
+import { backendClient } from '#/api/request';
+
+export namespace SystemRoleApi {
+  /** 角色类型枚举 */
+  export enum RoleTypeEnum {
+    SYSTEM = 1,
+    CUSTOM = 2,
+  }
+
+  /** 角色信息 */
+  export interface Role {
+    id?: number | string;
+    roleName: string;
+    roleCode: string;
+    roleType: number;
+    sort: number;
+    status: CommonStatusEnum | number;
+    statusName?: string;
+    roleTypeName?: string;
+    createTime?: number[] | string;
+    updateTime?: number[] | string;
+    remark?: string;
+  }
+
+  /** 创建角色参数 */
+  export interface CreateRoleParams {
+    roleName: string;
+    roleCode: string;
+    roleType?: number;
+    sort?: number;
+    status?: CommonStatusEnum | number;
+    remark?: string;
+  }
+
+  /** 更新角色参数 */
+  export interface UpdateRoleParams extends CreateRoleParams {
+    id: number | string;
+  }
+
+  /** 角色分页查询参数 */
+  export interface RolePageParam extends PageParam {
+    roleName?: string;
+    roleCode?: string;
+    roleType?: number;
+  }
+}
+
+/** 分页获取角色列表 */
+export async function getRolePageList(params: Record<string, any> & SystemRoleApi.RolePageParam) {
+  return backendClient.get<Record<string, any>>('/system/admin-api/role/page', {
+    params,
+    // 分页接口返回结构不稳定，拿完整 body 交给页面兼容解析
+    responseReturn: 'body',
+  });
+}
+
+/** 获取角色详情 */
+export async function getRole(id: number | string) {
+  return backendClient.get<SystemRoleApi.Role>(`/system/admin-api/role/${id}`);
+}
+
+/** 创建角色 */
+export async function createRole(data: SystemRoleApi.CreateRoleParams) {
+  return backendClient.post('/system/admin-api/role/create', data);
+}
+
+/** 更新角色 */
+export async function updateRole(data: SystemRoleApi.UpdateRoleParams) {
+  return backendClient.put('/system/admin-api/role/update', data);
+}
+
+/** 删除角色（支持批量） */
+export async function deleteRole(ids: Array<number | string>) {
+  return backendClient.delete('/system/admin-api/role/delete', {
+    data: { ids },
+  });
+}

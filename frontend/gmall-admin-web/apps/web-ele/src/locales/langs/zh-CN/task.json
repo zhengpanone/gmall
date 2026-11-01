@@ -1,0 +1,15 @@
+{
+  "title": "我的任务",
+  "myTask": {
+    "title": "我发起的"
+  },
+  "taskTodo": {
+    "title": "我的待办"
+  },
+  "taskFinish": {
+    "title": "我的已办"
+  },
+  "taskCopy": {
+    "title": "我的抄送"
+  }
+}

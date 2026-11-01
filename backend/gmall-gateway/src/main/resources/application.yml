@@ -1,0 +1,75 @@
+spring:
+  main:
+    allow-circular-references: true # 允许循环依赖，因为项目是三层架构，无法避免这个情况。
+  cloud:
+    # Spring Cloud Gateway 配置项，对应 GatewayProperties 类
+    gateway:
+      discovery:
+        locator:
+          enabled: true #开启从注册中心动态创建路由的功能，利用微服务名进行路由
+      # 路由配置项，对应 RouteDefinition 数组
+      routes:
+         # system-server 服务
+        - id: system-admin-api # 路由的编号
+          uri: grayLb://system-server
+          predicates: # 断言，作为路由的匹配条件，对应 RouteDefinition 数组
+            - Path=/system/**
+          filters:
+            - RewritePath=/system/admin-api/v3/api-docs, /system/v3/api-docs # 配置，保证转发到 /v3/api-docs
+        - id: system-app-api # 路由的编号
+          uri: grayLb://system-server
+          predicates: # 断言，作为路由的匹配条件，对应 RouteDefinition 数组
+            - Path=/system/**
+          filters:
+            - RewritePath=/system/app-api/v3/api-docs, /system/v3/api-docs
+        # ====== ai-server 服务 ======
+        - id: ai-admin-api
+          uri: grayLb://ai-server
+          predicates:
+            - Path=/admin-api/ai/**
+          filters:
+            - RewritePath=/admin-api/ai/v3/api-docs, /ai/v3/api-docs
+
+        - id: ai-app-api
+          uri: grayLb://ai-server
+          predicates:
+            - Path=/app-api/ai/**
+          filters:
+            - RewritePath=/app-api/ai/v3/api-docs, /ai/v3/api-docs
+
+        ## infra-server 服务
+        - id: infra-admin-api # 路由的编号
+          uri: grayLb://infra-server
+          predicates: # 断言，作为路由的匹配条件，对应 RouteDefinition 数组
+            - Path=/infra/**
+          filters:
+            - RewritePath=/infra/admin-api/v3/api-docs, /infra/v3/api-docs
+        - id: infra-app-api # 路由的编号
+          uri: grayLb://infra-server
+          predicates: # 断言，作为路由的匹配条件，对应 RouteDefinition 数组
+            - Path=/infra/**
+          filters:
+            - RewritePath=/infra/app-api/v3/api-docs, /infra/v3/api-docs
+        - id: infra-spring-boot-admin # 路由的编号（Spring Boot Admin）
+          uri: grayLb://infra-server
+          predicates: # 断言，作为路由的匹配条件，对应 RouteDefinition 数组
+            - Path=/admin/**
+        - id: infra-websocket # 路由的编号（WebSocket）
+          uri: grayLb://infra-server
+          predicates: # 断言，作为路由的匹配条件，对应 RouteDefinition 数组
+            - Path=/infra/ws/**
+
+
+      x-forwarded:
+        prefix-enabled: false # 避免 Swagger 重复带上额外的 /admin-api/system 前缀
+
+# ====== 新增：SpringDoc 聚合配置 ======
+springdoc:
+  swagger-ui:
+    enabled: true
+    path: /swagger-ui
+    urls:
+      - name: system-server
+        url: /system/admin-api/v3/api-docs
+      - name: ai-server
+        url: /ai/admin-api/v3/api-docs

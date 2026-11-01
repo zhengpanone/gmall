@@ -1,0 +1,227 @@
+package com.zp.gmall.module.system.service.permission.impl;
+
+import cn.hutool.core.collection.CollUtil;
+import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
+import com.baomidou.mybatisplus.core.metadata.IPage;
+import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
+import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
+import com.google.common.annotations.VisibleForTesting;
+import com.zp.gmall.framework.common.domain.dto.Ids;
+import com.zp.gmall.framework.common.domain.vo.PageResult;
+import com.zp.gmall.framework.common.enums.CommonStatusEnum;
+import com.zp.gmall.framework.redis.core.annotation.BatchCacheEvict;
+import com.zp.gmall.framework.tenant.core.context.TenantContextHolder;
+import com.zp.gmall.module.system.constant.RedisKeyConstants;
+import com.zp.gmall.module.system.controller.admin.permission.dto.RoleDTO;
+import com.zp.gmall.module.system.controller.admin.permission.dto.RolePageDTO;
+import com.zp.gmall.module.system.controller.admin.permission.vo.RoleVO;
+import com.zp.gmall.module.system.convert.permission.RoleConvert;
+import com.zp.gmall.module.system.entity.permission.RoleDO;
+import com.zp.gmall.module.system.enums.permission.RoleCodeEnum;
+import com.zp.gmall.module.system.mapper.permission.RoleMapper;
+import com.zp.gmall.module.system.service.permission.IRoleService;
+import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
+import org.apache.commons.lang3.StringUtils;
+import org.mapstruct.factory.Mappers;
+import org.springframework.beans.factory.ObjectProvider;
+import org.springframework.cache.annotation.CacheEvict;
+import org.springframework.cache.annotation.CachePut;
+import org.springframework.cache.annotation.Cacheable;
+import org.springframework.stereotype.Service;
+
+import java.io.Serializable;
+import java.util.Collection;
+import java.util.List;
+import java.util.stream.Collectors;
+
+import static com.zp.gmall.framework.common.exception.util.ServiceExceptionUtils.exception;
+import static com.zp.gmall.module.system.enums.ErrorCodeConstants.*;
+
+/**
+ * @author : zhengpanone
+ * Date : 2026/4/24 23:39
+ * Version : v1.0.0
+ * Description:
+ */
+@Slf4j
+@Service
+@RequiredArgsConstructor
+public class RoleServiceImpl extends ServiceImpl<RoleMapper, RoleDO> implements IRoleService {
+
+    private final RoleConvert roleConvertMapper = Mappers.getMapper(RoleConvert.class);
+
+    private final ObjectProvider<IRoleService> roleServiceProvider;
+
+
+    @Override
+    @CachePut(cacheNames = RedisKeyConstants.ROLE, key = "#result.id", unless = "#result == null || #result.id == null")
+    public RoleDO createRole(RoleDTO roleDTO) {
+        String tenantId = TenantContextHolder.getTenantId();
+        if (StringUtils.isBlank(tenantId)) {
+            tenantId = "0";
+        }
+        // 校验角色
+        validateRoleDuplicate(roleDTO.getRoleName(), roleDTO.getRoleCode(), null, tenantId);
+        RoleDO roleDO = roleConvertMapper.convert(roleDTO);
+        // 设置默认状态为启用
+        roleDO.setStatus(CommonStatusEnum.ENABLE.getValue());
+        // 设置默认排序
+        if (roleDO.getSort() == null) {
+            roleDO.setSort(0);
+        }
+        baseMapper.insert(roleDO);
+        return roleDO;
+    }
+
+    @Override
+    public PageResult<RoleVO> getRolePage(RolePageDTO rolePageDTO) {
+        String tenantId = TenantContextHolder.getTenantId();
+        if (StringUtils.isBlank(tenantId)) {
+            tenantId = "0";
+        }
+        // 构建分页查询条件
+        Page<RoleDO> page = new Page<>(rolePageDTO.getPageNo(), rolePageDTO.getPageSize());
+        LambdaQueryWrapper<RoleDO> queryWrapper = new LambdaQueryWrapper<>();
+        queryWrapper.eq(RoleDO::getTenantId, tenantId);
+        // 按角色名称模糊查询
+        if (StringUtils.isNotBlank(rolePageDTO.getRoleName())) {
+            queryWrapper.like(RoleDO::getName, rolePageDTO.getRoleName());
+        }
+        // 按角色编码模糊查询
+        if (StringUtils.isNotBlank(rolePageDTO.getRoleCode())) {
+            queryWrapper.like(RoleDO::getCode, rolePageDTO.getRoleCode());
+        }
+        // 按角色类型精确查询
+        if (rolePageDTO.getRoleType() != null) {
+            queryWrapper.eq(RoleDO::getType, rolePageDTO.getRoleType());
+        }
+        // 按创建时间倒序排序
+        queryWrapper.orderByAsc(RoleDO::getSort);
+        queryWrapper.orderByDesc(RoleDO::getCreateTime, RoleDO::getUpdateTime);
+
+        // 执行分页查询
+        IPage<RoleDO> rolePage = baseMapper.selectPage(page, queryWrapper);
+
+        // 转换为VO
+        List<RoleVO> voList = rolePage.getRecords().stream()
+                .map(roleConvertMapper::convert)
+                .collect(Collectors.toList());
+
+        return PageResult.ok(rolePage.getTotal(), rolePage.getCurrent(), rolePage.getSize(), voList);
+    }
+
+    @Cacheable(cacheNames = RedisKeyConstants.ROLE, key = "#roleId", unless = "#result == null")
+    @Override
+    public RoleDO getRoleById(String roleId) {
+        RoleDO role = baseMapper.selectById(roleId);
+        if (role == null) {
+            throw exception(ROLE_NOT_EXISTS);
+        }
+        return role;
+    }
+
+    @CacheEvict(cacheNames = RedisKeyConstants.ROLE, key = "#roleDTO.id")
+    @Override
+    public void updateRole(RoleDTO roleDTO) {
+        String tenantId = TenantContextHolder.getTenantId();
+        if (StringUtils.isBlank(tenantId)) {
+            tenantId = "0";
+        }
+        // 校验角色是否存在
+        RoleDO existRole = baseMapper.selectById(roleDTO.getId());
+        if (existRole == null) {
+            throw exception(ROLE_NOT_EXISTS);
+        }
+        // 校验角色唯一性
+        validateRoleDuplicate(roleDTO.getRoleName(), roleDTO.getRoleCode(), roleDTO.getId(), tenantId);
+        // 更新角色
+        RoleDO roleDO = roleConvertMapper.convert(roleDTO);
+        roleDO.setId(roleDTO.getId());
+        baseMapper.updateById(roleDO);
+    }
+
+    @BatchCacheEvict(value = RedisKeyConstants.ROLE, keys = "#ids?.ids")
+    @Override
+    public void deleteRole(Ids ids) {
+        if (ids == null || CollUtil.isEmpty(ids.getIds())) {
+            return;
+        }
+        Collection<? extends Serializable> roleIds = ids.getIds();
+        // 校验角色是否存在
+        for (Serializable id : roleIds) {
+            RoleDO roleDO = baseMapper.selectById(id);
+            if (roleDO == null) {
+                throw exception(ROLE_NOT_EXISTS);
+            }
+        }
+        baseMapper.deleteByIds(roleIds);
+    }
+
+    @Override
+    public List<RoleVO> getRoleListByRoleIds(Collection<String> roleIds) {
+        List<RoleDO> roleList = baseMapper.selectByIds(roleIds);
+        return RoleConvert.INSTANCE.convert(roleList);
+    }
+
+    @Override
+    public boolean hasAnySuperAdmin(Collection<String> roleIds) {
+        if (CollUtil.isEmpty(roleIds)) {
+            return false;
+        }
+        IRoleService roleService = roleServiceProvider.getObject();
+        return roleIds.stream().anyMatch(roleId -> {
+            RoleDO role = roleService.getRoleById(roleId);
+            return role != null && RoleCodeEnum.isSuperAdmin(role.getCode());
+        });
+
+    }
+
+    /**
+     * 三权模式下使用
+     *
+     * @param roleIds
+     * @return
+     */
+    @Override
+    public boolean hasAnySysAdmin(Collection<String> roleIds) {
+        if (CollUtil.isEmpty(roleIds)) {
+            return false;
+        }
+        IRoleService roleService = roleServiceProvider.getObject();
+        return roleIds.stream().anyMatch(roleId -> {
+            RoleDO role = roleService.getRoleById(roleId);
+            return role != null && RoleCodeEnum.isSystemAdmin(role.getCode());
+        });
+
+    }
+
+
+    /**
+     * 校验角色的唯一字段是否重复
+     * <p>
+     * 1. 是否存在相同名字的角色
+     * 2. 是否存在相同编码的角色
+     *
+     * @param name 角色名字
+     * @param code 角色额编码
+     * @param id   角色编号
+     */
+    @VisibleForTesting
+    void validateRoleDuplicate(String name, String code, String id, String tenantId) {
+        // 0. 超级管理员，不允许创建
+        if (RoleCodeEnum.isSuperAdmin(code)) {
+            throw exception(ROLE_ADMIN_CODE_ERROR, code);
+        }
+        // 1. 该 name 名字被其它角色所使用
+        RoleDO role = baseMapper.selectByName(name, tenantId);
+        if (role != null && !role.getId().equals(id)) {
+            throw exception(ROLE_NAME_DUPLICATE, name);
+        }
+        // 该 code 编码被其它角色所使用
+        role = baseMapper.selectByCode(code, tenantId);
+        if (role != null && !role.getId().equals(id)) {
+            throw exception(ROLE_CODE_DUPLICATE, code);
+        }
+    }
+}

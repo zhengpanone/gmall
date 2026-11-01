@@ -1,0 +1,80 @@
+### 创建分类
+POST {{productBaseUrl}}/admin-api/category/create
+Content-Type: application/json
+
+{
+  "name": "手机",
+  "parentId": "0"
+}
+
+### 更新分类
+PUT {{productBaseUrl}}/admin-api/category/update
+Content-Type: application/json
+
+{
+  "id": "2054144201357340673",
+  "parentId": "0",
+  "name": "手机1"
+}
+
+### 分页查看分类
+GET {{productBaseUrl}}/admin-api/category/page
+Content-Type: application/json
+
+{
+  "pageNo": "1",
+  "pageSize": "10"
+}
+
+### 查看分类详情
+GET {{productBaseUrl}}/admin-api/category/get?id=2054144201357340673
+Content-Type: application/json
+
+
+### 删除分类
+DELETE {{productBaseUrl}}/admin-api/category/delete
+Content-Type: application/json
+
+{
+  "ids": ["2054144201357340673"]
+}
+
+### 创建品牌
+POST {{productBaseUrl}}/admin-api/brand/create
+Content-Type: application/json
+
+{
+  "name": "小米"
+}
+
+### 更新品牌
+PUT {{productBaseUrl}}/admin-api/brand/update
+Content-Type: application/json
+
+{
+  "id": "2054101272802734081",
+  "name": "小米"
+}
+
+### 分页查看品牌
+GET {{productBaseUrl}}/admin-api/brand/page
+Content-Type: application/json
+
+{
+    "pageNo": "1",
+    "pageSize": "10"
+}
+
+### 查看品牌详情
+GET {{productBaseUrl}}/admin-api/brand/get?id=2054101272802734081
+Content-Type: application/json
+
+
+### 删除品牌
+DELETE {{productBaseUrl}}/admin-api/brand/delete
+Content-Type: application/json
+
+{
+  "ids": ["2054101272802734081"]
+}
+

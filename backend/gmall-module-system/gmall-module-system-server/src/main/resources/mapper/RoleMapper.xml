@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.zp.gmall.module.system.mapper.permission.RoleMapper">
+
+    <select id="selectByName" resultType="com.zp.gmall.module.system.entity.permission.RoleDO">
+        select *
+        from sys_role
+        where name = #{roleName}
+          and tenant_id = #{tenantId}
+    </select>
+
+    <select id="selectByCode" resultType="com.zp.gmall.module.system.entity.permission.RoleDO">
+        select *
+        from sys_role
+        where code = #{roleCode}
+          and tenant_id = #{tenantId}
+    </select>
+</mapper>

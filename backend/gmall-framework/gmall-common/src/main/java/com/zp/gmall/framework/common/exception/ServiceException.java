@@ -1,0 +1,66 @@
+package com.zp.gmall.framework.common.exception;
+
+import com.zp.gmall.framework.common.enums.ResultEnum;
+import com.zp.gmall.framework.common.exception.enums.ServiceErrorCodeRange;
+import lombok.Data;
+import lombok.EqualsAndHashCode;
+
+import java.io.Serial;
+
+/**
+ * 业务逻辑异常Exception
+ */
+@Data
+@EqualsAndHashCode(callSuper = true)
+public final class ServiceException extends RuntimeException {
+
+    @Serial
+    private static final long serialVersionUID = 1L;
+    /**
+     * 业务错误码
+     *
+     * @see ServiceErrorCodeRange
+     */
+    private int code;
+    /**
+     * 错误提示
+     */
+    private String message;
+
+    /**
+     * 空构造方法，避免反序列化问题
+     */
+    public ServiceException() {
+    }
+
+    public ServiceException(ErrorCode errorCode) {
+        this.code = errorCode.getCode();
+        this.message = errorCode.getMsg();
+    }
+
+    public ServiceException(String message) {
+        this.code = ResultEnum.INTERNAL_SERVER_ERROR.getCode();
+        this.message = message;
+    }
+
+    public ServiceException(Integer code, String message) {
+        this.code = code;
+        this.message = message;
+    }
+
+    public ServiceException setCode(Integer code) {
+        this.code = code;
+        return this;
+    }
+
+    public ServiceException setMsg(String message) {
+        this.message = message;
+        return this;
+    }
+
+    public ServiceException setCode(int code) {
+        this.code = code;
+        return this;
+    }
+
+}

@@ -1,0 +1,3 @@
+com.zp.gmall.framework.security.config.GmallSecurityAutoConfiguration
+com.zp.gmall.framework.security.config.GmallWebSecurityConfigurerAdapter
+com.zp.gmall.framework.security.config.GmallSecurityRpcAutoConfiguration

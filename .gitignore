@@ -1,0 +1,7 @@
+**/.idea
+**/target
+**/logs
+**/*.iml
+**/.flattened-pom.xml
+**/rebel.xml
+

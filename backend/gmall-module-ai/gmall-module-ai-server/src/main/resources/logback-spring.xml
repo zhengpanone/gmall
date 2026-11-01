@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- 注意：文件名必须为 logback-spring.xml，springProperty / springProfile 标签才能被 Spring Boot 正确解析 -->
+<configuration>
+
+    <!-- 引入 Spring 配置：应用名与 Loki 推送地址 -->
+    <springProperty name="appName" source="spring.application.name" defaultValue="ai-server"/>
+    <springProperty name="lokiUrl" source="gmall.logging.loki.url" defaultValue="http://127.0.0.1:31920/loki/api/v1/push"/>
+
+    <!-- Loki 推送开关：用 gmall.logging.loki.appender 指定挂在 root 上的 appender 名称
+         LOKI     = 真实推送
+         LOKI_NOP = 丢弃不推送
+         原因：Loki 不可用时（如 WSL/k8s 没起、端口不通），loki4j 会把 HTTP 302/5xx 写入 Logback StatusManager，
+               被 LogbackLoggingSystem 判为配置错误而中断启动，所以默认留一个可关闭的开关 -->
+    <springProperty name="lokiAppender" source="gmall.logging.loki.appender" defaultValue="LOKI_NOP"/>
+    <springProfile name="!local">
+        <!-- 非 local 环境默认推送（仍可用 gmall.logging.loki.appender 显式关闭） -->
+        <springProperty name="lokiAppender" source="gmall.logging.loki.appender" defaultValue="LOKI"/>
+    </springProfile>
+
+    <!-- 控制台输出：复用 Spring Boot 自带配置片段，不手写 pattern
+         defaults.xml         = %clr 彩色输出、%wex 异常转换、CONSOLE_LOG_PATTERN 等默认属性 + 官方默认 logger 级别
+         console-appender.xml = 官方 CONSOLE Appender（等价于 Boot 程序化初始化的那个）
+         想调样式直接改 logging.pattern.console / logging.pattern.level，不用动这个文件 -->
+    <include resource="org/springframework/boot/logging/logback/defaults.xml"/>
+    <include resource="org/springframework/boot/logging/logback/console-appender.xml"/>
+
+    <!-- 空实现，用于关闭 Loki 推送时占位 -->
+    <appender name="LOKI_NOP" class="ch.qos.logback.core.helpers.NOPAppender"/>
+
+    <!-- Loki 输出器 -->
+    <appender name="LOKI" class="com.github.loki4j.logback.Loki4jAppender">
+        <http>
+            <url>${lokiUrl}</url>
+        </http>
+        <format>
+            <label>
+                <!-- 低基数标签，千万别把 traceId/userId 放进 label -->
+                <pattern>application=${appName},level=%level</pattern>
+                <readMarkers>true</readMarkers>
+            </label>
+            <message>
+                <!-- 结构化 JSON 正文 -->
+                <pattern>
+                    {"timestamp": "%d{yyyy-MM-dd HH:mm:ss.SSS}", "level": "%level", "logger": "%logger{36}.%method", "method":"%M", "line":"%line", "thread": "%thread", "message": "%msg%n"}
+                </pattern>
+            </message>
+            <batchSize>1000</batchSize>
+            <sendTimeoutMs>1000</sendTimeoutMs>
+            <sortByTime>true</sortByTime>
+        </format>
+    </appender>
+
+    <!-- 关掉 Nacos 自带日志配置后，它的日志会汇入 root。Nacos 客户端 INFO 日志量很大，
+         这里降到 WARN，避免刷屏并占用 Loki 配额（需要排查 Nacos 连接问题时临时改成 INFO） -->
+    <logger name="com.alibaba.nacos" level="WARN"/>
+
+    <root level="INFO">
+        <appender-ref ref="CONSOLE"/>
+        <appender-ref ref="${lokiAppender}"/>
+    </root>
+
+</configuration>

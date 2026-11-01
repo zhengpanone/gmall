@@ -1,0 +1,40 @@
+package com.zp.gmall.module.system.convert.user;
+
+import com.zp.gmall.module.system.controller.admin.user.dto.UserDTO;
+import com.zp.gmall.module.system.controller.admin.user.vo.AdminUserVO;
+import com.zp.gmall.module.system.convert.auth.AuthConvert;
+import com.zp.gmall.module.system.entity.user.UserDO;
+import org.mapstruct.Mapper;
+import org.mapstruct.Mapping;
+import org.mapstruct.factory.Mappers;
+
+import java.util.List;
+import java.util.stream.Collectors;
+
+/**
+ * Author : zhengpanone
+ * Date : 2025/3/28 13:26
+ * Version : v1.0.0
+ * Description:
+ */
+@Mapper(componentModel = "spring")
+public interface UserConvert {
+
+    UserConvert INSTANCE = Mappers.getMapper(UserConvert.class);
+
+
+    @Mapping(source = "id", target = "id")
+    @Mapping(source = "username", target = "username")
+    @Mapping(target = "postIds", ignore = true)
+    AdminUserVO convert(UserDO userDO);
+
+    default List<AdminUserVO> convert(List<UserDO> userDOList) {
+        return userDOList.stream().map(this::convert).collect(Collectors.toList());
+    }
+
+
+    @Mapping(target = "loginIp", ignore = true)
+    @Mapping(target = "loginDate", ignore = true)
+    UserDO convert(UserDTO userDTO);
+    
+}

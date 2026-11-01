@@ -1,0 +1,41 @@
+package com.zp.gmall.module.system.controller.admin.tenant.dto;
+
+import io.swagger.v3.oas.annotations.media.Schema;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
+import lombok.Data;
+import lombok.NoArgsConstructor;
+
+import java.io.Serial;
+import java.io.Serializable;
+
+/**
+ *
+ * Description:
+ *
+ * @author zhengpan
+ * @version 1.0.0
+ * @since 2026-05-08
+ */
+@Data
+@Builder
+@NoArgsConstructor
+@AllArgsConstructor
+@Schema(title = "租户套餐保存DTO", description = "租户套餐保存传输对象")
+public class TenantPackageDTO implements Serializable {
+
+    @Serial
+    private static final long serialVersionUID = 1L;
+
+    @Schema(title = "租户套餐名称", description = "租户套餐名称", example = "租户套餐名称")
+    private String packageName;
+
+    @Schema(title = "租户套餐编码", description = "租户套餐编码", example = "租户套餐编码")
+    private String packageCode;
+
+    @Schema(title = "租户套餐状态", description = "租户套餐状态", example = "租户套餐状态")
+    private String status;
+
+    @Schema(title = "租户套餐描述", description = "租户套餐描述", example = "租户套餐描述")
+    private String description;
+}

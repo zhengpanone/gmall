@@ -1,0 +1,243 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<configuration>
+    <!--定义日志文件的存储地址,使用绝对路径-->
+    <property name="log.path" value="./logs/infra-server"/>
+    <!-- 引入 Spring 配置：应用名与 Loki 推送地址 -->
+    <springProperty name="appName" source="spring.application.name" defaultValue="infra-server"/>
+    <springProperty name="lokiUrl" source="gmall.logging.loki.url" defaultValue="http://127.0.0.1:31920/loki/api/v1/push"/>
+
+    <!-- Loki 推送开关：用 gmall.logging.loki.appender 指定挂在 root 上的 appender 名称
+         LOKI     = 真实推送
+         LOKI_NOP = 丢弃不推送
+         原因：Loki 不可用时（如 WSL/k8s 没起、端口不通），loki4j 会把 HTTP 302/5xx 写入 Logback StatusManager，
+               被 LogbackLoggingSystem 判为配置错误而中断启动，所以默认留一个可关闭的开关 -->
+    <springProperty name="lokiAppender" source="gmall.logging.loki.appender" defaultValue="LOKI_NOP"/>
+    <springProfile name="!local">
+        <!-- 非 local 环境默认推送（仍可用 gmall.logging.loki.appender 显式关闭） -->
+        <springProperty name="lokiAppender" source="gmall.logging.loki.appender" defaultValue="LOKI"/>
+    </springProfile>
+
+    <!-- 日志输出格式 -->
+    <!-- 彩色日志 -->
+    <!-- 彩色日志依赖的渲染类 - 使用新的class属性替代converterClass -->
+    <conversionRule conversionWord="clr" class="org.springframework.boot.logging.logback.ColorConverter" />
+    <conversionRule conversionWord="wex" class="org.springframework.boot.logging.logback.WhitespaceThrowableProxyConverter" />
+    <conversionRule conversionWord="wEx" class="org.springframework.boot.logging.logback.ExtendedWhitespaceThrowableProxyConverter" />
+
+    <!-- 控制台日志格式（使用Spring Boot默认格式） -->
+    <property name="CONSOLE_LOG_PATTERN"
+              value="%clr(%d{${LOG_DATEFORMAT_PATTERN:-yyyy-MM-dd HH:mm:ss.SSS}}){faint} %clr(${LOG_LEVEL_PATTERN:-%5p}) %clr(${PID:- }){magenta} %clr(---){faint} %clr([%15.15t]){faint} %clr(%-40.40logger{39}){cyan} %clr(:){faint} %m%n${LOG_EXCEPTION_CONVERSION_WORD:-%wEx}"/>
+
+    <!-- 文件日志格式 -->
+    <property name="FILE_LOG_PATTERN"
+              value="%d{${LOG_DATEFORMAT_PATTERN:-yyyy-MM-dd HH:mm:ss.SSS}} ${LOG_LEVEL_PATTERN:-%5p} ${PID:- } --- [%t] %-40.40logger{39} : %m%n${LOG_EXCEPTION_CONVERSION_WORD:-%wEx}"/>
+
+    <!-- 错误日志专用格式 -->
+    <property name="ERROR_LOG_PATTERN"
+              value="%d{yyyy-MM-dd HH:mm:ss.SSS} %-5level ${PID:- } --- [%t] %-40.40logger{39} : %msg%n%wEx"/>
+
+    <!-- Console 输出设置 -->
+    <appender name="CONSOLE" class="ch.qos.logback.core.ConsoleAppender">
+        <encoder>
+            <pattern>${CONSOLE_LOG_PATTERN}</pattern>
+            <charset>utf8</charset>
+        </encoder>
+    </appender>
+
+    <!-- 空实现，用于关闭 Loki 推送时占位 -->
+    <appender name="LOKI_NOP" class="ch.qos.logback.core.helpers.NOPAppender"/>
+
+    <!-- Loki 输出器。注意 loki4j 版本为 1.6.0：
+         batchSize 在 1.4.0 已移除（现名 batchMaxItems，且是 appender 顶层配置）、
+         sendTimeoutMs 从来不存在（等价项是 http.requestTimeoutMs）、
+         format.sortByTime 在 1.6.0 已移除；写错位置/写错名字会被 Joran 报未知属性，
+         写进 StatusManager 后可能被 Spring Boot 判定为日志配置错误而中断启动 -->
+    <appender name="LOKI" class="com.github.loki4j.logback.Loki4jAppender">
+        <http>
+            <url>${lokiUrl}</url>
+            <requestTimeoutMs>5000</requestTimeoutMs>
+        </http>
+        <batchMaxItems>1000</batchMaxItems>
+        <format>
+            <label>
+                <!-- 低基数标签，千万别把 traceId/userId 放进 label -->
+                <pattern>application=${appName},level=%level</pattern>
+                <readMarkers>true</readMarkers>
+            </label>
+            <message>
+                <!-- 结构化 JSON 正文 -->
+                <pattern>
+                    {"timestamp": "%d{yyyy-MM-dd HH:mm:ss.SSS}", "level": "%level", "logger": "%logger{36}.%method", "method":"%M", "line":"%line", "thread": "%thread", "message": "%msg%n"}
+                </pattern>
+            </message>
+        </format>
+    </appender>
+
+    <!-- INFO级别日志文件输出（按天滚动） -->
+    <appender name="FILE_INFO" class="ch.qos.logback.core.rolling.RollingFileAppender">
+        <file>${log.path}/infra_info.log</file>
+        <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
+            <fileNamePattern>${log.path}/system.%d{yyyy-MM-dd}.log</fileNamePattern>
+            <!-- 最大保留天数 -->
+            <maxHistory>7</maxHistory>
+            <!-- 单个文件最大大小 -->
+            <totalSizeCap>1GB</totalSizeCap>
+        </rollingPolicy>
+        <encoder>
+            <pattern>${FILE_LOG_PATTERN}</pattern>
+            <charset>UTF-8</charset>
+        </encoder>
+        <!-- 只记录INFO及以上级别的日志 -->
+        <filter class="ch.qos.logback.classic.filter.ThresholdFilter">
+            <level>INFO</level>
+        </filter>
+    </appender>
+
+    <!-- ERROR级别日志文件输出（按天滚动） -->
+    <appender name="FILE_ERROR" class="ch.qos.logback.core.rolling.RollingFileAppender">
+        <file>${log.path}/infra_error.log</file>
+        <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
+            <fileNamePattern>${log.path}/error.%d{yyyy-MM-dd}.log</fileNamePattern>
+            <maxHistory>30</maxHistory> <!-- 错误日志保留更长时间 -->
+            <totalSizeCap>2GB</totalSizeCap>
+        </rollingPolicy>
+        <encoder>
+            <pattern>${ERROR_LOG_PATTERN}</pattern>
+            <charset>UTF-8</charset>
+        </encoder>
+        <!-- 只记录ERROR级别日志 -->
+        <filter class="ch.qos.logback.classic.filter.LevelFilter">
+            <level>ERROR</level>
+            <onMatch>ACCEPT</onMatch>
+            <onMismatch>DENY</onMismatch>
+        </filter>
+    </appender>
+
+    <!-- DEBUG级别日志文件输出 -->
+    <appender name="FILE_DEBUG" class="ch.qos.logback.core.rolling.RollingFileAppender">
+        <file>${log.path}/infra_debug.log</file>
+        <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
+            <fileNamePattern>${log.path}/debug.%d{yyyy-MM-dd}.log</fileNamePattern>
+            <maxHistory>3</maxHistory>
+            <totalSizeCap>500MB</totalSizeCap>
+        </rollingPolicy>
+        <encoder>
+            <pattern>${FILE_LOG_PATTERN}</pattern>
+            <charset>UTF-8</charset>
+        </encoder>
+        <filter class="ch.qos.logback.classic.filter.ThresholdFilter">
+            <level>DEBUG</level>
+        </filter>
+    </appender>
+
+    <!-- 异步输出（性能优化） -->
+    <appender name="ASYNC_INFO" class="ch.qos.logback.classic.AsyncAppender">
+        <!-- 不丢失日志，队列满时丢弃TRACE、DEBUG、INFO级别日志 -->
+        <discardingThreshold>0</discardingThreshold>
+        <!-- 队列深度，默认256 -->
+        <queueSize>512</queueSize>
+        <!-- 是否包含调用者信息，会影响性能 -->
+        <includeCallerData>false</includeCallerData>
+        <!-- 关联的appender -->
+        <appender-ref ref="FILE_INFO"/>
+    </appender>
+
+    <appender name="ASYNC_ERROR" class="ch.qos.logback.classic.AsyncAppender">
+        <discardingThreshold>0</discardingThreshold>
+        <queueSize>256</queueSize>
+        <includeCallerData>false</includeCallerData>
+        <appender-ref ref="FILE_ERROR"/>
+    </appender>
+
+    <appender name="ASYNC_DEBUG" class="ch.qos.logback.classic.AsyncAppender">
+        <discardingThreshold>0</discardingThreshold>
+        <queueSize>1024</queueSize>
+        <includeCallerData>false</includeCallerData>
+        <appender-ref ref="FILE_DEBUG"/>
+    </appender>
+
+    <!-- 日志级别配置 -->
+
+    <!-- Nacos 客户端日志：关掉 Nacos 自带 logback 配置后，它的日志会汇入 root（也就是会打到 CONSOLE、推到 Loki），
+         这正是"以前控制台看不到 Nacos 日志、现在一大堆"的原因——以前它们被 Nacos 自己的配置写进了
+         ${user.home}/logs/nacos/{config,naming,remote}.log。
+         这里单独拎出来并 additivity=false：彻底切断 root，只落文件，既不再刷控制台，也不占 Loki 配额。
+         这样即使别处（Nacos 远程配置、logging.level.*）把级别改回 INFO，也污染不到控制台和 Loki。
+         需要排查 Nacos 连接问题时把 level 临时改成 INFO/DEBUG -->
+    <logger name="com.alibaba.nacos" level="WARN" additivity="false">
+        <appender-ref ref="ASYNC_INFO"/>
+    </logger>
+
+    <!-- 系统模块日志级别控制 -->
+    <logger name="com.zp" level="INFO" />
+
+    <!-- Spring日志级别控制，减少框架日志输出 -->
+    <logger name="org.springframework" level="WARN" />
+    <logger name="org.springframework.web" level="INFO" />
+    <logger name="org.springframework.security" level="INFO" />
+    <logger name="org.springframework.boot" level="INFO" />
+
+    <!-- SQL日志输出配置 -->
+    <logger name="org.apache.ibatis" level="DEBUG" />
+    <logger name="java.sql" level="DEBUG" />
+    <logger name="java.sql.Connection" level="DEBUG" />
+    <logger name="java.sql.Statement" level="DEBUG" />
+    <logger name="java.sql.PreparedStatement" level="DEBUG" />
+    <logger name="com.zaxxer.hikari" level="INFO" />
+
+    <!-- MyBatis缓存日志配置 -->
+    <logger name="org.apache.ibatis.cache.decorators.LoggingCache" level="DEBUG" additivity="false">
+        <appender-ref ref="CONSOLE"/>
+        <appender-ref ref="ASYNC_DEBUG"/>
+    </logger>
+
+    <!-- 第三方库日志控制 -->
+    <logger name="org.apache.catalina" level="WARN" />
+    <logger name="org.apache.tomcat" level="WARN" />
+    <logger name="org.eclipse.jetty" level="WARN" />
+    <logger name="ch.qos.logback" level="WARN" />
+    <logger name="com.rabbitmq" level="WARN" />
+    <logger name="com.netflix" level="WARN" />
+    <logger name="io.netty" level="WARN" />
+
+    <!-- 根日志配置 -->
+    <root level="INFO">
+        <!-- 控制台输出 -->
+        <appender-ref ref="CONSOLE" />
+        <!-- 异步文件输出 -->
+        <appender-ref ref="ASYNC_INFO" />
+        <appender-ref ref="ASYNC_ERROR" />
+        <appender-ref ref="${lokiAppender}"/>
+    </root>
+
+    <!-- 环境相关配置 -->
+    <springProfile name="dev,test,local">
+        <!-- 开发测试环境：输出更多日志到控制台。
+             这里 additivity="false"，日志不再走 root，所以必须自己挂 Loki，否则业务日志推不到 Loki -->
+        <logger name="com.zp" level="DEBUG" additivity="false">
+            <appender-ref ref="CONSOLE" />
+            <appender-ref ref="ASYNC_INFO" />
+            <appender-ref ref="ASYNC_ERROR" />
+            <appender-ref ref="ASYNC_DEBUG" />
+            <appender-ref ref="${lokiAppender}"/>
+        </logger>
+    </springProfile>
+
+    <springProfile name="prod">
+        <!-- 生产环境。注意：logback 里重复声明 <root>/<logger> 是"追加"而不是"覆盖"，
+             上面 root 已挂的 CONSOLE / ${lokiAppender} 依然存在，想去掉控制台要在上方 CONSOLE 声明处用
+             springProfile 包裹。这里显式再挂一次 Loki，避免误以为生产不推送 -->
+        <root level="INFO">
+            <appender-ref ref="ASYNC_INFO" />
+            <appender-ref ref="ASYNC_ERROR" />
+            <appender-ref ref="${lokiAppender}"/>
+        </root>
+        <logger name="com.zp" level="INFO" additivity="false">
+            <appender-ref ref="ASYNC_INFO" />
+            <appender-ref ref="ASYNC_ERROR" />
+            <appender-ref ref="${lokiAppender}"/>
+        </logger>
+    </springProfile>
+
+</configuration>

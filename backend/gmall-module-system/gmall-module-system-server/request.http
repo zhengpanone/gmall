@@ -1,0 +1,90 @@
+### 创建租户
+POST {{sysBaseUrl}}/admin-api/tenant/create
+Content-Type: application/json
+
+{
+  "tenantName": "GMALL",
+  "tenantCode": "gmall",
+  "websites": [
+    "127.0.0.1:5778",
+    "localhost:5778"
+  ]
+}
+
+### 创建用户
+POST {{sysBaseUrl}}/admin-api/user/create
+Content-Type: application/json
+
+{
+  "password": "admin123",
+  "nickname": "超级管理员",
+  "email": "admin@qq.com",
+  "phone": "13800138000",
+  "username": "superAdmin",
+  "deptId": "1",
+  "status": 1,
+  "remark": "超级管理员"
+}
+
+### 创建角色
+POST {{sysBaseUrl}}/admin-api/role/create
+Content-Type: application/json
+
+{
+  "name": "管理员",
+  "code": "admin",
+  "status": 1,
+  "remark": "管理员"
+}
+
+### 删除角色
+POST {{sysBaseUrl}}/admin-api/role/delete
+Content-Type: application/json
+
+{
+  "id": []
+}
+
+### 创建字典
+POST {{sysBaseUrl}}/admin-api/dict/create
+Content-Type: application/json
+
+### 创建系统配置
+POST {{sysBaseUrl}}/admin-api/config/create
+Content-Type: application/json
+
+{
+  "category": "system",
+  "configName": "是否开启验证码",
+  "configKey": "CAPTCHA_ENABLE2",
+  "configValue": "false",
+  "configType": "1",
+  "remark": "系统配置",
+  "visible": "1"
+}
+
+### 根据key数组获取系统配置
+POST {{sysBaseUrl}}/admin-api/config/getKeys
+Content-Type: application/json
+
+[
+  "CAPTCHA_ENABLE",
+  "CAPTCHA_ENABLE2"
+]
+
+
+### 登录
+POST {{sysBaseUrl}}/admin-api/auth/login
+Content-Type: application/json
+
+{
+  "selectAccount": "superAdmin",
+  "username": "superAdmin",
+  "password": "admin123",
+  "captcha": true
+}
+
+### 根据key获取系统配置
+GET {{sysBaseUrl}}/admin-api/config/getByKey?configKey=CATEGORY_TYPE
+Content-Type: application/json
+
