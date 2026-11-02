@@ -100,6 +100,13 @@
             <groupId>com.zp.gmall</groupId>
             <artifactId>gmall-spring-boot-starter-biz-tenant</artifactId>
         </dependency>
+
+        <!-- Loki 日志推送 -->
+        <dependency>
+            <groupId>com.github.loki4j</groupId>
+            <artifactId>loki-logback-appender</artifactId>
+        </dependency>
+
     </dependencies>
 
     <build>
