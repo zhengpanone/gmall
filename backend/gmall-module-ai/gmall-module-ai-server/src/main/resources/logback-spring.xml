@@ -44,10 +44,9 @@
                     {"timestamp": "%d{yyyy-MM-dd HH:mm:ss.SSS}", "level": "%level", "logger": "%logger{36}.%method", "method":"%M", "line":"%line", "thread": "%thread", "message": "%msg%n"}
                 </pattern>
             </message>
-            <batchSize>1000</batchSize>
-            <sendTimeoutMs>1000</sendTimeoutMs>
-            <sortByTime>true</sortByTime>
         </format>
+        <!-- 批处理参数在 loki4j 1.6.0 是 appender 顶层属性（batchSize/sortByTime 已移除） -->
+        <batchMaxItems>1000</batchMaxItems>
     </appender>
 
     <!-- 关掉 Nacos 自带日志配置后，它的日志会汇入 root。Nacos 客户端 INFO 日志量很大，
