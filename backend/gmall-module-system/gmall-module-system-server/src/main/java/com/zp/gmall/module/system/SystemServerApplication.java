@@ -1,5 +1,8 @@
 package com.zp.gmall.module.system;
 
+import ch.qos.logback.classic.Level;
+import ch.qos.logback.classic.LoggerContext;
+import org.slf4j.LoggerFactory;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
@@ -7,10 +10,19 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
  * Author : zhengpanone
  * Date : 2023/11/11 17:14
  * Version : v1.0.0
- 
  */
 @SpringBootApplication
 public class SystemServerApplication {
+    static {
+        /**
+         * {@link com.zp.gmall.module.infra.InfraServerApplication}
+         */
+        System.setProperty("nacos.logging.default.config.enabled", "false");
+        if (LoggerFactory.getILoggerFactory() instanceof LoggerContext loggerContext) {
+            loggerContext.getLogger("com.alibaba.nacos").setLevel(Level.WARN);
+        }
+    }
+
     public static void main(String[] args) {
         SpringApplication.run(SystemServerApplication.class, args);
     }

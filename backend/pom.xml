@@ -46,12 +46,11 @@
         <maven.compiler.source>${java.version}</maven.compiler.source>
         <maven.compiler.target>${java.version}</maven.compiler.target>
         <maven-surefire-plugin.version>3.1.2</maven-surefire-plugin.version>
-        <maven-compiler-plugin.version>3.11.0</maven-compiler-plugin.version>
+        <maven-compiler-plugin.version>3.14.0</maven-compiler-plugin.version>
         <maven-enforcer-plugin.version>3.4.1</maven-enforcer-plugin.version>
         <jib-maven-plugin.version>3.4.3</jib-maven-plugin.version>
         <jib.base.image>eclipse-temurin:17-jre</jib.base.image>
 
-        <lombok.version>1.18.36</lombok.version>
         <spring.boot.version>3.4.1</spring.boot.version>
         <mapstruct.version>1.6.3</mapstruct.version>
 
@@ -171,7 +170,7 @@
                             <path>
                                 <groupId>org.projectlombok</groupId>
                                 <artifactId>lombok</artifactId>
-                                <version>${lombok.version}</version>
+                                <!-- 版本由 gmall-dependencies BOM 统一管理 -->
                             </path>
                             <path>
                                 <groupId>org.mapstruct</groupId>

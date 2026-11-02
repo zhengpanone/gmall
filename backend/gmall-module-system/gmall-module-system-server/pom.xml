@@ -18,12 +18,6 @@
     </description>
 
     <dependencies>
-        <!-- Spring Cloud 基础 -->
-        <dependency>
-            <groupId>org.springframework.cloud</groupId>
-            <artifactId>spring-cloud-starter-bootstrap</artifactId>
-        </dependency>
-
         <!-- Registry 注册中心相关 -->
         <dependency>
             <groupId>com.alibaba.cloud</groupId>
@@ -91,6 +85,11 @@
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-mail</artifactId>
+        </dependency>
+
+        <dependency>
+            <groupId>com.github.loki4j</groupId>
+            <artifactId>loki-logback-appender</artifactId>
         </dependency>
 
         <!-- flyway-->

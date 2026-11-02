@@ -13,6 +13,15 @@
     <springProperty scope="context" name="application.name" source="spring.application.name"  defaultValue="system-server"/>
     <springProperty scope="context" name="HOSTNAME" source="HOSTNAME" defaultValue="localhost"/>
 
+    <!-- Loki 推送地址，可用 gmall.logging.loki.url 覆盖 -->
+    <springProperty scope="context" name="lokiUrl" source="gmall.logging.loki.url" defaultValue="http://127.0.0.1:31920/loki/api/v1/push"/>
+    <!-- Loki 推送开关：LOKI=真实推送，LOKI_NOP=丢弃不推送（Loki 不可用时避免中断启动） -->
+    <springProperty scope="context" name="lokiAppender" source="gmall.logging.loki.appender" defaultValue="LOKI_NOP"/>
+    <springProfile name="!local">
+        <!-- 非 local 环境默认推送 -->
+        <springProperty scope="context" name="lokiAppender" source="gmall.logging.loki.appender" defaultValue="LOKI"/>
+    </springProfile>
+
 
     <!-- 日志输出格式 -->
     <!-- 彩色日志 -->
@@ -43,35 +52,36 @@
         </encoder>
     </appender>
 
-    <appender name="LOKI" class="com.github.loki4j.logback.LokiAppender">
+    <!-- 空实现，用于关闭 Loki 推送时占位 -->
+    <appender name="LOKI_NOP" class="ch.qos.logback.core.helpers.NOPAppender"/>
+
+    <!-- Loki 输出器。注意 loki4j 版本为 1.6.0：
+         类名为 Loki4jAppender（老版本是 LokiAppender）、
+         batch 参数为 appender 顶层平铺属性（不再是嵌套的 &lt;batch&gt;）、
+         认证节点为 &lt;auth&gt;（老版本是 &lt;basicAuth&gt;）、sortByTime 已移除 -->
+    <appender name="LOKI" class="com.github.loki4j.logback.Loki4jAppender">
         <http>
-            <url>http://127.0.0.1:3100/loki/api/v1/push</url>
-            <basicAuth>
+            <url>${lokiUrl}</url>
+            <auth>
                 <username>admin</username>
                 <password>admin</password>
-            </basicAuth>
+            </auth>
         </http>
-        <batch>
-            <maxItems>1000</maxItems>
-            <maxBytes>4194304</maxBytes>
-            <timeoutMs>5000</timeoutMs>
-        </batch>
-
-        <encoder>
-            <pattern>${CONSOLE_LOG_PATTERN}</pattern>
-            <charset>utf8</charset>
-        </encoder>
+        <batchMaxItems>1000</batchMaxItems>
+        <batchMaxBytes>4194304</batchMaxBytes>
+        <batchTimeoutMs>5000</batchTimeoutMs>
         <format>
             <label>
-                <pattern>application=${application.name},hostname=${HOSTNAME},ip=${IP},level=${level}</pattern>
+                <!-- 低基数标签，千万别把 traceId/userId 放进 label -->
+                <pattern>application=${application.name},hostname=${HOSTNAME},level=%level</pattern>
                 <readMarkers>true</readMarkers>
             </label>
             <message>
+                <!-- 结构化 JSON 正文 -->
                 <pattern>
                     {"timestamp": "%d{yyyy-MM-dd HH:mm:ss.SSS}", "level": "%level", "logger": "%logger{36}.%method", "method":"%M", "line":"%line", "thread": "%thread", "message": "%msg%n"}
                 </pattern>
             </message>
-            <sortByTime>true</sortByTime>
         </format>
     </appender>
 
@@ -200,7 +210,7 @@
     <root level="INFO">
         <!-- 控制台输出 -->
         <appender-ref ref="CONSOLE"/>
-        <appender-ref ref="LOKI"/>
+        <appender-ref ref="${lokiAppender}"/>
         <!-- 异步文件输出 -->
         <appender-ref ref="ASYNC_INFO"/>
         <appender-ref ref="ASYNC_ERROR"/>
@@ -208,12 +218,14 @@
 
     <!-- 环境相关配置 -->
     <springProfile name="dev,test,local">
-        <!-- 开发测试环境：输出更多日志到控制台 -->
+        <!-- 开发测试环境：输出更多日志到控制台。
+             additivity="false" 时日志不走 root，需自己挂 Loki -->
         <logger name="com.zp" level="DEBUG" additivity="false">
             <appender-ref ref="CONSOLE"/>
             <appender-ref ref="ASYNC_INFO"/>
             <appender-ref ref="ASYNC_ERROR"/>
             <appender-ref ref="ASYNC_DEBUG"/>
+            <appender-ref ref="${lokiAppender}"/>
         </logger>
     </springProfile>
 

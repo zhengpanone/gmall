@@ -9,7 +9,6 @@
         <version>${revision}</version>
     </parent>
     <artifactId>gmall-common</artifactId>
-    <version>${revision}</version>
     <packaging>jar</packaging>
     <description>定义基础 pojo 类、枚举、工具类等等</description>
 
