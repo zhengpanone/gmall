@@ -1,3 +1,59 @@
+--- #################### 应用基础配置 ####################
+spring:
+  application:
+    name: product-server
+
+  profiles:
+    active: local
+
+server:
+  port: 48100
+  servlet:
+    context-path: /product
+
+# 日志文件配置。注意，如果 logging.file.name 不放在 bootstrap.yaml 配置文件，而是放在 application.yaml 中，会导致出现 LOG_FILE_IS_UNDEFINED 文件
+logging:
+  file:
+    name: ${user.home}/log/${spring.application.name}.log # 日志文件名，全路径
+  level:
+    web: debug
+    #    root: debug
+    com.zp.gmall: debug
+
+--- # 数据库
+spring:
+  # Redis 配置。Redisson 默认的配置足够使用，一般不需要进行调优
+  data:
+    redis:
+      host: 127.0.0.1 # 地址
+      port: 30379 # 端口
+      database: 0 # 数据库索引
+      password: redis123456 # 密码，建议生产环境开启
+
+--- #注册中心相关配置
+spring:
+  cloud:
+    nacos:
+      server-addr: ${nacos.server.address:127.0.0.1:30848}
+      username: nacos
+      password: nacos
+      discovery:
+        group: gmall
+        namespace: gmall
+        metadata:
+          version: 1.0.0 # 服务实例的版本号，可用于灰度发布
+
+      # Nacos Config 配置项，对应 NacosConfigProperties 配置属性类
+      config:
+        group: gmall
+        namespace: gmall
+        file-extension: yaml
+
+  config:
+    import:
+      - optional:nacos:product-server.yaml?group=gmall&refreshEnabled=true
+
+--- #################### 芋道相关配置 ####################
 gmall:
   info:
     version: 0.0.1
@@ -9,3 +65,13 @@ gmall:
     title: 管理后台
     description: 提供管理员管理的所有功能
     version: 1.0.0
+
+  logging:
+    loki:
+      # 本机 Loki 推送地址。校验方式：curl http://127.0.0.1:31920/ready 应返回 200
+      # 30310 端口虽然也监听，但返回 302（网关重定向），推过去必然失败
+      url: http://127.0.0.1:31920/loki/api/v1/push
+      # LOKI = 开启推送；LOKI_NOP = 关闭推送。
+      # Loki 没启动时务必切成 LOKI_NOP：启动瞬间推送失败会被 LogbackLoggingSystem
+      # 判定为”配置错误“并中断启动（运行期推送失败不会致命）
+      appender: LOKI

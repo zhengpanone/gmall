@@ -45,23 +45,28 @@ public class ChatController {
      * @return
      */
     @GetMapping("/chat")
-    public String chat(@RequestParam(value = "prompt", defaultValue = "你是谁") String prompt) {
-        return chatService.chat(prompt);
+    public Result<String> chat(@RequestParam(value = "prompt", defaultValue = "你是谁") String prompt) {
+        String chat = chatService.chat(prompt);
+        return Result.ok(chat);
     }
 
     @GetMapping("/chatHistory")
-    public String chatHistory(@RequestParam(value = "prompt", defaultValue = "你是谁") String prompt) {
+    public Result<String> chatHistory(@RequestParam(value = "prompt", defaultValue = "你是谁") String prompt) {
         List<Message> messages = new ArrayList<>();
         messages.add(new SystemMessage("你是一个Java专家"));
         messages.add(new UserMessage("什么是Spring Boot"));
         messages.add(new AssistantMessage("Spring Boot是..."));
         messages.add(new UserMessage(prompt)); // 它的优点呢？
-        return chatService.chatHistory(messages);
+        String chat = chatService.chatHistory(messages);
+        return Result.ok(chat);
     }
 
     @GetMapping(value = "/stream", produces = MediaType.TEXT_EVENT_STREAM_VALUE)
     public Flux<String> chatStream(@RequestParam(value = "prompt", defaultValue = "你是谁") String prompt) {
-        return chatService.stream(prompt);
+        Flux<String> content = chatService.stream(prompt);
+        return content
+                .doOnNext(System.out::println)
+                .concatWith(Flux.just("[complete]"));
     }
 
     @Operation(summary = "列出Ollama模型")

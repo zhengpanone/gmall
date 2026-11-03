@@ -11,13 +11,10 @@ import reactor.core.publisher.Flux;
 
 import java.util.List;
 
-
 @Service
 public class ChatServiceImpl implements IChatService {
 
-
     private final ChatClient ollamaChatClient;
-
 
     private final ChatClient dashScopeChatClient;
 
