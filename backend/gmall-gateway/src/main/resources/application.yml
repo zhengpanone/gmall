@@ -1,4 +1,32 @@
 spring:
+  application:
+    name: gateway-server
+  profiles:
+    active: local
+
+server:
+  port: 48080
+
+# 日志文件配置
+logging:
+  file:
+    name: ${user.home}/log/${spring.application.name}.log # 日志文件名，全路径
+  level:
+    com.zp.gmall: debug
+    org.springframework: debug
+
+gmall:
+  logging:
+    loki:
+      # 本机 Loki 推送地址。校验方式：curl http://127.0.0.1:31920/ready 应返回 200
+      url: http://127.0.0.1:31920/loki/api/v1/push
+      # LOKI = 开启推送；LOKI_NOP = 关闭推送。
+      # Loki 没启动时务必切成 LOKI_NOP：启动瞬间推送失败会被 LogbackLoggingSystem
+      # 判定为“配置错误”并中断启动（运行期推送失败不会致命）
+      appender: LOKI_NOP
+
+---
+spring:
   main:
     allow-circular-references: true # 允许循环依赖，因为项目是三层架构，无法避免这个情况。
   cloud:
@@ -7,7 +35,7 @@ spring:
       discovery:
         locator:
           enabled: true #开启从注册中心动态创建路由的功能，利用微服务名进行路由
-      # 路由配置项，对应 RouteDefinition 数组
+      # 路由配置项，对应 RouteDefinition 数数组
       routes:
          # system-server 服务
         - id: system-admin-api # 路由的编号
@@ -73,3 +101,26 @@ springdoc:
         url: /system/admin-api/v3/api-docs
       - name: ai-server
         url: /ai/admin-api/v3/api-docs
+
+--- #################### 注册中心相关配置 ####################
+spring:
+  cloud:
+    nacos:
+      server-addr: ${nacos.server.address:127.0.0.1:30848}
+      username: nacos
+      password: nacos
+      discovery:
+        group: gmall # 命名空间。这里使用 gmall 开发环境
+        namespace: gmall
+        metadata:
+          version: 1.0.0 # 服务实例的版本号，可用于灰度发布
+
+      # Nacos Config 配置项，对应 NacosConfigProperties 配置属性类
+      config:
+        file-extension: yaml
+        group: gmall
+        namespace: gmall
+
+  config:
+    import:
+      - optional:nacos:gateway-server.yaml?group=gmall&refreshEnabled=true

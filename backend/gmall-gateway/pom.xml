@@ -16,12 +16,6 @@
     <url>https://github.com/YunaiV/yudao-cloud</url>
 
     <dependencies>
-        <!-- Spring Cloud 基础 -->
-        <dependency>
-            <groupId>org.springframework.cloud</groupId>
-            <artifactId>spring-cloud-starter-bootstrap</artifactId>
-        </dependency>
-
         <!-- 业务组件 -->
         <dependency>
             <groupId>com.zp.gmall</groupId>
@@ -79,6 +73,11 @@
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-actuator</artifactId>
+        </dependency>
+
+        <dependency>
+            <groupId>com.github.loki4j</groupId>
+            <artifactId>loki-logback-appender</artifactId>
         </dependency>
 
         <dependency>
